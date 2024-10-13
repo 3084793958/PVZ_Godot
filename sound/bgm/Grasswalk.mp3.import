@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Grasswalk.mp3-b264d251b97b5b8546061517eba22e25.mp3str"
+
+[deps]
+
+source_file="res://sound/bgm/Grasswalk.mp3"
+dest_files=[ "res://.import/Grasswalk.mp3-b264d251b97b5b8546061517eba22e25.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

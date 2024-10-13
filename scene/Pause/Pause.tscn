@@ -1,0 +1,125 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://font/zh.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://image/Start/godot.png" type="Texture" id=2]
+[ext_resource path="res://icon/icon.png" type="Texture" id=3]
+[ext_resource path="res://image/background/button_Hover.png" type="Texture" id=4]
+[ext_resource path="res://image/background/button.png" type="Texture" id=5]
+[ext_resource path="res://image/background/dialog_background.png" type="Texture" id=6]
+[ext_resource path="res://code/Pause/Pause_Main.cs" type="Script" id=7]
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=8]
+[ext_resource path="res://sound/button/pause.ogg" type="AudioStream" id=9]
+[ext_resource path="res://code/Pause/Pause_Background.cs" type="Script" id=10]
+[ext_resource path="res://code/Pause/Pause_Back.cs" type="Script" id=11]
+
+[sub_resource type="DynamicFont" id=1]
+size = 36
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_bottom = 13
+extra_spacing_char = 27
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 117, 46 )
+modulate_color = Color( 0.192157, 0.192157, 0.192157, 1 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 60
+outline_size = 5
+outline_color = Color( 0, 1, 1, 1 )
+use_filter = true
+extra_spacing_char = 10
+font_data = ExtResource( 1 )
+
+[node name="Pause" type="Control"]
+pause_mode = 2
+margin_right = 1024.0
+margin_bottom = 600.0
+script = ExtResource( 7 )
+
+[node name="Pause" type="Node2D" parent="."]
+z_index = 10
+
+[node name="Background" type="TextureRect" parent="Pause"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 340.0
+margin_top = 165.0
+margin_right = 660.0
+margin_bottom = 430.0
+rect_scale = Vector2( 1.5, 1.5 )
+rect_pivot_offset = Vector2( 160, 132 )
+texture = ExtResource( 6 )
+script = ExtResource( 10 )
+
+[node name="Back" type="Button" parent="Pause/Background"]
+margin_left = 21.0
+margin_top = 173.0
+margin_right = 291.0
+margin_bottom = 235.0
+custom_colors/font_color_disabled = Color( 0.25098, 0.25098, 0.25098, 1 )
+custom_colors/font_color_focus = Color( 0, 0.556863, 0.00784314, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0.556863, 0.00784314, 1 )
+custom_colors/font_color_pressed = Color( 0, 0.556863, 0.00784314, 1 )
+custom_fonts/font = SubResource( 1 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "返回游戏"
+script = ExtResource( 11 )
+
+[node name="Logo" type="TextureRect" parent="Pause/Background"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -316.667
+margin_top = -297.5
+margin_right = 183.333
+margin_bottom = 202.5
+rect_scale = Vector2( 0.2, 0.2 )
+rect_pivot_offset = Vector2( 250, 250 )
+texture = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="Pause/Background"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -60.6667
+margin_top = -129.333
+margin_right = 342.333
+margin_bottom = -49.3333
+rect_scale = Vector2( 0.3, 0.3 )
+custom_fonts/font = SubResource( 6 )
+text = "PVZ_Godot"
+
+[node name="Godot" type="TextureRect" parent="Pause/Background"]
+margin_left = 163.333
+margin_top = 33.6667
+margin_right = 663.333
+margin_bottom = 533.667
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 2 )
+
+[node name="button_Click" type="AudioStreamPlayer" parent="Pause"]
+stream = ExtResource( 9 )
+script = ExtResource( 8 )

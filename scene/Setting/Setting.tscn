@@ -1,0 +1,194 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://env/Name_Label_theme.tres" type="Theme" id=1]
+[ext_resource path="res://font/zh.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://image/background/Menu.png" type="Texture" id=3]
+[ext_resource path="res://image/background/button_Hover.png" type="Texture" id=4]
+[ext_resource path="res://image/background/button.png" type="Texture" id=5]
+[ext_resource path="res://code/Setting/Setting_Main.cs" type="Script" id=6]
+[ext_resource path="res://code/Setting/Setting_Back.cs" type="Script" id=7]
+[ext_resource path="res://sound/button/click.ogg" type="AudioStream" id=8]
+[ext_resource path="res://code/Setting/Setting_Button_Debug.cs" type="Script" id=9]
+[ext_resource path="res://code/Setting/Setting_Back_All.cs" type="Script" id=10]
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=11]
+[ext_resource path="res://code/Setting/Setting_bgm_HSlider.cs" type="Script" id=12]
+[ext_resource path="res://code/Setting/Setting_sound_HSlider.cs" type="Script" id=13]
+
+[sub_resource type="DynamicFont" id=1]
+size = 40
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_bottom = 13
+extra_spacing_char = 27
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 117, 46 )
+modulate_color = Color( 0.192157, 0.192157, 0.192157, 1 )
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 20
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_bottom = 7
+font_data = ExtResource( 2 )
+
+[node name="Setting" type="Control"]
+pause_mode = 2
+margin_left = 1.0
+margin_right = 1025.0
+margin_bottom = 600.0
+script = ExtResource( 6 )
+
+[node name="Setting" type="Node2D" parent="."]
+z_index = 10
+
+[node name="Menu" type="TextureRect" parent="Setting"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 303.5
+margin_top = 53.5
+margin_right = 720.5
+margin_bottom = 546.5
+rect_pivot_offset = Vector2( -270.5, 101.5 )
+texture = ExtResource( 3 )
+
+[node name="BGM" type="Control" parent="Setting/Menu"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="Setting/Menu/BGM"]
+margin_left = 53.5
+margin_top = 127.5
+margin_right = 117.5
+margin_bottom = 149.5
+theme = ExtResource( 1 )
+text = "背景音乐"
+
+[node name="HSlider" type="HSlider" parent="Setting/Menu/BGM"]
+margin_left = 123.0
+margin_top = 131.5
+margin_right = 367.0
+margin_bottom = 147.5
+theme = ExtResource( 1 )
+value = 100.0
+script = ExtResource( 12 )
+
+[node name="Sound" type="Control" parent="Setting/Menu"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( -10.5, 131.5 )
+
+[node name="Label" type="Label" parent="Setting/Menu/Sound"]
+margin_left = 53.5
+margin_top = 160.5
+margin_right = 93.5
+margin_bottom = 182.5
+theme = ExtResource( 1 )
+text = "音效"
+
+[node name="HSlider" type="HSlider" parent="Setting/Menu/Sound"]
+margin_left = 123.0
+margin_top = 165.5
+margin_right = 367.0
+margin_bottom = 181.5
+theme = ExtResource( 1 )
+value = 100.0
+script = ExtResource( 13 )
+
+[node name="Back" type="Button" parent="Setting/Menu"]
+margin_left = 47.0
+margin_top = 392.0
+margin_right = 372.0
+margin_bottom = 479.0
+custom_colors/font_color_disabled = Color( 0.25098, 0.25098, 0.25098, 1 )
+custom_colors/font_color_focus = Color( 0, 0.556863, 0.00784314, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0.556863, 0.00784314, 1 )
+custom_colors/font_color_pressed = Color( 0, 0.556863, 0.00784314, 1 )
+custom_fonts/font = SubResource( 1 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "返回游戏"
+script = ExtResource( 7 )
+
+[node name="Back_All" type="Button" parent="Setting/Menu"]
+margin_left = 94.0
+margin_top = 325.5
+margin_right = 323.0
+margin_bottom = 370.5
+custom_colors/font_color_disabled = Color( 0.25098, 0.25098, 0.25098, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "返回主菜单"
+script = ExtResource( 10 )
+
+[node name="WiKi" type="Button" parent="Setting/Menu"]
+margin_left = 94.0
+margin_top = 239.5
+margin_right = 323.0
+margin_bottom = 284.5
+custom_colors/font_color_disabled = Color( 0.25098, 0.25098, 0.25098, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "图鉴"
+
+[node name="ReStart" type="Button" parent="Setting/Menu"]
+margin_left = 94.0
+margin_top = 282.5
+margin_right = 323.0
+margin_bottom = 327.5
+custom_colors/font_color_disabled = Color( 0.25098, 0.25098, 0.25098, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "重新开始"
+
+[node name="Debug" type="Button" parent="Setting/Menu"]
+pause_mode = 2
+margin_left = 94.0
+margin_top = 197.5
+margin_right = 323.0
+margin_bottom = 242.5
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+toggle_mode = true
+text = "Debug"
+script = ExtResource( 9 )
+
+[node name="button_Click" type="AudioStreamPlayer" parent="Setting"]
+stream = ExtResource( 8 )
+script = ExtResource( 11 )
+
+[connection signal="value_changed" from="Setting/Menu/BGM/HSlider" to="Setting/Menu/BGM/HSlider" method="Bgm_HSlider_value_changed"]
+[connection signal="value_changed" from="Setting/Menu/Sound/HSlider" to="Setting/Menu/Sound/HSlider" method="Sound_HSlider_value_changed"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ZombiesOnYourLawn.ogg-1bb343541532fece3d9c79c7bd62e8f1.oggstr"
+
+[deps]
+
+source_file="res://sound/button/ZombiesOnYourLawn.ogg"
+dest_files=[ "res://.import/ZombiesOnYourLawn.ogg-1bb343541532fece3d9c79c7bd62e8f1.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

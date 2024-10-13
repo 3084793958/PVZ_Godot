@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/readysetplant.ogg-49d3508a1fd736401ddf43c9d243a8e0.oggstr"
+
+[deps]
+
+source_file="res://sound/button/readysetplant.ogg"
+dest_files=[ "res://.import/readysetplant.ogg-49d3508a1fd736401ddf43c9d243a8e0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

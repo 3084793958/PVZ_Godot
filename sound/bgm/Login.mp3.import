@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Login.mp3-48423d7b566029af96ed865e5970ceaa.mp3str"
+
+[deps]
+
+source_file="res://sound/bgm/Login.mp3"
+dest_files=[ "res://.import/Login.mp3-48423d7b566029af96ed865e5970ceaa.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

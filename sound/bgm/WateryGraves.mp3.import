@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/WateryGraves.mp3-65625402b790f0cb4c5aafcf930ea746.mp3str"
+
+[deps]
+
+source_file="res://sound/bgm/WateryGraves.mp3"
+dest_files=[ "res://.import/WateryGraves.mp3-65625402b790f0cb4c5aafcf930ea746.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bigchomp.ogg-b08e2d44a5a682b20bddace2fc152dc6.oggstr"
+
+[deps]
+
+source_file="res://sound/Zombies/bigchomp.ogg"
+dest_files=[ "res://.import/bigchomp.ogg-b08e2d44a5a682b20bddace2fc152dc6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

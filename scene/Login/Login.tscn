@@ -1,0 +1,745 @@
+[gd_scene load_steps=69 format=2]
+
+[ext_resource path="res://image/Login/title.png" type="Texture" id=1]
+[ext_resource path="res://sound/bgm/Login.mp3" type="AudioStream" id=2]
+[ext_resource path="res://image/Login/Change_Hover.png" type="Texture" id=3]
+[ext_resource path="res://image/Login/Show.png" type="Texture" id=4]
+[ext_resource path="res://image/Login/Change.png" type="Texture" id=5]
+[ext_resource path="res://font/zh.otf" type="DynamicFontData" id=6]
+[ext_resource path="res://image/Login/Empty_Wood.png" type="Texture" id=7]
+[ext_resource path="res://image/Login/Wood_Small.png" type="Texture" id=8]
+[ext_resource path="res://image/Login/Mode.png" type="Texture" id=9]
+[ext_resource path="res://image/Login/Mode1.png" type="Texture" id=10]
+[ext_resource path="res://image/Login/Mode1_Hover.png" type="Texture" id=11]
+[ext_resource path="res://image/Login/Mode4.png" type="Texture" id=12]
+[ext_resource path="res://image/Login/Mode3_Hover.png" type="Texture" id=13]
+[ext_resource path="res://image/Login/Mode4_Hover.png" type="Texture" id=14]
+[ext_resource path="res://image/Login/Mode3.png" type="Texture" id=15]
+[ext_resource path="res://image/Login/Mode2.png" type="Texture" id=16]
+[ext_resource path="res://image/Login/Mode2_Hover.png" type="Texture" id=17]
+[ext_resource path="res://code/Login/Login_Main.cs" type="Script" id=18]
+[ext_resource path="res://sound/button/hover.ogg" type="AudioStream" id=19]
+[ext_resource path="res://sound/button/click.ogg" type="AudioStream" id=20]
+[ext_resource path="res://code/Login/Button_Mode4.cs" type="Script" id=21]
+[ext_resource path="res://code/Login/Button_Mode1.cs" type="Script" id=22]
+[ext_resource path="res://code/Login/Button_Change.cs" type="Script" id=23]
+[ext_resource path="res://code/Login/Button_Mode3.cs" type="Script" id=24]
+[ext_resource path="res://code/Login/Button_Mode2.cs" type="Script" id=25]
+[ext_resource path="res://code/Login/Button_Quit.cs" type="Script" id=26]
+[ext_resource path="res://image/background/dialog_background.png" type="Texture" id=27]
+[ext_resource path="res://code/Login/Create_User_Main.cs" type="Script" id=28]
+[ext_resource path="res://image/background/button_Hover.png" type="Texture" id=29]
+[ext_resource path="res://image/background/button.png" type="Texture" id=30]
+[ext_resource path="res://code/Login/Name_List_Main.cs" type="Script" id=31]
+[ext_resource path="res://code/Login/Button_Ok.cs" type="Script" id=32]
+[ext_resource path="res://code/Login/Button_Build.cs" type="Script" id=33]
+[ext_resource path="res://code/Login/Button_Delete.cs" type="Script" id=34]
+[ext_resource path="res://code/Login/Button_Build_Cancel.cs" type="Script" id=35]
+[ext_resource path="res://code/Login/Button_Build_Ok.cs" type="Script" id=36]
+[ext_resource path="res://env/Name_Label_theme.tres" type="Theme" id=37]
+[ext_resource path="res://code/Login/Login_Setting.cs" type="Script" id=38]
+[ext_resource path="res://code/Login/Login_Debug.cs" type="Script" id=39]
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=40]
+[ext_resource path="res://code/Public/Set_bgm.cs" type="Script" id=41]
+[ext_resource path="res://code/Login/Button_Re_name.cs" type="Script" id=42]
+[ext_resource path="res://code/Login/Button_ReName_Ok.cs" type="Script" id=43]
+[ext_resource path="res://code/Login/Button_ReName_Cancel.cs" type="Script" id=44]
+[ext_resource path="res://image/background/Cloud.png" type="Texture" id=45]
+[ext_resource path="res://image/background/PVZ_PlayButton.png" type="Texture" id=46]
+[ext_resource path="res://sound/button/ZombiesOnYourLawn.ogg" type="AudioStream" id=47]
+[ext_resource path="res://code/Login/Button_PVZ.cs" type="Script" id=48]
+
+[sub_resource type="Animation" id=21]
+resource_name = "Run"
+length = 60.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Cloud:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 60 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1024, 0 ), Vector2( -650, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=1]
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "load"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("User:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( -2, -2 ),
+"update": 0,
+"values": [ Vector2( 0, -250 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("User/Change:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -30 ), Vector2( 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("User/More:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 143 ), Vector2( 0, 194 ) ]
+}
+
+[sub_resource type="DynamicFont" id=3]
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 30
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="Animation" id=6]
+resource_name = "load"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath("Mode:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ Vector2( 0, 600 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Mode/Mode1:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ Vector2( 673, 138 ), Vector2( 673, 38 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Mode/Mode2:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ Vector2( 682, 277 ), Vector2( 682, 127 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Mode/Mode3:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ Vector2( 684, 388 ), Vector2( 684, 188 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Mode/Mode4:rect_position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ Vector2( 682, 493 ), Vector2( 682, 243 ) ]
+}
+
+[sub_resource type="DynamicFont" id=9]
+size = 20
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_bottom = 7
+font_data = ExtResource( 6 )
+
+[sub_resource type="StyleBoxTexture" id=10]
+texture = ExtResource( 29 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="StyleBoxTexture" id=11]
+texture = ExtResource( 29 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="StyleBoxTexture" id=13]
+texture = ExtResource( 30 )
+region_rect = Rect2( 0, 0, 117, 46 )
+modulate_color = Color( 0.192157, 0.192157, 0.192157, 1 )
+
+[sub_resource type="StyleBoxTexture" id=14]
+texture = ExtResource( 30 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="StyleBoxTexture" id=12]
+texture = ExtResource( 30 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="DynamicFont" id=15]
+size = 30
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="StyleBoxEmpty" id=16]
+
+[sub_resource type="StyleBoxEmpty" id=17]
+
+[sub_resource type="StyleBoxEmpty" id=18]
+
+[sub_resource type="Animation" id=7]
+resource_name = "in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ Vector2( 0, 600 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 600 ) ]
+}
+
+[sub_resource type="DynamicFont" id=20]
+size = 25
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[node name="Login" type="Node2D"]
+script = ExtResource( 18 )
+
+[node name="Main" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="background" type="TextureRect" parent="Main"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 1 )
+
+[node name="Cloud_Player" type="AnimationPlayer" parent="Main/background"]
+autoplay = "Run"
+anims/Run = SubResource( 21 )
+
+[node name="Cloud" type="Control" parent="Main/background"]
+margin_left = 1024.0
+margin_right = 1024.0
+
+[node name="Cloud1" type="TextureRect" parent="Main/background/Cloud"]
+margin_left = 37.0
+margin_top = 24.0
+margin_right = 108.0
+margin_bottom = 64.0
+texture = ExtResource( 45 )
+
+[node name="Cloud2" type="TextureRect" parent="Main/background/Cloud"]
+margin_left = 548.0
+margin_top = 77.0
+margin_right = 619.0
+margin_bottom = 117.0
+texture = ExtResource( 45 )
+
+[node name="Cloud3" type="TextureRect" parent="Main/background/Cloud"]
+margin_left = 14.0
+margin_top = 150.0
+margin_right = 85.0
+margin_bottom = 190.0
+texture = ExtResource( 45 )
+
+[node name="Cloud4" type="TextureRect" parent="Main/background/Cloud"]
+margin_left = 194.0
+margin_top = 211.0
+margin_right = 265.0
+margin_bottom = 251.0
+texture = ExtResource( 45 )
+
+[node name="Cloud5" type="TextureRect" parent="Main/background/Cloud"]
+margin_left = 393.0
+margin_top = 316.0
+margin_right = 464.0
+margin_bottom = 356.0
+texture = ExtResource( 45 )
+
+[node name="User" type="Control" parent="Main"]
+margin_top = -250.0
+margin_bottom = -250.0
+
+[node name="Show" type="TextureRect" parent="Main/User"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 4 )
+
+[node name="Name_Rect" type="Control" parent="Main/User/Show"]
+margin_left = 33.0
+margin_top = 94.0
+margin_right = 268.0
+margin_bottom = 116.0
+
+[node name="Name" type="Label" parent="Main/User/Show/Name_Rect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -117.5
+margin_top = -11.0
+margin_right = 116.5
+margin_bottom = 11.0
+custom_fonts/font = SubResource( 1 )
+align = 1
+
+[node name="Change" type="Control" parent="Main/User"]
+margin_top = -30.0
+margin_bottom = -30.0
+
+[node name="Change" type="TextureButton" parent="Main/User/Change"]
+margin_top = 137.0
+margin_right = 291.0
+margin_bottom = 208.0
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 3 )
+texture_disabled = ExtResource( 5 )
+texture_focused = ExtResource( 3 )
+script = ExtResource( 23 )
+
+[node name="More" type="TextureRect" parent="Main/User"]
+margin_top = 143.0
+margin_right = 291.0
+margin_bottom = 214.0
+texture = ExtResource( 7 )
+
+[node name="Info_Rect" type="Control" parent="Main/User/More"]
+margin_left = 19.0
+margin_top = 13.0
+margin_right = 270.0
+margin_bottom = 40.0
+rect_rotation = -0.803092
+
+[node name="Info" type="Label" parent="Main/User/More/Info_Rect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -81.0
+margin_top = -11.0
+margin_right = 81.0
+margin_bottom = 11.0
+custom_fonts/font = SubResource( 2 )
+text = "该版本仅在github发布"
+
+[node name="User_Animation" type="AnimationPlayer" parent="Main"]
+anims/load = SubResource( 4 )
+
+[node name="Version" type="TextureRect" parent="Main"]
+margin_left = 917.0
+margin_top = 550.0
+margin_right = 1009.0
+margin_bottom = 590.0
+texture = ExtResource( 8 )
+
+[node name="Text" type="Label" parent="Main/Version"]
+margin_left = 18.0
+margin_top = 2.0
+margin_right = 61.0
+margin_bottom = 24.0
+rect_rotation = 11.1373
+custom_fonts/font = SubResource( 3 )
+text = "V1.0b"
+
+[node name="Mode" type="Control" parent="Main"]
+margin_top = 600.0
+margin_bottom = 600.0
+
+[node name="Background" type="TextureRect" parent="Main/Mode"]
+margin_left = 410.0
+margin_top = 30.0
+margin_right = 1230.0
+margin_bottom = 610.0
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 9 )
+
+[node name="Setting" type="Button" parent="Main/Mode/Background"]
+margin_left = 492.0
+margin_top = 434.667
+margin_right = 568.0
+margin_bottom = 483.667
+custom_fonts/font = SubResource( 5 )
+text = "设置"
+flat = true
+script = ExtResource( 38 )
+
+[node name="Quit" type="Button" parent="Main/Mode/Background"]
+margin_left = 633.333
+margin_top = 450.667
+margin_right = 709.333
+margin_bottom = 499.667
+custom_fonts/font = SubResource( 5 )
+text = "退出"
+flat = true
+script = ExtResource( 26 )
+
+[node name="Mode1" type="TextureButton" parent="Main/Mode"]
+margin_left = 673.0
+margin_top = 138.0
+margin_right = 1039.0
+margin_bottom = 333.0
+rect_scale = Vector2( 0.6, 0.6 )
+texture_normal = ExtResource( 10 )
+texture_pressed = ExtResource( 11 )
+texture_hover = ExtResource( 11 )
+texture_disabled = ExtResource( 10 )
+texture_focused = ExtResource( 11 )
+script = ExtResource( 22 )
+
+[node name="Mode2" type="TextureButton" parent="Main/Mode"]
+margin_left = 682.0
+margin_top = 277.0
+margin_right = 995.0
+margin_bottom = 410.0
+rect_scale = Vector2( 0.6, 0.6 )
+texture_normal = ExtResource( 16 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 17 )
+texture_disabled = ExtResource( 16 )
+texture_focused = ExtResource( 17 )
+script = ExtResource( 25 )
+
+[node name="Mode3" type="TextureButton" parent="Main/Mode"]
+margin_left = 684.0
+margin_top = 388.0
+margin_right = 970.0
+margin_bottom = 510.0
+rect_scale = Vector2( 0.6, 0.6 )
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 13 )
+texture_hover = ExtResource( 13 )
+texture_disabled = ExtResource( 15 )
+texture_focused = ExtResource( 13 )
+script = ExtResource( 24 )
+
+[node name="Mode4" type="TextureButton" parent="Main/Mode"]
+margin_left = 682.0
+margin_top = 493.0
+margin_right = 948.0
+margin_bottom = 616.0
+rect_scale = Vector2( 0.6, 0.6 )
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 14 )
+texture_hover = ExtResource( 14 )
+texture_disabled = ExtResource( 12 )
+texture_focused = ExtResource( 14 )
+script = ExtResource( 21 )
+
+[node name="Mode_Animation" type="AnimationPlayer" parent="Main"]
+anims/load = SubResource( 6 )
+
+[node name="Create_User" type="Control" parent="Main"]
+margin_top = 600.0
+margin_right = 1024.0
+margin_bottom = 1200.0
+script = ExtResource( 28 )
+
+[node name="Background" type="TextureRect" parent="Main/Create_User"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -160.0
+margin_top = -132.5
+margin_right = 160.0
+margin_bottom = 132.5
+rect_scale = Vector2( 1.5, 1.5 )
+rect_pivot_offset = Vector2( 160, 132 )
+texture = ExtResource( 27 )
+
+[node name="Main" type="ScrollContainer" parent="Main/Create_User/Background"]
+margin_left = 33.0
+margin_top = 33.0
+margin_right = 278.0
+margin_bottom = 160.0
+
+[node name="Main" type="VBoxContainer" parent="Main/Create_User/Background/Main"]
+script = ExtResource( 31 )
+child_theme = ExtResource( 37 )
+
+[node name="Ok" type="Button" parent="Main/Create_User/Background"]
+margin_left = 220.667
+margin_top = 190.333
+margin_right = 286.667
+margin_bottom = 225.333
+custom_colors/font_color_disabled = Color( 0.25098, 0.25098, 0.25098, 1 )
+custom_fonts/font = SubResource( 9 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
+disabled = true
+text = "确定"
+script = ExtResource( 32 )
+
+[node name="Build" type="Button" parent="Main/Create_User/Background"]
+margin_left = 154.0
+margin_top = 190.333
+margin_right = 220.0
+margin_bottom = 225.333
+custom_fonts/font = SubResource( 9 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 12 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
+text = "创建"
+script = ExtResource( 33 )
+
+[node name="Delete" type="Button" parent="Main/Create_User/Background"]
+margin_left = 20.6667
+margin_top = 190.333
+margin_right = 86.6667
+margin_bottom = 225.333
+custom_fonts/font = SubResource( 9 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 12 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
+disabled = true
+text = "删除"
+script = ExtResource( 34 )
+
+[node name="Re_name" type="Button" parent="Main/Create_User/Background"]
+margin_left = 86.6667
+margin_top = 190.333
+margin_right = 152.667
+margin_bottom = 225.333
+custom_fonts/font = SubResource( 9 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 12 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
+disabled = true
+text = "重命名"
+script = ExtResource( 42 )
+
+[node name="Build_Main" type="TextureRect" parent="Main/Create_User/Background"]
+margin_left = 76.6667
+margin_top = 54.3332
+margin_right = 396.667
+margin_bottom = 319.333
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 27 )
+
+[node name="Ok" type="Button" parent="Main/Create_User/Background/Build_Main"]
+margin_left = 194.667
+margin_top = 184.0
+margin_right = 273.667
+margin_bottom = 222.0
+custom_colors/font_color_disabled = Color( 0.25098, 0.25098, 0.25098, 1 )
+custom_fonts/font = SubResource( 9 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
+disabled = true
+text = "确定"
+script = ExtResource( 36 )
+
+[node name="Cancel" type="Button" parent="Main/Create_User/Background/Build_Main"]
+margin_left = 36.0
+margin_top = 185.333
+margin_right = 115.0
+margin_bottom = 223.333
+custom_fonts/font = SubResource( 9 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 12 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
+text = "取消"
+script = ExtResource( 35 )
+
+[node name="LineEdit" type="LineEdit" parent="Main/Create_User/Background/Build_Main"]
+margin_left = 35.0
+margin_top = 81.0
+margin_right = 276.0
+margin_bottom = 121.0
+custom_fonts/font = SubResource( 15 )
+custom_styles/read_only = SubResource( 16 )
+custom_styles/focus = SubResource( 17 )
+custom_styles/normal = SubResource( 18 )
+align = 1
+expand_to_text_length = true
+clear_button_enabled = true
+placeholder_text = "输入用户名..."
+caret_blink = true
+
+[node name="ReName_Main" type="TextureRect" parent="Main/Create_User/Background"]
+visible = false
+margin_left = 76.6667
+margin_top = 54.3332
+margin_right = 396.667
+margin_bottom = 319.333
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 27 )
+
+[node name="Ok" type="Button" parent="Main/Create_User/Background/ReName_Main"]
+margin_left = 194.667
+margin_top = 184.0
+margin_right = 273.667
+margin_bottom = 222.0
+custom_colors/font_color_disabled = Color( 0.25098, 0.25098, 0.25098, 1 )
+custom_fonts/font = SubResource( 9 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
+disabled = true
+text = "确定"
+script = ExtResource( 43 )
+
+[node name="Cancel" type="Button" parent="Main/Create_User/Background/ReName_Main"]
+margin_left = 36.0
+margin_top = 185.333
+margin_right = 115.0
+margin_bottom = 223.333
+custom_fonts/font = SubResource( 9 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 12 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
+text = "取消"
+script = ExtResource( 44 )
+
+[node name="LineEdit" type="LineEdit" parent="Main/Create_User/Background/ReName_Main"]
+margin_left = 35.0
+margin_top = 81.0
+margin_right = 276.0
+margin_bottom = 121.0
+custom_fonts/font = SubResource( 15 )
+custom_styles/read_only = SubResource( 16 )
+custom_styles/focus = SubResource( 17 )
+custom_styles/normal = SubResource( 18 )
+align = 1
+expand_to_text_length = true
+clear_button_enabled = true
+placeholder_text = "输入用户名..."
+caret_blink = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Main/Create_User"]
+anims/in = SubResource( 7 )
+anims/out = SubResource( 8 )
+
+[node name="Debug" type="TextureRect" parent="Main"]
+visible = false
+margin_left = 931.0
+margin_top = 503.0
+margin_right = 1023.0
+margin_bottom = 543.0
+texture = ExtResource( 8 )
+
+[node name="Button" type="Button" parent="Main/Debug"]
+margin_left = 18.0
+margin_top = 2.0
+margin_right = 61.0
+margin_bottom = 24.0
+rect_rotation = 11.1373
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = SubResource( 20 )
+text = "Debug"
+flat = true
+script = ExtResource( 39 )
+
+[node name="PVZ" type="TextureButton" parent="Main"]
+margin_left = 115.0
+margin_top = 458.0
+margin_right = 174.0
+margin_bottom = 519.0
+rect_rotation = 25.3368
+texture_normal = ExtResource( 46 )
+script = ExtResource( 48 )
+
+[node name="PVZ" type="AudioStreamPlayer" parent="Main/PVZ"]
+pause_mode = 2
+stream = ExtResource( 47 )
+script = ExtResource( 40 )
+
+[node name="bgm" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 2 )
+autoplay = true
+script = ExtResource( 41 )
+
+[node name="button_Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 20 )
+script = ExtResource( 40 )
+
+[node name="button_Hover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+script = ExtResource( 40 )

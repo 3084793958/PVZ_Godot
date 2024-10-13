@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/reverse_explosion.ogg-44e3b5a83cff5460453338bc115c7db5.oggstr"
+
+[deps]
+
+source_file="res://sound/Plants/C_Boom/reverse_explosion.ogg"
+dest_files=[ "res://.import/reverse_explosion.ogg-44e3b5a83cff5460453338bc115c7db5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
