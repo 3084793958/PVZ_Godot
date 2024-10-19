@@ -99,7 +99,8 @@ tracks/1/keys = {
 
 [node name="Sun" type="Node2D"]
 position = Vector2( -30, -22 )
-z_index = 8
+z_index = 17
+z_as_relative = false
 script = ExtResource( 4 )
 
 [node name="Sun" type="Control" parent="."]

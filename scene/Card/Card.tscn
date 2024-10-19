@@ -191,7 +191,7 @@ autostart = true
 
 [node name="Info" type="Node2D" parent="Main/Main"]
 visible = false
-z_index = 9
+z_index = 19
 z_as_relative = false
 
 [node name="Info" type="Control" parent="Main/Main/Info"]

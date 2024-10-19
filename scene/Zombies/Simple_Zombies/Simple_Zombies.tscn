@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://image/Zombies/Simple_Zombies/Simple_Zombies.png" type="Texture" id=1]
 [ext_resource path="res://code/Zombies/Simple_Zombies/Simple_Zombies_Main.cs" type="Script" id=2]
@@ -490,8 +490,8 @@ tracks/22/keys = {
 "values": [ Vector2( -1.466, 24.0003 ), Vector2( -1.466, 24.0003 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 33.3333, 40 )
+[sub_resource type="RectangleShape2D" id=10]
+extents = Vector2( 28, 40 )
 
 [sub_resource type="Animation" id=6]
 resource_name = "Lose_Arm"
@@ -674,26 +674,35 @@ tracks/9/keys = {
 "update": 1,
 "values": [ true ]
 }
-tracks/10/type = "method"
-tracks/10/path = NodePath("Zombies_Area")
+tracks/10/type = "value"
+tracks/10/path = NodePath("Zombies_Area:monitoring")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
 tracks/10/enabled = true
 tracks/10/keys = {
-"times": PoolRealArray( 1.6 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "queue_free"
-} ]
+"times": PoolRealArray( 0, 1.4, 3.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Zombies_Area:monitorable")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 1.4, 3.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "Boom_Effect"
-length = 2.5
-tracks/0/type = "method"
-tracks/0/path = NodePath("Zombies_Area")
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Zombies_Area/Shape:shape:extents")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -701,30 +710,32 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "queue_free"
-} ]
+"update": 0,
+"values": [ Vector2( 28, 40 ) ]
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath("Fall:playing")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
+
+[sub_resource type="Animation" id=8]
+resource_name = "Boom_Effect"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Fall:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
 "times": PoolRealArray( 0, 1, 1.7 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ false, true, false ]
 }
-tracks/2/type = "method"
-tracks/2/path = NodePath("../Timer")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
+tracks/1/type = "method"
+tracks/1/path = NodePath("../Timer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
@@ -732,20 +743,32 @@ tracks/2/keys = {
 "method": "stop"
 } ]
 }
-tracks/3/type = "value"
-tracks/3/path = NodePath("..:modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
+tracks/2/type = "value"
+tracks/2/path = NodePath("..:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
 "times": PoolRealArray( 0, 0.1, 1.8, 2.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 tracks/4/type = "value"
-tracks/4/path = NodePath("Body:modulate")
+tracks/4/path = NodePath("In_Arm:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -757,7 +780,7 @@ tracks/4/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("In_Arm:modulate")
+tracks/5/path = NodePath("Out_Arm:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -769,42 +792,54 @@ tracks/5/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Out_Arm:modulate")
+tracks/6/path = NodePath("Head:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 0.5, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("Head:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
 "times": PoolRealArray( 0, 1, 1.5 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( -14.534, -62.667 ), Vector2( -14.534, -62.667 ), Vector2( -10.6667, 18.6667 ) ]
 }
-tracks/8/type = "method"
-tracks/8/path = NodePath("..")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/keys = {
+tracks/7/type = "method"
+tracks/7/path = NodePath("..")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
 "times": PoolRealArray( 2.5 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
 "method": "queue_free"
 } ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Zombies_Area:monitoring")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.1, 2.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Zombies_Area:monitorable")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.1, 2.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
 }
 
 [node name="Simple_Zombies" type="Node2D"]
@@ -820,7 +855,7 @@ margin_bottom = -16.0
 rect_scale = Vector2( 0.75, 0.75 )
 
 [node name="Help" type="Node2D" parent="Dock"]
-z_index = 8
+z_index = 18
 z_as_relative = false
 
 [node name="Texture" type="TextureRect" parent="Dock/Help"]
@@ -846,7 +881,7 @@ margin_bottom = -16.0
 rect_scale = Vector2( 0.75, 0.75 )
 
 [node name="Help" type="Node2D" parent="Show"]
-z_index = 8
+z_index = 18
 z_as_relative = false
 
 [node name="Texture" type="TextureRect" parent="Show/Help"]
@@ -969,20 +1004,24 @@ script = ExtResource( 3 )
 script = ExtResource( 24 )
 
 [node name="Shape" type="CollisionShape2D" parent="Main/Zombies_Area"]
-position = Vector2( 20, 0 )
-shape = SubResource( 4 )
+position = Vector2( 6.66667, 0 )
+shape = SubResource( 10 )
 
 [node name="Lose_Arm" type="AnimationPlayer" parent="Main"]
 anims/Lose_Arm = SubResource( 6 )
 
 [node name="Lose_Head" type="AnimationPlayer" parent="Main"]
 anims/Lose_Head = SubResource( 7 )
+anims/RESET = SubResource( 9 )
 
 [node name="Fall" type="AudioStreamPlayer" parent="Main"]
 stream = ExtResource( 27 )
 
 [node name="Boom_Effect" type="AnimationPlayer" parent="Main"]
 anims/Boom_Effect = SubResource( 8 )
+
+[node name="Fire_Hurt" type="Timer" parent="Main"]
+one_shot = true
 
 [node name="Plant_Sound" type="Node" parent="."]
 

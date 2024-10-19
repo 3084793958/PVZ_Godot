@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://code/Bullets/Plants/Van_Door_Bullets/Van_Door_Bullets_Main.cs" type="Script" id=1]
 [ext_resource path="res://image/Plants/Van_Door/Bullets/Pea.png" type="Texture" id=2]
@@ -7,6 +7,186 @@
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=5]
 [ext_resource path="res://sound/Plants/Van_Door/splat.ogg" type="AudioStream" id=6]
 [ext_resource path="res://image/Plants/Van_Door/Bullets/Effect.png" type="Texture" id=7]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea2.png" type="Texture" id=8]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea_flame2.png" type="Texture" id=9]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea3.png" type="Texture" id=10]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea1.png" type="Texture" id=11]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea_flame3.png" type="Texture" id=12]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea_flame1.png" type="Texture" id=13]
+[ext_resource path="res://image/Plants/Fire/fire1_3.png" type="Texture" id=14]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea2_flame3.png" type="Texture" id=15]
+[ext_resource path="res://image/Plants/Fire/fire1_2.png" type="Texture" id=16]
+[ext_resource path="res://image/Plants/Fire/fire1_1.png" type="Texture" id=17]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea3_flame3.png" type="Texture" id=18]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea2_flame1.png" type="Texture" id=19]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea2_flame2.png" type="Texture" id=20]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea3_flame1.png" type="Texture" id=21]
+[ext_resource path="res://image/Plants/Van_Door/Bullets/FirePea3_flame2.png" type="Texture" id=22]
+[ext_resource path="res://sound/Plants/Van_Door/firepea.ogg" type="AudioStream" id=23]
+
+[sub_resource type="Animation" id=4]
+resource_name = "Run"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("3:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, false, false ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Run"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("3:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, false, false ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Run"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("3:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, false, false ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "fire"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("3:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, false, false ]
+}
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 13, 12.5 )
@@ -37,10 +217,76 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.01 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Pea:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Effect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.05 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Shadow:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Touch"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Fire:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.01 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Pea:visible")
@@ -95,16 +341,116 @@ tracks/4/keys = {
 
 [node name="Van_Door_Bullets" type="Node2D"]
 position = Vector2( -32, -52 )
-z_index = 8
+z_index = 17
+z_as_relative = false
 script = ExtResource( 1 )
 
-[node name="Pea" type="Sprite" parent="."]
+[node name="Pea_Fire" type="Node2D" parent="."]
+
+[node name="Fire1" type="Node2D" parent="Pea_Fire"]
+visible = false
+position = Vector2( -22, 0 )
+
+[node name="1" type="Sprite" parent="Pea_Fire/Fire1"]
+position = Vector2( 4, 0 )
+texture = ExtResource( 13 )
+
+[node name="2" type="Sprite" parent="Pea_Fire/Fire1"]
+visible = false
+position = Vector2( 4, 0 )
+texture = ExtResource( 9 )
+
+[node name="3" type="Sprite" parent="Pea_Fire/Fire1"]
+visible = false
+position = Vector2( 4, 0 )
+texture = ExtResource( 12 )
+
+[node name="Fire_Run" type="AnimationPlayer" parent="Pea_Fire/Fire1"]
+anims/Run = SubResource( 4 )
+
+[node name="Fire2" type="Node2D" parent="Pea_Fire"]
+visible = false
+position = Vector2( -22, 0 )
+
+[node name="1" type="Sprite" parent="Pea_Fire/Fire2"]
+position = Vector2( 4, 0 )
+texture = ExtResource( 19 )
+
+[node name="2" type="Sprite" parent="Pea_Fire/Fire2"]
+visible = false
+position = Vector2( 4, 0 )
+texture = ExtResource( 20 )
+
+[node name="3" type="Sprite" parent="Pea_Fire/Fire2"]
+visible = false
+position = Vector2( 4, 0 )
+texture = ExtResource( 15 )
+
+[node name="Fire_Run" type="AnimationPlayer" parent="Pea_Fire/Fire2"]
+anims/Run = SubResource( 5 )
+
+[node name="Fire3" type="Node2D" parent="Pea_Fire"]
+visible = false
+position = Vector2( -22, 0 )
+
+[node name="1" type="Sprite" parent="Pea_Fire/Fire3"]
+position = Vector2( 4, 0 )
+texture = ExtResource( 21 )
+
+[node name="2" type="Sprite" parent="Pea_Fire/Fire3"]
+visible = false
+position = Vector2( 4, 0 )
+texture = ExtResource( 22 )
+
+[node name="3" type="Sprite" parent="Pea_Fire/Fire3"]
+visible = false
+position = Vector2( 4, 0 )
+texture = ExtResource( 18 )
+
+[node name="Fire_Run" type="AnimationPlayer" parent="Pea_Fire/Fire3"]
+anims/Run = SubResource( 6 )
+
+[node name="Pea" type="Node2D" parent="."]
+
+[node name="Pea1" type="Sprite" parent="Pea"]
 texture = ExtResource( 2 )
 
-[node name="Effect" type="Sprite" parent="."]
+[node name="Pea2" type="Sprite" parent="Pea"]
 visible = false
+texture = ExtResource( 11 )
+
+[node name="Pea3" type="Sprite" parent="Pea"]
+visible = false
+texture = ExtResource( 8 )
+
+[node name="Pea4" type="Sprite" parent="Pea"]
+visible = false
+texture = ExtResource( 10 )
+
+[node name="Effect" type="Node2D" parent="."]
+visible = false
+
+[node name="Effect1" type="Sprite" parent="Effect"]
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 7 )
+
+[node name="1" type="Node2D" parent="Effect"]
+visible = false
+scale = Vector2( 0.3, 0.3 )
+
+[node name="1" type="Sprite" parent="Effect/1"]
+texture = ExtResource( 17 )
+
+[node name="2" type="Sprite" parent="Effect/1"]
+visible = false
+texture = ExtResource( 16 )
+
+[node name="3" type="Sprite" parent="Effect/1"]
+visible = false
+texture = ExtResource( 14 )
+
+[node name="turn_fire" type="AnimationPlayer" parent="Effect/1"]
+anims/fire = SubResource( 7 )
 
 [node name="Shadow" type="Sprite" parent="."]
 position = Vector2( 0, 50 )
@@ -126,5 +472,12 @@ anims/Touch = SubResource( 3 )
 [node name="Touch" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 script = ExtResource( 5 )
+
+[node name="Fire" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 23 )
+script = ExtResource( 5 )
+
+[node name="Fire_Animation" type="AnimationPlayer" parent="."]
+anims/Touch = SubResource( 8 )
 
 [connection signal="area_entered" from="Area2D" to="." method="Touch_Zombies"]

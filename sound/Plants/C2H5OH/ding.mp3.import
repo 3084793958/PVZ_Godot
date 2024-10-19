@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ding.mp3-10d010f6e27b40d96d7e174aeb2d506c.mp3str"
+
+[deps]
+
+source_file="res://sound/Plants/C2H5OH/ding.mp3"
+dest_files=[ "res://.import/ding.mp3-10d010f6e27b40d96d7e174aeb2d506c.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

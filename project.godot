@@ -17,6 +17,10 @@ boot_splash/image="res://image/Start/logo.png"
 config/icon="res://icon/icon.png"
 config/windows_native_icon="res://icon/icon.ico"
 
+[audio]
+
+default_bus_layout=""
+
 [autoload]
 
 Change_Scene="*res://scene/Change_Scene/Change_Scene.tscn"

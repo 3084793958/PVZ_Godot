@@ -52,7 +52,7 @@ margin_bottom = 600.0
 script = ExtResource( 7 )
 
 [node name="Pause" type="Node2D" parent="."]
-z_index = 10
+z_index = 20
 
 [node name="Background" type="TextureRect" parent="Pause"]
 anchor_left = 0.5
