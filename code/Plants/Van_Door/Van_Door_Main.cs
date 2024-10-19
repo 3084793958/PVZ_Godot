@@ -37,6 +37,19 @@ public class Van_Door_Main : Normal_Plants
                 }
             }
         }
+        if (has_planted && area2D.Area2D_type == "Bug")
+        {
+            Bug_Area = (Bug_Area2D)area2D;
+            if (Bug_Area != null)
+            {
+                await ToSignal(GetTree(), "idle_frame");//保险
+                if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
+                {
+                    this.Modulate = hover_color;
+                    on_Bug = true;
+                }
+            }
+        }
         if (area2D.Area2D_type == "Zombies")
         {
             Zombies_Area_2D = (Normal_Zombies_Area)area2D;
@@ -55,6 +68,15 @@ public class Van_Door_Main : Normal_Plants
                 this.Modulate = normal_color;
                 Shovel_Area = null;
                 on_Shovel = false;
+            }
+        }
+        if (has_planted && area2D.Area2D_type == "Bug")
+        {
+            if (Bug_Area != null)
+            {
+                this.Modulate = normal_color;
+                Bug_Area = null;
+                on_Bug = false;
             }
         }
         if (area2D.Area2D_type == "Zombies")
@@ -152,6 +174,19 @@ public class Van_Door_Main : Normal_Plants
                     }
                 }
             }
+            if (on_Bug && Input.IsActionPressed("Left_Mouse"))
+            {
+                if (!GetNode<AnimationPlayer>("Bug_player").IsPlaying())
+                {
+                    if (Bug_Area != null)
+                    {
+                        if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area") && Bug_Area.playing)
+                        {
+                            GetNode<AnimationPlayer>("Bug_player").Play("Bug");
+                        }
+                    }
+                }
+            }
             if (Zombies_Area_2D_List.Count != 0)
             {
                 for (int i = 0; i < Zombies_Area_2D_List.Count; i++)
@@ -210,6 +245,14 @@ public class Van_Door_Main : Normal_Plants
             {
                 GetNode<AnimationPlayer>("Main/Shoot").Play("Shoot");
             }
+        }
+    }
+    public async void Bug_Doing()
+    { 
+        for (int i=0;i<25;i++)
+        {
+            await ToSignal(GetTree(), "idle_frame");
+            Clone_Bullets();
         }
     }
     public void Clone_Bullets()

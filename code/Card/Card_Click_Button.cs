@@ -80,11 +80,13 @@ public class Card_Click_Button : Button
                 var Info = GetNode<Node2D>("../Info");
                 Info.Hide();
                 Vector2 Delta_Vector2 = (Card_Node.RectGlobalPosition - this.GetNode<Control>("../..").RectGlobalPosition) / 5;
+                GetNode<Node2D>("..").ZIndex += 1;
                 for (int i = 0; i < 5; i++)
                 {
                     await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
                     this.GetNode<Control>("../..").RectGlobalPosition += Delta_Vector2;
                 }
+                GetNode<Node2D>("..").ZIndex -= 1;
                 this.GetParent().GetParent().GetParent().RemoveChild(this.GetParent().GetParent());
                 Card_Node.AddChild(this.GetParent().GetParent());
                 this.GetNode<Control>("../..").RectPosition = Vector2.Zero;
@@ -106,11 +108,13 @@ public class Card_Click_Button : Button
                     {
                         Delta_Vector2 = (Card_Node.RectGlobalPosition - Seed_Bank.GetChild<Control>(Seed_Bank.GetChildCount() - 1).RectGlobalPosition - new Vector2(3 + Card_Node.RectSize.x, 0)) / 5;
                     }
+                    GetNode<Node2D>("..").ZIndex += 1;
                     for (int i = 0; i < 5; i++)
                     {
                         await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
                         this.GetNode<Control>("../..").RectGlobalPosition -= Delta_Vector2;
                     }
+                    GetNode<Node2D>("..").ZIndex -= 1;
                     Card_Node.RemoveChild(this.GetParent().GetParent());
                     Seed_Bank.AddChild(this.GetParent().GetParent());
                     Info.Hide();

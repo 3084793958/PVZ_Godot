@@ -62,7 +62,7 @@ static public class Public_Main
     GD.Load<Texture>("res://image/Plants/C2H5OH/C2H5OH.png"),
     5f,
     30f,
-    new Tuple<int,string>(50,null)
+    new Tuple<int,string>(50,"res://scene/Plants/C2H5OH/C2H5OH.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     6,

@@ -3,6 +3,7 @@ using System;
 
 public class Van_Door_Bullets_Main : Normal_Plants_Bullets
 {
+    public int Bullets_Type = 1;
     public override void _Ready()
     {
         GetNode<Bullets_Area>("Area2D").hurt = 20;
@@ -39,7 +40,52 @@ public class Van_Door_Bullets_Main : Normal_Plants_Bullets
                         GetNode<Bullets_Area>("Area2D").Choose_Zombies_Area = Top_Zombies_Area;
                     }
                 }
-                GetNode<AnimationPlayer>("Touch_Animation").Play("Touch");
+                if (Bullets_Type == 1)
+                {
+                    GetNode<AnimationPlayer>("Touch_Animation").Play("Touch");
+                }
+                else
+                {
+                    GetNode<AnimationPlayer>("Fire_Animation").Play("Touch");
+                }
+            }
+        }
+        if (area_2D.Area2D_type == "Bullets_Fire")
+        {
+            var Bullets_Fire_Area = (C2H5OH_Bullets_Fire_Area)area_2D;
+            if (Bullets_Fire_Area.can_work && Bullets_Type < 4)
+            {
+                Bullets_Type++;
+                GetNode<Bullets_Area>("Area2D").hurt = (int)(GetNode<Bullets_Area>("Area2D").hurt * Bullets_Fire_Area.MUL_number);
+                if (Bullets_Type == 2)
+                {
+                    GetNode<Bullets_Area>("Area2D").hurt_type = 2;
+                    GetNode<Node2D>("Pea_Fire/Fire1").Show();
+                    GetNode<AnimationPlayer>("Pea_Fire/Fire1/Fire_Run").Play("Run");
+                    GetNode<Node2D>("Pea/Pea1").Hide();
+                    GetNode<Node2D>("Pea/Pea2").Show();
+                    GetNode<Node2D>("Effect/Effect1").Hide();
+                    GetNode<Node2D>("Effect/1").Show();
+                    GetNode<AnimationPlayer>("Effect/1/turn_fire").Play("fire");
+                }
+                else if (Bullets_Type == 3)
+                {
+                    GetNode<Node2D>("Pea_Fire/Fire1").Hide();
+                    GetNode<Node2D>("Pea_Fire/Fire2").Show();
+                    GetNode<AnimationPlayer>("Pea_Fire/Fire1/Fire_Run").Stop();
+                    GetNode<AnimationPlayer>("Pea_Fire/Fire2/Fire_Run").Play("Run");
+                    GetNode<Node2D>("Pea/Pea2").Hide();
+                    GetNode<Node2D>("Pea/Pea3").Show();
+                }
+                else if (Bullets_Type == 4)
+                {
+                    GetNode<Node2D>("Pea_Fire/Fire2").Hide();
+                    GetNode<Node2D>("Pea_Fire/Fire3").Show();
+                    GetNode<AnimationPlayer>("Pea_Fire/Fire2/Fire_Run").Stop();
+                    GetNode<AnimationPlayer>("Pea_Fire/Fire3/Fire_Run").Play("Run");
+                    GetNode<Node2D>("Pea/Pea3").Hide();
+                    GetNode<Node2D>("Pea/Pea4").Show();
+                }
             }
         }
     }

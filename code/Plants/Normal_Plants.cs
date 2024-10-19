@@ -13,7 +13,9 @@ public class Normal_Plants : Node2D
     protected bool on_lock_grid = false;
     protected bool has_planted = false;
     protected bool on_Shovel = false;
+    protected bool on_Bug = false;
     protected Shovel_Area2D Shovel_Area = null;
+    protected Bug_Area2D Bug_Area = null;
     public Card_Click_Button card_parent_Button = null;
     protected Normal_Zombies_Area Zombies_Area_2D = null;
     protected List<Normal_Zombies_Area> Zombies_Area_2D_List = new List<Normal_Zombies_Area>();

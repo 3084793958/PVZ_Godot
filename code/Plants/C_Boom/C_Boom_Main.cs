@@ -44,6 +44,19 @@ public class C_Boom_Main : Normal_Plants
                 }
             }
         }
+        if (has_planted && area2D.Area2D_type == "Bug")
+        {
+            Bug_Area = (Bug_Area2D)area2D;
+            if (Bug_Area != null)
+            {
+                await ToSignal(GetTree(), "idle_frame");//保险
+                if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
+                {
+                    this.Modulate = hover_color;
+                    on_Bug = true;
+                }
+            }
+        }
         if (area2D.Area2D_type == "Zombies")
         {
             Zombies_Area_2D = (Normal_Zombies_Area)area2D;
@@ -62,6 +75,15 @@ public class C_Boom_Main : Normal_Plants
                 this.Modulate = normal_color;
                 Shovel_Area = null;
                 on_Shovel = false;
+            }
+        }
+        if (has_planted && area2D.Area2D_type == "Bug")
+        {
+            if (Bug_Area != null)
+            {
+                this.Modulate = normal_color;
+                Bug_Area = null;
+                on_Bug = false;
             }
         }
         if (area2D.Area2D_type == "Zombies")
@@ -154,6 +176,19 @@ public class C_Boom_Main : Normal_Plants
                         {
                             GetNode<AnimationPlayer>("Free_player").Play("Free");
                             dock_area_2d.Normal_Plant_List.Remove(this);
+                        }
+                    }
+                }
+            }
+            if (on_Bug && Input.IsActionPressed("Left_Mouse"))
+            {
+                if (!GetNode<AnimationPlayer>("Bug_player").IsPlaying())
+                {
+                    if (Bug_Area != null)
+                    {
+                        if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area") && Bug_Area.playing)
+                        {
+                            GetNode<AnimationPlayer>("Bug_player").Play("Bug");
                         }
                     }
                 }

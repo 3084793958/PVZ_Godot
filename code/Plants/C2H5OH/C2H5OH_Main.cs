@@ -1,17 +1,16 @@
 using Godot;
 using System;
 
-public class SunFlower_Main : Normal_Plants
+public class C2H5OH_Main : Normal_Plants
 {
+    public bool is_fire = true;
     public override void _Ready()
     {
-        GetNode<Timer>("Timer").Stop();
-        GetNode<AudioStreamPlayer>("Sun").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Big_Chmop").Stream.Set("loop", false);
-        health = 300;
+        health = 100;
     }
     public void Dock_Enter(Control_Area_2D area2D)
     {
@@ -117,7 +116,7 @@ public class SunFlower_Main : Normal_Plants
                 {
                     card_parent_Button.Set_ColorRect_2(false);
                     Normal_Plants.Choosing = false;
-                    if (on_lock_grid && ((In_Game_Main.Sun_Number>=card_parent_Button.sun&&dock_area_2d.Normal_Plant_List.Count == 0 && dock_area_2d.type == 1) || Public_Main.debuging))
+                    if (on_lock_grid && ((In_Game_Main.Sun_Number >= card_parent_Button.sun && dock_area_2d.Normal_Plant_List.Count == 0 && dock_area_2d.type == 1) || Public_Main.debuging))
                     {
                         has_planted = true;
                         dock_area_2d.Normal_Plant_List.Add(this);
@@ -137,14 +136,13 @@ public class SunFlower_Main : Normal_Plants
                                 GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Play();
                             }
                         }
+                        GetNode<C2H5OH_Bullets_Fire_Area>("Main/Bullets_Fire_Area").Monitorable = true;
+                        GetNode<C2H5OH_Bullets_Fire_Area>("Main/Bullets_Fire_Area").can_work = true;
                         GetNode<Control>("Dock").Hide();
                         GetNode<Control>("Show").Hide();
                         GetNode<Control>("Main").Show();
-                        GetNode<AnimationPlayer>("Main/Player3").Play("eyes");
-                        GetNode<AnimationPlayer>("Main/Player1").Play("Mouth");
-                        GetNode<AnimationPlayer>("Main/Player2").Play("Normal");
+                        GetNode<AnimationPlayer>("Main/Player1").Play("Fire");
                         GetNode<Normal_Plants_Area>("Main/Shovel_Area").has_planted = this.has_planted;
-                        GetNode<Timer>("Timer").WaitTime = 15f;
                         GetNode<Timer>("Timer").Start();
                     }
                     else
@@ -164,7 +162,7 @@ public class SunFlower_Main : Normal_Plants
         else
         {
             if (on_Shovel && Input.IsActionPressed("Left_Mouse"))
-            { 
+            {
                 if (!GetNode<AnimationPlayer>("Free_player").IsPlaying())
                 {
                     if (Shovel_Area != null)
@@ -192,7 +190,7 @@ public class SunFlower_Main : Normal_Plants
             }
             if (Zombies_Area_2D_List.Count != 0)
             {
-                for (int i=0;i<Zombies_Area_2D_List.Count;i++)
+                for (int i = 0; i < Zombies_Area_2D_List.Count; i++)
                 {
                     if (Zombies_Area_2D_List[i].Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
                     {
@@ -208,48 +206,46 @@ public class SunFlower_Main : Normal_Plants
             }
             if (health <= 0)
             {
-                if (!GetNode<AnimationPlayer>("Died").IsPlaying())
+                if (is_fire)
                 {
-                    GetNode<AnimationPlayer>("Died").Play("Died");
-                    dock_area_2d.Normal_Plant_List.Remove(this);
+                    if (!GetNode<AnimationPlayer>("Died2").IsPlaying())
+                    {
+                        GetNode<AnimationPlayer>("Died2").Play("Died");
+                        dock_area_2d.Normal_Plant_List.Remove(this);
+                    }
                 }
+                else
+                {
+                    if (!GetNode<AnimationPlayer>("Died1").IsPlaying())
+                    {
+                        GetNode<AnimationPlayer>("Died1").Play("Died");
+                        dock_area_2d.Normal_Plant_List.Remove(this);
+                    }
+                }
+
             }
+        }
+    }
+    public void C2H5OH_Up()
+    {
+        is_fire = false;
+        GetNode<Node2D>("Main/Fire").Hide();
+        GetNode<AnimationPlayer>("Main/Player1").Stop();
+        GetNode<C2H5OH_Bullets_Fire_Area>("Main/Bullets_Fire_Area").can_work = false;
+    }
+    public void Send_To_Area()
+    { 
+        if (is_fire)
+        {
+            GetNode<C2H5OH_Died_Fire_Area>("Main/Died_Fire_Area").died = true;
         }
     }
     public void Bug_Doing()
     {
-        Sun_Flower_Up();
-        Sun_Flower_Up();
-        Sun_Flower_Up();
-    }
-    public void Sun_Flower_Up()
-    { 
-        if (has_planted)
-        {
-            GetNode<AnimationPlayer>("Make_Sun").Play("Make_Sun");
-            GetNode<Timer>("Timer").WaitTime = (float)GD.RandRange(5d,30d);
-            var scene = GD.Load<PackedScene>("res://scene/Plants/SunFlower/Sun/Sun.tscn");
-            GetNode<AudioStreamPlayer>("Sun").Play();
-            var sun_child = (Sun_Main)scene.Instance();
-            sun_child.is_from_plant = true;
-            float random_number = GD.Randf();
-            if (random_number < 0.3f)
-            {
-                sun_child.sun_value = 50;
-                sun_child.size = 2.0f;
-            }
-            else if (random_number > 0.8f)
-            {
-                sun_child.sun_value = 75;
-                sun_child.size = 3.0f;
-            }
-            else
-            {
-                sun_child.sun_value = 25;
-                sun_child.size = 1.0f;
-            }
-            sun_child.GlobalPosition = this.GlobalPosition;
-            GetNode<Control>("/root/In_Game/Object").AddChild(sun_child);
-        }
+        GetNode<Timer>("Timer").Start();
+        is_fire = true;
+        GetNode<Node2D>("Main/Fire").Show();
+        GetNode<AnimationPlayer>("Main/Player1").Play("Fire");
+        GetNode<C2H5OH_Bullets_Fire_Area>("Main/Bullets_Fire_Area").can_work = true;
     }
 }
