@@ -59,7 +59,7 @@ tracks/1/path = NodePath("..:is_lock")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
-tracks/1/enabled = true
+tracks/1/enabled = false
 tracks/1/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -69,7 +69,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "Hide"
-length = 1.1
+length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("..:modulate")
 tracks/0/interp = 1
@@ -77,7 +77,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1.05 ),
+"times": PoolRealArray( 0, 1.9 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -89,7 +89,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1.1 ),
+"times": PoolRealArray( 2 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -165,12 +165,15 @@ anims/SunFlower = SubResource( 2 )
 anims/Hide = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 7.0
 one_shot = true
-autostart = true
 
 [node name="Sun_player" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 
+[node name="Run_Timer" type="Timer" parent="."]
+wait_time = 0.05
+
 [connection signal="pressed" from="Sun/Click_Button" to="." method="Click_Button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="Hide_TimerOut"]
+[connection signal="timeout" from="Run_Timer" to="." method="Run_Timer_Timeout"]

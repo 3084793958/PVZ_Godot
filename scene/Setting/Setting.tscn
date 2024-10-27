@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://env/Name_Label_theme.tres" type="Theme" id=1]
 [ext_resource path="res://font/zh.otf" type="DynamicFontData" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=11]
 [ext_resource path="res://code/Setting/Setting_bgm_HSlider.cs" type="Script" id=12]
 [ext_resource path="res://code/Setting/Setting_sound_HSlider.cs" type="Script" id=13]
+[ext_resource path="res://code/Setting/Setting_Button_Android.cs" type="Script" id=14]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -171,10 +172,10 @@ text = "重新开始"
 
 [node name="Debug" type="Button" parent="Setting/Menu"]
 pause_mode = 2
-margin_left = 94.0
-margin_top = 197.5
-margin_right = 323.0
-margin_bottom = 242.5
+margin_left = 218.0
+margin_top = 198.0
+margin_right = 326.0
+margin_bottom = 243.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
 custom_fonts/font = SubResource( 6 )
@@ -185,6 +186,23 @@ custom_styles/normal = SubResource( 5 )
 toggle_mode = true
 text = "Debug"
 script = ExtResource( 9 )
+
+[node name="Android" type="Button" parent="Setting/Menu"]
+pause_mode = 2
+margin_left = 97.0
+margin_top = 198.0
+margin_right = 213.0
+margin_bottom = 243.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+toggle_mode = true
+text = "无鼠标模式"
+script = ExtResource( 14 )
 
 [node name="button_Click" type="AudioStreamPlayer" parent="Setting"]
 stream = ExtResource( 8 )
