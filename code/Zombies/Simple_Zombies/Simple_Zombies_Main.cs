@@ -11,6 +11,10 @@ public class Simple_Zombies_Main : Normal_Zombies
     public int hurt_time = 0;
     public override void _Ready()
     {
+        this.AddChild(Android_Timer);
+        Android_Timer.WaitTime = 0.5f;
+        Android_Timer.Autostart = false;
+        Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
@@ -29,7 +33,7 @@ public class Simple_Zombies_Main : Normal_Zombies
         if (area2D.Area2D_type == "Plants")
         {
             var plant_area2D = (Normal_Plants_Area)area2D;
-            if (plant_area2D.plants_type == "Normal")
+            if (true/*plant_area2D.plants_type == "Normal"*/)
             {
                 if (has_planted)
                 {
@@ -54,13 +58,29 @@ public class Simple_Zombies_Main : Normal_Zombies
                                 }
                                 else
                                 {
-                                    if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
+                                    if (Top_Area_2D.plants_type==Plants_Area_2D_List[i].plants_type)
                                     {
-                                        Top_Area_2D = Plants_Area_2D_List[i];
+                                        if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
+                                        {
+                                            Top_Area_2D = Plants_Area_2D_List[i];
+                                        }
+                                        else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
+                                        {
+                                            if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
+                                            {
+                                                Top_Area_2D = Plants_Area_2D_List[i];
+                                            }
+                                        }
                                     }
-                                    else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
+                                    else
                                     {
-                                        if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
+                                        if (Top_Area_2D.plants_type == "Casing")
+                                        {
+                                            Top_Area_2D = Plants_Area_2D_List[i];
+                                        }
+                                        else if (Plants_Area_2D_List[i].plants_type == "Casing")
+                                        { }
+                                        else if (Top_Area_2D.plants_type == "Normal" && Plants_Area_2D_List[i].plants_type != "Casing")
                                         {
                                             Top_Area_2D = Plants_Area_2D_List[i];
                                         }
@@ -112,13 +132,17 @@ public class Simple_Zombies_Main : Normal_Zombies
         {
             C2H5OH_Fire_Area_2D_List.Add((C2H5OH_Died_Fire_Area)area2D);
         }
+        if (area2D.Area2D_type == "Mg_Shining")
+        {
+            Shining_Area_2D_List.Add((Mg_Shining_Area)area2D);
+        }
     }
     public async void Plants_Exited(Control_Area_2D area2D)
     {
         if (area2D.Area2D_type == "Plants")
         {
             var plant_area2D = (Normal_Plants_Area)area2D;
-            if (plant_area2D.plants_type == "Normal")
+            if (true/*plant_area2D.plants_type == "Normal"*/)
             {
                 has_touched = false;
                 Plants_Area_2D_List.Remove(plant_area2D);
@@ -156,13 +180,29 @@ public class Simple_Zombies_Main : Normal_Zombies
                                 }
                                 else
                                 {
-                                    if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
+                                    if (Top_Area_2D.plants_type == Plants_Area_2D_List[i].plants_type)
                                     {
-                                        Top_Area_2D = Plants_Area_2D_List[i];
+                                        if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
+                                        {
+                                            Top_Area_2D = Plants_Area_2D_List[i];
+                                        }
+                                        else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
+                                        {
+                                            if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
+                                            {
+                                                Top_Area_2D = Plants_Area_2D_List[i];
+                                            }
+                                        }
                                     }
-                                    else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
+                                    else
                                     {
-                                        if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
+                                        if (Top_Area_2D.plants_type == "Casing")
+                                        {
+                                            Top_Area_2D = Plants_Area_2D_List[i];
+                                        }
+                                        else if (Plants_Area_2D_List[i].plants_type == "Casing")
+                                        { }
+                                        else if (Top_Area_2D.plants_type == "Normal" && Plants_Area_2D_List[i].plants_type != "Casing")
                                         {
                                             Top_Area_2D = Plants_Area_2D_List[i];
                                         }
@@ -199,6 +239,10 @@ public class Simple_Zombies_Main : Normal_Zombies
                 this.Modulate = normal_color;
             }
         }
+        if (area2D.Area2D_type == "Mg_Shining")
+        {
+            Shining_Area_2D_List.Remove((Mg_Shining_Area)area2D);
+        }
     }
     public void Dock_Enter(Control_Area_2D area2D)
     {
@@ -211,6 +255,22 @@ public class Simple_Zombies_Main : Normal_Zombies
     }
     public override void _Process(float delta)
     {
+        if (Public_Main.for_Android && Input.IsActionJustReleased("Left_Mouse"))
+        {
+            if (Android_Timer.IsStopped())
+            {
+                Android_Timer.Start();
+            }
+            else
+            {
+                Is_Double_Click = true;
+                Android_Timer.Start();
+            }
+        }
+        if (Android_Timer.IsStopped() && Public_Main.for_Android && !Input.IsActionJustReleased("Left_Mouse"))
+        {
+            Is_Double_Click = false;
+        }
         if (!has_planted)
         {
             if (Normal_Plants.Choosing)
@@ -237,12 +297,13 @@ public class Simple_Zombies_Main : Normal_Zombies
                     card_parent_Button.Set_ColorRect_2(false);
                     this.QueueFree();
                 }
-                if (Input.IsActionPressed("Left_Mouse"))
+                if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
                 {
                     card_parent_Button.Set_ColorRect_2(false);
                     Normal_Plants.Choosing = false;
                     if ((In_Game_Main.Sun_Number >= card_parent_Button.sun || Public_Main.debuging) && on_lock_grid)
                     {
+                        Is_Double_Click = false;
                         has_planted = true;
                         GetNode<Normal_Zombies_Area>("Main/Zombies_Area").has_plant = true;
                         dock_control.Hide();
@@ -286,7 +347,7 @@ public class Simple_Zombies_Main : Normal_Zombies
         }
         else
         {
-            if (!eating && GetNode<AnimationPlayer>("Main/Walk").IsPlaying() && !On_Boom_Effect)
+            if (!eating && GetNode<AnimationPlayer>("Main/Walk").IsPlaying() && !On_Boom_Effect && !Is_Shining)
             {
                 this.Position += new Vector2(speed * speed_x, 0);
             }
@@ -311,13 +372,29 @@ public class Simple_Zombies_Main : Normal_Zombies
                         }
                         else
                         {
-                            if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
+                            if (Top_Area_2D.plants_type == Plants_Area_2D_List[i].plants_type)
                             {
-                                Top_Area_2D = Plants_Area_2D_List[i];
+                                if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
+                                {
+                                    Top_Area_2D = Plants_Area_2D_List[i];
+                                }
+                                else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
+                                {
+                                    if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
+                                    {
+                                        Top_Area_2D = Plants_Area_2D_List[i];
+                                    }
+                                }
                             }
-                            else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
+                            else
                             {
-                                if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
+                                if (Top_Area_2D.plants_type == "Casing")
+                                {
+                                    Top_Area_2D = Plants_Area_2D_List[i];
+                                }
+                                else if (Plants_Area_2D_List[i].plants_type == "Casing")
+                                { }
+                                else if (Top_Area_2D.plants_type == "Normal" && Plants_Area_2D_List[i].plants_type != "Casing")
                                 {
                                     Top_Area_2D = Plants_Area_2D_List[i];
                                 }
@@ -359,13 +436,29 @@ public class Simple_Zombies_Main : Normal_Zombies
                                 }
                                 else
                                 {
-                                    if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
+                                    if (Top_Area_2D.plants_type == Plants_Area_2D_List[i].plants_type)
                                     {
-                                        Top_Area_2D = Plants_Area_2D_List[i];
+                                        if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
+                                        {
+                                            Top_Area_2D = Plants_Area_2D_List[i];
+                                        }
+                                        else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
+                                        {
+                                            if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
+                                            {
+                                                Top_Area_2D = Plants_Area_2D_List[i];
+                                            }
+                                        }
                                     }
-                                    else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
+                                    else
                                     {
-                                        if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
+                                        if (Top_Area_2D.plants_type == "Casing")
+                                        {
+                                            Top_Area_2D = Plants_Area_2D_List[i];
+                                        }
+                                        else if (Plants_Area_2D_List[i].plants_type == "Casing")
+                                        { }
+                                        else if (Top_Area_2D.plants_type == "Normal" && Plants_Area_2D_List[i].plants_type != "Casing")
                                         {
                                             Top_Area_2D = Plants_Area_2D_List[i];
                                         }
@@ -450,6 +543,36 @@ public class Simple_Zombies_Main : Normal_Zombies
                         this.Modulate = normal_color;
                     }
                 }
+            }
+            if (Shining_Area_2D_List.Count != 0)
+            {
+                if (GetNode<Timer>("Main/Fire_Hurt").IsStopped())
+                {
+                    for (int i = 0; i < Shining_Area_2D_List.Count; i++)
+                    {
+                        if (Shining_Area_2D_List[i].start)
+                        {
+                            Is_Shining = true;
+                            health -= 5;
+                            if (!this.On_Boom_Effect)
+                            {
+                                this.Modulate = hurt_color;
+                            }
+                        }
+                    }
+                    GetNode<Timer>("Main/Fire_Hurt").Start();
+                }
+                else
+                {
+                    if (hurt_time <= 0 && !this.On_Boom_Effect)
+                    {
+                        this.Modulate = normal_color;
+                    }
+                }
+            }
+            else
+            {
+                Is_Shining = false;
             }
         }
     }

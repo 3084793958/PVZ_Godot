@@ -3,7 +3,7 @@ using System;
 
 public class Setting_bgm_HSlider : HSlider
 {
-    public override void _Ready()
+    public void Update_This()
     {
         this.Value = Public_Main.bgm_value;
     }

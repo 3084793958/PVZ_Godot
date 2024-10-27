@@ -5,7 +5,7 @@ public class Login_Debug : Button
 {
     public override void _Pressed()
     {
-        var Click = GetNode<AudioStreamPlayer>("/root/Setting/button_Click");
+        var Click = GetNode<AudioStreamPlayer>("/root/Setting/Setting/button_Click");
         Click.Play();
     }
     public override void _Process(float delta)

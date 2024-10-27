@@ -22,7 +22,7 @@ public class Button_PVZ : TextureButton
             music_player.Stop();
         }
         Public_Main.bgm_value = 0;
-        var Bgm_HSlider = GetNode<HSlider>("/root/Setting/Menu/BGM/HSlider");
+        var Bgm_HSlider = GetNode<HSlider>("/root/Setting/Setting/Menu/BGM/HSlider");
         Bgm_HSlider.Value = Public_Main.bgm_value;
     }
 }

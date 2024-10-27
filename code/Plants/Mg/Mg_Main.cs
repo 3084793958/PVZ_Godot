@@ -1,15 +1,17 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
-public class C2H5OH_Main : Normal_Plants
+public class Mg_Main : Normal_Plants
 {
-    public bool is_fire = true;
+    public List<C2H5OH_Bullets_Fire_Area> C2H5OH_Fire_Area_2D_List = new List<C2H5OH_Bullets_Fire_Area>();
     public override void _Ready()
     {
         this.AddChild(Android_Timer);
         Android_Timer.WaitTime = 0.3f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
+        GetNode<AudioStreamPlayer>("Burn").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
@@ -25,7 +27,7 @@ public class C2H5OH_Main : Normal_Plants
             dock_area_2d = area2D_Grid;
         }
     }
-    public async void Area_Entered(Control_Area_2D area2D)
+    public async void Shovel_Area_Entered(Control_Area_2D area2D)
     {
         if (has_planted && area2D.Area2D_type == "Shovel")
         {
@@ -53,16 +55,8 @@ public class C2H5OH_Main : Normal_Plants
                 }
             }
         }
-        if (area2D.Area2D_type == "Zombies")
-        {
-            Zombies_Area_2D = (Normal_Zombies_Area)area2D;
-            if (Zombies_Area_2D.can_hurt)
-            {
-                Zombies_Area_2D_List.Add(Zombies_Area_2D);
-            }
-        }
     }
-    public void Area_Exited(Control_Area_2D area2D)
+    public void Shovel_Area_Exited(Control_Area_2D area2D)
     {
         if (has_planted && area2D.Area2D_type == "Shovel")
         {
@@ -82,10 +76,32 @@ public class C2H5OH_Main : Normal_Plants
                 on_Bug = false;
             }
         }
+    }
+    public void Area_Entered(Control_Area_2D area2D)
+    {
+        if (area2D.Area2D_type == "Zombies")
+        {
+            Zombies_Area_2D = (Normal_Zombies_Area)area2D;
+            if (Zombies_Area_2D.can_hurt)
+            {
+                Zombies_Area_2D_List.Add(Zombies_Area_2D);
+            }
+        }
+        if (area2D.Area2D_type == "Bullets_Fire")
+        {
+            C2H5OH_Fire_Area_2D_List.Add((C2H5OH_Bullets_Fire_Area)area2D);
+        }
+    }
+    public void Area_Exited(Control_Area_2D area2D)
+    {
         if (area2D.Area2D_type == "Zombies")
         {
             Zombies_Area_2D_List.Remove(Zombies_Area_2D);
             Zombies_Area_2D = null;
+        }
+        if (area2D.Area2D_type == "Bullets_Fire")
+        {
+            C2H5OH_Fire_Area_2D_List.Remove((C2H5OH_Bullets_Fire_Area)area2D);
         }
     }
     public override void _Process(float delta)
@@ -132,15 +148,15 @@ public class C2H5OH_Main : Normal_Plants
                     card_parent_Button.Set_ColorRect_2(false);
                     this.QueueFree();
                 }
-                if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
+                if ((Input.IsActionPressed("Left_Mouse")&&!Public_Main.for_Android)||(Public_Main.for_Android&&Is_Double_Click))
                 {
                     card_parent_Button.Set_ColorRect_2(false);
                     Normal_Plants.Choosing = false;
-                    if (on_lock_grid && ((In_Game_Main.Sun_Number >= card_parent_Button.sun && dock_area_2d.Normal_Plant_List.Count == 0 && dock_area_2d.type == 1) || Public_Main.debuging))
+                    if (on_lock_grid && ((In_Game_Main.Sun_Number>=card_parent_Button.sun&&dock_area_2d.Top_Plant_List.Count == 0 && dock_area_2d.type == 1) || Public_Main.debuging))
                     {
                         Is_Double_Click = false;
                         has_planted = true;
-                        dock_area_2d.Normal_Plant_List.Add(this);
+                        dock_area_2d.Top_Plant_List.Add(this);
                         dock_control.Hide();
                         this.GlobalPosition = Area_Vector2;
                         In_Game_Main.Sun_Number -= card_parent_Button.sun;
@@ -157,14 +173,35 @@ public class C2H5OH_Main : Normal_Plants
                                 GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Play();
                             }
                         }
-                        GetNode<C2H5OH_Bullets_Fire_Area>("Main/Bullets_Fire_Area").Monitorable = true;
-                        GetNode<C2H5OH_Bullets_Fire_Area>("Main/Bullets_Fire_Area").can_work = true;
                         GetNode<Control>("Dock").Hide();
                         GetNode<Control>("Show").Hide();
                         GetNode<Control>("Main").Show();
-                        GetNode<AnimationPlayer>("Main/Player1").Play("Fire");
+                        if (C2H5OH_Fire_Area_2D_List.Count != 0)
+                        {
+                            bool has_fire = false;
+                            for (int i = 0; i < C2H5OH_Fire_Area_2D_List.Count; i++)
+                            {
+                                if (C2H5OH_Fire_Area_2D_List[i].can_work)
+                                {
+                                    has_fire = true;
+                                    break;
+                                }
+                            }
+                            if (has_fire)
+                            {
+                                GetNode<AnimationPlayer>("Main/Player2").Play("Player1");
+                            }
+                            else
+                            {
+                                GetNode<AnimationPlayer>("Main/Player1").Play("Player1");
+                            }
+                        }
+                        else
+                        {
+                            GetNode<AnimationPlayer>("Main/Player1").Play("Player1");
+                        }
                         GetNode<Normal_Plants_Area>("Main/Shovel_Area").has_planted = this.has_planted;
-                        GetNode<Timer>("Timer").Start();
+                        GetNode<Normal_Plants_Area>("Main/Touch_Area").has_planted = this.has_planted;
                     }
                     else
                     {
@@ -182,40 +219,30 @@ public class C2H5OH_Main : Normal_Plants
         }
         else
         {
-            if (on_Shovel && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
-            {
+            if (on_Shovel && Input.IsActionPressed("Left_Mouse"))
+            { 
                 if (!GetNode<AnimationPlayer>("Free_player").IsPlaying())
                 {
                     if (Shovel_Area != null)
                     {
-                        if (Shovel_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
+                        if (Shovel_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Touch_Area"))
                         {
                             Is_Double_Click = false;
                             GetNode<AnimationPlayer>("Free_player").Play("Free");
-                            dock_area_2d.Normal_Plant_List.Remove(this);
+                            dock_area_2d.Top_Plant_List.Remove(this);
                         }
                     }
                 }
             }
-            if (on_Bug && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
+            if (on_Bug && Input.IsActionPressed("Left_Mouse"))
             {
-                if (!GetNode<AnimationPlayer>("Bug_player").IsPlaying())
-                {
-                    if (Bug_Area != null)
-                    {
-                        if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area") && Bug_Area.playing)
-                        {
-                            Is_Double_Click = false;
-                            GetNode<AnimationPlayer>("Bug_player").Play("Bug");
-                        }
-                    }
-                }
+                //NO_WAY
             }
             if (Zombies_Area_2D_List.Count != 0)
             {
-                for (int i = 0; i < Zombies_Area_2D_List.Count; i++)
+                for (int i=0;i<Zombies_Area_2D_List.Count;i++)
                 {
-                    if (Zombies_Area_2D_List[i].Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
+                    if (Zombies_Area_2D_List[i].Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Touch_Area"))
                     {
                         if (Zombies_Area_2D_List[i].is_eating_show && !Zombies_Area_2D_List[i].has_lose_head)
                         {
@@ -229,46 +256,8 @@ public class C2H5OH_Main : Normal_Plants
             }
             if (health <= 0)
             {
-                if (is_fire)
-                {
-                    if (!GetNode<AnimationPlayer>("Died2").IsPlaying())
-                    {
-                        GetNode<AnimationPlayer>("Died2").Play("Died");
-                        dock_area_2d.Normal_Plant_List.Remove(this);
-                    }
-                }
-                else
-                {
-                    if (!GetNode<AnimationPlayer>("Died1").IsPlaying())
-                    {
-                        GetNode<AnimationPlayer>("Died1").Play("Died");
-                        dock_area_2d.Normal_Plant_List.Remove(this);
-                    }
-                }
-
+                dock_area_2d.Top_Plant_List.Remove(this);
             }
         }
-    }
-    public void C2H5OH_Up()
-    {
-        is_fire = false;
-        GetNode<Node2D>("Main/Fire").Hide();
-        GetNode<AnimationPlayer>("Main/Player1").Stop();
-        GetNode<C2H5OH_Bullets_Fire_Area>("Main/Bullets_Fire_Area").can_work = false;
-    }
-    public void Send_To_Area()
-    { 
-        if (is_fire)
-        {
-            GetNode<C2H5OH_Died_Fire_Area>("Main/Died_Fire_Area").died = true;
-        }
-    }
-    public void Bug_Doing()
-    {
-        GetNode<Timer>("Timer").Start();
-        is_fire = true;
-        GetNode<Node2D>("Main/Fire").Show();
-        GetNode<AnimationPlayer>("Main/Player1").Play("Fire");
-        GetNode<C2H5OH_Bullets_Fire_Area>("Main/Bullets_Fire_Area").can_work = true;
     }
 }

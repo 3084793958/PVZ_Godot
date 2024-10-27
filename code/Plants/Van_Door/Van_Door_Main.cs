@@ -6,6 +6,10 @@ public class Van_Door_Main : Normal_Plants
     [Export] public string Bullets_Path = null;
     public override void _Ready()
     {
+        this.AddChild(Android_Timer);
+        Android_Timer.WaitTime = 0.3f;
+        Android_Timer.Autostart = false;
+        Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Main/Throw").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
@@ -87,6 +91,22 @@ public class Van_Door_Main : Normal_Plants
     }
     public override void _Process(float delta)
     {
+        if (Public_Main.for_Android && Input.IsActionJustReleased("Left_Mouse"))
+        {
+            if (Android_Timer.IsStopped())
+            {
+                Android_Timer.Start();
+            }
+            else
+            {
+                Is_Double_Click = true;
+                Android_Timer.Start();
+            }
+        }
+        if (Android_Timer.IsStopped() && Public_Main.for_Android && !Input.IsActionJustReleased("Left_Mouse"))
+        {
+            Is_Double_Click = false;
+        }
         if (!has_planted)
         {
             if (Normal_Plants.Choosing)
@@ -113,12 +133,13 @@ public class Van_Door_Main : Normal_Plants
                     card_parent_Button.Set_ColorRect_2(false);
                     this.QueueFree();
                 }
-                if (Input.IsActionPressed("Left_Mouse"))
+                if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
                 {
                     card_parent_Button.Set_ColorRect_2(false);
                     Normal_Plants.Choosing = false;
                     if (on_lock_grid && ((In_Game_Main.Sun_Number >= card_parent_Button.sun && dock_area_2d.Normal_Plant_List.Count == 0 && dock_area_2d.type == 1) || Public_Main.debuging))
                     {
+                        Is_Double_Click = false;
                         has_planted = true;
                         dock_area_2d.Normal_Plant_List.Add(this);
                         dock_control.Hide();
@@ -160,7 +181,7 @@ public class Van_Door_Main : Normal_Plants
         }
         else
         {
-            if (on_Shovel && Input.IsActionPressed("Left_Mouse"))
+            if (on_Shovel && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
             { 
                 if (!GetNode<AnimationPlayer>("Free_player").IsPlaying())
                 {
@@ -168,13 +189,14 @@ public class Van_Door_Main : Normal_Plants
                     {
                         if (Shovel_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
                         {
+                            Is_Double_Click = false;
                             GetNode<AnimationPlayer>("Free_player").Play("Free");
                             dock_area_2d.Normal_Plant_List.Remove(this);
                         }
                     }
                 }
             }
-            if (on_Bug && Input.IsActionPressed("Left_Mouse"))
+            if (on_Bug && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
             {
                 if (!GetNode<AnimationPlayer>("Bug_player").IsPlaying())
                 {
@@ -182,6 +204,7 @@ public class Van_Door_Main : Normal_Plants
                     {
                         if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area") && Bug_Area.playing)
                         {
+                            Is_Double_Click = false;
                             GetNode<AnimationPlayer>("Bug_player").Play("Bug");
                         }
                     }

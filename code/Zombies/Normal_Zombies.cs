@@ -4,11 +4,17 @@ using System.Collections.Generic;
 
 public class Normal_Zombies : Node2D
 {
+    //for Android
+    protected Timer Android_Timer = new Timer();
+    protected bool Is_Double_Click = false;
+    //
     [Export] protected Color hurt_color;
     [Export] protected Color normal_color;
     public bool player_put = false;
     protected bool has_planted = false;
     public bool On_Boom_Effect = false;
+    public bool Is_Shining = false;
+    public List<Mg_Shining_Area> Shining_Area_2D_List = new List<Mg_Shining_Area>();
     protected Vector2 Area_Vector2 = new Vector2(-1000, -1000);
     protected Background_Grid_Main dock_area_2d = null;
     protected bool on_lock_grid = false;

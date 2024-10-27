@@ -5,6 +5,9 @@ using System.Collections.Generic;
 public class Normal_Plants : Node2D
 {
     static public bool Choosing = false;
+    //for Android
+    protected Timer Android_Timer = new Timer();
+    protected bool Is_Double_Click = false;
     //
     [Export] protected Color hover_color;
     [Export] protected Color normal_color;
@@ -22,5 +25,5 @@ public class Normal_Plants : Node2D
     protected Normal_Zombies_Area Bullets_Zombies_Area_2D = null;
     protected List<Normal_Zombies_Area> Bullets_Zombies_Area_2D_List = new List<Normal_Zombies_Area>();
     //
-    public int health = 300;
+    [Export] public int health = 300;
 }

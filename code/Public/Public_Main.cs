@@ -11,12 +11,13 @@ static public class Public_Main
     static public int bgm_value = 100, sound_value = 100;
     static public bool Starting = true;
     static public int allow_card_number=13;
+    static public bool for_Android = false;//无鼠标模式,双击
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int,string>>> Plant_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
     {
     //ID,Name,Info,More_Info,Texture(有搞头,可能变成List<Texture>),First_Time(Normal),Wait_Time(Normal),Sun(Normal),path
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     1,
-    "godot",
+    "godot3.5",
     "开源的力量!",
     "godot3.5.stable.mono,你值得拥有!",
     GD.Load<Texture>("res://image/Plants/godot/godot.png"),
@@ -77,12 +78,12 @@ static public class Public_Main
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     7,
     "Mg",
-    "燃烧吧!",
+    "燃烧吧!\n在点燃的酒精灯上使用,放出刺眼的光\n将僵尸速度降为0,造成40点伤害",
     "也不一定要配合酒精灯使用",
     GD.Load<Texture>("res://image/Plants/Mg/Mg.png"),
     10f,
     10f,
-    new Tuple<int,string>(25,null)
+    new Tuple<int,string>(25,"res://scene/Plants/Mg/Mg.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>

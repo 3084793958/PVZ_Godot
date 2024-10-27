@@ -4,12 +4,20 @@ using System.Collections.Generic;
 
 public class Bug_Main : Node2D
 {
+    //for Android
+    protected Timer Android_Timer = new Timer();
+    protected bool Is_Double_Click = false;
+    //
     public Normal_Plants_Area Top_Area_2D = null;
     public List<Normal_Plants_Area> Plants_Area_2D_List = new List<Normal_Plants_Area>();
     //public Control_Area_2D plants_Area_2d=null;
     private bool playing = false;
     public override void _Ready()
     {
+        this.AddChild(Android_Timer);
+        Android_Timer.WaitTime = 0.3f;
+        Android_Timer.Autostart = false;
+        Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Sound/Press").Stream.Set("loop", false);
     }
     public void Area2D_Entered(Control_Area_2D area2D)
@@ -87,8 +95,21 @@ public class Bug_Main : Node2D
                 this.QueueFree();
                 GetNode<TextureRect>("/root/In_Game/Main/Card/BugBank/Bug").Show();
             }
-            if (Input.IsActionPressed("Left_Mouse"))
+            if (Public_Main.for_Android && Input.IsActionJustReleased("Left_Mouse"))
             {
+                if (Android_Timer.IsStopped())
+                {
+                    Android_Timer.Start();
+                }
+                else
+                {
+                    Is_Double_Click = true;
+                    Android_Timer.Stop();
+                }
+            }
+            if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
+            {
+                Is_Double_Click = false;
                 if (Plants_Area_2D_List.Count == 0)
                 {
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
