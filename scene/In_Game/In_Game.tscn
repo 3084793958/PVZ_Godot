@@ -1,0 +1,1081 @@
+[gd_scene load_steps=61 format=2]
+
+[ext_resource path="res://image/background/background1.jpg" type="Texture" id=1]
+[ext_resource path="res://image/background/background3.png" type="Texture" id=2]
+[ext_resource path="res://image/background/background2.jpg" type="Texture" id=3]
+[ext_resource path="res://image/background/pool_night.jpg" type="Texture" id=4]
+[ext_resource path="res://image/background/background5.jpg" type="Texture" id=5]
+[ext_resource path="res://image/background/background4.jpg" type="Texture" id=6]
+[ext_resource path="res://image/background/background6.jpg" type="Texture" id=7]
+[ext_resource path="res://code/In_Game/Water.shader" type="Shader" id=8]
+[ext_resource path="res://code/In_Game/In_Game_Main.cs" type="Script" id=9]
+[ext_resource path="res://sound/button/click.ogg" type="AudioStream" id=10]
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=11]
+[ext_resource path="res://sound/bgm/Start.mp3" type="AudioStream" id=12]
+[ext_resource path="res://code/Public/Set_bgm.cs" type="Script" id=13]
+[ext_resource path="res://image/background/SeedBank.png" type="Texture" id=14]
+[ext_resource path="res://font/zh.otf" type="DynamicFontData" id=15]
+[ext_resource path="res://image/background/SunBank.png" type="Texture" id=16]
+[ext_resource path="res://image/background/button.png" type="Texture" id=17]
+[ext_resource path="res://image/background/button_Hover.png" type="Texture" id=18]
+[ext_resource path="res://image/background/ShovelBank.png" type="Texture" id=19]
+[ext_resource path="res://image/background/bug_spray.png" type="Texture" id=20]
+[ext_resource path="res://image/background/Shovel.png" type="Texture" id=21]
+[ext_resource path="res://image/background/SeedChooser_Background.png" type="Texture" id=22]
+[ext_resource path="res://code/In_Game/In_Game_Menu.cs" type="Script" id=23]
+[ext_resource path="res://image/background/SeedChooser_Button.png" type="Texture" id=24]
+[ext_resource path="res://image/Setting/doge.png" type="Texture" id=25]
+[ext_resource path="res://code/In_Game/In_Game_Choose_Card_OK.cs" type="Script" id=26]
+[ext_resource path="res://sound/bgm/Grasswalk.mp3" type="AudioStream" id=27]
+[ext_resource path="res://sound/bgm/WateryGraves.mp3" type="AudioStream" id=28]
+[ext_resource path="res://sound/button/readysetplant.ogg" type="AudioStream" id=29]
+[ext_resource path="res://scene/Background_Grid/Background_Grid.tscn" type="PackedScene" id=30]
+[ext_resource path="res://sound/button/hover.ogg" type="AudioStream" id=31]
+[ext_resource path="res://code/In_Game/In_Game_Shovel.cs" type="Script" id=32]
+[ext_resource path="res://sound/Plants/Shovel/shovel.ogg" type="AudioStream" id=33]
+[ext_resource path="res://sound/button/pause.ogg" type="AudioStream" id=34]
+[ext_resource path="res://image/background/Bug_Sun.png" type="Texture" id=35]
+[ext_resource path="res://code/In_Game/In_Game_Bug.cs" type="Script" id=36]
+
+[sub_resource type="Animation" id=2]
+resource_name = "C_to_L"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Background:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 1 ),
+"transitions": PoolRealArray( 1, 2, 2 ),
+"update": 0,
+"values": [ Vector2( -220, 0 ), Vector2( -220, 0 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "C_to_R"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Background:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 1 ),
+"transitions": PoolRealArray( 1, 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( -220, 0 ), Vector2( -220, 0 ), Vector2( -376, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "R_to_C"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Background:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 1 ),
+"transitions": PoolRealArray( 1, 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( -367, 0 ), Vector2( -367, 0 ), Vector2( -220, 0 ) ]
+}
+
+[sub_resource type="OpenSimplexNoise" id=25]
+seed = 1437
+period = 89.6
+persistence = 1.0
+lacunarity = 2.59
+
+[sub_resource type="NoiseTexture" id=26]
+noise = SubResource( 25 )
+
+[sub_resource type="ShaderMaterial" id=22]
+resource_local_to_scene = true
+shader = ExtResource( 8 )
+shader_param/level = 0.44
+shader_param/water_albedo = Color( 0.223529, 0.937255, 0.992157, 1 )
+shader_param/water_opacity = 0.35
+shader_param/water_speed = 0.05
+shader_param/wave_distortion = 0.3
+shader_param/wave_multiplyer = 1
+shader_param/water_texture_on = true
+shader_param/reflection_X_offset = 0.0
+shader_param/reflection_Y_offset = 0.0
+shader_param/noise_texture = SubResource( 26 )
+shader_param/noise_texture2 = ExtResource( 7 )
+
+[sub_resource type="ImageTexture" id=20]
+flags = 0
+lossy_quality = 1.0
+flags = 0
+size = Vector2( 500, 500 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 20
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_bottom = 7
+font_data = ExtResource( 15 )
+
+[sub_resource type="StyleBoxTexture" id=6]
+texture = ExtResource( 18 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="StyleBoxTexture" id=7]
+texture = ExtResource( 18 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="StyleBoxTexture" id=8]
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="StyleBoxTexture" id=9]
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 117, 46 )
+modulate_color = Color( 0.192157, 0.192157, 0.192157, 1 )
+
+[sub_resource type="StyleBoxTexture" id=10]
+texture = ExtResource( 17 )
+region_rect = Rect2( 0, 0, 117, 46 )
+
+[sub_resource type="Theme" id=16]
+GridContainer/constants/hseparation = 7
+GridContainer/constants/vseparation = 16
+
+[sub_resource type="DynamicFont" id=14]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 15 )
+
+[sub_resource type="StyleBoxTexture" id=15]
+texture = ExtResource( 24 )
+region_rect = Rect2( 0, 0, 111, 26 )
+
+[sub_resource type="DynamicFont" id=4]
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 15 )
+
+[sub_resource type="Animation" id=19]
+resource_name = "Warning"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sun_Text:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="DynamicFont" id=27]
+size = 23
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 15 )
+
+[sub_resource type="Animation" id=11]
+resource_name = "load"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Card:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ Vector2( 0, -90 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Choose_Card:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ Vector2( 0, 520 ), Vector2( 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Card/ShovelBank:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ Vector2( 809, 7 ), Vector2( 809, -83 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Card/BugBank:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 2, 2 ),
+"update": 0,
+"values": [ Vector2( 883, 7 ), Vector2( 883, -83 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "ok"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Card/ShovelBank:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( 809, -83 ), Vector2( 809, 7 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Card/BugBank:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( 883, -83 ), Vector2( 883, 7 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Choose_Card:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 520 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "watch"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Card:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -90 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Card/ShovelBank:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( 809, -83 ), Vector2( 809, 7 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Card/BugBank:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( 883, -83 ), Vector2( 883, 7 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Choose_Card:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 0.5, 0.5 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 520 ) ]
+}
+
+[sub_resource type="DynamicFont" id=17]
+size = 128
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 15 )
+
+[sub_resource type="Animation" id=18]
+resource_name = "start"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Ready/Text1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Ready/Text2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Ready/Text3:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.4, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Ready:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Ready_Animation/AudioStreamPlayer:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Ready_Animation/AudioStreamPlayer:stream")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 29 ) ]
+}
+
+[node name="In_Game" type="Node2D"]
+script = ExtResource( 9 )
+
+[node name="Main" type="Control" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Main"]
+anims/C_to_L = SubResource( 2 )
+anims/C_to_R = SubResource( 1 )
+anims/R_to_C = SubResource( 3 )
+
+[node name="Background" type="Control" parent="Main"]
+margin_left = -220.0
+margin_right = 804.0
+margin_bottom = 600.0
+
+[node name="Background1" type="TextureRect" parent="Main/Background"]
+visible = false
+margin_right = 1400.0
+margin_bottom = 600.0
+texture = ExtResource( 1 )
+
+[node name="Background2" type="TextureRect" parent="Main/Background"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 3 )
+
+[node name="Background3" type="TextureRect" parent="Main/Background"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 2 )
+
+[node name="Shader" type="Sprite" parent="Main/Background/Background3"]
+material = SubResource( 22 )
+position = Vector2( 616, 304 )
+scale = Vector2( 1.41, 0.538 )
+texture = SubResource( 20 )
+
+[node name="Grid" type="Control" parent="Main/Background/Background3"]
+
+[node name="1" type="Control" parent="Main/Background/Background3/Grid"]
+margin_left = 261.0
+margin_top = 92.0
+margin_right = 261.0
+margin_bottom = 92.0
+
+[node name="1" parent="Main/Background/Background3/Grid/1" instance=ExtResource( 30 )]
+position = Vector2( 35, 32 )
+
+[node name="2" parent="Main/Background/Background3/Grid/1" instance=ExtResource( 30 )]
+position = Vector2( 35, 124 )
+pos = PoolIntArray( 1, 2 )
+
+[node name="3" parent="Main/Background/Background3/Grid/1" instance=ExtResource( 30 )]
+position = Vector2( 35, 218 )
+type = 2
+pos = PoolIntArray( 1, 3 )
+
+[node name="4" parent="Main/Background/Background3/Grid/1" instance=ExtResource( 30 )]
+position = Vector2( 35, 303 )
+type = 2
+pos = PoolIntArray( 1, 4 )
+
+[node name="5" parent="Main/Background/Background3/Grid/1" instance=ExtResource( 30 )]
+position = Vector2( 35, 385 )
+pos = PoolIntArray( 1, 5 )
+
+[node name="6" parent="Main/Background/Background3/Grid/1" instance=ExtResource( 30 )]
+position = Vector2( 35, 466 )
+pos = PoolIntArray( 1, 6 )
+
+[node name="2" type="Control" parent="Main/Background/Background3/Grid"]
+margin_left = 342.0
+margin_top = 92.0
+margin_right = 342.0
+margin_bottom = 92.0
+
+[node name="1" parent="Main/Background/Background3/Grid/2" instance=ExtResource( 30 )]
+position = Vector2( 35, 32 )
+
+[node name="2" parent="Main/Background/Background3/Grid/2" instance=ExtResource( 30 )]
+position = Vector2( 35, 124 )
+
+[node name="3" parent="Main/Background/Background3/Grid/2" instance=ExtResource( 30 )]
+position = Vector2( 35, 218 )
+type = 2
+
+[node name="4" parent="Main/Background/Background3/Grid/2" instance=ExtResource( 30 )]
+position = Vector2( 35, 303 )
+type = 2
+
+[node name="5" parent="Main/Background/Background3/Grid/2" instance=ExtResource( 30 )]
+position = Vector2( 35, 385 )
+
+[node name="6" parent="Main/Background/Background3/Grid/2" instance=ExtResource( 30 )]
+position = Vector2( 35, 466 )
+
+[node name="3" type="Control" parent="Main/Background/Background3/Grid"]
+margin_left = 424.0
+margin_top = 92.0
+margin_right = 424.0
+margin_bottom = 92.0
+
+[node name="1" parent="Main/Background/Background3/Grid/3" instance=ExtResource( 30 )]
+position = Vector2( 35, 32 )
+
+[node name="2" parent="Main/Background/Background3/Grid/3" instance=ExtResource( 30 )]
+position = Vector2( 35, 124 )
+
+[node name="3" parent="Main/Background/Background3/Grid/3" instance=ExtResource( 30 )]
+position = Vector2( 35, 218 )
+type = 2
+
+[node name="4" parent="Main/Background/Background3/Grid/3" instance=ExtResource( 30 )]
+position = Vector2( 35, 303 )
+type = 2
+
+[node name="5" parent="Main/Background/Background3/Grid/3" instance=ExtResource( 30 )]
+position = Vector2( 35, 385 )
+
+[node name="6" parent="Main/Background/Background3/Grid/3" instance=ExtResource( 30 )]
+position = Vector2( 35, 466 )
+
+[node name="4" type="Control" parent="Main/Background/Background3/Grid"]
+margin_left = 498.0
+margin_top = 92.0
+margin_right = 498.0
+margin_bottom = 92.0
+
+[node name="1" parent="Main/Background/Background3/Grid/4" instance=ExtResource( 30 )]
+position = Vector2( 35, 32 )
+
+[node name="2" parent="Main/Background/Background3/Grid/4" instance=ExtResource( 30 )]
+position = Vector2( 35, 124 )
+
+[node name="3" parent="Main/Background/Background3/Grid/4" instance=ExtResource( 30 )]
+position = Vector2( 35, 218 )
+type = 2
+
+[node name="4" parent="Main/Background/Background3/Grid/4" instance=ExtResource( 30 )]
+position = Vector2( 35, 303 )
+type = 2
+
+[node name="5" parent="Main/Background/Background3/Grid/4" instance=ExtResource( 30 )]
+position = Vector2( 35, 385 )
+
+[node name="6" parent="Main/Background/Background3/Grid/4" instance=ExtResource( 30 )]
+position = Vector2( 35, 466 )
+
+[node name="5" type="Control" parent="Main/Background/Background3/Grid"]
+margin_left = 583.0
+margin_top = 92.0
+margin_right = 583.0
+margin_bottom = 92.0
+
+[node name="1" parent="Main/Background/Background3/Grid/5" instance=ExtResource( 30 )]
+position = Vector2( 35, 32 )
+
+[node name="2" parent="Main/Background/Background3/Grid/5" instance=ExtResource( 30 )]
+position = Vector2( 35, 124 )
+
+[node name="3" parent="Main/Background/Background3/Grid/5" instance=ExtResource( 30 )]
+position = Vector2( 35, 218 )
+type = 2
+
+[node name="4" parent="Main/Background/Background3/Grid/5" instance=ExtResource( 30 )]
+position = Vector2( 35, 303 )
+type = 2
+
+[node name="5" parent="Main/Background/Background3/Grid/5" instance=ExtResource( 30 )]
+position = Vector2( 35, 385 )
+
+[node name="6" parent="Main/Background/Background3/Grid/5" instance=ExtResource( 30 )]
+position = Vector2( 35, 466 )
+
+[node name="6" type="Control" parent="Main/Background/Background3/Grid"]
+margin_left = 669.0
+margin_top = 92.0
+margin_right = 669.0
+margin_bottom = 92.0
+
+[node name="1" parent="Main/Background/Background3/Grid/6" instance=ExtResource( 30 )]
+position = Vector2( 35, 32 )
+
+[node name="2" parent="Main/Background/Background3/Grid/6" instance=ExtResource( 30 )]
+position = Vector2( 35, 124 )
+
+[node name="3" parent="Main/Background/Background3/Grid/6" instance=ExtResource( 30 )]
+position = Vector2( 35, 218 )
+type = 2
+
+[node name="4" parent="Main/Background/Background3/Grid/6" instance=ExtResource( 30 )]
+position = Vector2( 35, 303 )
+type = 2
+
+[node name="5" parent="Main/Background/Background3/Grid/6" instance=ExtResource( 30 )]
+position = Vector2( 35, 385 )
+
+[node name="6" parent="Main/Background/Background3/Grid/6" instance=ExtResource( 30 )]
+position = Vector2( 35, 466 )
+
+[node name="7" type="Control" parent="Main/Background/Background3/Grid"]
+margin_left = 743.0
+margin_top = 92.0
+margin_right = 743.0
+margin_bottom = 92.0
+
+[node name="1" parent="Main/Background/Background3/Grid/7" instance=ExtResource( 30 )]
+position = Vector2( 35, 32 )
+
+[node name="2" parent="Main/Background/Background3/Grid/7" instance=ExtResource( 30 )]
+position = Vector2( 35, 124 )
+
+[node name="3" parent="Main/Background/Background3/Grid/7" instance=ExtResource( 30 )]
+position = Vector2( 35, 218 )
+type = 2
+
+[node name="4" parent="Main/Background/Background3/Grid/7" instance=ExtResource( 30 )]
+position = Vector2( 35, 303 )
+type = 2
+
+[node name="5" parent="Main/Background/Background3/Grid/7" instance=ExtResource( 30 )]
+position = Vector2( 35, 385 )
+
+[node name="6" parent="Main/Background/Background3/Grid/7" instance=ExtResource( 30 )]
+position = Vector2( 35, 466 )
+
+[node name="8" type="Control" parent="Main/Background/Background3/Grid"]
+margin_left = 818.0
+margin_top = 92.0
+margin_right = 818.0
+margin_bottom = 92.0
+
+[node name="1" parent="Main/Background/Background3/Grid/8" instance=ExtResource( 30 )]
+position = Vector2( 35, 32 )
+
+[node name="2" parent="Main/Background/Background3/Grid/8" instance=ExtResource( 30 )]
+position = Vector2( 35, 124 )
+
+[node name="3" parent="Main/Background/Background3/Grid/8" instance=ExtResource( 30 )]
+position = Vector2( 35, 218 )
+type = 2
+
+[node name="4" parent="Main/Background/Background3/Grid/8" instance=ExtResource( 30 )]
+position = Vector2( 35, 303 )
+type = 2
+
+[node name="5" parent="Main/Background/Background3/Grid/8" instance=ExtResource( 30 )]
+position = Vector2( 35, 385 )
+
+[node name="6" parent="Main/Background/Background3/Grid/8" instance=ExtResource( 30 )]
+position = Vector2( 35, 466 )
+
+[node name="9" type="Control" parent="Main/Background/Background3/Grid"]
+margin_left = 895.0
+margin_top = 92.0
+margin_right = 895.0
+margin_bottom = 92.0
+
+[node name="1" parent="Main/Background/Background3/Grid/9" instance=ExtResource( 30 )]
+position = Vector2( 35, 32 )
+
+[node name="2" parent="Main/Background/Background3/Grid/9" instance=ExtResource( 30 )]
+position = Vector2( 35, 124 )
+
+[node name="3" parent="Main/Background/Background3/Grid/9" instance=ExtResource( 30 )]
+position = Vector2( 35, 218 )
+type = 2
+
+[node name="4" parent="Main/Background/Background3/Grid/9" instance=ExtResource( 30 )]
+position = Vector2( 35, 303 )
+type = 2
+
+[node name="5" parent="Main/Background/Background3/Grid/9" instance=ExtResource( 30 )]
+position = Vector2( 35, 385 )
+
+[node name="6" parent="Main/Background/Background3/Grid/9" instance=ExtResource( 30 )]
+position = Vector2( 35, 466 )
+
+[node name="10" type="Control" parent="Main/Background/Background3/Grid"]
+margin_left = 977.0
+margin_top = 92.0
+margin_right = 977.0
+margin_bottom = 92.0
+
+[node name="1" parent="Main/Background/Background3/Grid/10" instance=ExtResource( 30 )]
+position = Vector2( 35, 32 )
+type = 3
+
+[node name="2" parent="Main/Background/Background3/Grid/10" instance=ExtResource( 30 )]
+position = Vector2( 35, 124 )
+type = 3
+
+[node name="3" parent="Main/Background/Background3/Grid/10" instance=ExtResource( 30 )]
+position = Vector2( 35, 218 )
+type = 3
+
+[node name="4" parent="Main/Background/Background3/Grid/10" instance=ExtResource( 30 )]
+position = Vector2( 35, 303 )
+type = 3
+
+[node name="5" parent="Main/Background/Background3/Grid/10" instance=ExtResource( 30 )]
+position = Vector2( 35, 385 )
+type = 3
+
+[node name="6" parent="Main/Background/Background3/Grid/10" instance=ExtResource( 30 )]
+position = Vector2( 35, 466 )
+type = 3
+
+[node name="Background4" type="TextureRect" parent="Main/Background"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 6 )
+
+[node name="Water" type="TextureRect" parent="Main/Background/Background4"]
+margin_left = 254.0
+margin_top = 278.0
+margin_right = 974.0
+margin_bottom = 437.0
+texture = ExtResource( 4 )
+
+[node name="Background5" type="TextureRect" parent="Main/Background"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+
+[node name="Background6" type="TextureRect" parent="Main/Background"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 7 )
+
+[node name="Menu" type="Button" parent="Main"]
+margin_left = 958.0
+margin_top = 6.0
+margin_right = 1024.0
+margin_bottom = 41.0
+custom_fonts/font = SubResource( 5 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/disabled = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
+text = "菜单"
+script = ExtResource( 23 )
+
+[node name="Choose_Card" type="Control" parent="Main"]
+margin_top = 520.0
+margin_bottom = 520.0
+
+[node name="Background" type="TextureRect" parent="Main/Choose_Card"]
+margin_left = 2.0
+margin_top = 86.0
+margin_right = 623.0
+margin_bottom = 599.0
+texture = ExtResource( 22 )
+
+[node name="Page" type="Control" parent="Main/Choose_Card/Background"]
+margin_left = 11.0
+margin_top = 31.0
+margin_right = 600.0
+margin_bottom = 483.0
+
+[node name="Page1" type="GridContainer" parent="Main/Choose_Card/Background/Page"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 585.0
+margin_bottom = 445.0
+theme = SubResource( 16 )
+columns = 10
+
+[node name="Up_Page" type="Button" parent="Main/Choose_Card/Background"]
+margin_left = 10.0
+margin_top = 481.0
+margin_right = 88.0
+margin_bottom = 503.0
+custom_fonts/font = SubResource( 14 )
+custom_styles/hover = SubResource( 15 )
+custom_styles/pressed = SubResource( 15 )
+custom_styles/focus = SubResource( 15 )
+custom_styles/disabled = SubResource( 15 )
+custom_styles/normal = SubResource( 15 )
+text = "上一页"
+
+[node name="Down_Page" type="Button" parent="Main/Choose_Card/Background"]
+margin_left = 87.0
+margin_top = 481.0
+margin_right = 165.0
+margin_bottom = 503.0
+custom_fonts/font = SubResource( 14 )
+custom_styles/hover = SubResource( 15 )
+custom_styles/pressed = SubResource( 15 )
+custom_styles/focus = SubResource( 15 )
+custom_styles/disabled = SubResource( 15 )
+custom_styles/normal = SubResource( 15 )
+text = "下一页"
+
+[node name="OK" type="Button" parent="Main/Choose_Card/Background"]
+margin_left = 520.0
+margin_top = 481.0
+margin_right = 598.0
+margin_bottom = 503.0
+custom_fonts/font = SubResource( 14 )
+custom_styles/hover = SubResource( 15 )
+custom_styles/pressed = SubResource( 15 )
+custom_styles/focus = SubResource( 15 )
+custom_styles/disabled = SubResource( 15 )
+custom_styles/normal = SubResource( 15 )
+text = "确定"
+script = ExtResource( 26 )
+
+[node name="RandomChoose" type="Button" parent="Main/Choose_Card/Background"]
+margin_left = 426.0
+margin_top = 481.0
+margin_right = 523.0
+margin_bottom = 503.0
+custom_fonts/font = SubResource( 14 )
+custom_styles/hover = SubResource( 15 )
+custom_styles/pressed = SubResource( 15 )
+custom_styles/focus = SubResource( 15 )
+custom_styles/disabled = SubResource( 15 )
+custom_styles/normal = SubResource( 15 )
+text = "随机选择   "
+
+[node name="TextureRect" type="TextureRect" parent="Main/Choose_Card/Background/RandomChoose"]
+margin_left = 74.0
+margin_top = 2.0
+margin_right = 170.0
+margin_bottom = 98.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 25 )
+
+[node name="LastChoose" type="Button" parent="Main/Choose_Card/Background"]
+margin_left = 351.0
+margin_top = 481.0
+margin_right = 429.0
+margin_bottom = 503.0
+custom_fonts/font = SubResource( 14 )
+custom_styles/hover = SubResource( 15 )
+custom_styles/pressed = SubResource( 15 )
+custom_styles/focus = SubResource( 15 )
+custom_styles/disabled = SubResource( 15 )
+custom_styles/normal = SubResource( 15 )
+text = "上次选择"
+
+[node name="Watch" type="Button" parent="Main/Choose_Card/Background"]
+margin_left = 276.0
+margin_top = 481.0
+margin_right = 354.0
+margin_bottom = 503.0
+custom_fonts/font = SubResource( 14 )
+custom_styles/hover = SubResource( 15 )
+custom_styles/pressed = SubResource( 15 )
+custom_styles/focus = SubResource( 15 )
+custom_styles/disabled = SubResource( 15 )
+custom_styles/normal = SubResource( 15 )
+text = "查看草坪"
+
+[node name="Card" type="Control" parent="Main"]
+margin_top = -90.0
+margin_bottom = -90.0
+
+[node name="SeedBank" type="TextureRect" parent="Main/Card"]
+margin_left = 2.0
+margin_right = 812.0
+margin_bottom = 87.0
+texture = ExtResource( 14 )
+
+[node name="Sun" type="Control" parent="Main/Card/SeedBank"]
+margin_left = 12.0
+margin_top = 61.0
+margin_right = 66.0
+margin_bottom = 83.0
+
+[node name="Sun_Text" type="Label" parent="Main/Card/SeedBank/Sun"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "1437"
+align = 1
+
+[node name="Pause" type="AudioStreamPlayer" parent="Main/Card/SeedBank/Sun"]
+stream = ExtResource( 34 )
+
+[node name="Warning" type="AnimationPlayer" parent="Main/Card/SeedBank/Sun"]
+anims/Warning = SubResource( 19 )
+
+[node name="Seed" type="HBoxContainer" parent="Main/Card/SeedBank"]
+margin_left = 77.0
+margin_top = 6.0
+margin_right = 796.0
+margin_bottom = 80.0
+custom_constants/separation = 3
+
+[node name="SunBank" type="TextureRect" parent="Main/Card"]
+visible = false
+margin_left = 50.0
+margin_right = 128.0
+margin_bottom = 87.0
+texture = ExtResource( 16 )
+
+[node name="Sun" type="Control" parent="Main/Card/SunBank"]
+margin_left = 12.0
+margin_top = 61.0
+margin_right = 66.0
+margin_bottom = 83.0
+
+[node name="Sun_Text" type="Label" parent="Main/Card/SunBank/Sun"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 4 )
+text = "1437"
+align = 1
+
+[node name="ShovelBank" type="TextureRect" parent="Main/Card"]
+margin_left = 809.0
+margin_top = 7.0
+margin_right = 879.0
+margin_bottom = 79.0
+texture = ExtResource( 19 )
+
+[node name="Shovel" type="TextureRect" parent="Main/Card/ShovelBank"]
+margin_left = -5.0
+margin_top = -6.0
+margin_right = 75.0
+margin_bottom = 74.0
+texture = ExtResource( 21 )
+
+[node name="Shovel_button" type="Button" parent="Main/Card/ShovelBank"]
+margin_right = 70.0
+margin_bottom = 72.0
+flat = true
+script = ExtResource( 32 )
+
+[node name="Shovel" type="AudioStreamPlayer" parent="Main/Card/ShovelBank/Shovel_button"]
+stream = ExtResource( 33 )
+script = ExtResource( 11 )
+
+[node name="BugBank" type="TextureRect" parent="Main/Card"]
+margin_left = 883.0
+margin_top = 7.0
+margin_right = 953.0
+margin_bottom = 79.0
+texture = ExtResource( 19 )
+
+[node name="Bug" type="TextureRect" parent="Main/Card/BugBank"]
+margin_left = 1.0
+margin_right = 73.0
+margin_bottom = 72.0
+texture = ExtResource( 20 )
+
+[node name="Sun" type="TextureRect" parent="Main/Card/BugBank"]
+margin_left = 42.0
+margin_top = 42.0
+margin_right = 70.0
+margin_bottom = 72.0
+texture = ExtResource( 35 )
+
+[node name="Sun_Text" type="Label" parent="Main/Card/BugBank/Sun"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -39.0
+margin_top = -2.0
+margin_right = -28.0
+custom_fonts/font = SubResource( 27 )
+text = "150"
+align = 1
+
+[node name="Bug_button" type="Button" parent="Main/Card/BugBank"]
+margin_right = 70.0
+margin_bottom = 72.0
+flat = true
+script = ExtResource( 36 )
+
+[node name="Bug" type="AudioStreamPlayer" parent="Main/Card/BugBank/Bug_button"]
+stream = ExtResource( 10 )
+script = ExtResource( 11 )
+
+[node name="Card_Player" type="AnimationPlayer" parent="Main"]
+anims/load = SubResource( 11 )
+anims/ok = SubResource( 12 )
+anims/watch = SubResource( 13 )
+
+[node name="button_Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+script = ExtResource( 11 )
+
+[node name="Before_bgm" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 12 )
+autoplay = true
+script = ExtResource( 13 )
+
+[node name="Ready" type="Control" parent="."]
+visible = false
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="Text1" type="Label" parent="Ready"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -128.0
+margin_top = -85.0
+margin_right = 128.0
+margin_bottom = 85.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 17 )
+text = "准备"
+
+[node name="Text2" type="Label" parent="Ready"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -128.0
+margin_top = -85.0
+margin_right = 128.0
+margin_bottom = 85.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 17 )
+text = "安放"
+
+[node name="Text3" type="Label" parent="Ready"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -148.0
+margin_top = -85.0
+margin_right = 148.0
+margin_bottom = 85.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 17 )
+text = "植物!"
+
+[node name="Ready_Animation" type="AnimationPlayer" parent="."]
+anims/start = SubResource( 18 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Ready_Animation"]
+stream = ExtResource( 29 )
+script = ExtResource( 11 )
+
+[node name="Music" type="Node" parent="."]
+
+[node name="GrassWalk" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 27 )
+script = ExtResource( 13 )
+
+[node name="WateryGraves" type="AudioStreamPlayer" parent="Music"]
+stream = ExtResource( 28 )
+script = ExtResource( 13 )
+
+[node name="Object" type="Control" parent="."]
+
+[node name="Cancel" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 31 )
+script = ExtResource( 11 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="Sun_Timeout"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bugspray.ogg-12c59152cf71b87456569a19fa22c5b3.oggstr"
+
+[deps]
+
+source_file="res://sound/Plants/Bug/bugspray.ogg"
+dest_files=[ "res://.import/bugspray.ogg-12c59152cf71b87456569a19fa22c5b3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

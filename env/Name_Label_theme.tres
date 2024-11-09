@@ -1,0 +1,23 @@
+[gd_resource type="Theme" load_steps=6 format=2]
+
+[ext_resource path="res://env/Name_Label_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://image/background/grabber.png" type="Texture" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.372549, 0.380392, 0.505882, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.372549, 0.380392, 0.505882, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.372549, 0.380392, 0.505882, 1 )
+
+[resource]
+default_font = ExtResource( 1 )
+Button/styles/focus = SubResource( 1 )
+Button/styles/hover = SubResource( 2 )
+Button/styles/pressed = SubResource( 3 )
+HSlider/icons/grabber = ExtResource( 2 )
+HSlider/icons/grabber_disabled = ExtResource( 2 )
+HSlider/icons/grabber_highlight = ExtResource( 2 )
+HSlider/icons/tick = ExtResource( 2 )

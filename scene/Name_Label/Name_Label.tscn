@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://env/Name_Label_font.tres" type="DynamicFont" id=1]
+[ext_resource path="res://code/Name_Label/Name_Label_Main.cs" type="Script" id=2]
+[ext_resource path="res://env/Name_Label_theme.tres" type="Theme" id=3]
+
+[node name="Name_Label" type="Button"]
+margin_right = 40.0
+margin_bottom = 14.0
+theme = ExtResource( 3 )
+custom_fonts/font = ExtResource( 1 )
+flat = true
+script = ExtResource( 2 )

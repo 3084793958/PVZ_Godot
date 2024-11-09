@@ -1,0 +1,148 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://image/background/Challenge_Background.png" type="Texture" id=1]
+[ext_resource path="res://font/zh.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://image/Login/Wood_Small.png" type="Texture" id=3]
+[ext_resource path="res://code/Mode1/Button_Back.cs" type="Script" id=4]
+[ext_resource path="res://sound/button/click.ogg" type="AudioStream" id=5]
+[ext_resource path="res://sound/bgm/Login.mp3" type="AudioStream" id=6]
+[ext_resource path="res://image/background/Level_Card.png" type="Texture" id=7]
+[ext_resource path="res://image/Mode1/Level1/Mode1_Level1.png" type="Texture" id=8]
+[ext_resource path="res://code/Mode1/Button_Level.cs" type="Script" id=9]
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=10]
+[ext_resource path="res://code/Public/Set_bgm.cs" type="Script" id=11]
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_char = 50
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+outline_size = 3
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 25
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 1, 1, 1, 0.392157 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 1, 1, 1, 0.392157 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0, 0, 0, 0 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.776471, 0, 0, 0 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[node name="Mode1" type="Node2D"]
+
+[node name="Main" type="Control" parent="."]
+
+[node name="Background" type="TextureRect" parent="Main"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 1 )
+
+[node name="Title" type="Label" parent="Main"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 344.0
+margin_top = 21.0
+margin_right = 654.0
+margin_bottom = 75.0
+custom_fonts/font = SubResource( 2 )
+text = "冒险模式"
+
+[node name="Back" type="TextureRect" parent="Main"]
+margin_left = 872.0
+margin_top = 529.0
+margin_right = 964.0
+margin_bottom = 569.0
+rect_scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 3 )
+
+[node name="Button" type="Button" parent="Main/Back"]
+margin_left = 18.0
+margin_top = 2.0
+margin_right = 61.0
+margin_bottom = 24.0
+rect_rotation = 11.1373
+rect_scale = Vector2( 0.5, 0.5 )
+custom_fonts/font = SubResource( 1 )
+text = "返回"
+flat = true
+script = ExtResource( 4 )
+
+[node name="Page1" type="Control" parent="Main"]
+margin_left = 23.0
+margin_top = 94.0
+margin_right = 1005.0
+margin_bottom = 523.0
+
+[node name="Level1" type="Control" parent="Main/Page1"]
+margin_right = 316.0
+margin_bottom = 203.0
+rect_scale = Vector2( 0.55, 0.55 )
+
+[node name="Main" type="TextureRect" parent="Main/Page1/Level1"]
+margin_left = 54.5455
+margin_right = 254.545
+margin_bottom = 200.0
+texture = ExtResource( 8 )
+
+[node name="Card" type="TextureRect" parent="Main/Page1/Level1"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 7 )
+
+[node name="Number" type="Control" parent="Main/Page1/Level1"]
+margin_left = 2.0
+margin_top = 174.0
+margin_right = 315.0
+margin_bottom = 204.0
+
+[node name="level_number" type="Label" parent="Main/Page1/Level1/Number"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -39.0
+margin_top = -20.0
+margin_right = 39.0
+margin_bottom = 20.0
+custom_fonts/font = SubResource( 3 )
+text = "第1关"
+
+[node name="Main_button" type="Button" parent="Main/Page1/Level1"]
+margin_right = 316.0
+margin_bottom = 203.0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/disabled = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+script = ExtResource( 9 )
+Level_Number = 1
+
+[node name="button_Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+script = ExtResource( 10 )
+
+[node name="bgm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+autoplay = true
+script = ExtResource( 11 )
