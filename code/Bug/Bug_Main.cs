@@ -8,6 +8,7 @@ public class Bug_Main : Node2D
     protected Timer Android_Timer = new Timer();
     protected bool Is_Double_Click = false;
     //
+    public bool by_H2SO4 = false;
     public Normal_Plants_Area Top_Area_2D = null;
     public List<Normal_Plants_Area> Plants_Area_2D_List = new List<Normal_Plants_Area>();
     //public Control_Area_2D plants_Area_2d=null;
@@ -120,7 +121,17 @@ public class Bug_Main : Node2D
                 }
                 else
                 {
-                    if (In_Game_Main.Sun_Number >= 150 || Public_Main.debuging)
+                    if (by_H2SO4 || Public_Main.debuging)
+                    {
+                        Normal_Plants.Choosing = false;
+                        playing = true;
+                        GlobalPosition = Top_Area_2D.GlobalPosition;
+                        GetNode<Bug_Area2D>("Main/Area2D").Choose_Plants_Area = Top_Area_2D;
+                        GetNode<Bug_Area2D>("Main/Area2D").playing = true;
+                        GetNode<AnimationPlayer>("Main/DO").Play("DO");
+                        GetNode<TextureRect>("/root/In_Game/Main/Card/BugBank/Bug").Show();
+                    }
+                    else if (In_Game_Main.Sun_Number >= 150)
                     {
                         Normal_Plants.Choosing = false;
                         playing = true;

@@ -84,6 +84,16 @@ static public class Public_Main
     10f,
     10f,
     new Tuple<int,string>(25,"res://scene/Plants/Mg/Mg.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    8,
+    "坚果墙",
+    "与二爷的关系很好",
+    "与二爷的关系很好",
+    GD.Load<Texture>("res://image/Plants/WallNut/Wallnut.png"),
+    10f,
+    30f,
+    new Tuple<int,string>(50,"res://scene/Plants/WallNut/WallNut.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Plants_Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -91,10 +101,10 @@ static public class Public_Main
     //魅惑僵尸列表
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     1,
-    "普通僵尸",
+    "魅惑普通僵尸",
     "魅惑僵尸",
     "第一个魅惑僵尸",
-    GD.Load<Texture>("res://image/Zombies/Simple_Zombies/Simple_Zombies.png"),
+    GD.Load<Texture>("res://image/Plants/Zombies/Simple_Zombies/Simple_Zombies.png"),
     0f,
     0f,
     new Tuple<int,string>(50,"res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn")

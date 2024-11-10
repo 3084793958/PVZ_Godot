@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public class H2SO4_Main : Normal_Plants
+public class WallNut_Main : Normal_Plants
 {
-    public bool on_Mg = false;
+    public int NUT_type = 3;
     public override void _Ready()
     {
         this.AddChild(Android_Timer);
@@ -14,7 +14,7 @@ public class H2SO4_Main : Normal_Plants
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Big_Chmop").Stream.Set("loop", false);
-        health = 100;
+        health = 4000;
     }
     public void Dock_Enter(Control_Area_2D area2D)
     {
@@ -61,10 +61,6 @@ public class H2SO4_Main : Normal_Plants
                 Zombies_Area_2D_List.Add(Zombies_Area_2D);
             }
         }
-        if (area2D.Area2D_type == "Mg_Shining")//TODO
-        {
-            on_Mg = true;
-        }
     }
     public void Area_Exited(Control_Area_2D area2D)
     {
@@ -90,10 +86,6 @@ public class H2SO4_Main : Normal_Plants
         {
             Zombies_Area_2D_List.Remove(Zombies_Area_2D);
             Zombies_Area_2D = null;
-        }
-        if (area2D.Area2D_type == "Mg_Shining")//TODO
-        {
-            on_Mg = false;
         }
     }
     public override void _Process(float delta)
@@ -168,7 +160,10 @@ public class H2SO4_Main : Normal_Plants
                         GetNode<Control>("Dock").Hide();
                         GetNode<Control>("Show").Hide();
                         GetNode<Control>("Main").Show();
+                        GetNode<AnimationPlayer>("Main/Player1").Play("Player1");
+                        GetNode<AnimationPlayer>("Main/Player2").Play("Player1");
                         GetNode<Normal_Plants_Area>("Main/Shovel_Area").has_planted = this.has_planted;
+                        GetNode<AnimationPlayer>("Main/Hurt3").Play("Hurt");
                     }
                     else
                     {
@@ -215,15 +210,6 @@ public class H2SO4_Main : Normal_Plants
                     }
                 }
             }
-            if (on_Mg && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
-            {
-                if (!GetNode<AnimationPlayer>("Open").IsPlaying())
-                {
-                    Is_Double_Click = false;
-                    GetNode<H2SO4_Area2D>("Main/H2SO4_Area").has_become = true;
-                    GetNode<AnimationPlayer>("Open").Play("Open");
-                }
-            }
             if (Zombies_Area_2D_List.Count != 0)
             {
                 for (int i = 0; i < Zombies_Area_2D_List.Count; i++)
@@ -239,37 +225,35 @@ public class H2SO4_Main : Normal_Plants
                     }
                 }
             }
-            if (health <= 0)
+            if (health >= 1500 && health <= 2500 && NUT_type != 2 && NUT_type != 0)
+            {
+                NUT_type = 2;
+                GetNode<AnimationPlayer>("Main/Hurt1").Play("Hurt");
+            }
+            else if (health < 1500 && health > 0 && NUT_type != 3 && NUT_type != 0)
+            {
+                NUT_type = 3;
+                GetNode<AnimationPlayer>("Main/Hurt2").Play("Hurt");
+            }
+            else if (health <= 0)
             {
                 if (!GetNode<AnimationPlayer>("Died").IsPlaying())
                 {
+                    NUT_type = 0;
                     dock_area_2d.Normal_Plant_List.Remove(this);
                     GetNode<AnimationPlayer>("Died").Play("Died");
-                    GetNode<H2SO4_Area2D>("Main/H2SO4_Area").has_died = true;
                 }
+            }
+            else if (NUT_type != 1 && NUT_type != 0 && health > 2500) 
+            {
+                NUT_type = 1;
+                GetNode<AnimationPlayer>("Main/Hurt3").Play("Hurt");
             }
         }
     }
     public void Bug_Doing()
     {
-        //none
-    }
-    public void Click_Pressed()
-    {
-        if (In_Game_Main.is_playing)
-        {
-            if (!Normal_Plants.Choosing && GetNode<H2SO4_Area2D>("Main/H2SO4_Area").has_become) 
-            {
-                GetNode<AudioStreamPlayer>("Bug").Play();
-                var scene = GD.Load<PackedScene>("res://scene/Bug/Bug.tscn");
-                var plant_child = (Bug_Main)scene.Instance();
-                plant_child.by_H2SO4 = true;
-                Normal_Plants.Choosing = true;
-                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                Hide();
-                dock_area_2d.Normal_Plant_List.Remove(this);
-                GetNode<AnimationPlayer>("Free_player").Play("Free");
-            }
-        }
+        health += 3000;
+        GetNode<AnimationPlayer>("Main/Hurt3").Play("Hurt");
     }
 }
