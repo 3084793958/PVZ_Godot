@@ -1,10 +1,9 @@
 using Godot;
 using System;
 
-public class Godot_Main : Normal_Plants
+public class Boom_WallNut_Main : Normal_Plants
 {
-    public bool clone_5_zombies = false;
-    public bool has_clone = false;
+    public int NUT_type = 3;
     public override void _Ready()
     {
         this.AddChild(Android_Timer);
@@ -15,7 +14,7 @@ public class Godot_Main : Normal_Plants
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Big_Chmop").Stream.Set("loop", false);
-        health = 300;
+        health = 4000;
     }
     public void Dock_Enter(Control_Area_2D area2D)
     {
@@ -163,7 +162,9 @@ public class Godot_Main : Normal_Plants
                         GetNode<Control>("Show").Hide();
                         GetNode<Control>("Main").Show();
                         GetNode<AnimationPlayer>("Main/Player1").Play("Player1");
+                        GetNode<AnimationPlayer>("Main/Player2").Play("Player1");
                         GetNode<Normal_Plants_Area>("Main/Shovel_Area").has_planted = this.has_planted;
+                        GetNode<AnimationPlayer>("Main/Hurt3").Play("Hurt");
                     }
                     else
                     {
@@ -225,78 +226,38 @@ public class Godot_Main : Normal_Plants
                     }
                 }
             }
-            if (health <= 0)
+            if (health >= 1500 && health <= 2500 && NUT_type != 2 && NUT_type != 0)
+            {
+                NUT_type = 2;
+                GetNode<AnimationPlayer>("Main/Hurt1").Play("Hurt");
+            }
+            else if (health < 1500 && health > 0 && NUT_type != 3 && NUT_type != 0)
+            {
+                NUT_type = 3;
+                GetNode<AnimationPlayer>("Main/Hurt2").Play("Hurt");
+            }
+            else if (health <= 0)
             {
                 if (!GetNode<AnimationPlayer>("Died").IsPlaying())
                 {
-                    Clone_DO();
+                    NUT_type = 0;
                     dock_area_2d.Normal_Plant_List.Remove(this);
+                    GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
+                    GetNode<Normal_Boom_Area>("Main/Boom").can_do = true;
+                    GetNode<Normal_Boom_Area>("Main/Boom").Start_hurting();
                     GetNode<AnimationPlayer>("Died").Play("Died");
                 }
+            }
+            else if (NUT_type != 1 && NUT_type != 0 && health > 2500)
+            {
+                NUT_type = 1;
+                GetNode<AnimationPlayer>("Main/Hurt3").Play("Hurt");
             }
         }
     }
     public void Bug_Doing()
     {
-        clone_5_zombies = true;
-    }
-    public void Clone_DO()
-    {
-        if (!has_clone)
-        {
-            has_clone = true;
-            if (clone_5_zombies)
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    Clone_Self_Zombies();
-                }
-            }
-            else
-            {
-                Clone_Self_Zombies();
-            }
-        }
-    }
-    public void Clone_Self_Zombies()
-    {
-        for (int i = 1; i <= 6; i++)
-        {
-            var scene = GD.Load<PackedScene>("res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn");
-            var plant_child = (Normal_Plants_Zombies)scene.Instance();
-            if (i == 1)
-            {
-                plant_child.put_position = new Vector2(76, 124);
-                plant_child.ZIndex = 7;
-            }
-            else if (i == 2)
-            {
-                plant_child.put_position = new Vector2(76, 216);
-                plant_child.ZIndex = 8;
-            }
-            else if (i == 3)
-            {
-                plant_child.put_position = new Vector2(76, 310);
-                plant_child.ZIndex = 9;
-            }
-            else if (i == 4)
-            {
-                plant_child.put_position = new Vector2(76, 395);
-                plant_child.ZIndex = 10;
-            }
-            else if (i == 5)
-            {
-                plant_child.put_position = new Vector2(76, 477);
-                plant_child.ZIndex = 11;
-            }
-            else if (i == 6)
-            {
-                plant_child.put_position = new Vector2(76, 558);
-                plant_child.ZIndex = 12;
-            }
-            plant_child.player_put = false;
-            //plant_child._Ready();//Warning:Can't Add Child
-            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-        }
+        health += 3000;
+        GetNode<AnimationPlayer>("Main/Hurt3").Play("Hurt");
     }
 }

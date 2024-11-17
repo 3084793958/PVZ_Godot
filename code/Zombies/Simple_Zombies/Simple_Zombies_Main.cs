@@ -148,6 +148,10 @@ public class Simple_Zombies_Main : Normal_Zombies
         {
             H2SO4_Area_2D_List.Add((H2SO4_Area2D)area2D);
         }
+        if (area2D.Area2D_type == "Crash_Hurt")
+        {
+            Crash_Area_2D_List.Add((Crash_Area_2D)area2D);
+        }
     }
     public async void Plants_Exited(Control_Area_2D area2D)
     {
@@ -156,11 +160,13 @@ public class Simple_Zombies_Main : Normal_Zombies
             var plant_area2D = (Normal_Plants_Area)area2D;
             if (true/*plant_area2D.plants_type == "Normal"*/)
             {
-                has_touched = false;
                 Plants_Area_2D_List.Remove(plant_area2D);
-                if (this.has_planted && plant_area2D.has_planted)
+                if (!this.has_planted || !plant_area2D.has_planted || Plants_Area_2D_List.Count != 0) 
                 {
-                    Plants_Area_2D_List.Remove(plant_area2D);
+                    has_touched = false;
+                }
+                if (this.has_planted)
+                {
                     if (Plants_Area_2D_List.Count == 0)
                     {
                         Top_Area_2D = null;
@@ -170,7 +176,6 @@ public class Simple_Zombies_Main : Normal_Zombies
                             GetNode<AnimationPlayer>("Main/Walk").Play("Walk");
                             GetNode<AnimationPlayer>("Main/Eating").Stop();
                         }
-
                     }
                     else
                     {
@@ -231,6 +236,15 @@ public class Simple_Zombies_Main : Normal_Zombies
                         }
                     }
                     GetNode<Normal_Zombies_Area>("Main/Zombies_Area").Choose_Plants_Area = Top_Area_2D;
+                    if (Top_Area_2D == null)
+                    {
+                        eating = false;
+                        if (health >= 90)
+                        {
+                            GetNode<AnimationPlayer>("Main/Walk").Play("Walk");
+                            GetNode<AnimationPlayer>("Main/Eating").Stop();
+                        }
+                    }
                 }
             }
         }
@@ -265,6 +279,15 @@ public class Simple_Zombies_Main : Normal_Zombies
         if (area2D.Area2D_type == "H2SO4")
         {
             H2SO4_Area_2D_List.Remove((H2SO4_Area2D)area2D);
+        }
+        if (area2D.Area2D_type == "Crash_Hurt")
+        {
+            Crash_Area_2D_List.Remove((Crash_Area_2D)area2D);
+        }
+        if (area2D.Area2D_type == "Plants_Boom")
+        {
+            var Boom_area2D = (Normal_Boom_Area)area2D;
+            Boom_Area_2D_List.Remove(Boom_area2D);
         }
     }
     public void Dock_Enter(Control_Area_2D area2D)
@@ -375,7 +398,11 @@ public class Simple_Zombies_Main : Normal_Zombies
             {
                 this.Position += new Vector2(speed * speed_x, 0);
             }
-            if (has_touched)
+            if (On_Boom_Effect)
+            {
+                GetNode<AnimationPlayer>("Main/Walk").Stop();
+            }
+            if (has_touched && Plants_Area_2D_List.Count != 0) 
             {
                 if (Plants_Area_2D_List[0].has_planted)
                 {
@@ -639,6 +666,22 @@ public class Simple_Zombies_Main : Normal_Zombies
                     {
                         health -= H2SO4_Area_2D_List[i].hurt;
                         H2SO4_Area_2D_List.RemoveAt(i);
+                        i--;
+                    }
+                }
+            }
+            if (Crash_Area_2D_List.Count != 0)
+            {
+                for (int i = 0; i < Crash_Area_2D_List.Count; i++)
+                {
+                    if (Crash_Area_2D_List[i].has_planted && Crash_Area_2D_List[i].Crash_Area == GetNode<Normal_Zombies_Area>("Main/Zombies_Area")) 
+                    {
+                        health -= Crash_Area_2D_List[i].hurt;
+                        if (!this.On_Boom_Effect)
+                        {
+                            GetNode<AnimationPlayer>("Is_Eated").Play("Is_Eated");
+                        }
+                        Crash_Area_2D_List.RemoveAt(i);
                         i--;
                     }
                 }

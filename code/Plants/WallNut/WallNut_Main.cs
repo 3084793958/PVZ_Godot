@@ -84,7 +84,8 @@ public class WallNut_Main : Normal_Plants
         }
         if (area2D.Area2D_type == "Zombies")
         {
-            Zombies_Area_2D_List.Remove(Zombies_Area_2D);
+            var leave_Area = (Normal_Zombies_Area)area2D;
+            Zombies_Area_2D_List.Remove(leave_Area);
             Zombies_Area_2D = null;
         }
     }

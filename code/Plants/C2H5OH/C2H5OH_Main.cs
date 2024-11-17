@@ -84,7 +84,8 @@ public class C2H5OH_Main : Normal_Plants
         }
         if (area2D.Area2D_type == "Zombies")
         {
-            Zombies_Area_2D_List.Remove(Zombies_Area_2D);
+            var leave_Area = (Normal_Zombies_Area)area2D;
+            Zombies_Area_2D_List.Remove(leave_Area);
             Zombies_Area_2D = null;
         }
     }
@@ -231,6 +232,7 @@ public class C2H5OH_Main : Normal_Plants
             {
                 if (is_fire)
                 {
+                    GetNode<Node2D>("Main/Hurt_Fire").ZIndex = dock_area_2d.pos[0] + 6;
                     if (!GetNode<AnimationPlayer>("Died2").IsPlaying())
                     {
                         dock_area_2d.Normal_Plant_List.Remove(this);

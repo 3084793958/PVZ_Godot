@@ -1,10 +1,9 @@
 using Godot;
 using System;
 
-public class Godot_Main : Normal_Plants
+public class Potato_Main : Normal_Plants
 {
-    public bool clone_5_zombies = false;
-    public bool has_clone = false;
+    public bool has_up = false;
     public override void _Ready()
     {
         this.AddChild(Android_Timer);
@@ -61,6 +60,20 @@ public class Godot_Main : Normal_Plants
             {
                 Zombies_Area_2D_List.Add(Zombies_Area_2D);
             }
+            /*if (Zombies_Area_2D.has_plant)
+            {
+                if (GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area == null)
+                {
+                    GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area = Zombies_Area_2D;
+                }
+                else
+                {
+                    if (Zombies_Area_2D.ZIndex > GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area.ZIndex || (Zombies_Area_2D.ZIndex == GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area.ZIndex && Zombies_Area_2D.GetParent().GetParent().GetIndex() > GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area.GetParent().GetParent().GetIndex()))
+                    {
+                        GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area = Zombies_Area_2D;
+                    }
+                }
+            }*/
         }
     }
     public void Area_Exited(Control_Area_2D area2D)
@@ -88,6 +101,10 @@ public class Godot_Main : Normal_Plants
             var leave_Area = (Normal_Zombies_Area)area2D;
             Zombies_Area_2D_List.Remove(leave_Area);
             Zombies_Area_2D = null;
+            /*if (GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area == leave_Area)
+            {
+                GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area = null;
+            }*/
         }
     }
     public override void _Process(float delta)
@@ -162,8 +179,9 @@ public class Godot_Main : Normal_Plants
                         GetNode<Control>("Dock").Hide();
                         GetNode<Control>("Show").Hide();
                         GetNode<Control>("Main").Show();
-                        GetNode<AnimationPlayer>("Main/Player1").Play("Player1");
+                        GetNode<AnimationPlayer>("Main/Player1").Play("Player");
                         GetNode<Normal_Plants_Area>("Main/Shovel_Area").has_planted = this.has_planted;
+                        GetNode<Timer>("Up_Timer").Start();
                     }
                     else
                     {
@@ -212,91 +230,58 @@ public class Godot_Main : Normal_Plants
             }
             if (Zombies_Area_2D_List.Count != 0)
             {
+                bool can_touch = false;
                 for (int i = 0; i < Zombies_Area_2D_List.Count; i++)
                 {
-                    if (Zombies_Area_2D_List[i].Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
+                    if (Zombies_Area_2D_List[i] != null)
                     {
-                        if (Zombies_Area_2D_List[i].is_eating_show && !Zombies_Area_2D_List[i].has_lose_head)
+                        if (Zombies_Area_2D_List[i].Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
                         {
-                            Zombies_Area_2D_List[i].is_eating_show = false;
-                            health -= Zombies_Area_2D_List[i].hurt;
-                            GetNode<AnimationPlayer>("Is_Eated").Play("Is_Eated");
+                            if (Zombies_Area_2D_List[i].is_eating_show && !Zombies_Area_2D_List[i].has_lose_head)
+                            {
+                                Zombies_Area_2D_List[i].is_eating_show = false;
+                                health -= Zombies_Area_2D_List[i].hurt;
+                                GetNode<AnimationPlayer>("Is_Eated").Play("Is_Eated");
+                            }
+                        }
+                        if (!can_touch && Zombies_Area_2D_List[i] != null && !GetNode<AnimationPlayer>("Died").IsPlaying())
+                        {
+                            if (!Zombies_Area_2D_List[i].has_lose_head&&Zombies_Area_2D_List[i].has_plant)
+                            {
+                                can_touch = true;
+                                if (has_up)
+                                {
+                                    GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
+                                    GetNode<Normal_Boom_Area>("Main/Boom").can_do = true;
+                                    GetNode<Normal_Boom_Area>("Main/Boom").Start_hurting();
+                                    GetNode<AnimationPlayer>("Died").Play("Died");
+                                    dock_area_2d.Normal_Plant_List.Remove(this);
+                                }
+                            }
                         }
                     }
                 }
             }
             if (health <= 0)
             {
-                if (!GetNode<AnimationPlayer>("Died").IsPlaying())
+                if (!GetNode<AnimationPlayer>("Died2").IsPlaying())
                 {
-                    Clone_DO();
+                    GetNode<AnimationPlayer>("Died2").Play("Died");
                     dock_area_2d.Normal_Plant_List.Remove(this);
-                    GetNode<AnimationPlayer>("Died").Play("Died");
                 }
             }
         }
     }
     public void Bug_Doing()
     {
-        clone_5_zombies = true;
+        //NOTHING
     }
-    public void Clone_DO()
+    public void Up_Timer_timeout()
     {
-        if (!has_clone)
+        if (health > 0)
         {
-            has_clone = true;
-            if (clone_5_zombies)
-            {
-                for (int i = 0; i < 5; i++)
-                {
-                    Clone_Self_Zombies();
-                }
-            }
-            else
-            {
-                Clone_Self_Zombies();
-            }
-        }
-    }
-    public void Clone_Self_Zombies()
-    {
-        for (int i = 1; i <= 6; i++)
-        {
-            var scene = GD.Load<PackedScene>("res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn");
-            var plant_child = (Normal_Plants_Zombies)scene.Instance();
-            if (i == 1)
-            {
-                plant_child.put_position = new Vector2(76, 124);
-                plant_child.ZIndex = 7;
-            }
-            else if (i == 2)
-            {
-                plant_child.put_position = new Vector2(76, 216);
-                plant_child.ZIndex = 8;
-            }
-            else if (i == 3)
-            {
-                plant_child.put_position = new Vector2(76, 310);
-                plant_child.ZIndex = 9;
-            }
-            else if (i == 4)
-            {
-                plant_child.put_position = new Vector2(76, 395);
-                plant_child.ZIndex = 10;
-            }
-            else if (i == 5)
-            {
-                plant_child.put_position = new Vector2(76, 477);
-                plant_child.ZIndex = 11;
-            }
-            else if (i == 6)
-            {
-                plant_child.put_position = new Vector2(76, 558);
-                plant_child.ZIndex = 12;
-            }
-            plant_child.player_put = false;
-            //plant_child._Ready();//Warning:Can't Add Child
-            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+            has_up = true;
+            GetNode<AnimationPlayer>("Main/Out_Land").Play("Out_Land");
         }
     }
 }

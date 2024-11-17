@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bowling.ogg-001e539d21cccdcea443ffa892986810.oggstr"
+
+[deps]
+
+source_file="res://sound/Plants/WallNut_Ball/bowling.ogg"
+dest_files=[ "res://.import/bowling.ogg-001e539d21cccdcea443ffa892986810.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

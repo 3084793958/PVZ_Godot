@@ -149,8 +149,11 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
             var plant_area2D = (Normal_Zombies_Area)area2D;
             if (true/*plant_area2D.plants_type == "Normal"*/)
             {
-                has_touched = false;
                 Zombies_Area_2D_List.Remove(plant_area2D);
+                if (!this.has_planted || !plant_area2D.has_plant || Zombies_Area_2D_List.Count != 0)
+                {
+                    has_touched = false;
+                }
                 if (this.has_planted && plant_area2D.has_plant)
                 {
                     Zombies_Area_2D_List.Remove(plant_area2D);
@@ -217,6 +220,15 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                         }
                     }
                     GetNode<Normal_Plants_Zombies_Area>("Main/Zombies_Area").Choose_Zombies_Area = Top_Area_2D;
+                    if (Top_Area_2D == null)
+                    {
+                        eating = false;
+                        if (health >= 90)
+                        {
+                            GetNode<AnimationPlayer>("Main/Walk").Play("Walk");
+                            GetNode<AnimationPlayer>("Main/Eating").Stop();
+                        }
+                    }
                 }
             }
         }
@@ -357,7 +369,11 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
             {
                 this.Position += new Vector2(speed * speed_x, 0);
             }
-            if (has_touched)
+            if (On_Boom_Effect)
+            {
+                GetNode<AnimationPlayer>("Main/Walk").Stop();
+            }
+            if (has_touched && Zombies_Area_2D_List.Count != 0)
             {
                 if (Zombies_Area_2D_List[0].has_plant)
                 {

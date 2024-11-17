@@ -94,6 +94,46 @@ static public class Public_Main
     10f,
     30f,
     new Tuple<int,string>(50,"res://scene/Plants/WallNut/WallNut.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    9,
+    "爆炸坚果墙",
+    "4000血量,1800伤害",
+    "4000血量,1800伤害",
+    GD.Load<Texture>("res://image/Plants/WallNut/Boom_Wallnut.png"),
+    10f,
+    30f,
+    new Tuple<int,string>(75,"res://scene/Plants/Boom_WallNut/Boom_WallNut.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    10,
+    "坚果保龄球",
+    "4000血量,500伤害",
+    "4000血量,500伤害",
+    GD.Load<Texture>("res://image/Plants/WallNut/Wallnut.png"),
+    0f,
+    30f,
+    new Tuple<int,string>(25,"res://scene/Plants/WallNut_Ball/WallNut_Ball.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    11,
+    "爆炸保龄球",
+    "4000血量,1800伤害",
+    "4000血量,1800伤害",
+    GD.Load<Texture>("res://image/Plants/WallNut/Boom_Wallnut.png"),
+    0f,
+    30f,
+    new Tuple<int,string>(50,"res://scene/Plants/Boom_WallNut_Ball/Boom_WallNut_Ball.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    12,
+    "土豆地雷",
+    "1800伤害",
+    "1800伤害",
+    GD.Load<Texture>("res://image/Plants/Potato/Potato.png"),
+    15f,
+    30f,
+    new Tuple<int,string>(25,"res://scene/Plants/Potato/Potato.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Plants_Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
