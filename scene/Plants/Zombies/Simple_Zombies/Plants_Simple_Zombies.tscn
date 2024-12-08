@@ -873,7 +873,7 @@ margin_bottom = -16.0
 rect_scale = Vector2( 0.75, 0.75 )
 
 [node name="Help" type="Node2D" parent="Dock"]
-z_index = 18
+z_index = 118
 z_as_relative = false
 
 [node name="Texture" type="TextureRect" parent="Dock/Help"]
@@ -899,7 +899,7 @@ margin_bottom = -16.0
 rect_scale = Vector2( 0.75, 0.75 )
 
 [node name="Help" type="Node2D" parent="Show"]
-z_index = 18
+z_index = 118
 z_as_relative = false
 
 [node name="Texture" type="TextureRect" parent="Show/Help"]

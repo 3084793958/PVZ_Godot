@@ -29,4 +29,5 @@ public class Normal_Plants_Zombies : Node2D
     //
     public int health = 270;
     public float speed_x = 1f;
+    [Export] public int normal_ZIndex = 7;
 }

@@ -177,7 +177,7 @@ tracks/12/keys = {
 
 [node name="Bug" type="Node2D"]
 position = Vector2( -67, -70 )
-z_index = 19
+z_index = 119
 z_as_relative = false
 script = ExtResource( 5 )
 

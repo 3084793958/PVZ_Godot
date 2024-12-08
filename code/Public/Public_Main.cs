@@ -10,7 +10,8 @@ static public class Public_Main
     static public bool debuging = false;
     static public int bgm_value = 100, sound_value = 100;
     static public bool Starting = true;
-    static public int allow_card_number=13;
+    static public int allow_card_number = 13;
+    static public int now_card_number = 0;
     static public bool for_Android = false;//无鼠标模式,双击
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int,string>>> Plant_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
     {
@@ -134,6 +135,16 @@ static public class Public_Main
     15f,
     30f,
     new Tuple<int,string>(25,"res://scene/Plants/Potato/Potato.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    13,
+    "大嘴花",
+    "一口吃掉",
+    "一口吃掉",
+    GD.Load<Texture>("res://image/Plants/Eating_Flower/Eating_Flower.png"),
+    2.5f,
+    45f,
+    new Tuple<int,string>(150,"res://scene/Plants/Eating_Flower/Eating_Flower.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Plants_Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>

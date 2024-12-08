@@ -1,0 +1,28 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=2]
+
+[ext_resource path="res://image/background/background6.jpg" type="Texture" id=1]
+[ext_resource path="res://code/In_Game/Water.shader" type="Shader" id=2]
+
+[sub_resource type="OpenSimplexNoise" id=25]
+seed = 1437
+period = 89.6
+persistence = 1.0
+lacunarity = 2.59
+
+[sub_resource type="NoiseTexture" id=26]
+noise = SubResource( 25 )
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource( 2 )
+shader_param/level = 0.5
+shader_param/water_albedo = Color( 0.223529, 0.937255, 0.992157, 1 )
+shader_param/water_opacity = 0.35
+shader_param/water_speed = 0.03
+shader_param/wave_distortion = 0.1
+shader_param/wave_multiplyer = 1
+shader_param/water_texture_on = true
+shader_param/reflection_X_offset = 0.0
+shader_param/reflection_Y_offset = 0.12
+shader_param/noise_texture = SubResource( 26 )
+shader_param/noise_texture2 = ExtResource( 1 )

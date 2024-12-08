@@ -272,7 +272,7 @@ margin_bottom = 40.0
 rect_pivot_offset = Vector2( 40, 40 )
 
 [node name="Help" type="Node2D" parent="Dock"]
-z_index = 18
+z_index = 118
 z_as_relative = false
 
 [node name="80" type="Control" parent="Dock/Help"]
@@ -304,7 +304,7 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Help" type="Node2D" parent="Show"]
-z_index = 18
+z_index = 118
 z_as_relative = false
 
 [node name="80" type="Control" parent="Show/Help"]
@@ -350,7 +350,7 @@ texture = ExtResource( 4 )
 modulate = Color( 1, 1, 1, 0.142857 )
 position = Vector2( 40, 40 )
 scale = Vector2( 1e-05, 1e-05 )
-z_index = 17
+z_index = 117
 z_as_relative = false
 texture = ExtResource( 11 )
 

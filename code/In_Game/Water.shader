@@ -1,4 +1,7 @@
 //copy from https://godotshaders.com/shader/2d-water-with-reflections/
+//changed
+//倒影要求:对象Z_Index<this.Z_Index
+//仅能1次调用screen_texture
 shader_type canvas_item;
 
 uniform float level : hint_range(0.0, 1.0) = 0.5; 
@@ -12,7 +15,6 @@ uniform float reflection_X_offset = 0.0;
 uniform float reflection_Y_offset = 0.0;
 uniform sampler2D noise_texture : hint_albedo;
 uniform sampler2D noise_texture2 : hint_albedo;
-
 
 void fragment() {
 	vec2 uv = UV;
@@ -35,8 +37,8 @@ void fragment() {
 		}
 	
 		// putting everything toghether 
-		vec4 current_texture = texture(SCREEN_TEXTURE, vec2(SCREEN_UV.x + noise + reflection_X_offset, 1.0 - SCREEN_UV.y - (level - 0.5) * 2.0 + reflection_Y_offset));
-		COLOR = mix(COLOR, current_texture, 0.5);
+			vec4 current_texture = texture(SCREEN_TEXTURE, vec2(SCREEN_UV.x + noise + reflection_X_offset, 1.0 - SCREEN_UV.y - (level - 0.5) * 2.0 + reflection_Y_offset));
+		COLOR = mix(COLOR, current_texture, 0.7);
 		COLOR = mix(COLOR, water_albedo, water_opacity);
 	}
 }

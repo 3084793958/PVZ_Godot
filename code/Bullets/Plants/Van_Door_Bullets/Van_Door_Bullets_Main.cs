@@ -9,9 +9,21 @@ public class Van_Door_Bullets_Main : Normal_Plants_Bullets
         GetNode<Bullets_Area>("Area2D").hurt = 20;
         GetNode<AudioStreamPlayer>("Touch").Stream.Set("loop", false);
         GetNode<AnimationPlayer>("Pea_Animation").Play("Pea");
+        normal_ZIndex = 17;
+    }
+    public void Dock_Enter(Control_Area_2D area2D)
+    {
+        if (area2D.Area2D_type == "Grid")
+        {
+            dock_area_2d = (Background_Grid_Main)area2D;
+        }
     }
     public override void _Process(float delta)
     {
+        if (dock_area_2d != null)
+        {
+            ZIndex = normal_ZIndex + 20 * (dock_area_2d.pos[0] - 1);
+        }
         if (!has_touch)
         {
             this.Position += new Vector2(speed_x, speed_y);

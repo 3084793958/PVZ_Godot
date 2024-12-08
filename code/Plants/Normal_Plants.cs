@@ -26,4 +26,5 @@ public class Normal_Plants : Node2D
     protected List<Normal_Zombies_Area> Bullets_Zombies_Area_2D_List = new List<Normal_Zombies_Area>();
     //
     [Export] public int health = 300;
+    [Export] public int normal_ZIndex = 3;
 }

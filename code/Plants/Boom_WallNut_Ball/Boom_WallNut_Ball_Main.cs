@@ -27,6 +27,10 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
             Area_Vector2 = area2D_Grid.GlobalPosition;
             dock_area_2d = area2D_Grid;
         }
+        else if (area2D.Area2D_type == "Grid")
+        {
+            dock_area_2d = (Background_Grid_Main)area2D;
+        }
     }
     public async void Area_Entered(Control_Area_2D area2D)
     {
@@ -127,6 +131,10 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
         if (Android_Timer.IsStopped() && Public_Main.for_Android && !Input.IsActionJustReleased("Left_Mouse"))
         {
             Is_Double_Click = false;
+        }
+        if (on_lock_grid && dock_area_2d != null)
+        {
+            ZIndex = normal_ZIndex + 20 * (dock_area_2d.pos[0] - 1);
         }
         if (!has_planted)
         {
@@ -257,7 +265,7 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
                         }
                         if (!can_touch && Zombies_Area_2D_List[i] != null&&!GetNode<AnimationPlayer>("Died").IsPlaying())
                         {
-                            if (!Zombies_Area_2D_List[i].has_lose_head)
+                            if (!Zombies_Area_2D_List[i].has_lose_head&&Zombies_Area_2D_List[i].has_plant)
                             {
                                 can_touch = true;
                                 if (touch_ZIndex != Zombies_Area_2D_List[i].GetParent().GetParent<Node2D>().ZIndex /*&& GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area == Zombies_Area_2D_List[i]*/)

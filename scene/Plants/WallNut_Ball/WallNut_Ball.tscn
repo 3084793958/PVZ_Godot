@@ -14,7 +14,7 @@
 [ext_resource path="res://sound/Zombies/bigchomp.ogg" type="AudioStream" id=20]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 0.01, 0.01 )
+extents = Vector2( 10, 30 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 1, 1 )
@@ -140,7 +140,7 @@ margin_bottom = 40.0
 rect_pivot_offset = Vector2( 40, 40 )
 
 [node name="Help" type="Node2D" parent="Dock"]
-z_index = 18
+z_index = 118
 z_as_relative = false
 
 [node name="80" type="Control" parent="Dock/Help"]
@@ -172,7 +172,7 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Help" type="Node2D" parent="Show"]
-z_index = 18
+z_index = 118
 z_as_relative = false
 
 [node name="80" type="Control" parent="Show/Help"]

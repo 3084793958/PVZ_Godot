@@ -268,7 +268,6 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
             var area2D_Grid = (Background_Grid_Main)area2D;
             Area_Vector2 = area2D_Grid.GlobalPosition;
             dock_area_2d = area2D_Grid;
-            this.ZIndex = area2D_Grid.pos[0] + 6;
         }
     }
     public override void _Process(float delta)
@@ -288,6 +287,10 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
         if (Android_Timer.IsStopped() && Public_Main.for_Android && !Input.IsActionJustReleased("Left_Mouse"))
         {
             Is_Double_Click = false;
+        }
+        if (on_lock_grid && dock_area_2d != null)
+        {
+            ZIndex = normal_ZIndex + 20 * (dock_area_2d.pos[0] - 1);
         }
         if (!has_planted)
         {

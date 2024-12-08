@@ -27,6 +27,10 @@ public class WallNut_Ball_Main : Normal_Plants
             Area_Vector2 = area2D_Grid.GlobalPosition;
             dock_area_2d = area2D_Grid;
         }
+        else if (area2D.Area2D_type == "Grid")
+        {
+            dock_area_2d = (Background_Grid_Main)area2D;
+        }
     }
     public async void Area_Entered(Control_Area_2D area2D)
     {
@@ -127,6 +131,10 @@ public class WallNut_Ball_Main : Normal_Plants
         if (Android_Timer.IsStopped() && Public_Main.for_Android && !Input.IsActionJustReleased("Left_Mouse"))
         {
             Is_Double_Click = false;
+        }
+        if (dock_area_2d != null)
+        {
+            ZIndex = normal_ZIndex + 20 * (dock_area_2d.pos[0] - 1);
         }
         if (!has_planted)
         {

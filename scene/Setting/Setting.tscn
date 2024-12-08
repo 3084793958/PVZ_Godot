@@ -55,7 +55,7 @@ margin_bottom = 600.0
 script = ExtResource( 6 )
 
 [node name="Setting" type="Node2D" parent="."]
-z_index = 20
+z_index = 140
 
 [node name="Menu" type="TextureRect" parent="Setting"]
 anchor_left = 0.5

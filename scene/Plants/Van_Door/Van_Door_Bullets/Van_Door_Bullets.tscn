@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://code/Bullets/Plants/Van_Door_Bullets/Van_Door_Bullets_Main.cs" type="Script" id=1]
 [ext_resource path="res://image/Plants/Van_Door/Bullets/Pea.png" type="Texture" id=2]
@@ -339,10 +339,12 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 0.01, 0.01 )
+
 [node name="Van_Door_Bullets" type="Node2D"]
 position = Vector2( -32, -52 )
 z_index = 17
-z_as_relative = false
 script = ExtResource( 1 )
 
 [node name="Pea_Fire" type="Node2D" parent="."]
@@ -480,4 +482,11 @@ script = ExtResource( 5 )
 [node name="Fire_Animation" type="AnimationPlayer" parent="."]
 anims/Touch = SubResource( 8 )
 
+[node name="Shovel_Area2D" type="Area2D" parent="."]
+position = Vector2( 40, 40 )
+
+[node name="Shape" type="CollisionShape2D" parent="Shovel_Area2D"]
+shape = SubResource( 9 )
+
 [connection signal="area_entered" from="Area2D" to="." method="Touch_Zombies"]
+[connection signal="area_entered" from="Shovel_Area2D" to="." method="Dock_Enter"]

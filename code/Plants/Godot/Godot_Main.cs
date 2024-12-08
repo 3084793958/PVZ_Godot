@@ -108,6 +108,10 @@ public class Godot_Main : Normal_Plants
         {
             Is_Double_Click = false;
         }
+        if (on_lock_grid && dock_area_2d != null)
+        {
+            ZIndex = normal_ZIndex + 20 * (dock_area_2d.pos[0] - 1);
+        }
         if (!has_planted)
         {
             if (Normal_Plants.Choosing)
@@ -272,27 +276,27 @@ public class Godot_Main : Normal_Plants
             else if (i == 2)
             {
                 plant_child.put_position = new Vector2(76, 216);
-                plant_child.ZIndex = 8;
+                plant_child.ZIndex = 27;
             }
             else if (i == 3)
             {
                 plant_child.put_position = new Vector2(76, 310);
-                plant_child.ZIndex = 9;
+                plant_child.ZIndex = 47;
             }
             else if (i == 4)
             {
                 plant_child.put_position = new Vector2(76, 395);
-                plant_child.ZIndex = 10;
+                plant_child.ZIndex = 67;
             }
             else if (i == 5)
             {
                 plant_child.put_position = new Vector2(76, 477);
-                plant_child.ZIndex = 11;
+                plant_child.ZIndex = 87;
             }
             else if (i == 6)
             {
                 plant_child.put_position = new Vector2(76, 558);
-                plant_child.ZIndex = 12;
+                plant_child.ZIndex = 107;
             }
             plant_child.player_put = false;
             //plant_child._Ready();//Warning:Can't Add Child

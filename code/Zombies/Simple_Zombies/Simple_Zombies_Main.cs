@@ -7,7 +7,6 @@ public class Simple_Zombies_Main : Normal_Zombies
     private bool has_lose_Head = false;
     public float speed = -1f*(float)GD.RandRange(0.1,0.2);
     public bool eating = false;
-    private bool has_touched = false;
     public int hurt_time = 0;
     public override void _Ready()
     {
@@ -106,7 +105,6 @@ public class Simple_Zombies_Main : Normal_Zombies
                     }
                     else
                     {
-                        has_touched = true;
                         Plants_Area_2D_List.Add(plant_area2D);
                     }
                 }
@@ -114,7 +112,6 @@ public class Simple_Zombies_Main : Normal_Zombies
                 {
                     if (plant_area2D.has_planted)
                     {
-                        has_touched = true;
                         Plants_Area_2D_List.Add(plant_area2D);
                     }
                 }
@@ -152,6 +149,10 @@ public class Simple_Zombies_Main : Normal_Zombies
         {
             Crash_Area_2D_List.Add((Crash_Area_2D)area2D);
         }
+        if (area2D.Area2D_type == "Eating_Flower")
+        {
+            Eating_Flower_Area_2D_List.Add((Eating_Flower_Area)area2D);
+        }
     }
     public async void Plants_Exited(Control_Area_2D area2D)
     {
@@ -161,10 +162,10 @@ public class Simple_Zombies_Main : Normal_Zombies
             if (true/*plant_area2D.plants_type == "Normal"*/)
             {
                 Plants_Area_2D_List.Remove(plant_area2D);
-                if (!this.has_planted || !plant_area2D.has_planted || Plants_Area_2D_List.Count != 0) 
+                /*if (!this.has_planted || !plant_area2D.has_planted || Plants_Area_2D_List.Count != 0) 
                 {
                     has_touched = false;
-                }
+                }*/
                 if (this.has_planted)
                 {
                     if (Plants_Area_2D_List.Count == 0)
@@ -289,6 +290,10 @@ public class Simple_Zombies_Main : Normal_Zombies
             var Boom_area2D = (Normal_Boom_Area)area2D;
             Boom_Area_2D_List.Remove(Boom_area2D);
         }
+        if (area2D.Area2D_type == "Eating_Flower")
+        {
+            Eating_Flower_Area_2D_List.Remove((Eating_Flower_Area)area2D);
+        }
     }
     public void Dock_Enter(Control_Area_2D area2D)
     {
@@ -297,7 +302,6 @@ public class Simple_Zombies_Main : Normal_Zombies
             var area2D_Grid = (Background_Grid_Main)area2D;
             Area_Vector2 = area2D_Grid.GlobalPosition;
             dock_area_2d = area2D_Grid;
-            this.ZIndex = area2D_Grid.pos[0] + 6;
         }
     }
     public override void _Process(float delta)
@@ -317,6 +321,10 @@ public class Simple_Zombies_Main : Normal_Zombies
         if (Android_Timer.IsStopped() && Public_Main.for_Android && !Input.IsActionJustReleased("Left_Mouse"))
         {
             Is_Double_Click = false;
+        }
+        if (on_lock_grid && dock_area_2d != null)
+        {
+            ZIndex = normal_ZIndex + 20 * (dock_area_2d.pos[0] - 1);
         }
         if (!has_planted)
         {
@@ -402,77 +410,10 @@ public class Simple_Zombies_Main : Normal_Zombies
             {
                 GetNode<AnimationPlayer>("Main/Walk").Stop();
             }
-            if (has_touched && Plants_Area_2D_List.Count != 0) 
-            {
-                if (Plants_Area_2D_List[0].has_planted)
-                {
-                    Top_Area_2D = Plants_Area_2D_List[0];
-                }
-                else
-                {
-                    Top_Area_2D = null;
-                }
-                for (int i = 0; i < Plants_Area_2D_List.Count; i++)
-                {
-                    if (Plants_Area_2D_List[i].has_planted)
-                    {
-                        has_touched = false;
-                        if (Top_Area_2D == null)
-                        {
-                            Top_Area_2D = Plants_Area_2D_List[i];
-                        }
-                        else
-                        {
-                            if (Plants_Area_2D_List[i].Sec_Info == "Zombies")
-                            {
-                                Top_Area_2D = Plants_Area_2D_List[i];
-                            }
-                            else
-                            {
-                                if (Top_Area_2D.plants_type == Plants_Area_2D_List[i].plants_type)
-                                {
-                                    if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
-                                    {
-                                        Top_Area_2D = Plants_Area_2D_List[i];
-                                    }
-                                    else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
-                                    {
-                                        if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
-                                        {
-                                            Top_Area_2D = Plants_Area_2D_List[i];
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    if (Top_Area_2D.plants_type == "Casing")
-                                    {
-                                        Top_Area_2D = Plants_Area_2D_List[i];
-                                    }
-                                    else if (Plants_Area_2D_List[i].plants_type == "Casing")
-                                    { }
-                                    else if (Top_Area_2D.plants_type == "Normal" && Plants_Area_2D_List[i].plants_type != "Casing")
-                                    {
-                                        Top_Area_2D = Plants_Area_2D_List[i];
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                GetNode<Normal_Zombies_Area>("Main/Zombies_Area").Choose_Plants_Area = Top_Area_2D;
-                if (Top_Area_2D != null && !has_lose_Head)
-                {
-                    eating = true;
-                    GetNode<AnimationPlayer>("Main/Walk").Stop();
-                    GetNode<AnimationPlayer>("Main/Eating").Play("Eating");
-                }
-            }
-            if (Top_Area_2D != null)
+            if (true/*Top_Area_2D != null*//*无效*/)
             { 
-                if (!Top_Area_2D.Monitorable)
+                if (true/*!Top_Area_2D.Monitorable*/)
                 {
-                    Plants_Area_2D_List.Remove(Top_Area_2D);
                     if (Plants_Area_2D_List.Count != 0)
                     {
                         if (Plants_Area_2D_List[0].has_planted)
@@ -485,9 +426,9 @@ public class Simple_Zombies_Main : Normal_Zombies
                         }
                         for (int i = 0; i < Plants_Area_2D_List.Count; i++)
                         {
-                            if (Plants_Area_2D_List[i].has_planted)
+                            if (Plants_Area_2D_List[i].has_planted && Plants_Area_2D_List[i].Monitorable) 
                             {
-                                has_touched = false;
+                                //has_touched = false;时代余辉
                                 if (Top_Area_2D == null)
                                 {
                                     Top_Area_2D = Plants_Area_2D_List[i];
@@ -683,6 +624,21 @@ public class Simple_Zombies_Main : Normal_Zombies
                         }
                         Crash_Area_2D_List.RemoveAt(i);
                         i--;
+                    }
+                }
+            }
+            GetNode<Normal_Zombies_Area>("Main/Zombies_Area").health = this.health;
+            if (Eating_Flower_Area_2D_List.Count != 0)
+            {
+                for (int i = 0; i < Eating_Flower_Area_2D_List.Count; i++)
+                {
+                    if (Eating_Flower_Area_2D_List[i].Choose_Eating_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Zombies_Area") && has_planted && Eating_Flower_Area_2D_List[i].can_eat) 
+                    {
+                        if (!GetNode<AnimationPlayer>("Be_Eated").IsPlaying())
+                        {
+                            GetNode<AnimationPlayer>("Be_Eated").Play("Eat");
+                        }
+                        break;
                     }
                 }
             }

@@ -28,7 +28,9 @@ public class Normal_Zombies : Node2D
     public List<Normal_Boom_Area> Boom_Area_2D_List = new List<Normal_Boom_Area>();
     public List<C2H5OH_Died_Fire_Area> C2H5OH_Fire_Area_2D_List = new List<C2H5OH_Died_Fire_Area>();
     public List<Crash_Area_2D> Crash_Area_2D_List = new List<Crash_Area_2D>();
+    public List<Eating_Flower_Area> Eating_Flower_Area_2D_List = new List<Eating_Flower_Area>();
     //
     public int health = 270;
     public float speed_x = 1f;
+    [Export] public int normal_ZIndex = 7;
 }

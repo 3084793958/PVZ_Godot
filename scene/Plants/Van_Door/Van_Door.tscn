@@ -280,7 +280,7 @@ margin_bottom = 40.0
 rect_pivot_offset = Vector2( 40, 40 )
 
 [node name="Help" type="Node2D" parent="Dock"]
-z_index = 18
+z_index = 118
 z_as_relative = false
 
 [node name="80" type="Control" parent="Dock/Help"]
@@ -315,7 +315,7 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Help" type="Node2D" parent="Show"]
-z_index = 18
+z_index = 118
 z_as_relative = false
 
 [node name="80" type="Control" parent="Show/Help"]

@@ -115,6 +115,10 @@ public class C_Boom_Main : Normal_Plants
         {
             Is_Double_Click = false;
         }
+        if (on_lock_grid && dock_area_2d != null)
+        {
+            ZIndex = normal_ZIndex + 20 * (dock_area_2d.pos[0] - 1);
+        }
         if (!has_planted)
         {
             if (Normal_Plants.Choosing)

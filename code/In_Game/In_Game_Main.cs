@@ -9,6 +9,7 @@ public class In_Game_Main : Node2D
     public bool allow_sun = false;
     public override async void _Ready()
     {
+        Public_Main.now_card_number = 0;
         is_playing = false;
         var Click = GetNode<AudioStreamPlayer>("button_Click");
         GetNode<AudioStreamPlayer>("Cancel").Stream.Set("loop", false);
