@@ -236,7 +236,7 @@ public class C2H5OH_Main : Normal_Plants
             {
                 if (is_fire)
                 {
-                    GetNode<Node2D>("Main/Hurt_Fire").ZIndex = dock_area_2d.pos[0] + 6;
+                    GetNode<Node2D>("Main/Hurt_Fire").ZIndex = normal_ZIndex + 20 * (dock_area_2d.pos[0] - 1) + 6;
                     if (!GetNode<AnimationPlayer>("Died2").IsPlaying())
                     {
                         dock_area_2d.Normal_Plant_List.Remove(this);

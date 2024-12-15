@@ -12,6 +12,10 @@ public class Normal_Zombies : Node2D
     //
     [Export] protected Color hurt_color;
     [Export] protected Color normal_color;
+    [Export] protected Color Ice_hurt_color;
+    [Export] protected Color Ice_normal_color;
+    public bool is_Ice = false;
+    public bool is_Lock_Ice = false;
     public bool player_put = false;
     protected bool has_planted = false;
     public bool On_Boom_Effect = false;

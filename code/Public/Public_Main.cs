@@ -145,6 +145,26 @@ static public class Public_Main
     2.5f,
     45f,
     new Tuple<int,string>(150,"res://scene/Plants/Eating_Flower/Eating_Flower.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    14,
+    "寒冰射手",
+    "生活在寒带,与豌豆射手不是一族",
+    "生活在寒带,与豌豆射手不是一族",
+    GD.Load<Texture>("res://image/Plants/Ice_Van_Door/Ice_Van_Door.png"),
+    7.5f,
+    35f,
+    new Tuple<int,string>(175,"res://scene/Plants/Ice_Van_Door/Ice_Van_Door.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    15,
+    "双发射手",
+    "发射两颗豌豆",
+    "发射两颗豌豆",
+    GD.Load<Texture>("res://image/Plants/Double_Van_Door/Double_Van_Door.png"),
+    5f,
+    20f,
+    new Tuple<int,string>(150,"res://scene/Plants/Double_Van_Door/Double_Van_Door.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Plants_Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>

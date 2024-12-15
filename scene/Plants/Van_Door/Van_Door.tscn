@@ -390,6 +390,7 @@ position = Vector2( 514.25, 6 )
 shape = SubResource( 13 )
 
 [node name="Timer" type="Timer" parent="Main"]
+process_mode = 0
 wait_time = 1.5
 autostart = true
 

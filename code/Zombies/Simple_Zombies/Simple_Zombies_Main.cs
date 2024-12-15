@@ -5,7 +5,7 @@ public class Simple_Zombies_Main : Normal_Zombies
 {
     private bool has_lose_Arm = false;
     private bool has_lose_Head = false;
-    public float speed = -1f*(float)GD.RandRange(0.1,0.2);
+    public float speed = -1.5f*(float)GD.RandRange(0.1,0.2);
     public bool eating = false;
     public int hurt_time = 0;
     public override void _Ready()
@@ -120,12 +120,48 @@ public class Simple_Zombies_Main : Normal_Zombies
         if (area2D.Area2D_type == "Plants_Bullets" && has_planted)
         {
             await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
-            var bullets_area2D = (Bullets_Area)area2D;
-            if (bullets_area2D.hurt_type == 2 || bullets_area2D.Choose_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Zombies_Area"))
+            if (area2D.Sec_Info=="Pea")
             {
-                hurt_time++;
-                this.Modulate = hurt_color;
-                health -= bullets_area2D.hurt;
+                var bullets_area2D = (Bullets_Area)area2D;
+                if (bullets_area2D.hurt_type == 2 || bullets_area2D.Choose_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Zombies_Area"))
+                {
+                    hurt_time++;
+                    if (bullets_area2D.Bullets_Type == 1)
+                    {
+                        if (is_Ice)
+                        {
+                            this.Modulate = Ice_hurt_color;
+                        }
+                        else
+                        {
+                            this.Modulate = hurt_color;
+                        }
+                    }
+                    else
+                    {
+                        this.Modulate = hurt_color;
+                    }
+                    health -= bullets_area2D.hurt;
+                }
+            }
+            else if (area2D.Sec_Info == "Ice_Pea")
+            {
+                var bullets_area2D = (Ice_Bullets_Area)area2D;
+                if (bullets_area2D.hurt_type == 2 || bullets_area2D.Choose_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Zombies_Area"))
+                {
+                    hurt_time++;
+                    this.Modulate = Ice_hurt_color;
+                    health -= bullets_area2D.hurt;
+                    is_Ice = true;
+                    if (bullets_area2D.Bullets_Type == 3)
+                    {
+                        is_Lock_Ice = true;
+                        GetNode<Sprite>("Main/Ice_Lock").Show();
+                        speed_x = 0f;
+                        GetNode<Timer>("Ice_Lock_Timer").Start();
+                    }
+                    GetNode<Timer>("Ice_Timer").Start();
+                }
             }
         }
         if (area2D.Area2D_type == "Plants_Boom")
@@ -252,17 +288,55 @@ public class Simple_Zombies_Main : Normal_Zombies
         if (area2D.Area2D_type == "Plants_Bullets")
         {
             await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
-            var bullets_area2D = (Bullets_Area)area2D;
-            if (bullets_area2D.hurt_type == 2 || bullets_area2D.Choose_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Zombies_Area"))
+            if (area2D.Sec_Info == "Pea")
             {
-                hurt_time--;
-                if (hurt_time == 0)
+                var bullets_area2D = (Bullets_Area)area2D;
+                if (bullets_area2D.hurt_type == 2 || bullets_area2D.Choose_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Zombies_Area"))
                 {
-                    this.Modulate = normal_color;
+                    hurt_time--;
+                    if (hurt_time == 0)
+                    {
+                        if (bullets_area2D.Bullets_Type == 1)
+                        {
+                            if (is_Ice)
+                            {
+                                this.Modulate = Ice_normal_color;
+                            }
+                            else
+                            {
+                                this.Modulate = normal_color;
+                            }
+                        }
+                        else
+                        {
+                            this.Modulate = normal_color;
+                        }
+                    }
+                    else if (hurt_time < 0)
+                    {
+                        hurt_time = 0;
+                    }
+                    if (bullets_area2D.Bullets_Type != 1)
+                    {
+                        is_Ice = false;
+                        is_Lock_Ice = false;
+                    }
                 }
-                else if (hurt_time < 0)
+            }
+            else if (area2D.Sec_Info == "Ice_Pea")
+            {
+                var bullets_area2D = (Ice_Bullets_Area)area2D;
+                if (bullets_area2D.hurt_type == 2 || bullets_area2D.Choose_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Zombies_Area"))
                 {
-                    hurt_time = 0;
+                    hurt_time--;
+                    if (hurt_time == 0)
+                    {
+                        this.Modulate = Ice_normal_color;
+                    }
+                    else if (hurt_time < 0)
+                    {
+                        hurt_time = 0;
+                    }
                 }
             }
         }
@@ -520,7 +594,14 @@ public class Simple_Zombies_Main : Normal_Zombies
             {
                 has_lose_Head = true;
                 GetNode<Normal_Zombies_Area>("Main/Zombies_Area").has_lose_head = true;
-                GetNode<AnimationPlayer>("Main/Lose_Head").Play("Lose_Head");
+                if (is_Ice)
+                {
+                    GetNode<AnimationPlayer>("Main/Lose_Head_ICE").Play("Lose_Head");
+                }
+                else
+                {
+                    GetNode<AnimationPlayer>("Main/Lose_Head").Play("Lose_Head");
+                }
             }
             if (Boom_Area_2D_List.Count != 0)
             {
@@ -556,6 +637,8 @@ public class Simple_Zombies_Main : Normal_Zombies
                             if (!this.On_Boom_Effect)
                             {
                                 this.Modulate = hurt_color;
+                                is_Ice = false;
+                                is_Lock_Ice = false;
                             }
                         }
                     }
@@ -565,7 +648,14 @@ public class Simple_Zombies_Main : Normal_Zombies
                 {
                     if (hurt_time <= 0 && !this.On_Boom_Effect)
                     {
-                        this.Modulate = normal_color;
+                        if (is_Ice)
+                        {
+                            this.Modulate = Ice_normal_color;
+                        }
+                        else
+                        {
+                            this.Modulate = normal_color;
+                        }
                     }
                 }
             }
@@ -581,7 +671,14 @@ public class Simple_Zombies_Main : Normal_Zombies
                             health -= 5;
                             if (!this.On_Boom_Effect)
                             {
-                                this.Modulate = hurt_color;
+                                if (is_Ice)
+                                {
+                                    this.Modulate = Ice_hurt_color;
+                                }
+                                else
+                                {
+                                    this.Modulate = hurt_color;
+                                }
                             }
                         }
                     }
@@ -591,7 +688,14 @@ public class Simple_Zombies_Main : Normal_Zombies
                 {
                     if (hurt_time <= 0 && !this.On_Boom_Effect)
                     {
-                        this.Modulate = normal_color;
+                        if (is_Ice)
+                        {
+                            this.Modulate = Ice_normal_color;
+                        }
+                        else
+                        {
+                            this.Modulate = normal_color;
+                        }
                     }
                 }
             }
@@ -642,6 +746,42 @@ public class Simple_Zombies_Main : Normal_Zombies
                     }
                 }
             }
+            if (!has_lose_Head)
+            {
+                if (this.Modulate == normal_color)
+                {
+                    is_Ice = false;
+                    speed_x = 1f;
+                }
+                else if (this.Modulate == Ice_normal_color)
+                {
+                    is_Ice = true;
+                    if (is_Lock_Ice)
+                    {
+                        speed_x = 0f;
+                    }
+                    else
+                    {
+                        speed_x = 0.35f;
+                    }
+                }
+            }
+        }
+    }
+    public void Ice_Timer_timeout()
+    {
+        if (!has_lose_Head)
+        {
+            is_Ice = false;
+            this.Modulate = normal_color;
+        }
+    }
+    public void Ice_Lock_Timer_timeout()
+    {
+        if (!has_lose_Head)
+        {
+            is_Lock_Ice = false;
+            GetNode<Sprite>("Main/Ice_Lock").Hide();
         }
     }
 }
