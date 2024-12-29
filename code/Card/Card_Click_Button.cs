@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Card_Click_Button : Button
+public class Card_Click_Button : Node2D
 {
     public Control Card_Node=null;
     public string plant_path = null;
@@ -20,8 +20,6 @@ public class Card_Click_Button : Button
         var button_Click = GetNode<AudioStreamPlayer>("../button_Click");
         button_Click.Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Seed").Stream.Set("loop", false);
-        Connect("mouse_entered", this, "Mouse_EnterEvent");
-        Connect("mouse_exited", this, "Mouse_ExitEvent");
     }
     public void Mouse_EnterEvent()
     {
@@ -33,7 +31,7 @@ public class Card_Click_Button : Button
         var Info = GetNode<Node2D>("../Info");
         Info.Hide();
     }
-    public async override void _Pressed()
+    public async void  Button_Pressed()
     {
         if (In_Game_Main.is_playing)
         {

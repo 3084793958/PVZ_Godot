@@ -170,16 +170,19 @@ rect_rotation = 180.0
 rect_scale = Vector2( -1, 1 )
 color = Color( 0, 0, 0, 0.843137 )
 
-[node name="Click_Button" type="Button" parent="Main/Main"]
-margin_right = 52.0
-margin_bottom = 74.0
-rect_min_size = Vector2( 52, 74 )
-flat = true
+[node name="Click_Button" type="Node2D" parent="Main/Main"]
+z_index = 117
 script = ExtResource( 6 )
 
 [node name="Seed" type="AudioStreamPlayer" parent="Main/Main/Click_Button"]
 stream = ExtResource( 7 )
 script = ExtResource( 8 )
+
+[node name="Click_Button" type="Button" parent="Main/Main/Click_Button"]
+margin_right = 52.0
+margin_bottom = 74.0
+rect_min_size = Vector2( 52, 74 )
+flat = true
 
 [node name="button_Click" type="AudioStreamPlayer" parent="Main/Main"]
 stream = ExtResource( 3 )
@@ -259,4 +262,7 @@ custom_fonts/font = SubResource( 7 )
 text = "Cd:30s"
 align = 1
 
+[connection signal="mouse_entered" from="Main/Main/Click_Button/Click_Button" to="Main/Main/Click_Button" method="Mouse_EnterEvent"]
+[connection signal="mouse_exited" from="Main/Main/Click_Button/Click_Button" to="Main/Main/Click_Button" method="Mouse_ExitEvent"]
+[connection signal="pressed" from="Main/Main/Click_Button/Click_Button" to="Main/Main/Click_Button" method="Button_Pressed"]
 [connection signal="timeout" from="Main/Main/Timer" to="Main/Main/Click_Button" method="Wait_TimerOut"]

@@ -142,7 +142,7 @@ public class Godot_Main : Normal_Plants
                 {
                     card_parent_Button.Set_ColorRect_2(false);
                     Normal_Plants.Choosing = false;
-                    if (on_lock_grid && ((In_Game_Main.Sun_Number >= card_parent_Button.sun && dock_area_2d.Normal_Plant_List.Count == 0 && dock_area_2d.type == 1) || Public_Main.debuging))
+                    if (on_lock_grid && ((In_Game_Main.Sun_Number >= card_parent_Button.sun && dock_area_2d.Normal_Plant_List.Count == 0 && dock_area_2d.now_type[dock_area_2d.now_type.Count - 1] == 1) || Public_Main.debuging))
                     {
                         Is_Double_Click = false;
                         has_planted = true;
@@ -152,7 +152,7 @@ public class Godot_Main : Normal_Plants
                         In_Game_Main.Sun_Number -= card_parent_Button.sun;
                         In_Game_Main.Update_Sun(this);
                         card_parent_Button.now_time = card_parent_Button.wait_time;
-                        if (dock_area_2d.type == 1)
+                        if (dock_area_2d.now_type[dock_area_2d.now_type.Count - 1] == 1)
                         {
                             if (GD.Randf() > 0.5f)
                             {
@@ -280,12 +280,12 @@ public class Godot_Main : Normal_Plants
             }
             else if (i == 3)
             {
-                plant_child.put_position = new Vector2(76, 310);
+                plant_child.put_position = new Vector2(76, 299);
                 plant_child.ZIndex = 47;
             }
             else if (i == 4)
             {
-                plant_child.put_position = new Vector2(76, 395);
+                plant_child.put_position = new Vector2(76, 376);
                 plant_child.ZIndex = 67;
             }
             else if (i == 5)

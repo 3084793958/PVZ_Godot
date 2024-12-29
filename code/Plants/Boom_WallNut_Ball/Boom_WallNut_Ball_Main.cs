@@ -166,7 +166,7 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
                 {
                     card_parent_Button.Set_ColorRect_2(false);
                     Normal_Plants.Choosing = false;
-                    if (on_lock_grid && ((In_Game_Main.Sun_Number >= card_parent_Button.sun && dock_area_2d.Normal_Plant_List.Count == 0 && dock_area_2d.type == 1) || Public_Main.debuging))
+                    if (on_lock_grid && ((In_Game_Main.Sun_Number >= card_parent_Button.sun && dock_area_2d.Normal_Plant_List.Count == 0 && dock_area_2d.now_type[dock_area_2d.now_type.Count - 1] == 1) || Public_Main.debuging))
                     {
                         Is_Double_Click = false;
                         has_planted = true;
@@ -175,7 +175,7 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
                         In_Game_Main.Sun_Number -= card_parent_Button.sun;
                         In_Game_Main.Update_Sun(this);
                         card_parent_Button.now_time = card_parent_Button.wait_time;
-                        if (dock_area_2d.type == 1)
+                        if (dock_area_2d.now_type[dock_area_2d.now_type.Count - 1] == 1)
                         {
                             if (GD.Randf() > 0.5f)
                             {
@@ -268,9 +268,9 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
                             if (!Zombies_Area_2D_List[i].has_lose_head&&Zombies_Area_2D_List[i].has_plant)
                             {
                                 can_touch = true;
-                                if (touch_ZIndex != Zombies_Area_2D_List[i].GetParent().GetParent<Node2D>().ZIndex /*&& GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area == Zombies_Area_2D_List[i]*/)
+                                if (touch_ZIndex != Zombies_Area_2D_List[i].GetParent().GetParent().GetParent<Node2D>().ZIndex /*&& GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area == Zombies_Area_2D_List[i]*/)
                                 {
-                                    touch_ZIndex = Zombies_Area_2D_List[i].GetParent().GetParent<Node2D>().ZIndex;
+                                    touch_ZIndex = Zombies_Area_2D_List[i].GetParent().GetParent().GetParent<Node2D>().ZIndex;
                                     speed_x = 0;
                                     GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
                                     GetNode<Normal_Boom_Area>("Main/Boom").can_do = true;

@@ -67,7 +67,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 29.985, 40 )
+extents = Vector2( 40, 40 )
 
 [sub_resource type="Animation" id=14]
 resource_name = "Eat"
@@ -470,7 +470,7 @@ scale = Vector2( 0.667, 0.667 )
 script = ExtResource( 17 )
 
 [node name="Shape" type="CollisionShape2D" parent="Main/Shovel_Area"]
-position = Vector2( -5.997, 0 )
+position = Vector2( 4.58956e-05, 0 )
 shape = SubResource( 6 )
 
 [node name="Eat" type="AnimationPlayer" parent="Main"]

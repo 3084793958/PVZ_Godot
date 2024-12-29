@@ -166,7 +166,7 @@ public class Mg_Main : Normal_Plants
                 {
                     card_parent_Button.Set_ColorRect_2(false);
                     Normal_Plants.Choosing = false;
-                    if (on_lock_grid && ((In_Game_Main.Sun_Number>=card_parent_Button.sun&&dock_area_2d.Top_Plant_List.Count == 0 && dock_area_2d.type == 1) || Public_Main.debuging))
+                    if (on_lock_grid && ((In_Game_Main.Sun_Number>=card_parent_Button.sun&&dock_area_2d.Top_Plant_List.Count == 0 && dock_area_2d.now_type[dock_area_2d.now_type.Count - 1] == 1) || Public_Main.debuging))
                     {
                         Is_Double_Click = false;
                         has_planted = true;
@@ -176,7 +176,7 @@ public class Mg_Main : Normal_Plants
                         In_Game_Main.Sun_Number -= card_parent_Button.sun;
                         In_Game_Main.Update_Sun(this);
                         card_parent_Button.now_time = card_parent_Button.wait_time;
-                        if (dock_area_2d.type == 1)
+                        if (dock_area_2d.now_type[dock_area_2d.now_type.Count - 1] == 1)
                         {
                             if (GD.Randf() > 0.5f)
                             {

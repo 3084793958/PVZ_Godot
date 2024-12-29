@@ -9,6 +9,8 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
     public bool eating = false;
     private bool has_touched = false;
     public int hurt_time = 0;
+    private bool in_water = false;
+    private bool now_in_water = false;
     public override void _Ready()
     {
         this.AddChild(Android_Timer);
@@ -18,9 +20,9 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
-        GetNode<AudioStreamPlayer>("Main/Eat_Sound1").Stream.Set("loop", false);
-        GetNode<AudioStreamPlayer>("Main/Eat_Sound2").Stream.Set("loop", false);
-        GetNode<AudioStreamPlayer>("Main/Fall").Stream.Set("loop", false);
+        GetNode<AudioStreamPlayer>("Main/Main/Eat_Sound1").Stream.Set("loop", false);
+        GetNode<AudioStreamPlayer>("Main/Main/Eat_Sound2").Stream.Set("loop", false);
+        GetNode<AudioStreamPlayer>("Main/Main/Fall").Stream.Set("loop", false);
         health = 270;
         if (!player_put)
         {
@@ -28,9 +30,9 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
             GetNode<Control>("Dock").Hide();
             GetNode<Control>("Show").Hide();
             GetNode<Control>("Main").Show();
-            GetNode<AnimationPlayer>("Main/Walk").Play("Walk");
+            GetNode<AnimationPlayer>("Main/Main/Walk").Play("Walk");
             Position = put_position;
-            GetNode<Normal_Plants_Zombies_Area>("Main/Zombies_Area").has_planted = true;
+            GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").has_planted = true;
         }
     }
     public /*async*/ void Plants_Entered(Control_Area_2D area2D)
@@ -93,12 +95,12 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                                 }
                             }
                         }
-                        GetNode<Normal_Plants_Zombies_Area>("Main/Zombies_Area").Choose_Zombies_Area = Top_Area_2D;
+                        GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").Choose_Zombies_Area = Top_Area_2D;
                         if (Top_Area_2D != null)
                         {
                             eating = true;
-                            GetNode<AnimationPlayer>("Main/Walk").Stop();
-                            GetNode<AnimationPlayer>("Main/Eating").Play("Eating");
+                            GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
+                            GetNode<AnimationPlayer>("Main/Main/Eating").Play("Eating");
                         }
                     }
                     else
@@ -121,7 +123,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
         {
             await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
             var bullets_area2D = (Bullets_Area)area2D;
-            if (bullets_area2D.hurt_type == 2 || bullets_area2D.Choose_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Zombies_Area"))
+            if (bullets_area2D.hurt_type == 2 || bullets_area2D.Choose_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area"))
             {
                 hurt_time++;
                 this.Modulate = hurt_color;
@@ -163,8 +165,8 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                         eating = false;
                         if (health >= 90)
                         {
-                            GetNode<AnimationPlayer>("Main/Walk").Play("Walk");
-                            GetNode<AnimationPlayer>("Main/Eating").Stop();
+                            GetNode<AnimationPlayer>("Main/Main/Walk").Play("Walk");
+                            GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
                         }
 
                     }
@@ -219,14 +221,14 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                             }
                         }
                     }
-                    GetNode<Normal_Plants_Zombies_Area>("Main/Zombies_Area").Choose_Zombies_Area = Top_Area_2D;
+                    GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").Choose_Zombies_Area = Top_Area_2D;
                     if (Top_Area_2D == null)
                     {
                         eating = false;
                         if (health >= 90)
                         {
-                            GetNode<AnimationPlayer>("Main/Walk").Play("Walk");
-                            GetNode<AnimationPlayer>("Main/Eating").Stop();
+                            GetNode<AnimationPlayer>("Main/Main/Walk").Play("Walk");
+                            GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
                         }
                     }
                 }
@@ -236,7 +238,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
         {
             await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
             var bullets_area2D = (Bullets_Area)area2D;
-            if (bullets_area2D.hurt_type == 2 || bullets_area2D.Choose_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Zombies_Area"))
+            if (bullets_area2D.hurt_type == 2 || bullets_area2D.Choose_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area"))
             {
                 hurt_time--;
                 if (hurt_time == 0)
@@ -268,6 +270,11 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
             var area2D_Grid = (Background_Grid_Main)area2D;
             Area_Vector2 = area2D_Grid.GlobalPosition;
             dock_area_2d = area2D_Grid;
+        }
+        if (area2D.Area2D_type == "Grid")
+        {
+            var area2D_Grid = (Background_Grid_Main)area2D;
+            in_water = area2D_Grid.type == 2;
         }
     }
     public override void _Process(float delta)
@@ -326,7 +333,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                     {
                         Is_Double_Click = false;
                         has_planted = true;
-                        GetNode<Normal_Plants_Zombies_Area>("Main/Zombies_Area").has_planted = true;
+                        GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").has_planted = true;
                         dock_control.Hide();
                         this.GlobalPosition = Area_Vector2;
                         In_Game_Main.Sun_Number -= card_parent_Button.sun;
@@ -350,7 +357,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                         GetNode<Control>("Dock").Hide();
                         GetNode<Control>("Show").Hide();
                         GetNode<Control>("Main").Show();
-                        GetNode<AnimationPlayer>("Main/Walk").Play("Walk");
+                        GetNode<AnimationPlayer>("Main/Main/Walk").Play("Walk");
                     }
                     else
                     {
@@ -368,13 +375,23 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
         }
         else
         {
-            if (!eating && GetNode<AnimationPlayer>("Main/Walk").IsPlaying() && !On_Boom_Effect && !Is_Shining)
+            if (in_water && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !now_in_water)
+            {
+                GetNode<AnimationPlayer>("In_Water").Play("Water");
+                now_in_water = true;
+            }
+            if (!in_water && !GetNode<AnimationPlayer>("Out_Water").IsPlaying() && now_in_water)
+            {
+                GetNode<AnimationPlayer>("Out_Water").Play("Water");
+                now_in_water = false;
+            }
+            if (!eating && GetNode<AnimationPlayer>("Main/Main/Walk").IsPlaying() && !On_Boom_Effect && !Is_Shining)
             {
                 this.Position += new Vector2(speed * speed_x, 0);
             }
             if (On_Boom_Effect)
             {
-                GetNode<AnimationPlayer>("Main/Walk").Stop();
+                GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
             }
             if (has_touched && Zombies_Area_2D_List.Count != 0)
             {
@@ -427,12 +444,12 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                         }
                     }
                 }
-                GetNode<Normal_Plants_Zombies_Area>("Main/Zombies_Area").Choose_Zombies_Area = Top_Area_2D;
+                GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").Choose_Zombies_Area = Top_Area_2D;
                 if (Top_Area_2D != null && !has_lose_Head)
                 {
                     eating = true;
-                    GetNode<AnimationPlayer>("Main/Walk").Stop();
-                    GetNode<AnimationPlayer>("Main/Eating").Play("Eating");
+                    GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
+                    GetNode<AnimationPlayer>("Main/Main/Eating").Play("Eating");
                 }
             }
             if (Top_Area_2D != null)
@@ -491,12 +508,12 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                                 }
                             }
                         }
-                        GetNode<Normal_Plants_Zombies_Area>("Main/Zombies_Area").Choose_Zombies_Area = Top_Area_2D;
+                        GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").Choose_Zombies_Area = Top_Area_2D;
                         if (Top_Area_2D != null && !has_lose_Head)
                         {
                             eating = true;
-                            GetNode<AnimationPlayer>("Main/Walk").Stop();
-                            GetNode<AnimationPlayer>("Main/Eating").Play("Eating");
+                            GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
+                            GetNode<AnimationPlayer>("Main/Main/Eating").Play("Eating");
                         }
                     }
                     else
@@ -505,8 +522,8 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                         if (health >= 90)
                         {
                             eating = false;
-                            GetNode<AnimationPlayer>("Main/Walk").Play("Walk");
-                            GetNode<AnimationPlayer>("Main/Eating").Stop();
+                            GetNode<AnimationPlayer>("Main/Main/Walk").Play("Walk");
+                            GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
                         }
                     }
                 }
@@ -515,7 +532,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
             {
                 for (int i = 0; i < Zombies_Area_2D_List.Count; i++)
                 {
-                    if (Zombies_Area_2D_List[i].Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Zombies_Area"))
+                    if (Zombies_Area_2D_List[i].Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Main/Zombies_Area"))
                     {
                         if (Zombies_Area_2D_List[i].is_eating_show && !Zombies_Area_2D_List[i].has_lose_head)
                         {
@@ -529,13 +546,13 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
             if (health < 180 && !has_lose_Arm)
             {
                 has_lose_Arm = true;
-                GetNode<AnimationPlayer>("Main/Lose_Arm").Play("Lose_Arm");
+                GetNode<AnimationPlayer>("Main/Main/Lose_Arm").Play("Lose_Arm");
             }
             if (health < 90 && !has_lose_Head)
             {
                 has_lose_Head = true;
-                GetNode<Normal_Plants_Zombies_Area>("Main/Zombies_Area").has_lose_head = true;
-                GetNode<AnimationPlayer>("Main/Lose_Head").Play("Lose_Head");
+                GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").has_lose_head = true;
+                GetNode<AnimationPlayer>("Main/Main/Lose_Head").Play("Lose_Head");
             }
             if (Boom_Area_2D_List.Count != 0)
             {
@@ -546,9 +563,9 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                         if (Boom_Area_2D_List[i].hurt >= health - 90)
                         {
                             On_Boom_Effect = true;
-                            GetNode<AnimationPlayer>("Main/Walk").Stop();
-                            GetNode<AnimationPlayer>("Main/Eating").Stop();
-                            GetNode<AnimationPlayer>("Main/Boom_Effect").Play("Boom_Effect");
+                            GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
+                            GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
+                            GetNode<AnimationPlayer>("Main/Main/Boom_Effect").Play("Boom_Effect");
                         }
                         else
                         {
@@ -561,7 +578,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
             }
             if (C2H5OH_Fire_Area_2D_List.Count != 0)
             {
-                if (GetNode<Timer>("Main/Fire_Hurt").IsStopped())
+                if (GetNode<Timer>("Main/Main/Fire_Hurt").IsStopped())
                 {
                     for (int i = 0; i < C2H5OH_Fire_Area_2D_List.Count; i++)
                     {
@@ -574,7 +591,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                             }
                         }
                     }
-                    GetNode<Timer>("Main/Fire_Hurt").Start();
+                    GetNode<Timer>("Main/Main/Fire_Hurt").Start();
                 }
                 else
                 {
@@ -586,7 +603,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
             }
             if (Shining_Area_2D_List.Count != 0)
             {
-                if (GetNode<Timer>("Main/Fire_Hurt").IsStopped())
+                if (GetNode<Timer>("Main/Main/Fire_Hurt").IsStopped())
                 {
                     for (int i = 0; i < Shining_Area_2D_List.Count; i++)
                     {
@@ -600,7 +617,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                             }
                         }
                     }
-                    GetNode<Timer>("Main/Fire_Hurt").Start();
+                    GetNode<Timer>("Main/Main/Fire_Hurt").Start();
                 }
                 else
                 {

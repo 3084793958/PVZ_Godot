@@ -69,7 +69,7 @@ static public class Public_Main
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     6,
     "硫酸",
-    "危险的东西,伤害200\n试着放上Mg",
+    "危险的东西,伤害500\n试着放上Mg",
     "MgSO4也不错",
     GD.Load<Texture>("res://image/Plants/H2SO4/H2SO4.png"),
     0f,
@@ -165,6 +165,16 @@ static public class Public_Main
     5f,
     20f,
     new Tuple<int,string>(150,"res://scene/Plants/Double_Van_Door/Double_Van_Door.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    16,
+    "莲叶",
+    "莲叶",
+    "莲叶",
+    GD.Load<Texture>("res://image/Plants/Lotus/Lotus.png"),
+    0f,
+    15f,
+    new Tuple<int,string>(25,"res://scene/Plants/Lotus/Lotus.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Plants_Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -179,6 +189,16 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(50,"res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    2,
+    "魅惑摇旗僵尸",
+    "Godot",
+    "第二个僵尸",
+    GD.Load<Texture>("res://image/Plants/Zombies/Flag_Zombies/Flag_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(100,"res://scene/Plants/Zombies/Flag_Zombies/Plants_Flag_Zombies.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -193,6 +213,16 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(50,"res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    2,
+    "摇旗僵尸",
+    "亡语",
+    "第二个僵尸",
+    GD.Load<Texture>("res://image/Zombies/Flag_Zombies/Flag_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(100,"res://scene/Zombies/Flag_Zombies/Flag_Zombies.tscn")
     )
     };
 }

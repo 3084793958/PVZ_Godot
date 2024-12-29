@@ -5,7 +5,8 @@ public class Start_Button : Button
 {
 	public override void _Ready()
 	{
-		Connect("mouse_entered", this, "Mouse_EnterEvent");
+        this.Disabled = false;
+        Connect("mouse_entered", this, "Mouse_EnterEvent");
 		var Click = GetNode<AudioStreamPlayer>("Click");
 		Click.Stream.Set("loop", false);
 		var Hover = GetNode<AudioStreamPlayer>("Hover");
@@ -13,6 +14,7 @@ public class Start_Button : Button
 	}
 	public async override void _Pressed()
 	{
+        this.Disabled = true;
 		var Click = GetNode<AudioStreamPlayer>("Click");
 		Click.Play();
 		await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
