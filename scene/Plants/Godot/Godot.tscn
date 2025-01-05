@@ -50,11 +50,14 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 3.8, 4 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 3.8, 3.9, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "Clone_DO"
+}, {
+"args": [  ],
+"method": "Clean_Area"
 }, {
 "args": [  ],
 "method": "queue_free"
@@ -227,9 +230,8 @@ scale = Vector2( 0.1, 0.06 )
 texture = ExtResource( 18 )
 
 [node name="Head" type="Sprite" parent="Main"]
-modulate = Color( 2, 2, 2, 1 )
 position = Vector2( 40, 40 )
-scale = Vector2( 0.032, 0.032 )
+scale = Vector2( 0.159748, 0.159748 )
 texture = ExtResource( 1 )
 
 [node name="Shovel_Area" type="Area2D" parent="Main"]

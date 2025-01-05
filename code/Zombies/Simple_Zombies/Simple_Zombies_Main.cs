@@ -5,6 +5,7 @@ public class Simple_Zombies_Main : Normal_Zombies
 {
     private bool has_lose_Arm = false;
     private bool has_lose_Head = false;
+    private bool has_Lose_Number = false;
     public float speed = -1.5f*(float)GD.RandRange(0.1,0.2);
     public bool eating = false;
     public int hurt_time = 0;
@@ -32,6 +33,7 @@ public class Simple_Zombies_Main : Normal_Zombies
             GetNode<AnimationPlayer>("Main/Main/Walk").Play("Walk");
             Position = put_position;
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").has_plant = true;
+            In_Game_Main.Zombies_Number++;
         }
     }
     public async void Plants_Entered(Control_Area_2D area2D)
@@ -223,6 +225,10 @@ public class Simple_Zombies_Main : Normal_Zombies
         {
             Eating_Flower_Area_2D_List.Add((Eating_Flower_Area)area2D);
         }
+        if (area2D.Area2D_type == "Car")
+        {
+            Car_Area_2D_List.Add((Car_Area2D)area2D);
+        }
     }
     public async void Plants_Exited(Control_Area_2D area2D)
     {
@@ -402,6 +408,10 @@ public class Simple_Zombies_Main : Normal_Zombies
         {
             Eating_Flower_Area_2D_List.Remove((Eating_Flower_Area)area2D);
         }
+        if (area2D.Area2D_type == "Car")
+        {
+            Car_Area_2D_List.Remove((Car_Area2D)area2D);
+        }
     }
     public void Dock_Enter(Control_Area_2D area2D)
     {
@@ -498,6 +508,7 @@ public class Simple_Zombies_Main : Normal_Zombies
                         GetNode<Control>("Show").Hide();
                         GetNode<Control>("Main").Show();
                         GetNode<AnimationPlayer>("Main/Main/Walk").Play("Walk");
+                        In_Game_Main.Zombies_Number++;
                     }
                     else
                     {
@@ -515,6 +526,15 @@ public class Simple_Zombies_Main : Normal_Zombies
         }
         else
         {
+            if (Position.x < -1437 / 2)
+            {
+                this.QueueFree();
+                this.Remove_Zombies_Number();
+            }
+            if (!In_Game_Main.has_Lost_Brain && Position.x < -20)
+            {
+                In_Game_Main.Lost_Brain = true;
+            }
             if (in_water && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !now_in_water)
             {
                 GetNode<AnimationPlayer>("In_Water").Play("Water");
@@ -795,6 +815,28 @@ public class Simple_Zombies_Main : Normal_Zombies
                     }
                 }
             }
+            if (Car_Area_2D_List.Count != 0)
+            {
+                if (this.has_planted)
+                {
+                    this.has_lose_Head = true;
+                    this.eating = false;
+                    this.speed = 0f;
+                    GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
+                    GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
+                    GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").has_lose_head = true;
+                    if (is_Ice)
+                    {
+                        this.Modulate = this.Ice_hurt_color;
+                        GetNode<AnimationPlayer>("Main/Main/Lose_Head_ICE").Play("Lose_Head");
+                    }
+                    else
+                    {
+                        this.Modulate = this.hurt_color;
+                        GetNode<AnimationPlayer>("Main/Main/Lose_Head").Play("Lose_Head");
+                    }
+                }
+            }
             if (!has_lose_Head)
             {
                 if (this.Modulate == normal_color)
@@ -823,6 +865,14 @@ public class Simple_Zombies_Main : Normal_Zombies
         {
             is_Ice = false;
             this.Modulate = normal_color;
+        }
+    }
+    public void Remove_Zombies_Number()
+    {
+        if (!has_Lose_Number)
+        {
+            has_Lose_Number = true;
+            In_Game_Main.Zombies_Number--;
         }
     }
     public void Ice_Lock_Timer_timeout()

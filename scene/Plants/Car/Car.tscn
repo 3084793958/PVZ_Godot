@@ -1,0 +1,146 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://image/Plants/Car/Car1.png" type="Texture" id=1]
+[ext_resource path="res://image/Plants/Car/Path/LawnMower_wheel1.png" type="Texture" id=2]
+[ext_resource path="res://image/Plants/Car/Path/LawnMower_wheel2.png" type="Texture" id=3]
+[ext_resource path="res://code/Control_Area_2D/Car_Area2D.cs" type="Script" id=4]
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=5]
+[ext_resource path="res://image/Plants/Car/Path/LawnMower_pull.png" type="Texture" id=6]
+[ext_resource path="res://image/Plants/Car/Path/LawnMower_engine.png" type="Texture" id=7]
+[ext_resource path="res://image/Plants/Car/Path/LawnMower_body.png" type="Texture" id=8]
+[ext_resource path="res://code/Plants/Car/Car_Main.cs" type="Script" id=9]
+[ext_resource path="res://sound/Plants/Car/lawnmower.ogg" type="AudioStream" id=10]
+
+[sub_resource type="Animation" id=3]
+resource_name = "Run"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("LawnMowerWheel1:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("LawnMowerWheel2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 40, 40 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Start"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Main/Car1:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.5 ),
+"transitions": PoolRealArray( 0, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -100, 0 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Speed"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:Speed")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 1 ),
+"transitions": PoolRealArray( 0, 1, 1 ),
+"update": 0,
+"values": [ 5.0, 2.0, 5.0 ]
+}
+
+[node name="Car" type="Node2D"]
+position = Vector2( -36, -39 )
+z_index = 2
+z_as_relative = false
+script = ExtResource( 9 )
+
+[node name="Car" type="Control" parent="."]
+rect_scale = Vector2( 0.5, 0.5 )
+
+[node name="Car1" type="Sprite" parent="Car"]
+visible = false
+texture = ExtResource( 1 )
+
+[node name="Main" type="Node2D" parent="Car"]
+
+[node name="Car1" type="Node2D" parent="Car/Main"]
+position = Vector2( 0, 10 )
+scale = Vector2( 1.39394, 1.39394 )
+
+[node name="LawnMowerWheel3" type="Sprite" parent="Car/Main/Car1"]
+position = Vector2( 36, 6 )
+texture = ExtResource( 3 )
+
+[node name="LawnMowerWheel4" type="Sprite" parent="Car/Main/Car1"]
+position = Vector2( 0, 6 )
+texture = ExtResource( 3 )
+
+[node name="LawnMowerPull" type="Sprite" parent="Car/Main/Car1"]
+position = Vector2( -24, 6 )
+texture = ExtResource( 6 )
+
+[node name="LawnMowerBody" type="Sprite" parent="Car/Main/Car1"]
+position = Vector2( 0, -6 )
+texture = ExtResource( 8 )
+
+[node name="LawnMowerEngine" type="Sprite" parent="Car/Main/Car1"]
+position = Vector2( 18, 4 )
+scale = Vector2( 1.29298, 1.29298 )
+texture = ExtResource( 7 )
+
+[node name="LawnMowerWheel1" type="Sprite" parent="Car/Main/Car1"]
+position = Vector2( 34, 32 )
+texture = ExtResource( 2 )
+
+[node name="LawnMowerWheel2" type="Sprite" parent="Car/Main/Car1"]
+position = Vector2( -10, 32 )
+texture = ExtResource( 2 )
+
+[node name="Run" type="AnimationPlayer" parent="Car/Main/Car1"]
+anims/Run = SubResource( 3 )
+
+[node name="Car_Area2D" type="Area2D" parent="Car/Main"]
+script = ExtResource( 4 )
+
+[node name="Shape" type="CollisionShape2D" parent="Car/Main/Car_Area2D"]
+position = Vector2( 10, 0 )
+shape = SubResource( 1 )
+
+[node name="Start" type="AnimationPlayer" parent="Car"]
+anims/Start = SubResource( 2 )
+
+[node name="Car_Run" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+script = ExtResource( 5 )
+
+[node name="Stop_Speed" type="AnimationPlayer" parent="."]
+anims/Speed = SubResource( 4 )
+
+[connection signal="area_entered" from="Car/Main/Car_Area2D" to="." method="Start_Area2D"]
+[connection signal="area_exited" from="Car/Main/Car_Area2D" to="." method="Start_Area2D_Out"]

@@ -17,4 +17,9 @@ public class Background_Grid_Main : Control_Area_2D
         pos[0] = int.Parse(this.Name);
         Area2D_type = "Grid";
     }
+    public override void _Process(float delta)
+    {
+        this.Monitoring = GetParent().GetParent().GetParent<TextureRect>().Visible;
+        this.Monitorable = GetParent().GetParent().GetParent<TextureRect>().Visible;
+    }
 }

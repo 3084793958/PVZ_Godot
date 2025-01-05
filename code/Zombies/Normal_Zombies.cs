@@ -33,6 +33,7 @@ public class Normal_Zombies : Node2D
     public List<C2H5OH_Died_Fire_Area> C2H5OH_Fire_Area_2D_List = new List<C2H5OH_Died_Fire_Area>();
     public List<Crash_Area_2D> Crash_Area_2D_List = new List<Crash_Area_2D>();
     public List<Eating_Flower_Area> Eating_Flower_Area_2D_List = new List<Eating_Flower_Area>();
+    public List<Car_Area2D> Car_Area_2D_List = new List<Car_Area2D>();
     //
     public int health = 270;
     public float speed_x = 1f;

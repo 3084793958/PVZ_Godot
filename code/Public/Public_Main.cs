@@ -39,7 +39,7 @@ static public class Public_Main
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     3,
     "豌豆射手",
-    "发射1颗豌豆,伤害20",
+    "发射1颗豌豆",
     "发射1颗豌豆,伤害20",
     GD.Load<Texture>("res://image/Plants/Van_Door/Van_Door.png"),
     5f,
@@ -79,7 +79,7 @@ static public class Public_Main
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     7,
     "Mg",
-    "燃烧吧!\n在点燃的酒精灯上使用,放出刺眼的光\n将僵尸速度降为0,造成40点伤害",
+    "燃烧吧!\n在点燃的酒精灯上使用,放出刺眼的光",
     "也不一定要配合酒精灯使用",
     GD.Load<Texture>("res://image/Plants/Mg/Mg.png"),
     10f,
@@ -224,5 +224,10 @@ static public class Public_Main
     0f,
     new Tuple<int,string>(100,"res://scene/Zombies/Flag_Zombies/Flag_Zombies.tscn")
     )
+    };
+    static public List<string> Zombies_Path_List = new List<string>
+    {
+        "res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn",
+        "res://scene/Zombies/Flag_Zombies/Flag_Zombies.tscn"
     };
 }

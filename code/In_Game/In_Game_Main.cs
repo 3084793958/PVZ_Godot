@@ -7,6 +7,16 @@ public class In_Game_Main : Node2D
     static public int background_number;
     static public bool is_playing=false;
     public bool allow_sun = false;
+    private string level_file = null;
+    private int Wave_number = 0;
+    private int Flag_number = 0;
+    private int now_Wave_number = 1;
+    private int now_Flag_number = 1;
+    static public int Zombies_Number = 0;
+    private bool Ended = false;
+    private bool Has_Made_Trophy = false;
+    static public bool Lost_Brain = false;
+    static public bool has_Lost_Brain = false;
     public override async void _Ready()
     {
         Public_Main.now_card_number = 0;
@@ -22,7 +32,7 @@ public class In_Game_Main : Node2D
             Error error = file.Load("user://Users/" + Public_Main.user_name + "/level_number.cfg");
             if (error == Error.Ok)
             {
-                string level_file = (string)file.GetValue("Level", "Level_Name", string.Empty);
+                level_file = (string)file.GetValue("Level", "Level_Name", string.Empty);
                 if (level_file != string.Empty)
                 {
                     ConfigFile file2 = new ConfigFile();
@@ -79,6 +89,107 @@ public class In_Game_Main : Node2D
                             Shovel_Main.Visible = Shovel;
                             Bug_Main.Visible = Bug;
                             int Card = (int)file2.GetValue("Bank","Card",13);
+                            int Car_Number = (int)file2.GetValue("Car", "Number", 5);
+                            if (background_number == 3 || background_number == 4)
+                            {
+                                for (int i = 1; i <= 6; i++)
+                                {
+                                    var scene = GD.Load<PackedScene>("res://scene/Plants/Car/Car.tscn");
+                                    var plant_child = (Car_Main)scene.Instance();
+                                    int Car_type = (int)file2.GetValue("Car", i.ToString(), 1);
+                                    if (Car_type == 0)
+                                    {
+                                        continue;
+                                    }
+                                    if (i == 1)
+                                    {
+                                        plant_child.Position = new Vector2(25, 124);
+                                        plant_child.ZIndex = 2;
+                                    }
+                                    else if (i == 2)
+                                    {
+                                        plant_child.Position = new Vector2(25, 216);
+                                        plant_child.ZIndex = 22;
+                                    }
+                                    else if (i == 3)
+                                    {
+                                        plant_child.Position = new Vector2(25, 299);
+                                        plant_child.ZIndex = 42;
+                                    }
+                                    else if (i == 4)
+                                    {
+                                        plant_child.Position = new Vector2(25, 376);
+                                        plant_child.ZIndex = 62;
+                                    }
+                                    else if (i == 5)
+                                    {
+                                        plant_child.Position = new Vector2(25, 477);
+                                        plant_child.ZIndex = 82;
+                                    }
+                                    else if (i == 6)
+                                    {
+                                        plant_child.Position = new Vector2(25, 558);
+                                        plant_child.ZIndex = 102;
+                                    }
+                                    plant_child.doing_Start = true;
+                                    plant_child.car_type = Car_type;
+                                    //plant_child._Ready();//Warning:Can't Add Child
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                            }
+                            else if (background_number == 1 || background_number == 2)
+                            {
+                                for (int i = 1; i <= 5; i++)
+                                {
+                                    var scene = GD.Load<PackedScene>("res://scene/Plants/Car/Car.tscn");
+                                    var plant_child = (Car_Main)scene.Instance();
+                                    int Car_type = (int)file2.GetValue("Car", i.ToString(), 1);
+                                    if (Car_type == 0)
+                                    {
+                                        continue;
+                                    }
+                                    if (i == 1)
+                                    {
+                                        plant_child.Position = new Vector2(25, 128);
+                                        plant_child.ZIndex = 2;
+                                    }
+                                    else if (i == 2)
+                                    {
+                                        plant_child.Position = new Vector2(25, 224);
+                                        plant_child.ZIndex = 22;
+                                    }
+                                    else if (i == 3)
+                                    {
+                                        plant_child.Position = new Vector2(25, 328);
+                                        plant_child.ZIndex = 42;
+                                    }
+                                    else if (i == 4)
+                                    {
+                                        plant_child.Position = new Vector2(25, 424);
+                                        plant_child.ZIndex = 62;
+                                    }
+                                    else if (i == 5)
+                                    {
+                                        plant_child.Position = new Vector2(25, 520);
+                                        plant_child.ZIndex = 82;
+                                    }
+                                    plant_child.doing_Start = true;
+                                    plant_child.car_type = Car_type;
+                                    //plant_child._Ready();//Warning:Can't Add Child
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                            }
+                            Wave_number = (int)file2.GetValue("Zombies", "Wave", 0);
+                            Flag_number = (int)file2.GetValue("Zombies", "Flag", 0);
+                            GetNode<Flag_Control>("Main/Info/Flag").All_Flag_Number = Flag_number;
+                            GetNode<Flag_Control>("Main/Info/Flag").All_Wave_Number = Wave_number;
+                            for (int i = 1; i <= Flag_number; i++)
+                            {
+                                GetNode<Flag_Control>("Main/Info/Flag").Flag_In_Wave_Number.Add((int)file2.GetValue("Flag" + i.ToString(), "Wave", 0));
+                            }
+                            GetNode<Flag_Control>("Main/Info/Flag").Make_Flag();
+                            GetNode<Flag_Control>("Main/Info/Flag").Update_Flag();
+                            GetNode<Label>("Main/Info/Name").Text = (string)file2.GetValue("Name", "Name", "PVZ_Godot");
                             Public_Main.allow_card_number = Card;
                             var player1 = GetNode<AnimationPlayer>("Main/AnimationPlayer");
                             var player2 = GetNode<AnimationPlayer>("Main/Card_Player");
@@ -88,12 +199,20 @@ public class In_Game_Main : Node2D
                             int Max_Plant_Id = 0;
                             int Max_Plants_Zombies_Id = 0;
                             int Max_Zombies_Id = 0;
-                            for (int i = 0; i < Public_Main.Plant_list.Count; i++)
-                            { 
-                                if (Public_Main.Plant_list[i].Item1>Max_Plant_Id)
+                            int Card_Type= (int)file2.GetValue("Card", "Type", 1);
+                            if (Card_Type == 1)
+                            {
+                                for (int i = 0; i < Public_Main.Plant_list.Count; i++)
                                 {
-                                    Max_Plant_Id = Public_Main.Plant_list[i].Item1;
+                                    if (Public_Main.Plant_list[i].Item1 > Max_Plant_Id)
+                                    {
+                                        Max_Plant_Id = Public_Main.Plant_list[i].Item1;
+                                    }
                                 }
+                            }
+                            else if (Card_Type == 2)
+                            { 
+                                Max_Plant_Id= (int)file2.GetValue("Card", "LockTo", 4);
                             }
                             for (int i = 0; i < Public_Main.Plants_Zombies_list.Count; i++)
                             {
@@ -190,6 +309,23 @@ public class In_Game_Main : Node2D
         {
             GetNode<Timer>("Timer").Start();
         }
+        if (is_playing && GetNode<Timer>("Wave_Timer").IsStopped() && !GetTree().Paused)
+        {
+            GetNode<Timer>("Wave_Timer").Start();
+        }
+        if (Ended && Zombies_Number <= 0 && !Has_Made_Trophy)  
+        {
+            Has_Made_Trophy = true;
+            var scene = GD.Load<PackedScene>("res://scene/In_Game/Trophy/Trophy.tscn");
+            var plant_child = (Trophy_Main)scene.Instance();
+            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+            plant_child.Position = new Vector2(512, 300);
+        }
+        if (Lost_Brain&&!has_Lost_Brain)
+        {
+            has_Lost_Brain = true;
+            GetNode<AnimationPlayer>("Lost_Brain").Play("Brain");
+        }
     }
     public void Sun_Timeout()
     {
@@ -213,6 +349,220 @@ public class In_Game_Main : Node2D
             sun_child.Position = new Vector2((float)GD.RandRange(30, 1000), -22f);
             GetNode<Control>("/root/In_Game/Object").AddChild(sun_child);
             GetNode<Timer>("Timer").Start();
+        }
+    }
+    public void Wave_Timer_Out()
+    {
+        ConfigFile file = new ConfigFile();
+        Error error = file.Load(level_file);
+        if (error == Error.Ok)
+        {
+            if (now_Flag_number <= Flag_number)
+            {
+                int result_Number2 = (int)file.GetValue("Flag" + now_Flag_number.ToString(), "Wave", -1);
+                if (result_Number2 != -1)
+                {
+                    if (now_Wave_number == result_Number2)
+                    {
+                        int Number_in_Wave = 1;
+                        int result_Number = -1;
+                        GetNode<Timer>("Wave_Timer").WaitTime = (int)file.GetValue("Flag" + now_Flag_number.ToString(), "Time", 5);
+                        while (true)
+                        {
+                            result_Number = (int)file.GetValue("Flag" + now_Flag_number.ToString(), Number_in_Wave.ToString(), -1);
+                            if (result_Number == -1)
+                            {
+                                break;
+                            }
+                            else
+                            {
+                                if (background_number == 3 || background_number == 4)
+                                {
+                                    int i = (int)(GD.Randi() % 6 + 1);
+                                    var scene = GD.Load<PackedScene>(Public_Main.Zombies_Path_List[result_Number - 1]);
+                                    var plant_child = (Normal_Zombies)scene.Instance();
+                                    if (i == 1)
+                                    {
+                                        plant_child.put_position = new Vector2(1024, 124);
+                                        plant_child.ZIndex = 7;
+                                    }
+                                    else if (i == 2)
+                                    {
+                                        plant_child.put_position = new Vector2(1024, 216);
+                                        plant_child.ZIndex = 27;
+                                    }
+                                    else if (i == 3)
+                                    {
+                                        plant_child.put_position = new Vector2(1024, 299);
+                                        plant_child.ZIndex = 47;
+                                    }
+                                    else if (i == 4)
+                                    {
+                                        plant_child.put_position = new Vector2(1024, 376);
+                                        plant_child.ZIndex = 67;
+                                    }
+                                    else if (i == 5)
+                                    {
+                                        plant_child.put_position = new Vector2(1024, 477);
+                                        plant_child.ZIndex = 87;
+                                    }
+                                    else if (i == 6)
+                                    {
+                                        plant_child.put_position = new Vector2(1024, 558);
+                                        plant_child.ZIndex = 107;
+                                    }
+                                    plant_child.player_put = false;
+                                    //plant_child._Ready();//Warning:Can't Add Child
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                                else if (background_number == 1 || background_number == 2)
+                                {
+                                    int i = (int)(GD.Randi() % 5 + 1);
+                                    var scene = GD.Load<PackedScene>(Public_Main.Zombies_Path_List[result_Number - 1]);
+                                    var plant_child = (Normal_Zombies)scene.Instance();
+                                    if (i == 1)
+                                    {
+                                        plant_child.put_position = new Vector2(1024, 138);
+                                        plant_child.ZIndex = 7;
+                                    }
+                                    else if (i == 2)
+                                    {
+                                        plant_child.put_position = new Vector2(1024, 234);
+                                        plant_child.ZIndex = 27;
+                                    }
+                                    else if (i == 3)
+                                    {
+                                        plant_child.put_position = new Vector2(1024, 338);
+                                        plant_child.ZIndex = 47;
+                                    }
+                                    else if (i == 4)
+                                    {
+                                        plant_child.put_position = new Vector2(1024, 434);
+                                        plant_child.ZIndex = 67;
+                                    }
+                                    else if (i == 5)
+                                    {
+                                        plant_child.put_position = new Vector2(1024, 530);
+                                        plant_child.ZIndex = 87;
+                                    }
+                                    plant_child.player_put = false;
+                                    //plant_child._Ready();//Warning:Can't Add Child
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                            }
+                            Number_in_Wave++;
+                        }
+                        now_Flag_number++;
+                        GetNode<Flag_Control>("Main/Info/Flag").Now_Flag_Number = now_Flag_number;
+                        GetNode<Flag_Control>("Main/Info/Flag").Now_Wave_Number = now_Wave_number + 1;//诶~!我有一计
+                        GetNode<Flag_Control>("Main/Info/Flag").Update_Flag();
+                        if (!Ended)
+                        {
+                            Ended = (bool)file.GetValue("Flag" + now_Flag_number.ToString(), "End", false);
+                        }
+                        return;
+                    }
+                }
+            }
+            if (now_Wave_number <= Wave_number)
+            {
+                int Number_in_Wave = 1;
+                int result_Number = -1;
+                GetNode<Timer>("Wave_Timer").WaitTime = (int)file.GetValue("Wave" + now_Wave_number.ToString(), "Time", 5);
+                while (true)
+                {
+                    result_Number = (int)file.GetValue("Wave" + now_Wave_number.ToString(), Number_in_Wave.ToString(), -1);
+                    if (result_Number == -1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        if (background_number == 3 || background_number == 4)
+                        {
+                            int i = (int)(GD.Randi() % 6 + 1);
+                            var scene = GD.Load<PackedScene>(Public_Main.Zombies_Path_List[result_Number - 1]);
+                            var plant_child = (Normal_Zombies)scene.Instance();
+                            if (i == 1)
+                            {
+                                plant_child.put_position = new Vector2(1024, 124);
+                                plant_child.ZIndex = 7;
+                            }
+                            else if (i == 2)
+                            {
+                                plant_child.put_position = new Vector2(1024, 216);
+                                plant_child.ZIndex = 27;
+                            }
+                            else if (i == 3)
+                            {
+                                plant_child.put_position = new Vector2(1024, 299);
+                                plant_child.ZIndex = 47;
+                            }
+                            else if (i == 4)
+                            {
+                                plant_child.put_position = new Vector2(1024, 376);
+                                plant_child.ZIndex = 67;
+                            }
+                            else if (i == 5)
+                            {
+                                plant_child.put_position = new Vector2(1024, 477);
+                                plant_child.ZIndex = 87;
+                            }
+                            else if (i == 6)
+                            {
+                                plant_child.put_position = new Vector2(1024, 558);
+                                plant_child.ZIndex = 107;
+                            }
+                            plant_child.player_put = false;
+                            //plant_child._Ready();//Warning:Can't Add Child
+                            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                        }
+                        else if (background_number == 1 || background_number == 2)
+                        {
+                            int i = (int)(GD.Randi() % 5 + 1);
+                            var scene = GD.Load<PackedScene>(Public_Main.Zombies_Path_List[result_Number - 1]);
+                            var plant_child = (Normal_Zombies)scene.Instance();
+                            if (i == 1)
+                            {
+                                plant_child.put_position = new Vector2(1024, 138);
+                                plant_child.ZIndex = 7;
+                            }
+                            else if (i == 2)
+                            {
+                                plant_child.put_position = new Vector2(1024, 234);
+                                plant_child.ZIndex = 27;
+                            }
+                            else if (i == 3)
+                            {
+                                plant_child.put_position = new Vector2(1024, 338);
+                                plant_child.ZIndex = 47;
+                            }
+                            else if (i == 4)
+                            {
+                                plant_child.put_position = new Vector2(1024, 434);
+                                plant_child.ZIndex = 67;
+                            }
+                            else if (i == 5)
+                            {
+                                plant_child.put_position = new Vector2(1024, 530);
+                                plant_child.ZIndex = 87;
+                            }
+                            plant_child.player_put = false;
+                            //plant_child._Ready();//Warning:Can't Add Child
+                            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                        }
+                    }
+                    Number_in_Wave++;
+                }
+                now_Wave_number++;
+            }
+            GetNode<Flag_Control>("Main/Info/Flag").Now_Flag_Number = now_Flag_number;
+            GetNode<Flag_Control>("Main/Info/Flag").Now_Wave_Number = now_Wave_number;
+            GetNode<Flag_Control>("Main/Info/Flag").Update_Flag();
+            if (!Ended)
+            {
+                Ended = (bool)file.GetValue("Wave" + now_Wave_number.ToString(), "End", false);
+            }
         }
     }
 }
