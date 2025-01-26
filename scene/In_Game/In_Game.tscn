@@ -497,8 +497,10 @@ anims/C_to_R = SubResource( 1 )
 anims/R_to_C = SubResource( 3 )
 
 [node name="Background" type="Control" parent="Main"]
-margin_right = 1024.0
+margin_left = -220.0
+margin_right = 804.0
 margin_bottom = 600.0
+mouse_filter = 2
 
 [node name="Background1" type="TextureRect" parent="Main/Background"]
 visible = false
@@ -1071,6 +1073,19 @@ custom_styles/normal = SubResource( 10 )
 text = "菜单"
 script = ExtResource( 23 )
 
+[node name="Next_Wave" type="Button" parent="Main"]
+margin_left = 957.0
+margin_top = 43.0
+margin_right = 1024.0
+margin_bottom = 78.0
+custom_fonts/font = SubResource( 5 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/disabled = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
+text = "下一波"
+
 [node name="Choose_Card" type="Node2D" parent="Main"]
 position = Vector2( 0, 520 )
 z_index = 119
@@ -1310,7 +1325,7 @@ anims/watch = SubResource( 13 )
 
 [node name="Info" type="Node2D" parent="Main"]
 position = Vector2( 814, 524 )
-z_index = 117
+z_index = 118
 z_as_relative = false
 
 [node name="Info" type="TextureRect" parent="Main/Info"]
@@ -1319,6 +1334,7 @@ margin_top = 29.0
 margin_right = 100.0
 margin_bottom = 40.0
 rect_scale = Vector2( 2.00719, 2.00719 )
+mouse_filter = 2
 texture = ExtResource( 40 )
 
 [node name="Flag" type="Control" parent="Main/Info"]
@@ -1331,6 +1347,7 @@ margin_right = 164.0
 margin_bottom = 22.0
 rect_scale = Vector2( -1, 1 )
 rect_clip_content = true
+mouse_filter = 2
 
 [node name="Info3" type="TextureRect" parent="Main/Info/Flag/Line"]
 margin_left = 4.79999
@@ -1338,6 +1355,7 @@ margin_top = 7.19998
 margin_right = 147.8
 margin_bottom = 14.2
 rect_scale = Vector2( 1.05, 1.4 )
+mouse_filter = 2
 texture = ExtResource( 41 )
 
 [node name="Info2" type="TextureRect" parent="Main/Info/Flag"]
@@ -1350,6 +1368,7 @@ margin_left = 139.2
 margin_top = -1.6
 margin_right = 162.2
 margin_bottom = 22.4
+mouse_filter = 2
 texture = ExtResource( 42 )
 
 [node name="Name" type="Label" parent="Main/Info"]
@@ -1455,8 +1474,6 @@ one_shot = true
 autostart = true
 
 [node name="Object" type="Control" parent="."]
-margin_left = 220.0
-margin_right = 220.0
 
 [node name="Wave_Timer" type="Timer" parent="."]
 wait_time = 20.0
@@ -1502,5 +1519,10 @@ custom_styles/normal = SubResource( 31 )
 flat = true
 script = ExtResource( 46 )
 
+[node name="End_Cold_Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="pressed" from="Main/Next_Wave" to="." method="Next_Wave_pressed"]
 [connection signal="timeout" from="Timer" to="." method="Sun_Timeout"]
 [connection signal="timeout" from="Wave_Timer" to="." method="Wave_Timer_Out"]
+[connection signal="timeout" from="End_Cold_Timer" to="." method="End_Cold_Timer_timeout"]

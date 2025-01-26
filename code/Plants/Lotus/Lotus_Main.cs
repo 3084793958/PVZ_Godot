@@ -26,12 +26,20 @@ public class Lotus_Main : Normal_Plants
     }
     public async void Area_Entered(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (has_planted && area2D.Area2D_type == "Shovel")
         {
             Shovel_Area = (Shovel_Area2D)area2D;
             if (Shovel_Area != null)
             {
                 await ToSignal(GetTree(), "idle_frame");//保险
+                if (area2D == null)
+                {
+                    return;
+                }
                 if (Shovel_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
                 {
                     this.Modulate = hover_color;
@@ -45,6 +53,10 @@ public class Lotus_Main : Normal_Plants
             if (Bug_Area != null)
             {
                 await ToSignal(GetTree(), "idle_frame");//保险
+                if (area2D == null)
+                {
+                    return;
+                }
                 if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
                 {
                     this.Modulate = hover_color;
@@ -63,6 +75,10 @@ public class Lotus_Main : Normal_Plants
     }
     public void Area_Exited(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (has_planted && area2D.Area2D_type == "Shovel")
         {
             if (Shovel_Area != null)

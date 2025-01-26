@@ -665,7 +665,7 @@ tracks/8/keys = {
 "method": "Remove_Zombies_Number"
 }, {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/9/type = "value"
@@ -837,7 +837,7 @@ tracks/8/keys = {
 "method": "Remove_Zombies_Number"
 }, {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/9/type = "value"
@@ -995,7 +995,7 @@ tracks/7/keys = {
 "method": "Remove_Zombies_Number"
 }, {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/8/type = "value"
@@ -1096,7 +1096,7 @@ tracks/0/keys = {
 "method": "Remove_Zombies_Number"
 }, {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 

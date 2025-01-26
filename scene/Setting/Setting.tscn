@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://env/Name_Label_theme.tres" type="Theme" id=1]
 [ext_resource path="res://font/zh.otf" type="DynamicFontData" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://code/Setting/Setting_bgm_HSlider.cs" type="Script" id=12]
 [ext_resource path="res://code/Setting/Setting_sound_HSlider.cs" type="Script" id=13]
 [ext_resource path="res://code/Setting/Setting_Button_Android.cs" type="Script" id=14]
+[ext_resource path="res://env/Name_Label_font.tres" type="DynamicFont" id=15]
+[ext_resource path="res://code/Setting/Setting_Button_Limit.cs" type="Script" id=16]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -145,10 +147,10 @@ text = "返回主菜单"
 script = ExtResource( 10 )
 
 [node name="WiKi" type="Button" parent="Setting/Menu"]
-margin_left = 94.0
-margin_top = 239.5
-margin_right = 323.0
-margin_bottom = 284.5
+margin_left = 83.5
+margin_top = 240.0
+margin_right = 148.5
+margin_bottom = 285.0
 custom_colors/font_color_disabled = Color( 0.25098, 0.25098, 0.25098, 1 )
 custom_fonts/font = SubResource( 6 )
 custom_styles/hover = SubResource( 2 )
@@ -156,6 +158,32 @@ custom_styles/pressed = SubResource( 3 )
 custom_styles/disabled = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
 text = "图鉴"
+
+[node name="Limit_LineEdit" type="LineEdit" parent="Setting/Menu"]
+margin_left = 267.5
+margin_top = 244.0
+margin_right = 337.5
+margin_bottom = 276.0
+custom_fonts/font = ExtResource( 15 )
+text = "8"
+clear_button_enabled = true
+
+[node name="Limit" type="Button" parent="Setting/Menu"]
+margin_left = 148.5
+margin_top = 240.0
+margin_right = 270.5
+margin_bottom = 285.0
+custom_colors/font_color_disabled = Color( 0.25098, 0.25098, 0.25098, 1 )
+custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+toggle_mode = true
+pressed = true
+text = "帧生成限制"
+script = ExtResource( 16 )
 
 [node name="ReStart" type="Button" parent="Setting/Menu"]
 margin_left = 94.0
@@ -172,9 +200,9 @@ text = "重新开始"
 
 [node name="Debug" type="Button" parent="Setting/Menu"]
 pause_mode = 2
-margin_left = 218.0
+margin_left = 224.5
 margin_top = 198.0
-margin_right = 326.0
+margin_right = 332.5
 margin_bottom = 243.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
@@ -189,9 +217,9 @@ script = ExtResource( 9 )
 
 [node name="Android" type="Button" parent="Setting/Menu"]
 pause_mode = 2
-margin_left = 97.0
+margin_left = 76.0
 margin_top = 198.0
-margin_right = 213.0
+margin_right = 208.0
 margin_bottom = 243.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
@@ -210,3 +238,4 @@ script = ExtResource( 11 )
 
 [connection signal="value_changed" from="Setting/Menu/BGM/HSlider" to="Setting/Menu/BGM/HSlider" method="Bgm_HSlider_value_changed"]
 [connection signal="value_changed" from="Setting/Menu/Sound/HSlider" to="Setting/Menu/Sound/HSlider" method="Sound_HSlider_value_changed"]
+[connection signal="text_changed" from="Setting/Menu/Limit_LineEdit" to="Setting/Menu/Limit" method="Limit_LineEdit_text_changed"]

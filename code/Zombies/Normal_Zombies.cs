@@ -8,6 +8,7 @@ public class Normal_Zombies : Node2D
     protected Timer Android_Timer = new Timer();
     protected bool Is_Double_Click = false;
     //
+    //
     public Vector2 put_position = Vector2.Zero;
     //
     [Export] protected Color hurt_color;

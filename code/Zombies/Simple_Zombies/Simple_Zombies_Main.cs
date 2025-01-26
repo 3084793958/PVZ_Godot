@@ -38,6 +38,10 @@ public class Simple_Zombies_Main : Normal_Zombies
     }
     public async void Plants_Entered(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Plants")
         {
             var plant_area2D = (Normal_Plants_Area)area2D;
@@ -156,6 +160,10 @@ public class Simple_Zombies_Main : Normal_Zombies
         if (area2D.Area2D_type == "Plants_Bullets" && has_planted)
         {
             await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
+            if (area2D == null)
+            {
+                return;
+            }
             if (area2D.Sec_Info=="Pea")
             {
                 var bullets_area2D = (Bullets_Area)area2D;
@@ -232,6 +240,10 @@ public class Simple_Zombies_Main : Normal_Zombies
     }
     public async void Plants_Exited(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Plants")
         {
             var plant_area2D = (Normal_Plants_Area)area2D;
@@ -328,6 +340,10 @@ public class Simple_Zombies_Main : Normal_Zombies
         if (area2D.Area2D_type == "Plants_Bullets")
         {
             await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
+            if (area2D == null)
+            {
+                return;
+            }
             if (area2D.Sec_Info == "Pea")
             {
                 var bullets_area2D = (Bullets_Area)area2D;
@@ -473,7 +489,7 @@ public class Simple_Zombies_Main : Normal_Zombies
                     Position = new Vector2(-100, -100);
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
                     card_parent_Button.Set_ColorRect_2(false);
-                    this.QueueFree();
+                    this.Free();
                 }
                 if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
                 {
@@ -515,7 +531,7 @@ public class Simple_Zombies_Main : Normal_Zombies
                         Hide();
                         Position = new Vector2(-40, -40);
                         GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
-                        this.QueueFree();
+                        this.Free();
                     }
                 }
             }
@@ -528,7 +544,7 @@ public class Simple_Zombies_Main : Normal_Zombies
         {
             if (Position.x < -1437 / 2)
             {
-                this.QueueFree();
+                this.Free();
                 this.Remove_Zombies_Number();
             }
             if (!In_Game_Main.has_Lost_Brain && Position.x < -20)
@@ -554,12 +570,12 @@ public class Simple_Zombies_Main : Normal_Zombies
                 GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
             }
             if (true/*Top_Area_2D != null*//*无效*/)
-            { 
+            {
                 if (true/*!Top_Area_2D.Monitorable*/)
                 {
                     if (Plants_Area_2D_List.Count != 0)
                     {
-                        if (Plants_Area_2D_List[0].has_planted)
+                        if (Plants_Area_2D_List[0].has_planted && Plants_Area_2D_List[0].Monitorable)
                         {
                             Top_Area_2D = Plants_Area_2D_List[0];
                         }
@@ -569,7 +585,7 @@ public class Simple_Zombies_Main : Normal_Zombies
                         }
                         for (int i = 0; i < Plants_Area_2D_List.Count; i++)
                         {
-                            if (Plants_Area_2D_List[i].has_planted && Plants_Area_2D_List[i].Monitorable) 
+                            if (Plants_Area_2D_List[i].has_planted && Plants_Area_2D_List[i].Monitorable)
                             {
                                 //has_touched = false;时代余辉
                                 if (Top_Area_2D == null)
@@ -622,6 +638,12 @@ public class Simple_Zombies_Main : Normal_Zombies
                             GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
                             GetNode<AnimationPlayer>("Main/Main/Eating").Play("Eating");
                         }
+                        else if (Top_Area_2D == null && !has_lose_Head)
+                        {
+                            eating = false;
+                            GetNode<AnimationPlayer>("Main/Main/Walk").Play("Walk");
+                            GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
+                        }
                     }
                     else
                     {
@@ -639,7 +661,7 @@ public class Simple_Zombies_Main : Normal_Zombies
             {
                 for (int i = 0; i < Plants_Area_2D_List.Count; i++)
                 {
-                    if (Plants_Area_2D_List[i].Sec_Info=="Zombies")
+                    if (Plants_Area_2D_List[i].Sec_Info == "Zombies")
                     {
                         var Plants_Zombies = (Normal_Plants_Zombies_Area)Plants_Area_2D_List[i];
                         if (Plants_Zombies.Choose_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area"))
@@ -654,12 +676,12 @@ public class Simple_Zombies_Main : Normal_Zombies
                     }
                 }
             }
-            if (health<180&&!has_lose_Arm)
+            if (health < 180 && !has_lose_Arm)
             {
                 has_lose_Arm = true;
                 GetNode<AnimationPlayer>("Main/Main/Lose_Arm").Play("Lose_Arm");
             }
-            if (health<90&&!has_lose_Head)
+            if (health < 90 && !has_lose_Head)
             {
                 has_lose_Head = true;
                 GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").has_lose_head = true;
@@ -678,7 +700,7 @@ public class Simple_Zombies_Main : Normal_Zombies
                 {
                     if (Boom_Area_2D_List[i].can_do && !Boom_Area_2D_List[i].end_hurt)
                     {
-                        if (Boom_Area_2D_List[i].hurt>=health-90)
+                        if (Boom_Area_2D_List[i].hurt >= health - 90)
                         {
                             On_Boom_Effect = true;
                             GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
@@ -788,7 +810,7 @@ public class Simple_Zombies_Main : Normal_Zombies
             {
                 for (int i = 0; i < Crash_Area_2D_List.Count; i++)
                 {
-                    if (Crash_Area_2D_List[i].has_planted && Crash_Area_2D_List[i].Crash_Area == GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area")) 
+                    if (Crash_Area_2D_List[i].has_planted && Crash_Area_2D_List[i].Crash_Area == GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area"))
                     {
                         health -= Crash_Area_2D_List[i].hurt;
                         if (!this.On_Boom_Effect)
@@ -805,7 +827,7 @@ public class Simple_Zombies_Main : Normal_Zombies
             {
                 for (int i = 0; i < Eating_Flower_Area_2D_List.Count; i++)
                 {
-                    if (Eating_Flower_Area_2D_List[i].Choose_Eating_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area") && has_planted && Eating_Flower_Area_2D_List[i].can_eat) 
+                    if (Eating_Flower_Area_2D_List[i].Choose_Eating_Zombies_Area == GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area") && has_planted && Eating_Flower_Area_2D_List[i].can_eat)
                     {
                         if (!GetNode<AnimationPlayer>("Be_Eated").IsPlaying())
                         {
@@ -873,6 +895,7 @@ public class Simple_Zombies_Main : Normal_Zombies
         {
             has_Lose_Number = true;
             In_Game_Main.Zombies_Number--;
+            In_Game_Main.Last_Zombies_Pos = this.Position;
         }
     }
     public void Ice_Lock_Timer_timeout()
@@ -882,5 +905,9 @@ public class Simple_Zombies_Main : Normal_Zombies
             is_Lock_Ice = false;
             GetNode<Sprite>("Main/Main/Ice_Lock").Hide();
         }
+    }
+    public void Free_Self()
+    {
+        this.QueueFree();
     }
 }

@@ -1446,11 +1446,11 @@ position = Vector2( -1.45132, 12.4949 )
 texture = ExtResource( 26 )
 
 [node name="Eating" type="AnimationPlayer" parent="Main/Main"]
-playback_speed = 2.0
+playback_speed = 3.0
 anims/Eating = SubResource( 3 )
 
 [node name="Walk" type="AnimationPlayer" parent="Main/Main"]
-playback_speed = 2.0
+playback_speed = 3.0
 anims/Walk = SubResource( 2 )
 
 [node name="Eat_Sound1" type="AudioStreamPlayer" parent="Main/Main"]

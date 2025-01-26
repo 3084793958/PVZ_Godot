@@ -6,7 +6,7 @@ public class Flag_Zombies_Main : Normal_Zombies
     private bool has_lose_Arm = false;
     private bool has_lose_Head = false;
     private bool has_Lose_Number = false;
-    public float speed = -3.0f * (float)GD.RandRange(0.15, 0.2);
+    public float speed = -4.5f * (float)GD.RandRange(0.15, 0.2);
     public bool eating = false;
     public int hurt_time = 0;
     private bool in_water = false;
@@ -38,6 +38,10 @@ public class Flag_Zombies_Main : Normal_Zombies
     }
     public async void Plants_Entered(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Plants")
         {
             var plant_area2D = (Normal_Plants_Area)area2D;
@@ -156,6 +160,10 @@ public class Flag_Zombies_Main : Normal_Zombies
         if (area2D.Area2D_type == "Plants_Bullets" && has_planted)
         {
             await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
+            if (area2D == null)
+            {
+                return;
+            }
             if (area2D.Sec_Info == "Pea")
             {
                 var bullets_area2D = (Bullets_Area)area2D;
@@ -232,6 +240,10 @@ public class Flag_Zombies_Main : Normal_Zombies
     }
     public async void Plants_Exited(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Plants")
         {
             var plant_area2D = (Normal_Plants_Area)area2D;
@@ -328,6 +340,10 @@ public class Flag_Zombies_Main : Normal_Zombies
         if (area2D.Area2D_type == "Plants_Bullets")
         {
             await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
+            if (area2D == null)
+            {
+                return;
+            }
             if (area2D.Sec_Info == "Pea")
             {
                 var bullets_area2D = (Bullets_Area)area2D;
@@ -473,7 +489,7 @@ public class Flag_Zombies_Main : Normal_Zombies
                     Position = new Vector2(-100, -100);
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
                     card_parent_Button.Set_ColorRect_2(false);
-                    this.QueueFree();
+                    this.Free();
                 }
                 if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
                 {
@@ -515,7 +531,7 @@ public class Flag_Zombies_Main : Normal_Zombies
                         Hide();
                         Position = new Vector2(-40, -40);
                         GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
-                        this.QueueFree();
+                        this.Free();
                     }
                 }
             }
@@ -528,7 +544,7 @@ public class Flag_Zombies_Main : Normal_Zombies
         {
             if (Position.x<-1437/2)
             {
-                this.QueueFree();
+                this.Free();
                 this.Remove_Zombies_Number();
             }
             if (!In_Game_Main.has_Lost_Brain && Position.x < -20)
@@ -559,7 +575,7 @@ public class Flag_Zombies_Main : Normal_Zombies
                 {
                     if (Plants_Area_2D_List.Count != 0)
                     {
-                        if (Plants_Area_2D_List[0].has_planted)
+                        if (Plants_Area_2D_List[0].has_planted && Plants_Area_2D_List[0].Monitorable)
                         {
                             Top_Area_2D = Plants_Area_2D_List[0];
                         }
@@ -621,6 +637,12 @@ public class Flag_Zombies_Main : Normal_Zombies
                             eating = true;
                             GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
                             GetNode<AnimationPlayer>("Main/Main/Eating").Play("Eating");
+                        }
+                        else if (Top_Area_2D == null && !has_lose_Head)
+                        {
+                            eating = false;
+                            GetNode<AnimationPlayer>("Main/Main/Walk").Play("Walk");
+                            GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
                         }
                     }
                     else
@@ -875,6 +897,7 @@ public class Flag_Zombies_Main : Normal_Zombies
         {
             has_Lose_Number = true;
             In_Game_Main.Zombies_Number--;
+            In_Game_Main.Last_Zombies_Pos = this.Position;
         }
     }
     public void Ice_Lock_Timer_timeout()
@@ -891,78 +914,84 @@ public class Flag_Zombies_Main : Normal_Zombies
         {
             for (int i = 1; i <= 6; i++)
             {
-                var scene = GD.Load<PackedScene>("res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn");
-                var plant_child = (Normal_Zombies)scene.Instance();
-                if (i == 1)
+                if (true)
                 {
-                    plant_child.put_position = new Vector2(1024, 124);
-                    plant_child.ZIndex = 7;
+                    Vector2 Zombies_put_position;
+                    int _ZIndex;
+                    if (i == 1)
+                    {
+                        Zombies_put_position = new Vector2(1024, 124);
+                        _ZIndex = 7;
+                    }
+                    else if (i == 2)
+                    {
+                        Zombies_put_position = new Vector2(1024, 216);
+                        _ZIndex = 27;
+                    }
+                    else if (i == 3)
+                    {
+                        Zombies_put_position = new Vector2(1024, 299);
+                        _ZIndex = 47;
+                    }
+                    else if (i == 4)
+                    {
+                        Zombies_put_position = new Vector2(1024, 376);
+                        _ZIndex = 67;
+                    }
+                    else if (i == 5)
+                    {
+                        Zombies_put_position = new Vector2(1024, 477);
+                        _ZIndex = 87;
+                    }
+                    else
+                    {
+                        Zombies_put_position = new Vector2(1024, 558);
+                        _ZIndex = 107;
+                    }
+                    In_Game_Main.Zombies_Clone_Request("res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn", Zombies_put_position, _ZIndex);
                 }
-                else if (i == 2)
-                {
-                    plant_child.put_position = new Vector2(1024, 216);
-                    plant_child.ZIndex = 27;
-                }
-                else if (i == 3)
-                {
-                    plant_child.put_position = new Vector2(1024, 299);
-                    plant_child.ZIndex = 47;
-                }
-                else if (i == 4)
-                {
-                    plant_child.put_position = new Vector2(1024, 376);
-                    plant_child.ZIndex = 67;
-                }
-                else if (i == 5)
-                {
-                    plant_child.put_position = new Vector2(1024, 477);
-                    plant_child.ZIndex = 87;
-                }
-                else if (i == 6)
-                {
-                    plant_child.put_position = new Vector2(1024, 558);
-                    plant_child.ZIndex = 107;
-                }
-                plant_child.player_put = false;
-                //plant_child._Ready();//Warning:Can't Add Child
-                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
             }
         }
         else if (In_Game_Main.background_number == 1 || In_Game_Main.background_number == 2)
         {
             for (int i = 1; i <= 5; i++)
             {
-                var scene = GD.Load<PackedScene>("res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn");
-                var plant_child = (Normal_Zombies)scene.Instance();
-                if (i == 1)
+                if (true)
                 {
-                    plant_child.put_position = new Vector2(1024, 138);
-                    plant_child.ZIndex = 7;
+                    Vector2 Zombies_put_position;
+                    int _ZIndex;
+                    if (i == 1)
+                    {
+                        Zombies_put_position = new Vector2(1024, 138);
+                        _ZIndex = 7;
+                    }
+                    else if (i == 2)
+                    {
+                        Zombies_put_position = new Vector2(1024, 234);
+                        _ZIndex = 27;
+                    }
+                    else if (i == 3)
+                    {
+                        Zombies_put_position = new Vector2(1024, 338);
+                        _ZIndex = 47;
+                    }
+                    else if (i == 4)
+                    {
+                        Zombies_put_position = new Vector2(1024, 434);
+                        _ZIndex = 67;
+                    }
+                    else
+                    {
+                        Zombies_put_position = new Vector2(1024, 530);
+                        _ZIndex = 87;
+                    }
+                    In_Game_Main.Zombies_Clone_Request("res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn", Zombies_put_position, _ZIndex);
                 }
-                else if (i == 2)
-                {
-                    plant_child.put_position = new Vector2(1024, 234);
-                    plant_child.ZIndex = 27;
-                }
-                else if (i == 3)
-                {
-                    plant_child.put_position = new Vector2(1024, 338);
-                    plant_child.ZIndex = 47;
-                }
-                else if (i == 4)
-                {
-                    plant_child.put_position = new Vector2(1024, 434);
-                    plant_child.ZIndex = 67;
-                }
-                else if (i == 5)
-                {
-                    plant_child.put_position = new Vector2(1024, 530);
-                    plant_child.ZIndex = 87;
-                }
-                plant_child.player_put = false;
-                //plant_child._Ready();//Warning:Can't Add Child
-                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
             }
         }
+    }
+    public void Free_Self()
+    {
+        this.QueueFree();//历史遗留问题
     }
 }

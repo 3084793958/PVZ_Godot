@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://image/background/Challenge_Background.png" type="Texture" id=1]
 [ext_resource path="res://font/zh.otf" type="DynamicFontData" id=2]
@@ -6,13 +6,9 @@
 [ext_resource path="res://code/Mode1/Button_Back.cs" type="Script" id=4]
 [ext_resource path="res://sound/button/click.ogg" type="AudioStream" id=5]
 [ext_resource path="res://sound/bgm/Login.mp3" type="AudioStream" id=6]
-[ext_resource path="res://image/background/Level_Card.png" type="Texture" id=7]
-[ext_resource path="res://image/Plants/SunFlower/sunflower_All.png" type="Texture" id=8]
-[ext_resource path="res://code/Mode1/Button_Level.cs" type="Script" id=9]
+[ext_resource path="res://code/Mode1/Mode1_Page.cs" type="Script" id=7]
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=10]
 [ext_resource path="res://code/Public/Set_bgm.cs" type="Script" id=11]
-[ext_resource path="res://image/Mode1/GroundDay.jpg" type="Texture" id=12]
-[ext_resource path="res://image/Plants/Ice_Van_Door/Ice_Van_Door.png" type="Texture" id=13]
 
 [sub_resource type="DynamicFont" id=2]
 size = 40
@@ -27,30 +23,10 @@ outline_size = 3
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=3]
-size = 25
-outline_size = 2
-outline_color = Color( 0, 0, 0, 1 )
-font_data = ExtResource( 2 )
-
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 1, 1, 1, 0.392157 )
-
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 1, 1, 1, 0.392157 )
-
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0, 0, 0, 0 )
-
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.776471, 0, 0, 0 )
-
-[sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
-
 [node name="Mode1" type="Node2D"]
 
 [node name="Main" type="Control" parent="."]
+script = ExtResource( 7 )
 
 [node name="Background" type="TextureRect" parent="Main"]
 margin_right = 40.0
@@ -89,128 +65,16 @@ text = "返回"
 flat = true
 script = ExtResource( 4 )
 
-[node name="Page1" type="Control" parent="Main"]
-margin_left = 23.0
-margin_top = 94.0
-margin_right = 1005.0
-margin_bottom = 523.0
-
-[node name="Level1" type="Control" parent="Main/Page1"]
-margin_right = 316.0
-margin_bottom = 203.0
-rect_scale = Vector2( 0.55, 0.55 )
-
-[node name="Background" type="TextureRect" parent="Main/Page1/Level1"]
-margin_left = 54.5455
-margin_right = 254.545
-margin_bottom = 200.0
-texture = ExtResource( 12 )
-
-[node name="Main" type="Control" parent="Main/Page1/Level1"]
-margin_left = 62.0
-margin_top = 20.0
-margin_right = 253.0
-margin_bottom = 169.0
-
-[node name="Main" type="TextureRect" parent="Main/Page1/Level1/Main"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 8 )
-expand = true
-stretch_mode = 6
-
-[node name="Card" type="TextureRect" parent="Main/Page1/Level1"]
-margin_right = 40.0
-margin_bottom = 40.0
-texture = ExtResource( 7 )
-
-[node name="Number" type="Control" parent="Main/Page1/Level1"]
-margin_left = 2.0
-margin_top = 174.0
-margin_right = 315.0
-margin_bottom = 204.0
-
-[node name="level_number" type="Label" parent="Main/Page1/Level1/Number"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -39.0
-margin_top = -20.0
-margin_right = 39.0
-margin_bottom = 20.0
-custom_fonts/font = SubResource( 3 )
-text = "第1关"
-
-[node name="Main_button" type="Button" parent="Main/Page1/Level1"]
-margin_right = 316.0
-margin_bottom = 203.0
-custom_styles/hover = SubResource( 4 )
-custom_styles/pressed = SubResource( 5 )
-custom_styles/focus = SubResource( 6 )
-custom_styles/disabled = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
-script = ExtResource( 9 )
-Level_Number = 1
-
-[node name="Level2" type="Control" parent="Main/Page1"]
-margin_left = 566.0
-margin_right = 882.0
-margin_bottom = 203.0
-rect_scale = Vector2( 0.55, 0.55 )
-
-[node name="Background" type="TextureRect" parent="Main/Page1/Level2"]
-margin_left = 54.5455
-margin_right = 254.545
-margin_bottom = 200.0
-texture = ExtResource( 12 )
-
-[node name="Main" type="Control" parent="Main/Page1/Level2"]
-margin_left = 62.0
-margin_top = 20.0
-margin_right = 253.0
-margin_bottom = 169.0
-
-[node name="Main" type="TextureRect" parent="Main/Page1/Level2/Main"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 13 )
-expand = true
-stretch_mode = 6
-
-[node name="Card" type="TextureRect" parent="Main/Page1/Level2"]
-margin_right = 40.0
-margin_bottom = 40.0
-texture = ExtResource( 7 )
-
-[node name="Number" type="Control" parent="Main/Page1/Level2"]
-margin_left = 2.0
-margin_top = 174.0
-margin_right = 315.0
-margin_bottom = 204.0
-
-[node name="level_number" type="Label" parent="Main/Page1/Level2/Number"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -39.0
-margin_top = -20.0
-margin_right = 39.0
-margin_bottom = 20.0
-custom_fonts/font = SubResource( 3 )
-text = "第2关"
-
-[node name="Main_button" type="Button" parent="Main/Page1/Level2"]
-margin_right = 316.0
-margin_bottom = 203.0
-custom_styles/hover = SubResource( 4 )
-custom_styles/pressed = SubResource( 5 )
-custom_styles/focus = SubResource( 6 )
-custom_styles/disabled = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
-script = ExtResource( 9 )
-Level_Number = 2
+[node name="Page1" type="GridContainer" parent="Main"]
+margin_left = 20.0
+margin_top = 92.0
+margin_right = 1665.0
+margin_bottom = 819.0
+rect_scale = Vector2( 0.6, 0.6 )
+mouse_filter = 2
+custom_constants/vseparation = 250
+custom_constants/hseparation = 330
+columns = 5
 
 [node name="button_Click" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )

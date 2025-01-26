@@ -47,11 +47,15 @@ public class Start_Main : Node2D
                 {
                     Public_Main.debuging = (bool)file3.GetValue("Setting", "debug", false);
                     Public_Main.for_Android = (bool)file3.GetValue("Setting", "Android", false);
+                    Public_Main.Using_Clone_Limit = (bool)file3.GetValue("Setting", "Limit", true);
+                    Public_Main.Max_Object_Clone_In_F = (int)file3.GetValue("Setting", "Limit_Number", 8);
                 }
                 else
                 {
                     Public_Main.debuging = false;
                     Public_Main.for_Android = false;
+                    Public_Main.Using_Clone_Limit = true;
+                    Public_Main.Max_Object_Clone_In_F = 8;
                 }
             }
         }
@@ -61,6 +65,8 @@ public class Start_Main : Node2D
         GetNode<Setting_sound_HSlider>("/root/Setting/Setting/Menu/Sound/HSlider").Update_This();
         GetNode<Setting_Button_Debug>("/root/Setting/Setting/Menu/Debug").Update_This();
         GetNode<Setting_Button_Android>("/root/Setting/Setting/Menu/Android").Update_This();
+        GetNode<Setting_Button_Limit>("/root/Setting/Setting/Menu/Limit").Update_This();
+        GetNode<LineEdit>("/root/Setting/Setting/Menu/Limit_LineEdit").Text = Public_Main.Max_Object_Clone_In_F.ToString();
         ChangeScene_Start.B_to_E(Shadow);
     }
 }

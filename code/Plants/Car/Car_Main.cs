@@ -18,7 +18,11 @@ public class Car_Main : Node2D
         }
     }
     public void Start_Area2D(Control_Area_2D area2D)
-    { 
+    {
+        if (area2D == null)
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Zombies")
         {
             Zombies_Area_2D_List.Add((Normal_Zombies_Area)area2D);
@@ -26,6 +30,10 @@ public class Car_Main : Node2D
     }
     public void Start_Area2D_Out(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Zombies")
         {
             Zombies_Area_2D_List.Remove((Normal_Zombies_Area)area2D);

@@ -28,13 +28,21 @@ public class Van_Door_Main : Normal_Plants
 	}
 	public async void Area_Entered(Control_Area_2D area2D)
 	{
-		if (has_planted && area2D.Area2D_type == "Shovel")
+        if (area2D == null)
+        {
+            return;
+        }
+        if (has_planted && area2D.Area2D_type == "Shovel")
 		{
 			Shovel_Area = (Shovel_Area2D)area2D;
 			if (Shovel_Area != null)
 			{
 				await ToSignal(GetTree(), "idle_frame");//保险
-				if (Shovel_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
+                if (area2D == null)
+                {
+                    return;
+                }
+                if (Shovel_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
 				{
 					this.Modulate = hover_color;
 					on_Shovel = true;
@@ -47,7 +55,11 @@ public class Van_Door_Main : Normal_Plants
 			if (Bug_Area != null)
 			{
 				await ToSignal(GetTree(), "idle_frame");//保险
-				if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
+                if (area2D == null)
+                {
+                    return;
+                }
+                if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
 				{
 					this.Modulate = hover_color;
 					on_Bug = true;
@@ -65,7 +77,11 @@ public class Van_Door_Main : Normal_Plants
 	}
 	public void Area_Exited(Control_Area_2D area2D)
 	{
-		if (has_planted && area2D.Area2D_type == "Shovel")
+        if (area2D == null)
+        {
+            return;
+        }
+        if (has_planted && area2D.Area2D_type == "Shovel")
 		{
 			if (Shovel_Area != null)
 			{
@@ -287,10 +303,10 @@ public class Van_Door_Main : Normal_Plants
 	{
 		if (Bullets_Path != null && health > 0)//health<=0 GetNode Error
 		{
-			var scene = GD.Load<PackedScene>(Bullets_Path);
-			var Bullets_child = (Normal_Plants_Bullets)scene.Instance();
-			GetNode<Control>("/root/In_Game/Object").AddChild(Bullets_child);
-			Bullets_child.GlobalPosition = GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition;
+            if (true)
+            {
+                In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition);
+            }
 		}
 	}
 }

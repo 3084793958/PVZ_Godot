@@ -28,12 +28,20 @@ public class SunFlower_Main : Normal_Plants
     }
     public async void Area_Entered(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (has_planted && area2D.Area2D_type == "Shovel")
         {
             Shovel_Area = (Shovel_Area2D)area2D;
             if (Shovel_Area != null)
             {
                 await ToSignal(GetTree(), "idle_frame");//保险
+                if (area2D == null)
+                {
+                    return;
+                }
                 if (Shovel_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
                 {
                     this.Modulate = hover_color;
@@ -47,6 +55,10 @@ public class SunFlower_Main : Normal_Plants
             if (Bug_Area != null)
             {
                 await ToSignal(GetTree(), "idle_frame");//保险
+                if (area2D == null)
+                {
+                    return;
+                }
                 if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
                 {
                     this.Modulate = hover_color;
@@ -65,6 +77,10 @@ public class SunFlower_Main : Normal_Plants
     }
     public void Area_Exited(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (has_planted && area2D.Area2D_type == "Shovel")
         {
             if (Shovel_Area != null)
@@ -85,6 +101,10 @@ public class SunFlower_Main : Normal_Plants
         }
         if (area2D.Area2D_type == "Zombies")
         {
+            if (area2D == null)
+            {
+                return;
+            }
             var leave_Area = (Normal_Zombies_Area)area2D;
             Zombies_Area_2D_List.Remove(leave_Area);
             Zombies_Area_2D = null;
@@ -255,28 +275,29 @@ public class SunFlower_Main : Normal_Plants
         {
             GetNode<AnimationPlayer>("Make_Sun").Play("Make_Sun");
             GetNode<Timer>("Timer").WaitTime = (float)GD.RandRange(5d,30d);
-            var scene = GD.Load<PackedScene>("res://scene/Plants/SunFlower/Sun/Sun.tscn");
             GetNode<AudioStreamPlayer>("Sun").Play();
-            var sun_child = (Sun_Main)scene.Instance();
-            sun_child.is_from_plant = true;
-            float random_number = GD.Randf();
-            if (random_number < 0.3f)
+            if (true)
             {
-                sun_child.sun_value = 50;
-                sun_child.size = 2.0f;
+                int sun_value;
+                float size;
+                float random_number = GD.Randf();
+                if (random_number < 0.3f)
+                {
+                    sun_value = 50;
+                    size = 2.0f;
+                }
+                else if (random_number > 0.8f)
+                {
+                    sun_value = 75;
+                    size = 3.0f;
+                }
+                else
+                {
+                    sun_value = 25;
+                    size = 1.0f;
+                }
+                In_Game_Main.Sun_Clone_Request(sun_value, this.GlobalPosition, size, true);
             }
-            else if (random_number > 0.8f)
-            {
-                sun_child.sun_value = 75;
-                sun_child.size = 3.0f;
-            }
-            else
-            {
-                sun_child.sun_value = 25;
-                sun_child.size = 1.0f;
-            }
-            sun_child.GlobalPosition = this.GlobalPosition;
-            GetNode<Control>("/root/In_Game/Object").AddChild(sun_child);
         }
     }
 }

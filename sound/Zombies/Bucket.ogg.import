@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Bucket.ogg-c42704070725fdbc46d79c0d50ba4bdc.oggstr"
+
+[deps]
+
+source_file="res://sound/Zombies/Bucket.ogg"
+dest_files=[ "res://.import/Bucket.ogg-c42704070725fdbc46d79c0d50ba4bdc.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

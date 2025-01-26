@@ -10,7 +10,7 @@ public class Pause_Main : Control
         new_pos.y = 167.5f;
         var This_Background = GetNode<TextureRect>("Pause/Background");
         This_Background.RectPosition = new_pos;
-        Raise();
+        //Raise();
         var Click = GetNode<AudioStreamPlayer>("Pause/button_Click");
         Click.Stream.Set("loop", false);
         Hide();

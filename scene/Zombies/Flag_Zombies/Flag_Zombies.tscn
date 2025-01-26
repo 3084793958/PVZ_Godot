@@ -671,7 +671,7 @@ tracks/8/keys = {
 "method": "Remove_Zombies_Number"
 }, {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/9/type = "value"
@@ -846,7 +846,7 @@ tracks/8/keys = {
 "method": "Remove_Zombies_Number"
 }, {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/9/type = "value"
@@ -1007,7 +1007,7 @@ tracks/7/keys = {
 "method": "Remove_Zombies_Number"
 }, {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/8/type = "value"
@@ -1111,7 +1111,7 @@ tracks/0/keys = {
 "method": "Clone_Self_Zombies"
 }, {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 
@@ -1458,11 +1458,11 @@ position = Vector2( -1.45132, 12.4949 )
 texture = ExtResource( 26 )
 
 [node name="Eating" type="AnimationPlayer" parent="Main/Main"]
-playback_speed = 2.0
+playback_speed = 3.0
 anims/Eating = SubResource( 3 )
 
 [node name="Walk" type="AnimationPlayer" parent="Main/Main"]
-playback_speed = 2.0
+playback_speed = 3.0
 anims/Walk = SubResource( 2 )
 
 [node name="Eat_Sound1" type="AudioStreamPlayer" parent="Main/Main"]

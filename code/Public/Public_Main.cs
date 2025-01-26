@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 static public class Public_Main
 {
+    //for R
+    static public bool Using_Clone_Limit = true;
+    static public int Max_Object_Clone_In_F = 8;
+    //for R
     static public List<string> user_list = new List<string>();
     static public string user_name = string.Empty;
     static public int choose_user = -1;
@@ -192,13 +196,53 @@ static public class Public_Main
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     2,
-    "魅惑摇旗僵尸",
+    "魅惑旗帜僵尸",
     "Godot",
     "第二个僵尸",
     GD.Load<Texture>("res://image/Plants/Zombies/Flag_Zombies/Flag_Zombies.png"),
     0f,
     0f,
     new Tuple<int,string>(100,"res://scene/Plants/Zombies/Flag_Zombies/Plants_Flag_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    3,
+    "魅惑路障僵尸",
+    "路障",
+    "第3个僵尸",
+    GD.Load<Texture>("res://image/Plants/Zombies/Cone_Zombies/Plants_Cone_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(75,"res://scene/Plants/Zombies/Cone_Zombies/Plants_Cone_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    4,
+    "魅惑快速路障僵尸",
+    "单挑4个普僵",
+    "普僵噩梦",
+    GD.Load<Texture>("res://image/Plants/Zombies/Fast_Cone_Zombies/Fast_Cone_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(125,"res://scene/Plants/Zombies/Fast_Cone_Zombies/Plants_Fast_Cone_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    5,
+    "魅惑忽略路障僵尸",
+    "不知道有什么用",
+    "不知道有什么用",
+    GD.Load<Texture>("res://image/Plants/Zombies/Ignore_Cone_Zombies/Ignore_Cone_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(100,"res://scene/Plants/Zombies/Ignore_Zombies/Plants_Ignore_Cone_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    6,
+    "魅惑铁桶僵尸",
+    "铁桶是坚硬的",
+    "装甲",
+    GD.Load<Texture>("res://image/Plants/Zombies/Bucket_Zombies/Bucket_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(125,"res://scene/Plants/Zombies/Bucket_Zombies/Plants_Bucket_Zombies.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -216,18 +260,75 @@ static public class Public_Main
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     2,
-    "摇旗僵尸",
-    "亡语",
+    "旗帜僵尸",
+    "闪电战+亡语",
     "第二个僵尸",
     GD.Load<Texture>("res://image/Zombies/Flag_Zombies/Flag_Zombies.png"),
     0f,
     0f,
     new Tuple<int,string>(100,"res://scene/Zombies/Flag_Zombies/Flag_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    3,
+    "路障僵尸",
+    "路障",
+    "第三个僵尸",
+    GD.Load<Texture>("res://image/Zombies/Cone_Zombies/Cone_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(75,"res://scene/Zombies/Cone_Zombies/Cone_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    4,
+    "快速路障僵尸",
+    "兼具速度与血量",
+    "完啦",
+    GD.Load<Texture>("res://image/Zombies/Fast_Cone_Zombies/Fast_Cone_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(125,"res://scene/Zombies/Fast_Cone_Zombies/Fast_Cone_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    5,
+    "忽略路障僵尸",
+    "不吃植物",
+    "完啦",
+    GD.Load<Texture>("res://image/Zombies/Ignore_Cone_Zombies/Ignore_Cone_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(100,"res://scene/Zombies/Ignore_Cone_Zombies/Ignore_Cone_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    6,
+    "铁桶僵尸",
+    "铁桶",
+    "血量多",
+    GD.Load<Texture>("res://image/Zombies/Bucket_Zombies/Bucket_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(125,"res://scene/Zombies/Bucket_Zombies/Bucket_Zombies.tscn")
     )
     };
     static public List<string> Zombies_Path_List = new List<string>
     {
         "res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn",
-        "res://scene/Zombies/Flag_Zombies/Flag_Zombies.tscn"
+        "res://scene/Zombies/Flag_Zombies/Flag_Zombies.tscn",
+        "res://scene/Zombies/Cone_Zombies/Cone_Zombies.tscn",
+        "res://scene/Zombies/Fast_Cone_Zombies/Fast_Cone_Zombies.tscn",
+        "res://scene/Zombies/Ignore_Cone_Zombies/Ignore_Cone_Zombies.tscn",//5
+        "res://scene/Zombies/Bucket_Zombies/Bucket_Zombies.tscn"
+    };
+    static public List<Tuple<string, string, Texture>> Level_Mode1 = new List<Tuple<string, string, Texture>>
+    { 
+        new Tuple<string, string,Texture>("第1关","res://level/Mode1/Mode1_1.cfg",
+        GD.Load<Texture>("res://image/Plants/SunFlower/sunflower_All.png")),
+        new Tuple<string, string,Texture>("第2关:偷袭","res://level/Mode1/Mode1_2.cfg",
+        GD.Load<Texture>("res://image/Plants/C2H5OH/C2H5OH.png")),
+        new Tuple<string, string,Texture>("第3关:防线","res://level/Mode1/Mode1_3.cfg",
+        GD.Load<Texture>("res://image/Plants/WallNut/Wallnut.png")),
+        new Tuple<string, string,Texture>("demo1","res://level/Mode1/Mode1_demo1.cfg",
+        GD.Load<Texture>("res://image/Plants/godot/godot.png")),
+        new Tuple<string, string,Texture>("demo2","res://level/Mode1/Mode1_demo2.cfg",
+        GD.Load<Texture>("res://image/Plants/godot/godot.png"))
     };
 }

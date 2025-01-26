@@ -1,0 +1,86 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://font/zh.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://code/Mode1/Level_Main.cs" type="Script" id=2]
+[ext_resource path="res://image/background/Level_Card.png" type="Texture" id=3]
+[ext_resource path="res://image/Plants/SunFlower/sunflower_All.png" type="Texture" id=4]
+[ext_resource path="res://image/Mode1/GroundDay.jpg" type="Texture" id=5]
+
+[sub_resource type="DynamicFont" id=3]
+size = 25
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 1, 1, 1, 0.392157 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 1, 1, 1, 0.392157 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0, 0, 0, 0 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.776471, 0, 0, 0 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[node name="Level" type="Control"]
+script = ExtResource( 2 )
+
+[node name="Background" type="TextureRect" parent="."]
+margin_left = 54.5455
+margin_right = 254.545
+margin_bottom = 200.0
+texture = ExtResource( 5 )
+
+[node name="Main" type="Control" parent="."]
+margin_left = 62.0
+margin_top = 20.0
+margin_right = 253.0
+margin_bottom = 169.0
+
+[node name="Main" type="TextureRect" parent="Main"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="Card" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 3 )
+
+[node name="Number" type="Control" parent="."]
+margin_left = 2.0
+margin_top = 174.0
+margin_right = 315.0
+margin_bottom = 204.0
+
+[node name="level_number" type="Label" parent="Number"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -38.5
+margin_top = -20.0
+margin_right = 39.5
+margin_bottom = 20.0
+grow_horizontal = 2
+custom_fonts/font = SubResource( 3 )
+text = "第1关"
+align = 1
+
+[node name="Main_button" type="Button" parent="."]
+margin_right = 316.0
+margin_bottom = 203.0
+custom_styles/hover = SubResource( 4 )
+custom_styles/pressed = SubResource( 5 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/disabled = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+
+[connection signal="pressed" from="Main_button" to="." method="Go_In_Game"]

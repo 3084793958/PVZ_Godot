@@ -5,7 +5,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
 {
     private bool has_lose_Arm = false;
     private bool has_lose_Head = false;
-    public float speed = 1f * (float)GD.RandRange(0.1, 0.2);
+    public float speed = 1.5f * (float)GD.RandRange(0.1, 0.2);
     public bool eating = false;
     private bool has_touched = false;
     public int hurt_time = 0;
@@ -37,6 +37,10 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
     }
     public /*async*/ void Plants_Entered(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Zombies")
         {
             var plant_area2D = (Normal_Zombies_Area)area2D;
@@ -146,6 +150,10 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
     }
     public /*async*/ void Plants_Exited(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Zombies")
         {
             var plant_area2D = (Normal_Zombies_Area)area2D;
@@ -395,7 +403,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
             }
             if (has_touched && Zombies_Area_2D_List.Count != 0)
             {
-                if (Zombies_Area_2D_List[0].has_plant)
+                if (Zombies_Area_2D_List[0].has_plant && Zombies_Area_2D_List[0].Monitorable)
                 {
                     Top_Area_2D = Zombies_Area_2D_List[0];
                 }
@@ -405,7 +413,7 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                 }
                 for (int i = 0; i < Zombies_Area_2D_List.Count; i++)
                 {
-                    if (Zombies_Area_2D_List[i].has_plant)
+                    if (Zombies_Area_2D_List[i].has_plant && Zombies_Area_2D_List[0].Monitorable)
                     {
                         has_touched = false;
                         if (Top_Area_2D == null)
@@ -450,6 +458,12 @@ public class Plants_Simple_Zombies_Main : Normal_Plants_Zombies
                     eating = true;
                     GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
                     GetNode<AnimationPlayer>("Main/Main/Eating").Play("Eating");
+                }
+                else if (Top_Area_2D == null && !has_lose_Head)
+                {
+                    eating = false;
+                    GetNode<AnimationPlayer>("Main/Main/Walk").Play("Walk");
+                    GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
                 }
             }
             if (Top_Area_2D != null)

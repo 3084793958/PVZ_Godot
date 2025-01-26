@@ -28,12 +28,20 @@ public class Godot_Main : Normal_Plants
     }
     public async void Area_Entered(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (has_planted && area2D.Area2D_type == "Shovel")
         {
             Shovel_Area = (Shovel_Area2D)area2D;
             if (Shovel_Area != null)
             {
                 await ToSignal(GetTree(), "idle_frame");//保险
+                if (area2D == null)
+                {
+                    return;
+                }
                 if (Shovel_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
                 {
                     this.Modulate = hover_color;
@@ -47,6 +55,10 @@ public class Godot_Main : Normal_Plants
             if (Bug_Area != null)
             {
                 await ToSignal(GetTree(), "idle_frame");//保险
+                if (area2D == null)
+                {
+                    return;
+                }
                 if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
                 {
                     this.Modulate = hover_color;
@@ -65,6 +77,10 @@ public class Godot_Main : Normal_Plants
     }
     public void Area_Exited(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (has_planted && area2D.Area2D_type == "Shovel")
         {
             if (Shovel_Area != null)
@@ -272,77 +288,79 @@ public class Godot_Main : Normal_Plants
         {
             for (int i = 1; i <= 6; i++)
             {
-                var scene = GD.Load<PackedScene>("res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn");
-                var plant_child = (Normal_Plants_Zombies)scene.Instance();
-                if (i == 1)
+                if (true)
                 {
-                    plant_child.put_position = new Vector2(76, 124);
-                    plant_child.ZIndex = 7;
+                    Vector2 Zombies_put_position;
+                    int _ZIndex;
+                    if (i == 1)
+                    {
+                        Zombies_put_position = new Vector2(76, 124);
+                        _ZIndex = 7;
+                    }
+                    else if (i == 2)
+                    {
+                        Zombies_put_position = new Vector2(76, 216);
+                        _ZIndex = 27;
+                    }
+                    else if (i == 3)
+                    {
+                        Zombies_put_position = new Vector2(76, 299);
+                        _ZIndex = 47;
+                    }
+                    else if (i == 4)
+                    {
+                        Zombies_put_position = new Vector2(76, 376);
+                        _ZIndex = 67;
+                    }
+                    else if (i == 5)
+                    {
+                        Zombies_put_position = new Vector2(76, 477);
+                        _ZIndex = 87;
+                    }
+                    else
+                    {
+                        Zombies_put_position = new Vector2(76, 558);
+                        _ZIndex = 107;
+                    }
+                    In_Game_Main.Plants_Zombies_Clone_Request("res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn", Zombies_put_position, _ZIndex);
                 }
-                else if (i == 2)
-                {
-                    plant_child.put_position = new Vector2(76, 216);
-                    plant_child.ZIndex = 27;
-                }
-                else if (i == 3)
-                {
-                    plant_child.put_position = new Vector2(76, 299);
-                    plant_child.ZIndex = 47;
-                }
-                else if (i == 4)
-                {
-                    plant_child.put_position = new Vector2(76, 376);
-                    plant_child.ZIndex = 67;
-                }
-                else if (i == 5)
-                {
-                    plant_child.put_position = new Vector2(76, 477);
-                    plant_child.ZIndex = 87;
-                }
-                else if (i == 6)
-                {
-                    plant_child.put_position = new Vector2(76, 558);
-                    plant_child.ZIndex = 107;
-                }
-                plant_child.player_put = false;
-                //plant_child._Ready();//Warning:Can't Add Child
-                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
             }
         }
         else if (In_Game_Main.background_number == 1 || In_Game_Main.background_number == 2)
         {
             for (int i = 1; i <= 5; i++)
             {
-                var scene = GD.Load<PackedScene>("res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn");
-                var plant_child = (Normal_Plants_Zombies)scene.Instance();
-                if (i == 1)
+                if (true)
                 {
-                    plant_child.put_position = new Vector2(76, 138);
-                    plant_child.ZIndex = 7;
+                    Vector2 Zombies_put_position;
+                    int _ZIndex;
+                    if (i == 1)
+                    {
+                        Zombies_put_position = new Vector2(76, 138);
+                        _ZIndex = 7;
+                    }
+                    else if (i == 2)
+                    {
+                        Zombies_put_position = new Vector2(76, 234);
+                        _ZIndex = 27;
+                    }
+                    else if (i == 3)
+                    {
+                        Zombies_put_position = new Vector2(76, 338);
+                        _ZIndex = 47;
+                    }
+                    else if (i == 4)
+                    {
+                        Zombies_put_position = new Vector2(76, 434);
+                        _ZIndex = 67;
+                    }
+                    else
+                    {
+                        Zombies_put_position = new Vector2(76, 530);
+                        _ZIndex = 87;
+                    }
+                    In_Game_Main.Plants_Zombies_Clone_Request("res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn", Zombies_put_position, _ZIndex);
                 }
-                else if (i == 2)
-                {
-                    plant_child.put_position = new Vector2(76, 234);
-                    plant_child.ZIndex = 27;
-                }
-                else if (i == 3)
-                {
-                    plant_child.put_position = new Vector2(76, 338);
-                    plant_child.ZIndex = 47;
-                }
-                else if (i == 4)
-                {
-                    plant_child.put_position = new Vector2(76, 434);
-                    plant_child.ZIndex = 67;
-                }
-                else if (i == 5)
-                {
-                    plant_child.put_position = new Vector2(76, 530);
-                    plant_child.ZIndex = 87;
-                }
-                plant_child.player_put = false;
-                //plant_child._Ready();//Warning:Can't Add Child
-                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
             }
         }
     }

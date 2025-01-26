@@ -5,7 +5,7 @@ public class Setting_Main : Control
 {
     public override void _Ready()
     {
-        Raise();
+        //Raise();
         var Click = GetNode<AudioStreamPlayer>("Setting/button_Click");
         Click.Stream.Set("loop", false);
         Hide();
