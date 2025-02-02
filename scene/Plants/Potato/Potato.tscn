@@ -24,7 +24,7 @@
 extents = Vector2( 0.01, 0.01 )
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 40, 40 )
+extents = Vector2( 30, 30 )
 
 [sub_resource type="Animation" id=12]
 resource_name = "Out_Land"

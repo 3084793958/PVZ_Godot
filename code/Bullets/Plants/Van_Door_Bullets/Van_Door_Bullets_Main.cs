@@ -38,7 +38,11 @@ public class Van_Door_Bullets_Main : Normal_Plants_Bullets
 		if (!has_touch && area_2D.Area2D_type == "Zombies")
 		{
 			Top_Zombies_Area = (Normal_Zombies_Area)area_2D;
-			if (Top_Zombies_Area.has_plant)
+            if (Top_Zombies_Area.Should_Ignore)
+            {
+                return;
+            }
+            if (Top_Zombies_Area.has_plant)
 			{
 				has_touch = true;
 				if (GetNode<Bullets_Area>("Area2D").Choose_Zombies_Area == null)

@@ -1566,6 +1566,7 @@ anims/RESET = SubResource( 14 )
 
 [node name="Fall" type="AudioStreamPlayer" parent="Main/Main"]
 stream = ExtResource( 27 )
+script = ExtResource( 3 )
 
 [node name="Boom_Effect" type="AnimationPlayer" parent="Main/Main"]
 anims/Boom_Effect = SubResource( 8 )

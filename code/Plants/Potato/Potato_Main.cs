@@ -18,6 +18,10 @@ public class Potato_Main : Normal_Plants
     }
     public void Dock_Enter(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (!has_planted && area2D.Area2D_type == "Grid")
         {
             var area2D_Grid = (Background_Grid_Main)area2D;
@@ -67,6 +71,10 @@ public class Potato_Main : Normal_Plants
         }
         if (area2D.Area2D_type == "Zombies")
         {
+            if (area2D == null)
+            {
+                return;
+            }
             Zombies_Area_2D = (Normal_Zombies_Area)area2D;
             if (Zombies_Area_2D.can_hurt)
             {
@@ -114,6 +122,10 @@ public class Potato_Main : Normal_Plants
         }
         if (area2D.Area2D_type == "Zombies")
         {
+            if (area2D == null)
+            {
+                return;
+            }
             var leave_Area = (Normal_Zombies_Area)area2D;
             Zombies_Area_2D_List.Remove(leave_Area);
             Zombies_Area_2D = null;
@@ -219,6 +231,11 @@ public class Potato_Main : Normal_Plants
         }
         else
         {
+            if (GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health)
+            {
+                GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health = false;
+                health -= GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health_number;
+            }
             if (on_Shovel && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
             {
                 if (!GetNode<AnimationPlayer>("Free_player").IsPlaying())
@@ -255,6 +272,10 @@ public class Potato_Main : Normal_Plants
                 {
                     if (Zombies_Area_2D_List[i] != null)
                     {
+                        if (Zombies_Area_2D_List[i].Should_Ignore)
+                        {
+                            continue;
+                        }
                         if (Zombies_Area_2D_List[i].Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
                         {
                             if (Zombies_Area_2D_List[i].is_eating_show && !Zombies_Area_2D_List[i].has_lose_head)
@@ -284,10 +305,21 @@ public class Potato_Main : Normal_Plants
             }
             if (health <= 0)
             {
-                if (!GetNode<AnimationPlayer>("Died2").IsPlaying())
+                if (has_up)
                 {
-                    GetNode<AnimationPlayer>("Died2").Play("Died");
+                    GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
+                    GetNode<Normal_Boom_Area>("Main/Boom").can_do = true;
+                    GetNode<Normal_Boom_Area>("Main/Boom").Start_hurting();
+                    GetNode<AnimationPlayer>("Died").Play("Died");
                     dock_area_2d.Normal_Plant_List.Remove(this);
+                }
+                else
+                {
+                    if (!GetNode<AnimationPlayer>("Died2").IsPlaying())
+                    {
+                        GetNode<AnimationPlayer>("Died2").Play("Died");
+                        dock_area_2d.Normal_Plant_List.Remove(this);
+                    }
                 }
             }
         }

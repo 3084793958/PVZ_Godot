@@ -10,6 +10,9 @@ public class Normal_Zombies_Area : Control_Area_2D
     public bool has_plant = false;
     public bool has_lose_head = false;
     public int health = 270;
+    public bool Should_Ignore = false;
+    public bool lose_health = false;
+    public int lose_health_number = 0;
     public override void _Ready()
     {
         Area2D_type = "Zombies";

@@ -39,6 +39,10 @@ public class Bucket_Zombies_Main : Normal_Zombies
     }
     public async void Plants_Entered(Control_Area_2D area2D)
     {
+        if (has_lose_Head)
+        {
+            return;
+        }
         if (area2D == null)
         {
             return;
@@ -440,6 +444,14 @@ public class Bucket_Zombies_Main : Normal_Zombies
     }
     public void Dock_Enter(Control_Area_2D area2D)
     {
+        if (has_lose_Head)
+        {
+            return;
+        }
+        if (area2D == null)
+        {
+            return;
+        }
         if (!has_planted && area2D.Area2D_type == "Grid")
         {
             var area2D_Grid = (Background_Grid_Main)area2D;
@@ -556,9 +568,14 @@ public class Bucket_Zombies_Main : Normal_Zombies
                 this.Free();
                 this.Remove_Zombies_Number();
             }
-            if (!In_Game_Main.has_Lost_Brain && Position.x < -20)
+            if (!In_Game_Main.has_Lost_Brain && Position.x < -20 && !has_lose_Head)
             {
                 In_Game_Main.Lost_Brain = true;
+            }
+            if (GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").lose_health)
+            {
+                GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").lose_health = false;
+                health -= GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").lose_health_number;
             }
             if (in_water && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !now_in_water)
             {
@@ -570,70 +587,83 @@ public class Bucket_Zombies_Main : Normal_Zombies
                 GetNode<AnimationPlayer>("Out_Water").Play("Water");
                 now_in_water = false;
             }
-            if (!eating && GetNode<AnimationPlayer>("Main/Main/Walk").IsPlaying() && !On_Boom_Effect && !Is_Shining)
+            if (!eating && GetNode<AnimationPlayer>("Main/Main/Walk").IsPlaying() && !On_Boom_Effect && !Is_Shining && !is_Lock_Ice)
             {
                 this.Position += new Vector2(speed * speed_x, 0);
             }
+            if (is_Lock_Ice)
+            {
+                GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
+                GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
+                GetNode<AnimationPlayer>("Main/Main/Hat/Hat/Walk").Stop();
+            }
             if (On_Boom_Effect)
             {
+                health = -1437;
                 GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
             }
             if (true/*Top_Area_2D != null*//*无效*/)
             {
-                if (true/*!Top_Area_2D.Monitorable*/)
+                if (Plants_Area_2D_List != null)
                 {
                     if (Plants_Area_2D_List.Count != 0)
                     {
-                        if (Plants_Area_2D_List[0].has_planted && Plants_Area_2D_List[0].Monitorable)
+                        if (Plants_Area_2D_List[0] != null)
                         {
-                            Top_Area_2D = Plants_Area_2D_List[0];
-                        }
-                        else
-                        {
-                            Top_Area_2D = null;
+                            if (Plants_Area_2D_List[0].has_planted && Plants_Area_2D_List[0].Monitorable)
+                            {
+                                Top_Area_2D = Plants_Area_2D_List[0];
+                            }
+                            else
+                            {
+                                Top_Area_2D = null;
+                            }
                         }
                         for (int i = 0; i < Plants_Area_2D_List.Count; i++)
                         {
-                            if (Plants_Area_2D_List[i].has_planted && Plants_Area_2D_List[i].Monitorable)
+                            if (Plants_Area_2D_List[i] != null)
                             {
-                                //has_touched = false;时代余辉
-                                if (Top_Area_2D == null)
+                                if (Plants_Area_2D_List[i].has_planted && Plants_Area_2D_List[i].Monitorable)
                                 {
-                                    Top_Area_2D = Plants_Area_2D_List[i];
-                                }
-                                else
-                                {
-                                    if (Plants_Area_2D_List[i].Sec_Info == "Zombies")
+                                    //has_touched = false;时代余辉
+                                    if (Top_Area_2D == null)
                                     {
                                         Top_Area_2D = Plants_Area_2D_List[i];
                                     }
                                     else
                                     {
-                                        if (Top_Area_2D.plants_type == Plants_Area_2D_List[i].plants_type)
+                                        if (Plants_Area_2D_List[i].Sec_Info == "Zombies")
                                         {
-                                            if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
-                                            {
-                                                Top_Area_2D = Plants_Area_2D_List[i];
-                                            }
-                                            else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
-                                            {
-                                                if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
-                                                {
-                                                    Top_Area_2D = Plants_Area_2D_List[i];
-                                                }
-                                            }
+                                            Top_Area_2D = Plants_Area_2D_List[i];
                                         }
                                         else
                                         {
-                                            if (Top_Area_2D.plants_type == "Casing")
+                                            if (Top_Area_2D.plants_type == Plants_Area_2D_List[i].plants_type)
                                             {
-                                                Top_Area_2D = Plants_Area_2D_List[i];
+                                                if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
+                                                {
+                                                    Top_Area_2D = Plants_Area_2D_List[i];
+                                                }
+                                                else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
+                                                {
+                                                    if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
+                                                    {
+                                                        Top_Area_2D = Plants_Area_2D_List[i];
+                                                    }
+                                                }
                                             }
-                                            else if (Plants_Area_2D_List[i].plants_type == "Casing")
-                                            { }
-                                            else if (Top_Area_2D.plants_type == "Normal" && Plants_Area_2D_List[i].plants_type != "Casing")
+                                            else
                                             {
-                                                Top_Area_2D = Plants_Area_2D_List[i];
+                                                if (Top_Area_2D.plants_type == "Casing")
+                                                {
+                                                    Top_Area_2D = Plants_Area_2D_List[i];
+                                                }
+                                                else if (Plants_Area_2D_List[i].plants_type == "Casing")
+                                                { }
+                                                else if (Top_Area_2D.plants_type == "Normal" && Plants_Area_2D_List[i].plants_type != "Casing")
+                                                {
+                                                    Top_Area_2D = Plants_Area_2D_List[i];
+                                                }
                                             }
                                         }
                                     }

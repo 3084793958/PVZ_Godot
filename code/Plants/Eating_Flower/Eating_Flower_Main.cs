@@ -20,6 +20,10 @@ public class Eating_Flower_Main : Normal_Plants
     }
     public void Dock_Enter(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (!has_planted && area2D.Area2D_type == "Grid")
         {
             var area2D_Grid = (Background_Grid_Main)area2D;
@@ -69,6 +73,10 @@ public class Eating_Flower_Main : Normal_Plants
         }
         if (area2D.Area2D_type == "Zombies")
         {
+            if (area2D == null)
+            {
+                return;
+            }
             Zombies_Area_2D = (Normal_Zombies_Area)area2D;
             if (Zombies_Area_2D.can_hurt)
             {
@@ -102,6 +110,10 @@ public class Eating_Flower_Main : Normal_Plants
         }
         if (area2D.Area2D_type == "Zombies")
         {
+            if (area2D == null)
+            {
+                return;
+            }
             var leave_Area = (Normal_Zombies_Area)area2D;
             Zombies_Area_2D_List.Remove(leave_Area);
             Zombies_Area_2D = null;
@@ -203,6 +215,11 @@ public class Eating_Flower_Main : Normal_Plants
         }
         else
         {
+            if (GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health)
+            {
+                GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health = false;
+                health -= GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health_number;
+            }
             if (on_Shovel && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
             {
                 if (!GetNode<AnimationPlayer>("Free_player").IsPlaying())
@@ -263,6 +280,10 @@ public class Eating_Flower_Main : Normal_Plants
                     bool can_work = false;
                     for (int i = 0; i < Eating_Zombies_List.Count; i++)
                     {
+                        if (Eating_Zombies_List[i].Should_Ignore) 
+                        {
+                            continue;
+                        }
                         if (Eating_Zombies_List[i].has_plant && Eating_Zombies_List[i].health > 0)
                         { 
                             if (GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area==null)
@@ -302,6 +323,10 @@ public class Eating_Flower_Main : Normal_Plants
     }
     public void Eating_Area_entered(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Zombies")
         {
             Eating_Zombies_List.Add((Normal_Zombies_Area)area2D);
@@ -309,6 +334,10 @@ public class Eating_Flower_Main : Normal_Plants
     }
     public void Eating_Area_exited(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Zombies")
         {
             Eating_Zombies_List.Remove((Normal_Zombies_Area)area2D);

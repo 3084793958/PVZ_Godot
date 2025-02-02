@@ -25,6 +25,10 @@ public class Car_Main : Node2D
         }
         if (area2D.Area2D_type == "Zombies")
         {
+            if (area2D == null)
+            {
+                return;
+            }
             Zombies_Area_2D_List.Add((Normal_Zombies_Area)area2D);
         }
     }
@@ -36,6 +40,10 @@ public class Car_Main : Node2D
         }
         if (area2D.Area2D_type == "Zombies")
         {
+            if (area2D == null)
+            {
+                return;
+            }
             Zombies_Area_2D_List.Remove((Normal_Zombies_Area)area2D);
         }
     }

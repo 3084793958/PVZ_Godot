@@ -10,6 +10,7 @@ public class Card_Main : Control
     [Export] public float wait_time = 30f;
     [Export] public int Card_Background = 1;
     [Export] public int[] Card_Number = {1,1};
+    public bool self_Wait_Time_Set = false;
     public override void _Ready()
     {
         Card_Background = Card_Number[0];
@@ -132,13 +133,19 @@ public class Card_Main : Control
                 {
                     Sun = Public_Main.Plant_list[Seed_Pos].Rest.Item1;
                     now_time = Public_Main.Plant_list[Seed_Pos].Item6;
-                    wait_time = Public_Main.Plant_list[Seed_Pos].Item7;
+                    if (!self_Wait_Time_Set)
+                    {
+                        wait_time = Public_Main.Plant_list[Seed_Pos].Item7;
+                    }
                 }
                 else
                 {
                     Sun = Public_Main.Zombies_list[Seed_Pos].Rest.Item1;
                     now_time = Public_Main.Zombies_list[Seed_Pos].Item6;
-                    wait_time = Public_Main.Zombies_list[Seed_Pos].Item7;
+                    if (!self_Wait_Time_Set)
+                    {
+                        wait_time = Public_Main.Zombies_list[Seed_Pos].Item7;
+                    }
                 }
             }
             Sun_Label.Text = Sun.ToString();

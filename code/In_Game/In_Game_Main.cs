@@ -87,7 +87,7 @@ public class In_Game_Main : Node2D
                             GD.Print("错误:关卡文件错误!Level_Mode=-1");
                             GetTree().Quit();
                         }
-                        else if (Level_Mode==0)//正常模式
+                        else if (Level_Mode == 0 || Level_Mode == 1) //正常模式
                         {
                             int Sun = (int)file2.GetValue("Bank", "Sun", 1437);
                             Sun_Number = Sun;
@@ -211,6 +211,7 @@ public class In_Game_Main : Node2D
                             int Max_Plants_Zombies_Id = 0;
                             int Max_Zombies_Id = 0;
                             int Card_Type= (int)file2.GetValue("Card", "Type", 1);
+                            List<int> Card3_id_List = new List<int>();
                             if (Card_Type == 1)
                             {
                                 for (int i = 0; i < Public_Main.Plant_list.Count; i++)
@@ -222,8 +223,26 @@ public class In_Game_Main : Node2D
                                 }
                             }
                             else if (Card_Type == 2)
-                            { 
-                                Max_Plant_Id= (int)file2.GetValue("Card", "LockTo", 4);
+                            {
+                                Max_Plant_Id = (int)file2.GetValue("Card", "LockTo", 4);
+                            }
+                            else if (Card_Type == 3)
+                            {
+                                int Adding_Number = 1;
+                                while (true)
+                                {
+                                    int Ans_Number = (int)file2.GetValue("Card", Adding_Number.ToString(), -1);
+                                    if (Ans_Number != -1)
+                                    {
+                                        Card3_id_List.Add(Ans_Number);
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                    Adding_Number++;
+                                }
+                                Max_Plant_Id = Card3_id_List.Count;
                             }
                             for (int i = 0; i < Public_Main.Plants_Zombies_list.Count; i++)
                             {
@@ -239,23 +258,79 @@ public class In_Game_Main : Node2D
                                     Max_Zombies_Id = Public_Main.Zombies_list[i].Item1;
                                 }
                             }
-                            var Page1 = GetNode<GridContainer>("/root/In_Game/Main/Choose_Card/Background/Page/Page1");
-                            for (int i=0;i<Max_Plant_Id;i++)
+                            List<int> LevelMode3_id_List = new List<int>();
+                            if (Level_Mode == 1)
                             {
-                                if (Page1.GetChildCount()>50)
-                                { }
+                                int Adding_Number = 1;
+                                while (true)
+                                {
+                                    int Ans_Number = (int)file2.GetValue("Level_Mode", Adding_Number.ToString(), -1);
+                                    if (Ans_Number != -1)
+                                    {
+                                        LevelMode3_id_List.Add(Ans_Number);
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                    Adding_Number++;
+                                }
+                            }
+                            var Page1 = GetNode<GridContainer>("/root/In_Game/Main/Choose_Card/Background/Page/Page1");
+                            if (Card_Type == 3)
+                            {
+                                if (Page1.GetChildCount() > 50)
+                                {
+                                }
                                 else
                                 {
-                                    var scene = GD.Load<PackedScene>("res://scene/Card/Card.tscn");
-                                    var card_child = (Card_Main)scene.Instance();
-                                    card_child.Card_Number[0] = 1;
-                                    card_child.Card_Number[1] = i+1;
-                                    card_child._Ready();
-                                    Page1.AddChild(card_child);
+                                    for (int j = 0; j < Card3_id_List.Count; j++)
+                                    {
+                                        var scene = GD.Load<PackedScene>("res://scene/Card/Card.tscn");
+                                        var card_child = (Card_Main)scene.Instance();
+                                        card_child.Card_Number[0] = 1;
+                                        card_child.Card_Number[1] = Card3_id_List[j];
+                                        for (int k = 0; k < LevelMode3_id_List.Count; k++)
+                                        {
+                                            if (LevelMode3_id_List[k] == card_child.Card_Number[1])
+                                            {
+                                                card_child.self_Wait_Time_Set = true;
+                                                card_child.wait_time = 0f;
+                                            }
+                                        }
+                                        card_child._Ready();
+                                        Page1.AddChild(card_child);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                for (int i = 0; i < Max_Plant_Id; i++)
+                                {
+                                    if (Page1.GetChildCount() > 50)
+                                    { }
+                                    else
+                                    {
+                                        var scene = GD.Load<PackedScene>("res://scene/Card/Card.tscn");
+                                        var card_child = (Card_Main)scene.Instance();
+                                        card_child.Card_Number[0] = 1;
+                                        card_child.Card_Number[1] = i + 1;
+                                        for (int k = 0; k < LevelMode3_id_List.Count; k++)
+                                        {
+                                            if (LevelMode3_id_List[k] == card_child.Card_Number[1])
+                                            {
+                                                card_child.self_Wait_Time_Set = true;
+                                                card_child.wait_time = 0f;
+                                            }
+                                        }
+                                        card_child._Ready();
+                                        Page1.AddChild(card_child);
+                                    }
                                 }
                             }
                             for (int i = 0; i < Max_Plants_Zombies_Id; i++)
                             {
+
                                 if (Page1.GetChildCount() > 50)
                                 { }
                                 else
@@ -264,6 +339,14 @@ public class In_Game_Main : Node2D
                                     var card_child = (Card_Main)scene.Instance();
                                     card_child.Card_Number[0] = 3;
                                     card_child.Card_Number[1] = i + 1;
+                                    for (int k = 0; k < LevelMode3_id_List.Count; k++)
+                                    {
+                                        if (LevelMode3_id_List[k] == card_child.Card_Number[1])
+                                        {
+                                            card_child.self_Wait_Time_Set = true;
+                                            card_child.wait_time = 0f;
+                                        }
+                                    }
                                     card_child._Ready();
                                     Page1.AddChild(card_child);
                                 }
@@ -278,6 +361,14 @@ public class In_Game_Main : Node2D
                                     var card_child = (Card_Main)scene.Instance();
                                     card_child.Card_Number[0] = 2;
                                     card_child.Card_Number[1] = i + 1;
+                                    for (int k = 0; k < LevelMode3_id_List.Count; k++)
+                                    {
+                                        if (LevelMode3_id_List[k] == card_child.Card_Number[1])
+                                        {
+                                            card_child.self_Wait_Time_Set = true;
+                                            card_child.wait_time = 0f;
+                                        }
+                                    }
                                     card_child._Ready();
                                     Page1.AddChild(card_child);
                                 }

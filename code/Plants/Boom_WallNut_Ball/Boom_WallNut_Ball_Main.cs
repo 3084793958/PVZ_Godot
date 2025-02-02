@@ -17,10 +17,14 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Big_Chmop").Stream.Set("loop", false);
         health = 4000;
-        speed_x = 6.5f;
+        speed_x = 5.5f;
     }
     public void Dock_Enter(Control_Area_2D area2D)
     {
+        if (area2D == null)
+        {
+            return;
+        }
         if (!has_planted && area2D.Area2D_type == "Grid")
         {
             var area2D_Grid = (Background_Grid_Main)area2D;
@@ -74,7 +78,15 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
         }
         if (area2D.Area2D_type == "Zombies")
         {
+            if (area2D == null)
+            {
+                return;
+            }
             Zombies_Area_2D = (Normal_Zombies_Area)area2D;
+            if (Zombies_Area_2D.Should_Ignore)
+            {
+                return;
+            }
             if (Zombies_Area_2D.can_hurt)
             {
                 Zombies_Area_2D_List.Add(Zombies_Area_2D);
@@ -121,6 +133,10 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
         }
         if (area2D.Area2D_type == "Zombies")
         {
+            if (area2D == null)
+            {
+                return;
+            }
             var leave_Area = (Normal_Zombies_Area)area2D;
             Zombies_Area_2D_List.Remove(leave_Area);
             Zombies_Area_2D = null;
@@ -233,6 +249,11 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
             else
             {
                 this.Position += new Vector2(speed_x, speed_y);
+            }
+            if (GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health)
+            {
+                GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health = false;
+                health -= GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health_number;
             }
             if (on_Shovel && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
             {

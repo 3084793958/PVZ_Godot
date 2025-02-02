@@ -117,7 +117,7 @@ static public class Public_Main
     "4000血量,500伤害",
     GD.Load<Texture>("res://image/Plants/WallNut/Wallnut.png"),
     0f,
-    30f,
+    45f,
     new Tuple<int,string>(25,"res://scene/Plants/WallNut_Ball/WallNut_Ball.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
@@ -127,7 +127,7 @@ static public class Public_Main
     "4000血量,1800伤害",
     GD.Load<Texture>("res://image/Plants/WallNut/Boom_Wallnut.png"),
     0f,
-    30f,
+    60f,
     new Tuple<int,string>(50,"res://scene/Plants/Boom_WallNut_Ball/Boom_WallNut_Ball.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
@@ -243,6 +243,26 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(125,"res://scene/Plants/Zombies/Bucket_Zombies/Plants_Bucket_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    7,
+    "魅惑撑杆跳僵尸",
+    "起飞",
+    "起飞",
+    GD.Load<Texture>("res://image/Plants/Zombies/Polevaulter_Zombies/Polevaulter_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(125,"res://scene/Plants/Zombies/Polevaulter_Zombies/Plants_Polevaulter_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    8,
+    "魅惑标枪撑杆跳僵尸",
+    "一枪2000",
+    "起飞",
+    GD.Load<Texture>("res://image/Plants/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(225,"res://scene/Plants/Zombies/Darts_Polevaulter_Zombies/Plants_Darts_Polevaulter_Zombies.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -307,6 +327,26 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(125,"res://scene/Zombies/Bucket_Zombies/Bucket_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    7,
+    "撑杆跳僵尸",
+    "起飞",
+    "起飞",
+    GD.Load<Texture>("res://image/Zombies/Polevaulter_Zombies/Polevaulter_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(125,"res://scene/Zombies/Polevaulter_Zombies/Polevaulter_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    8,
+    "标枪撑杆跳僵尸",
+    "一枪2000",
+    "起飞",
+    GD.Load<Texture>("res://image/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(225,"res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn")
     )
     };
     static public List<string> Zombies_Path_List = new List<string>
@@ -316,7 +356,9 @@ static public class Public_Main
         "res://scene/Zombies/Cone_Zombies/Cone_Zombies.tscn",
         "res://scene/Zombies/Fast_Cone_Zombies/Fast_Cone_Zombies.tscn",
         "res://scene/Zombies/Ignore_Cone_Zombies/Ignore_Cone_Zombies.tscn",//5
-        "res://scene/Zombies/Bucket_Zombies/Bucket_Zombies.tscn"
+        "res://scene/Zombies/Bucket_Zombies/Bucket_Zombies.tscn",
+        "res://scene/Zombies/Polevaulter_Zombies/Polevaulter_Zombies.tscn",
+        "res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn"
     };
     static public List<Tuple<string, string, Texture>> Level_Mode1 = new List<Tuple<string, string, Texture>>
     { 
@@ -326,6 +368,14 @@ static public class Public_Main
         GD.Load<Texture>("res://image/Plants/C2H5OH/C2H5OH.png")),
         new Tuple<string, string,Texture>("第3关:防线","res://level/Mode1/Mode1_3.cfg",
         GD.Load<Texture>("res://image/Plants/WallNut/Wallnut.png")),
+        new Tuple<string, string,Texture>("第4关:保龄球","res://level/Mode1/Mode1_4.cfg",
+        GD.Load<Texture>("res://image/Plants/WallNut/Boom_Wallnut.png")),
+        new Tuple<string, string,Texture>("第5关:铁(桶)幕","res://level/Mode1/Mode1_5.cfg",
+        GD.Load<Texture>("res://image/Plants/Potato/Potato.png")),
+        new Tuple<string, string,Texture>("第6关:撑杆跳锦标赛","res://level/Mode1/Mode1_6.cfg",
+        GD.Load<Texture>("res://image/Plants/Eating_Flower/Eating_Flower.png")),
+        new Tuple<string, string,Texture>("第7关:撑杆跳锦标赛2","res://level/Mode1/Mode1_7.cfg",
+        GD.Load<Texture>("res://image/Plants/Ice_Van_Door/Ice_Van_Door.png")),
         new Tuple<string, string,Texture>("demo1","res://level/Mode1/Mode1_demo1.cfg",
         GD.Load<Texture>("res://image/Plants/godot/godot.png")),
         new Tuple<string, string,Texture>("demo2","res://level/Mode1/Mode1_demo2.cfg",

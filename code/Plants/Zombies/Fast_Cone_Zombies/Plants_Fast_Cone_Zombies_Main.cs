@@ -383,6 +383,11 @@ public class Plants_Fast_Cone_Zombies_Main : Normal_Plants_Zombies
         }
         else
         {
+            if (GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").lose_health)
+            {
+                GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").lose_health = false;
+                health -= GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").lose_health_number;
+            }
             if (in_water && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !now_in_water)
             {
                 GetNode<AnimationPlayer>("In_Water").Play("Water");

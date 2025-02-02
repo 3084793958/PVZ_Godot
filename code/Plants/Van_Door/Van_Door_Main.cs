@@ -19,7 +19,11 @@ public class Van_Door_Main : Normal_Plants
 	}
 	public void Dock_Enter(Control_Area_2D area2D)
 	{
-		if (!has_planted && area2D.Area2D_type == "Grid")
+        if (area2D == null)
+        {
+            return;
+        }
+        if (!has_planted && area2D.Area2D_type == "Grid")
 		{
 			var area2D_Grid = (Background_Grid_Main)area2D;
 			Area_Vector2 = area2D_Grid.GlobalPosition;
@@ -68,7 +72,11 @@ public class Van_Door_Main : Normal_Plants
 		}
 		if (area2D.Area2D_type == "Zombies")
 		{
-			Zombies_Area_2D = (Normal_Zombies_Area)area2D;
+            if (area2D == null)
+            {
+                return;
+            }
+            Zombies_Area_2D = (Normal_Zombies_Area)area2D;
 			if (Zombies_Area_2D.can_hurt)
 			{
 				Zombies_Area_2D_List.Add(Zombies_Area_2D);
@@ -101,7 +109,11 @@ public class Van_Door_Main : Normal_Plants
 		}
 		if (area2D.Area2D_type == "Zombies")
 		{
-			var leave_Area = (Normal_Zombies_Area)area2D;
+            if (area2D == null)
+            {
+                return;
+            }
+            var leave_Area = (Normal_Zombies_Area)area2D;
 			Zombies_Area_2D_List.Remove(leave_Area);
 			Zombies_Area_2D = null;
 		}
@@ -202,7 +214,12 @@ public class Van_Door_Main : Normal_Plants
 		}
 		else
 		{
-			if (on_Shovel && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
+            if (GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health)
+            {
+                GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health = false;
+                health -= GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health_number;
+            }
+            if (on_Shovel && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
 			{ 
 				if (!GetNode<AnimationPlayer>("Free_player").IsPlaying())
 				{
@@ -258,17 +275,25 @@ public class Van_Door_Main : Normal_Plants
 	}
 	public void Bullets_Way_On(Control_Area_2D area_2D)
 	{
-		if (area_2D.Area2D_type == "Zombies")
+        if (area_2D == null)
+        {
+            return;
+        }
+        if (area_2D.Area2D_type == "Zombies")
 		{
-			Bullets_Zombies_Area_2D = (Normal_Zombies_Area)area_2D;
+            Bullets_Zombies_Area_2D = (Normal_Zombies_Area)area_2D;
 			Bullets_Zombies_Area_2D_List.Add(Bullets_Zombies_Area_2D);
 		}
 	}
 	public void Bullets_Way_Off(Control_Area_2D area_2D)
 	{
-		if (area_2D.Area2D_type == "Zombies")
+        if (area_2D == null)
+        {
+            return;
+        }
+        if (area_2D.Area2D_type == "Zombies")
 		{
-			Bullets_Zombies_Area_2D = (Normal_Zombies_Area)area_2D;
+            Bullets_Zombies_Area_2D = (Normal_Zombies_Area)area_2D;
 			Bullets_Zombies_Area_2D_List.Remove(Bullets_Zombies_Area_2D);
 		}
 	}

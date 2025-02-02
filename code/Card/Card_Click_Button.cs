@@ -11,9 +11,11 @@ public class Card_Click_Button : Node2D
     public Vector2 normal_size;
     public bool is_zombies = false;
     public bool isPlants_zombies = false;
+    public bool has_Clicked = false;
     //private Object
     public override void _Ready()
     {
+        has_Clicked = false;
         normal_size.x = 100;
         normal_size.y = 0;
         Card_Node = GetNode<Control>("../../..");
@@ -33,6 +35,10 @@ public class Card_Click_Button : Node2D
     }
     public async void  Button_Pressed()
     {
+        if (has_Clicked)
+        {
+            return;
+        }
         if (In_Game_Main.is_playing)
         {
             if (In_Game_Main.Sun_Number < this.sun && !Public_Main.debuging)

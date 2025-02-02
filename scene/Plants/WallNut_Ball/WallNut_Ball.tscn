@@ -14,7 +14,7 @@
 [ext_resource path="res://sound/Zombies/bigchomp.ogg" type="AudioStream" id=20]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 10, 30 )
+extents = Vector2( 0.01, 0.01 )
 
 [sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 1, 1 )
