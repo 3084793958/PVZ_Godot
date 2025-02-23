@@ -48,14 +48,14 @@ public class Start_Main : Node2D
                     Public_Main.debuging = (bool)file3.GetValue("Setting", "debug", false);
                     Public_Main.for_Android = (bool)file3.GetValue("Setting", "Android", false);
                     Public_Main.Using_Clone_Limit = (bool)file3.GetValue("Setting", "Limit", true);
-                    Public_Main.Max_Object_Clone_In_F = (int)file3.GetValue("Setting", "Limit_Number", 8);
+                    Public_Main.Max_Object_Clone_In_F = (int)file3.GetValue("Setting", "Limit_Number", 5);
                 }
                 else
                 {
                     Public_Main.debuging = false;
                     Public_Main.for_Android = false;
                     Public_Main.Using_Clone_Limit = true;
-                    Public_Main.Max_Object_Clone_In_F = 8;
+                    Public_Main.Max_Object_Clone_In_F = 5;
                 }
             }
         }

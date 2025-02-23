@@ -6,7 +6,7 @@ static public class Public_Main
 {
     //for R
     static public bool Using_Clone_Limit = true;
-    static public int Max_Object_Clone_In_F = 8;
+    static public int Max_Object_Clone_In_F = 5;
     //for R
     static public List<string> user_list = new List<string>();
     static public string user_name = string.Empty;
@@ -360,25 +360,50 @@ static public class Public_Main
         "res://scene/Zombies/Polevaulter_Zombies/Polevaulter_Zombies.tscn",
         "res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn"
     };
-    static public List<Tuple<string, string, Texture>> Level_Mode1 = new List<Tuple<string, string, Texture>>
+    static public List<Tuple<string, string, Texture, int>> Level_Mode1 = new List<Tuple<string, string, Texture, int>>
     { 
-        new Tuple<string, string,Texture>("第1关","res://level/Mode1/Mode1_1.cfg",
-        GD.Load<Texture>("res://image/Plants/SunFlower/sunflower_All.png")),
-        new Tuple<string, string,Texture>("第2关:偷袭","res://level/Mode1/Mode1_2.cfg",
-        GD.Load<Texture>("res://image/Plants/C2H5OH/C2H5OH.png")),
-        new Tuple<string, string,Texture>("第3关:防线","res://level/Mode1/Mode1_3.cfg",
-        GD.Load<Texture>("res://image/Plants/WallNut/Wallnut.png")),
-        new Tuple<string, string,Texture>("第4关:保龄球","res://level/Mode1/Mode1_4.cfg",
-        GD.Load<Texture>("res://image/Plants/WallNut/Boom_Wallnut.png")),
-        new Tuple<string, string,Texture>("第5关:铁(桶)幕","res://level/Mode1/Mode1_5.cfg",
-        GD.Load<Texture>("res://image/Plants/Potato/Potato.png")),
-        new Tuple<string, string,Texture>("第6关:撑杆跳锦标赛","res://level/Mode1/Mode1_6.cfg",
-        GD.Load<Texture>("res://image/Plants/Eating_Flower/Eating_Flower.png")),
-        new Tuple<string, string,Texture>("第7关:撑杆跳锦标赛2","res://level/Mode1/Mode1_7.cfg",
-        GD.Load<Texture>("res://image/Plants/Ice_Van_Door/Ice_Van_Door.png")),
-        new Tuple<string, string,Texture>("demo1","res://level/Mode1/Mode1_demo1.cfg",
-        GD.Load<Texture>("res://image/Plants/godot/godot.png")),
-        new Tuple<string, string,Texture>("demo2","res://level/Mode1/Mode1_demo2.cfg",
-        GD.Load<Texture>("res://image/Plants/godot/godot.png"))
+        new Tuple<string, string,Texture, int>("第1关","res://level/Mode1/Mode1_1.cfg",
+        GD.Load<Texture>("res://image/Plants/SunFlower/sunflower_All.png"),
+        1),
+        new Tuple<string, string,Texture, int>("第2关:偷袭","res://level/Mode1/Mode1_2.cfg",
+        GD.Load<Texture>("res://image/Plants/C2H5OH/C2H5OH.png"),
+        1),
+        new Tuple<string, string,Texture, int>("第3关:防线","res://level/Mode1/Mode1_3.cfg",
+        GD.Load<Texture>("res://image/Plants/WallNut/Wallnut.png"),
+        1),
+        new Tuple<string, string,Texture, int>("第4关:保龄球","res://level/Mode1/Mode1_4.cfg",
+        GD.Load<Texture>("res://image/Plants/WallNut/Boom_Wallnut.png"),
+        1),
+        new Tuple<string, string,Texture, int>("第5关:铁(桶)幕","res://level/Mode1/Mode1_5.cfg",
+        GD.Load<Texture>("res://image/Plants/Potato/Potato.png"),
+        1),
+        new Tuple<string, string,Texture, int>("第6关:撑杆跳锦标赛","res://level/Mode1/Mode1_6.cfg",
+        GD.Load<Texture>("res://image/Plants/Eating_Flower/Eating_Flower.png"),
+        1),
+        new Tuple<string, string,Texture, int>("第7关:撑杆跳锦标赛2","res://level/Mode1/Mode1_7.cfg",
+        GD.Load<Texture>("res://image/Plants/Ice_Van_Door/Ice_Van_Door.png"),
+        1),
+        new Tuple<string, string,Texture, int>("第8关:重装出击","res://level/Mode1/Mode1_8.cfg",
+        GD.Load<Texture>("res://image/Plants/Double_Van_Door/Double_Van_Door.png"),
+        1),
+        new Tuple<string, string,Texture, int>("白天草坪(测试专用)","res://level/Mode1/Mode1_demo_Day.cfg",
+        GD.Load<Texture>("res://image/Plants/godot/godot.png"),
+        1),
+        new Tuple<string, string,Texture, int>("夜晚草坪(测试专用)","res://level/Mode1/Mode1_demo_Night.cfg",
+        GD.Load<Texture>("res://image/Plants/godot/godot.png"),
+        2),
+        new Tuple<string, string,Texture, int>("白天后院(测试专用)","res://level/Mode1/Mode1_demo_Day_Pool.cfg",
+        GD.Load<Texture>("res://image/Plants/godot/godot.png"),
+        3)
     };
+}
+public class Health_Container
+{
+    public int Health { get; set; }
+    public bool Is_lock { get; set; }
+    public Health_Container(int health, bool is_lock)
+    {
+        Health = health;
+        Is_lock = is_lock;
+    }
 }

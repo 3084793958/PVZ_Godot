@@ -10,14 +10,11 @@ public class Background_Grid_Main : Control_Area_2D
     public List<Node2D> Down_Plant_List = new List<Node2D>();
     public List<Node2D> Top_Plant_List = new List<Node2D>();
     public List<int> now_type = new List<int>();//末项
-    public async override void _Ready()
+    public override void _Ready()
     {
         now_type.Add(type);
         pos[1] = int.Parse(this.GetParent().Name);
         pos[0] = int.Parse(this.Name);
         Area2D_type = "Grid";
-        await ToSignal(GetTree().CreateTimer(0.3f), "timeout");
-        this.Monitoring = GetParent().GetParent().GetParent<TextureRect>().Visible;
-        this.Monitorable = GetParent().GetParent().GetParent<TextureRect>().Visible;
     }
 }

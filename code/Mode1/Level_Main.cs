@@ -8,6 +8,9 @@ public class Level_Main : Control
         int Level_Number = this.GetIndex();
         GetNode<Label>("Number/level_number").Text = Public_Main.Level_Mode1[Level_Number].Item1;
         GetNode<TextureRect>("Main/Main").Texture = Public_Main.Level_Mode1[Level_Number].Item3;
+        GetNode<TextureRect>("Background/1").Visible = Public_Main.Level_Mode1[Level_Number].Item4 == 1;
+        GetNode<TextureRect>("Background/2").Visible = Public_Main.Level_Mode1[Level_Number].Item4 == 2;
+        GetNode<TextureRect>("Background/3").Visible = Public_Main.Level_Mode1[Level_Number].Item4 == 3;
     }
     public async void Go_In_Game()
     {

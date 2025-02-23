@@ -13,7 +13,7 @@ public class In_Game_Main : Node2D
     static public int Sun_Number;
     static public int background_number;
     static public bool is_playing=false;
-    public bool allow_sun = false;
+    static public bool allow_sun = false;
     private string level_file = null;
     private int Wave_number = 0;
     private bool Wave_Auto_Next = false;
@@ -71,6 +71,30 @@ public class In_Game_Main : Node2D
                             Background4.Visible = background_number == 4;
                             Background5.Visible = background_number == 5;
                             Background6.Visible = background_number == 6;
+                            if (background_number != 1)
+                            {
+                                Background1.QueueFree();
+                            }
+                            if (background_number != 2)
+                            {
+                                Background2.QueueFree();
+                            }
+                            if (background_number != 3)
+                            {
+                                Background3.QueueFree();
+                            }
+                            if (background_number != 4)
+                            {
+                                Background4.QueueFree();
+                            }
+                            if (background_number != 5)
+                            {
+                                Background5.QueueFree();
+                            }
+                            if (background_number != 6)
+                            {
+                                Background6.QueueFree();
+                            }
                             if (background_number == 1 || background_number == 3 || background_number == 5)
                             {
                                 allow_sun = true;

@@ -1253,7 +1253,6 @@ position = Vector2( -80, -80 )
 z_index = 7
 script = ExtResource( 2 )
 hurt_color = Color( 1.4, 1.4, 1.4, 1 )
-normal_color = Color( 1, 1, 1, 1 )
 Ice_hurt_color = Color( 0, 0.588235, 1, 1 )
 Ice_normal_color = Color( 0, 0.77, 1.3, 1 )
 
@@ -1281,6 +1280,7 @@ mouse_filter = 2
 texture = ExtResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="Dock"]
+position = Vector2( 0, 21.333 )
 
 [node name="Shape" type="CollisionShape2D" parent="Dock/Area2D"]
 shape = SubResource( 1 )
@@ -1525,7 +1525,8 @@ anims/Water = SubResource( 15 )
 [node name="Out_Water" type="AnimationPlayer" parent="."]
 anims/Water = SubResource( 17 )
 
-[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Enter"]
+[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
+[connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
 [connection signal="area_entered" from="Main/Main/Zombies_Area" to="." method="Plants_Entered"]
 [connection signal="area_exited" from="Main/Main/Zombies_Area" to="." method="Plants_Exited"]
 [connection signal="timeout" from="Timer" to="." method="Hurt_Timer_Out"]

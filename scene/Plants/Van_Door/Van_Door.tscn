@@ -264,8 +264,6 @@ tracks/0/keys = {
 [node name="Van_Door" type="Node2D"]
 z_index = 3
 script = ExtResource( 2 )
-hover_color = Color( 1.3, 1.3, 1.3, 1 )
-normal_color = Color( 1, 1, 1, 1 )
 Bullets_Path = "res://scene/Plants/Van_Door/Van_Door_Bullets/Van_Door_Bullets.tscn"
 
 [node name="Dock" type="Control" parent="."]
@@ -432,7 +430,8 @@ anims/Died = SubResource( 12 )
 [node name="Bug_player" type="AnimationPlayer" parent="."]
 anims/Bug = SubResource( 15 )
 
-[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Enter"]
+[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
+[connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
 [connection signal="area_entered" from="Main/Shovel_Area" to="." method="Area_Entered"]
 [connection signal="area_exited" from="Main/Shovel_Area" to="." method="Area_Exited"]
 [connection signal="area_entered" from="Main/Bullets_Way" to="." method="Bullets_Way_On"]

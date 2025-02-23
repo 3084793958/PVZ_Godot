@@ -329,6 +329,18 @@ tracks/22/keys = {
 "method": "Walk_Mode"
 } ]
 }
+tracks/23/type = "value"
+tracks/23/path = NodePath("../../Dock/Area2D:position")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/keys = {
+"times": PoolRealArray( 0, 0.4, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 21.333 ), Vector2( -37.333, 21.333 ), Vector2( -450.667, 21.333 ) ]
+}
 
 [sub_resource type="Animation" id=18]
 resource_name = "Walk"
@@ -1320,6 +1332,7 @@ mouse_filter = 2
 texture = ExtResource( 31 )
 
 [node name="Area2D" type="Area2D" parent="Dock"]
+position = Vector2( 0, 21.333 )
 
 [node name="Shape" type="CollisionShape2D" parent="Dock/Area2D"]
 shape = SubResource( 1 )
@@ -1586,7 +1599,8 @@ anims/Water = SubResource( 25 )
 [node name="Out_Water" type="AnimationPlayer" parent="."]
 anims/Water = SubResource( 26 )
 
-[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Enter"]
+[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
+[connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
 [connection signal="area_entered" from="Main/Main/Zombies_Area" to="." method="Plants_Entered"]
 [connection signal="area_exited" from="Main/Main/Zombies_Area" to="." method="Plants_Exited"]
 [connection signal="area_entered" from="Main/Main/Jump_Area2D" to="." method="Jump_Area2D_area_entered"]

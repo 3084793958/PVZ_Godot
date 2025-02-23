@@ -1167,6 +1167,7 @@ mouse_filter = 2
 texture = ExtResource( 32 )
 
 [node name="Area2D" type="Area2D" parent="Dock"]
+position = Vector2( 0, 46.667 )
 
 [node name="Shape" type="CollisionShape2D" parent="Dock/Area2D"]
 shape = SubResource( 1 )
@@ -1408,7 +1409,8 @@ anims/Water = SubResource( 13 )
 [node name="Out_Water" type="AnimationPlayer" parent="."]
 anims/Water = SubResource( 14 )
 
-[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Enter"]
+[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
+[connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
 [connection signal="area_entered" from="Main/Main/Zombies_Area" to="." method="Plants_Entered"]
 [connection signal="area_exited" from="Main/Main/Zombies_Area" to="." method="Plants_Exited"]
 [connection signal="timeout" from="Timer" to="." method="Hurt_Timer_Out"]

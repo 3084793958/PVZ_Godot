@@ -7,6 +7,7 @@ public class Normal_Zombies_Area : Control_Area_2D
     public bool can_hurt = true;
     public int hurt = 60;
     public Normal_Plants_Area Choose_Plants_Area = null;
+    public Eating_Flower_Area Choose_Eating_Flower_Area = null;
     public bool has_plant = false;
     public bool has_lose_head = false;
     public int health = 270;
