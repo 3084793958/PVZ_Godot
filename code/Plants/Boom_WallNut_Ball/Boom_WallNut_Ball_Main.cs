@@ -37,10 +37,10 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
                         }
                         if (!can_touch && Zombies_Area_2D_List[i] != null && !GetNode<AnimationPlayer>("Died").IsPlaying())
                         {
-                            if (!Zombies_Area_2D_List[i].has_lose_head && Zombies_Area_2D_List[i].has_plant)
+                            if (!Zombies_Area_2D_List[i].has_lose_head && Zombies_Area_2D_List[i].has_plant&& !Zombies_Area_2D_List[i].has_lose_head)
                             {
                                 can_touch = true;
-                                if (touch_ZIndex != Zombies_Area_2D_List[i].GetParent().GetParent().GetParent<Node2D>().ZIndex /*&& GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area == Zombies_Area_2D_List[i]*/)
+                                if (touch_ZIndex != Zombies_Area_2D_List[i].GetParent().GetParent().GetParent<Node2D>().ZIndex)
                                 {
                                     touch_ZIndex = Zombies_Area_2D_List[i].GetParent().GetParent().GetParent<Node2D>().ZIndex;
                                     speed_x = 0;

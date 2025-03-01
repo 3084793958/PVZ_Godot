@@ -8,18 +8,20 @@ public class Mg_Main : Normal_Plants
     public List<H2SO4_Area2D> H2SO4_Area_2D_List = new List<H2SO4_Area2D>();
     public void Shovel_Area_Entered(Control_Area_2D area2D)
     {
-            if (has_planted && area2D.Area2D_type == "Shovel")
-            {
-                Shovel_Area = (Shovel_Area2D)area2D;
-            }
-            if (has_planted && area2D.Area2D_type == "Bug")
-            {
-                Bug_Area = (Bug_Area2D)area2D;
-            }
+        string Type_string = area2D?.Area2D_type;
+        if (has_planted && Type_string != null && Type_string == "Shovel")
+        {
+            Shovel_Area = (Shovel_Area2D)area2D;
+        }
+        if (has_planted && Type_string != null && Type_string == "Bug")
+        {
+            Bug_Area = (Bug_Area2D)area2D;
+        }
     }
     public void Shovel_Area_Exited(Control_Area_2D area2D)
     {
-        if (has_planted && area2D.Area2D_type == "Shovel")
+        string Type_string = area2D?.Area2D_type;
+        if (has_planted && Type_string != null && Type_string == "Shovel")
         {
             if (Shovel_Area != null)
             {
@@ -28,7 +30,7 @@ public class Mg_Main : Normal_Plants
                 on_Shovel = false;
             }
         }
-        if (has_planted && area2D.Area2D_type == "Bug")
+        if (has_planted && Type_string != null && Type_string == "Bug")
         {
             if (Bug_Area != null)
             {
@@ -74,11 +76,12 @@ public class Mg_Main : Normal_Plants
     protected override void Area_Entered(Control_Area_2D area2D)
     {
         base.Area_Entered(area2D);
-        if (area2D.Area2D_type == "Bullets_Fire")
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Bullets_Fire")
         {
             C2H5OH_Fire_Area_2D_List.Add((C2H5OH_Bullets_Fire_Area)area2D);
         }
-        if (area2D.Area2D_type == "H2SO4")
+        if (Type_string != null && Type_string == "H2SO4")
         {
             H2SO4_Area_2D_List.Add((H2SO4_Area2D)area2D);
         }
@@ -86,11 +89,12 @@ public class Mg_Main : Normal_Plants
     protected override void Area_Exited(Control_Area_2D area2D)
     {
         base.Area_Exited(area2D);
-        if (area2D.Area2D_type == "Bullets_Fire")
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Bullets_Fire")
         {
             C2H5OH_Fire_Area_2D_List.Remove((C2H5OH_Bullets_Fire_Area)area2D);
         }
-        if (area2D.Area2D_type == "H2SO4")
+        if (Type_string != null && Type_string == "H2SO4")
         {
             H2SO4_Area_2D_List.Remove((H2SO4_Area2D)area2D);
         }

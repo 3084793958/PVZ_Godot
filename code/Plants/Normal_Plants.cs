@@ -31,17 +31,17 @@ public class Normal_Plants : Node2D
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
-        if (Public_Main.debuging)
+        if (true/*Public_Main.debuging*/)
         {
-            Console.WriteLine("异常:" + e.ExceptionObject);
+            GD.Print("异常:" + e.ExceptionObject);//Console似乎无反应
         }
     }
     protected static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
     {
         e.SetObserved();
-        if (Public_Main.debuging)
+        if (true/*Public_Main.debuging*/)
         {
-            Console.WriteLine("未观测异常:" + e.Exception);
+            GD.Print("未观测异常:" + e.Exception);
         }
     }
     public override void _Ready()
@@ -160,33 +160,43 @@ public class Normal_Plants : Node2D
                 {
                     card_parent_Button.Set_ColorRect_2(false);
                     Normal_Plants.Choosing = false;
-                    if (Allow_Plants())
+                    if (Dock_Area_2D != null)
                     {
-                        has_planted = true;
-                        Plants_Add_List();
-                        this.GlobalPosition = Dock_Area_2D.GlobalPosition;
-                        In_Game_Main.Sun_Number -= card_parent_Button.sun;
-                        In_Game_Main.Update_Sun(this);
-                        card_parent_Button.now_time = card_parent_Button.wait_time;
-                        if (Dock_Area_2D.type == 2)
+                        if (Allow_Plants())
                         {
-                            GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Play();
-                        }
-                        else
-                        {
-                            if (GD.Randf() > 0.5f)
+                            has_planted = true;
+                            Plants_Add_List();
+                            this.GlobalPosition = Dock_Area_2D.GlobalPosition;
+                            In_Game_Main.Sun_Number -= card_parent_Button.sun;
+                            In_Game_Main.Update_Sun(this);
+                            card_parent_Button.now_time = card_parent_Button.wait_time;
+                            if (Dock_Area_2D.type == 2)
                             {
-                                GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Play();
+                                GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Play();
                             }
                             else
                             {
-                                GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Play();
+                                if (GD.Randf() > 0.5f)
+                                {
+                                    GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Play();
+                                }
+                                else
+                                {
+                                    GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Play();
+                                }
                             }
+                            GetNode<Control>("Dock").Hide();
+                            GetNode<Control>("Show").Hide();
+                            GetNode<Control>("Main").Show();
+                            Plants_Init();
                         }
-                        GetNode<Control>("Dock").Hide();
-                        GetNode<Control>("Show").Hide();
-                        GetNode<Control>("Main").Show();
-                        Plants_Init();
+                        else
+                        {
+                            Hide();
+                            Position = new Vector2(-1437, -1437);
+                            GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
+                            this.Free();
+                        }
                     }
                     else
                     {
@@ -208,6 +218,10 @@ public class Normal_Plants : Node2D
                     on_Shovel = true;
                 }
             }
+            else
+            {
+                on_Shovel = false;
+            }
             if (Bug_Area != null)
             {
                 if (Bug_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
@@ -215,6 +229,14 @@ public class Normal_Plants : Node2D
                     this.Modulate = hover_color;
                     on_Bug = true;
                 }
+            }
+            else
+            {
+                on_Bug = false;
+            }
+            if (!GetNode<AnimationPlayer>("Is_Eated").IsPlaying() && !on_Bug && !on_Shovel) 
+            {
+                this.Modulate = normal_color;
             }
             if (GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health)
             {
@@ -252,58 +274,79 @@ public class Normal_Plants : Node2D
     }
     protected virtual void Area_Entered(Control_Area_2D area2D)
     {
-        if (!just_for_MG)
+        try
         {
-            if (has_planted && area2D.Area2D_type == "Shovel")
+            string Type_string = area2D?.Area2D_type;
+            if (!just_for_MG)
             {
-                Shovel_Area = (Shovel_Area2D)area2D;
+                if (has_planted && Type_string != null && Type_string == "Shovel")
+                {
+                    Shovel_Area = (Shovel_Area2D)area2D;
+                }
+                else if (has_planted && Type_string != null && Type_string == "Bug")
+                {
+                    Bug_Area = (Bug_Area2D)area2D;
+                }
             }
-            if (has_planted && area2D.Area2D_type == "Bug")
+            if (Type_string != null && Type_string == "Zombies")
             {
-                Bug_Area = (Bug_Area2D)area2D;
+                Zombies_Area_2D = (Normal_Zombies_Area)area2D;
+                if (Zombies_Area_2D != null)
+                {
+                    if (Zombies_Area_2D.can_hurt)//屎山造成
+                    {
+                        Zombies_Area_2D_List.Add(Zombies_Area_2D);
+                    }
+                }
             }
         }
-        if (area2D.Area2D_type == "Zombies")
+        catch (Exception ex)
         {
-            Zombies_Area_2D = (Normal_Zombies_Area)area2D;
-            if (Zombies_Area_2D.can_hurt)//屎山造成
-            {
-                Zombies_Area_2D_List.Add(Zombies_Area_2D);
-            }
+            GD.Print(ex.Message);
         }
     }
     protected virtual void Area_Exited(Control_Area_2D area2D)
     {
-        if (just_for_MG)
+        try
         {
-            if (has_planted && area2D.Area2D_type == "Shovel")
+            string Type_string = area2D?.Area2D_type;
+            if (!just_for_MG)
             {
-                this.Modulate = normal_color;
-                Shovel_Area = null;
-                on_Shovel = false;
+                if (has_planted && Type_string != null && Type_string == "Shovel")
+                {
+                    this.Modulate = normal_color;
+                    Shovel_Area = null;
+                    on_Shovel = false;
+                }
+                else if (has_planted && Type_string != null && Type_string == "Bug")
+                {
+                    this.Modulate = normal_color;
+                    Bug_Area = null;
+                    on_Bug = false;
+                }
             }
-            if (has_planted && area2D.Area2D_type == "Bug")
+            if (Type_string != null && Type_string == "Zombies")
             {
-                this.Modulate = normal_color;
-                Bug_Area = null;
-                on_Bug = false;
+                Zombies_Area_2D_List.Remove((Normal_Zombies_Area)area2D);
             }
         }
-        if (area2D.Area2D_type == "Zombies")
+        catch (Exception ex)
         {
-            Zombies_Area_2D_List.Remove((Normal_Zombies_Area)area2D);
+            GD.Print(ex.Message);
         }
     }
     protected virtual void Dock_Entered(Control_Area_2D area2D)
     {
-        if (area2D.Area2D_type == "Grid")
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Grid")
         {
             Dock_Area_2D_List.Add((Background_Grid_Main)area2D);
         }
     }
     protected virtual void Dock_Exited(Control_Area_2D area2D)
     {
-        if (area2D.Area2D_type == "Grid")
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Grid")
         {
             Dock_Area_2D_List.Remove((Background_Grid_Main)area2D);
         }

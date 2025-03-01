@@ -76,6 +76,10 @@ Cancel={
  ]
 }
 
+[mono]
+
+runtime/unhandled_exception_policy=1
+
 [physics]
 
 common/enable_pause_aware_picking=true

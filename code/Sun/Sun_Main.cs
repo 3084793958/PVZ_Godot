@@ -34,18 +34,6 @@ public class Sun_Main : Node2D
     {
         GetNode<AnimationPlayer>("Sun/Hide").Play("Hide");
     }
-    public void Click_Button_pressed()
-    {
-        GetNode<Timer>("Run_Timer").Stop();
-        GetNode<Button>("Sun/Click_Button").Visible = false;
-        is_lock = true;
-        GetNode<AudioStreamPlayer>("Sun_player").Play();
-        In_Game_Main.Sun_Number += this.sun_value;
-        In_Game_Main.Update_Sun(this);
-        Get_Delta_Vector2 = new Vector2(((float)(Position.x + 250)) / 20, ((float)(Position.y + 250)) / 20);
-        Get_Run_Time = 20;
-        GetNode<Timer>("Run_Timer").Start();
-    }
     public void Run_Timer_Timeout()
     {
         var Run_Timer = GetNode<Timer>("Run_Timer");
@@ -73,6 +61,27 @@ public class Sun_Main : Node2D
             {
                 GetNode<Timer>("Timer").Start();
                 Run_Timer.Stop();
+            }
+        }
+    }
+    public override void _Process(float delta)
+    {
+        if (In_Game_Main.is_playing && !GetTree().Paused) 
+        {
+            var Mouse_position = GetTree().Root.GetMousePosition();
+            if (Math.Abs(GetNode<Control>("Sun").RectGlobalPosition.x - Mouse_position.x) < 40 && Math.Abs(GetNode<Control>("Sun").RectGlobalPosition.y - Mouse_position.y) < 40)
+            {
+                if (Input.IsActionPressed("Left_Mouse") && !is_lock) 
+                {
+                    GetNode<Timer>("Run_Timer").Stop();
+                    is_lock = true;
+                    GetNode<AudioStreamPlayer>("Sun_player").Play();
+                    In_Game_Main.Sun_Number += this.sun_value;
+                    In_Game_Main.Update_Sun(this);
+                    Get_Delta_Vector2 = new Vector2(((float)(Position.x + 250)) / 20, ((float)(Position.y + 250)) / 20);
+                    Get_Run_Time = 20;
+                    GetNode<Timer>("Run_Timer").Start();
+                }
             }
         }
     }

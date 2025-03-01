@@ -251,7 +251,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=17]
-extents = Vector2( 45.977, 40 )
+extents = Vector2( 81.4593, 40 )
 
 [sub_resource type="Animation" id=7]
 resource_name = "Free"
@@ -486,7 +486,7 @@ scale = Vector2( 0.667, 0.667 )
 script = ExtResource( 13 )
 
 [node name="Shape" type="CollisionShape2D" parent="Main/Eating_Area"]
-position = Vector2( 55.972, 0 )
+position = Vector2( 91.4543, 0 )
 shape = SubResource( 17 )
 
 [node name="Plant_Sound" type="Node" parent="."]
@@ -528,6 +528,4 @@ one_shot = true
 [connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
 [connection signal="area_entered" from="Main/Shovel_Area" to="." method="Area_Entered"]
 [connection signal="area_exited" from="Main/Shovel_Area" to="." method="Area_Exited"]
-[connection signal="area_entered" from="Main/Eating_Area" to="." method="Eating_Area_entered"]
-[connection signal="area_exited" from="Main/Eating_Area" to="." method="Eating_Area_exited"]
 [connection signal="timeout" from="Timer" to="." method="Eating_timeout"]

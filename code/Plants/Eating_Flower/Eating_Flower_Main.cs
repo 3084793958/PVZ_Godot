@@ -37,49 +37,16 @@ public class Eating_Flower_Main : Normal_Plants
             GetNode<Eating_Flower_Area>("Main/Eating_Area").can_eat = has_planted && !is_eating;
             if (health > 0 && !is_eating && !GetNode<AnimationPlayer>("Main/Eating_End").IsPlaying())
             {
-                if (Eating_Zombies_List.Count != 0)
+                if (health > 0)
                 {
-                    bool can_work = false;
-                    for (int i = 0; i < Eating_Zombies_List.Count; i++)
+                    if (GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area != null)
                     {
-                        if (Eating_Zombies_List[i].Should_Ignore)
+                        if (!GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area.Should_Ignore)
                         {
-                            continue;
-                        }
-                        if (Eating_Zombies_List[i].has_plant && Eating_Zombies_List[i].health > 0)
-                        {
-                            if (GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area == null)
-                            {
-                                GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area = Eating_Zombies_List[i];
-                            }
-                            if (Eating_Zombies_List[i].ZIndex > GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area.ZIndex)
-                            {
-                                GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area = Eating_Zombies_List[i];
-                            }
-                            else if (Eating_Zombies_List[i].ZIndex == GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area.ZIndex)
-                            {
-                                if (Eating_Zombies_List[i].GetParent().GetParent().GetIndex() > GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area.GetParent().GetParent().GetIndex())
-                                {
-                                    GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area = Eating_Zombies_List[i];
-                                }
-                            }
-                            can_work = true;
-                        }
-                    }
-                    if (can_work)
-                    {
-                        if (health > 0)
-                        {
-                            if (GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area != null)
-                            {
-                                if (!GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area.Should_Ignore && GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area.Choose_Eating_Flower_Area == GetNode<Eating_Flower_Area>("Main/Eating_Area"))
-                                {
-                                    is_eating = true;
-                                    GetNode<Timer>("Timer").WaitTime = 1f + GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area.health / 75f;
-                                    GetNode<Timer>("Timer").Start();
-                                    GetNode<AnimationPlayer>("Main/Eat").Play("Eat");
-                                }
-                            }
+                            is_eating = true;
+                            GetNode<Timer>("Timer").WaitTime = 1f + GetNode<Eating_Flower_Area>("Main/Eating_Area").Choose_Eating_Zombies_Area.health / 75f;
+                            GetNode<Timer>("Timer").Start();
+                            GetNode<AnimationPlayer>("Main/Eat").Play("Eat");
                         }
                     }
                 }
@@ -128,20 +95,6 @@ public class Eating_Flower_Main : Normal_Plants
     {
         GetNode<Timer>("Timer").Stop();
         Eating_timeout();
-    }
-    public void Eating_Area_entered(Control_Area_2D area2D)
-    {
-        if (area2D.Area2D_type == "Zombies")
-        {
-            Eating_Zombies_List.Add((Normal_Zombies_Area)area2D);
-        }
-    }
-    public void Eating_Area_exited(Control_Area_2D area2D)
-    {
-        if (area2D.Area2D_type == "Zombies")
-        {
-            Eating_Zombies_List.Remove((Normal_Zombies_Area)area2D);
-        }
     }
     public void Eating_timeout()
     {

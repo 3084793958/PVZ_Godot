@@ -37,7 +37,7 @@ public class WallNut_Ball_Main : Normal_Plants
                         }
                         if (!can_touch && Zombies_Area_2D_List[i] != null)
                         {
-                            if (!Zombies_Area_2D_List[i].has_lose_head)
+                            if (!Zombies_Area_2D_List[i].has_lose_head&& !Zombies_Area_2D_List[i].Should_Ignore && Zombies_Area_2D_List[i].has_plant)
                             {
                                 can_touch = true;
                                 GetNode<Crash_Area_2D>("Main/Crash_Area").Crash_Area = Zombies_Area_2D_List[i];

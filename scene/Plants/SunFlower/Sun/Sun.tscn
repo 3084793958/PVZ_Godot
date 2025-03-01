@@ -1,15 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://image/Plants/SunFlower/Sun/Sun2.png" type="Texture" id=1]
 [ext_resource path="res://image/Plants/SunFlower/Sun/Sun1.png" type="Texture" id=2]
 [ext_resource path="res://image/Plants/SunFlower/Sun/Sun3.png" type="Texture" id=3]
 [ext_resource path="res://code/Sun/Sun_Main.cs" type="Script" id=4]
 [ext_resource path="res://sound/Plants/SunFlower/Sun/points.ogg" type="AudioStream" id=5]
-
-[sub_resource type="StyleBoxEmpty" id=4]
-
-[sub_resource type="Theme" id=5]
-Button/styles/focus = SubResource( 4 )
 
 [sub_resource type="Animation" id=1]
 resource_name = "sun"
@@ -145,16 +140,6 @@ margin_bottom = 18.0
 rect_pivot_offset = Vector2( 18, 18 )
 texture = ExtResource( 2 )
 
-[node name="Click_Button" type="Button" parent="Sun"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -46.0
-margin_top = -44.0
-margin_right = 46.0
-margin_bottom = 46.0
-theme = SubResource( 5 )
-flat = true
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sun"]
 anims/sun = SubResource( 1 )
 
@@ -174,6 +159,5 @@ stream = ExtResource( 5 )
 [node name="Run_Timer" type="Timer" parent="."]
 wait_time = 0.05
 
-[connection signal="pressed" from="Sun/Click_Button" to="." method="Click_Button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="Hide_TimerOut"]
 [connection signal="timeout" from="Run_Timer" to="." method="Run_Timer_Timeout"]

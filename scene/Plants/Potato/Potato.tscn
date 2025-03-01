@@ -545,6 +545,7 @@ texture = ExtResource( 11 )
 [node name="Shovel_Area" type="Area2D" parent="Main"]
 position = Vector2( 40, 40 )
 script = ExtResource( 17 )
+plants_type = "Down"
 
 [node name="Shape" type="CollisionShape2D" parent="Main/Shovel_Area"]
 shape = SubResource( 6 )

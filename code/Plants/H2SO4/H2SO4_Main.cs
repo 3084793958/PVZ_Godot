@@ -9,6 +9,15 @@ public class H2SO4_Main : Normal_Plants
         base._Process(delta);
         if (has_planted)
         {
+            if (on_Mg && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
+            {
+                if (!GetNode<AnimationPlayer>("Open").IsPlaying())
+                {
+                    Is_Double_Click = false;
+                    GetNode<H2SO4_Area2D>("Main/H2SO4_Area").has_become = true;
+                    GetNode<AnimationPlayer>("Open").Play("Open");
+                }
+            }
             if (Zombies_Area_2D_List.Count != 0)
             {
                 for (int i = 0; i < Zombies_Area_2D_List.Count; i++)
@@ -43,7 +52,8 @@ public class H2SO4_Main : Normal_Plants
     protected override void Area_Entered(Control_Area_2D area2D)
     {
         base.Area_Entered(area2D);
-        if (area2D.Area2D_type == "Mg_Shining")//TODO
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Mg_Shining")//TODO
         {
             on_Mg = true;
         }
@@ -51,7 +61,8 @@ public class H2SO4_Main : Normal_Plants
     protected override void Area_Exited(Control_Area_2D area2D)
     {
         base.Area_Exited(area2D);
-        if (area2D.Area2D_type == "Mg_Shining")//TODO
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Mg_Shining")//TODO
         {
             on_Mg = false;
         }

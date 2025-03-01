@@ -38,17 +38,17 @@ public class Normal_Plants_Zombies : Node2D
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
-        if (Public_Main.debuging)
+        if (true/*Public_Main.debuging*/)
         {
-            Console.WriteLine("异常:" + e.ExceptionObject);
+            GD.Print("异常:" + e.ExceptionObject);
         }
     }
     protected static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
     {
         e.SetObserved();
-        if (Public_Main.debuging)
+        if (true/*Public_Main.debuging*/)
         {
-            Console.WriteLine("未观测异常:" + e.Exception);
+            GD.Print("未观测异常:" + e.Exception);
         }
     }
     public override void _Ready()
@@ -202,34 +202,44 @@ public class Normal_Plants_Zombies : Node2D
                 {
                     card_parent_Button.Set_ColorRect_2(false);
                     Normal_Plants.Choosing = false;
-                    if ((In_Game_Main.Sun_Number >= card_parent_Button.sun || Public_Main.debuging) && on_lock_grid)
+                    if (Dock_Area_2D != null)
                     {
-                        has_planted = true;
-                        GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").has_planted = true;
-                        this.GlobalPosition = Dock_Area_2D.GlobalPosition;
-                        In_Game_Main.Sun_Number -= card_parent_Button.sun;
-                        In_Game_Main.Update_Sun(this);
-                        card_parent_Button.now_time = card_parent_Button.wait_time;
-                        if (Dock_Area_2D.type == 2)
+                        if ((In_Game_Main.Sun_Number >= card_parent_Button.sun || Public_Main.debuging) && on_lock_grid)
                         {
-                            GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Play();
-                        }
-                        else
-                        {
-                            if (GD.Randf() > 0.5f)
+                            has_planted = true;
+                            GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").has_planted = true;
+                            this.GlobalPosition = Dock_Area_2D.GlobalPosition;
+                            In_Game_Main.Sun_Number -= card_parent_Button.sun;
+                            In_Game_Main.Update_Sun(this);
+                            card_parent_Button.now_time = card_parent_Button.wait_time;
+                            if (Dock_Area_2D.type == 2)
                             {
-                                GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Play();
+                                GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Play();
                             }
                             else
                             {
-                                GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Play();
+                                if (GD.Randf() > 0.5f)
+                                {
+                                    GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Play();
+                                }
+                                else
+                                {
+                                    GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Play();
+                                }
                             }
+                            GetNode<Control>("Dock").Hide();
+                            GetNode<Control>("Show").Hide();
+                            GetNode<Control>("Main").Show();
+                            Walk_Mode(true);
+                            In_Game_Main.Zombies_Number++;
                         }
-                        GetNode<Control>("Dock").Hide();
-                        GetNode<Control>("Show").Hide();
-                        GetNode<Control>("Main").Show();
-                        Walk_Mode(true);
-                        In_Game_Main.Zombies_Number++;
+                        else
+                        {
+                            Hide();
+                            Position = new Vector2(-1437, -1437);
+                            GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
+                            this.Free();
+                        }
                     }
                     else
                     {
@@ -351,28 +361,46 @@ public class Normal_Plants_Zombies : Node2D
     }
     protected virtual void Plants_Entered(Control_Area_2D area2D)//函数名为历史遗留问题
     {
-        if (area2D.Area2D_type == "Zombies")
+        try
         {
-            Zombies_Area_2D_List.Add((Normal_Zombies_Area)area2D);
+            string Type_string = area2D?.Area2D_type;
+            if (Type_string != null && Type_string == "Zombies")
+            {
+                Zombies_Area_2D_List.Add((Normal_Zombies_Area)area2D);
+            }
+        }
+        catch (Exception ex)
+        {
+            GD.Print(ex.Message);
         }
     }
     protected virtual void Plants_Exited(Control_Area_2D area2D)
     {
-        if (area2D.Area2D_type == "Zombies")
+        try
         {
-            Zombies_Area_2D_List.Remove((Normal_Zombies_Area)area2D);
+            string Type_string = area2D?.Area2D_type;
+            if (Type_string != null && Type_string == "Zombies")
+            {
+                Zombies_Area_2D_List.Remove((Normal_Zombies_Area)area2D);
+            }
+        }
+        catch (Exception ex)
+        {
+            GD.Print(ex.Message);
         }
     }
     protected virtual void Dock_Entered(Control_Area_2D area2D)
     {
-        if (area2D.Area2D_type == "Grid")
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Grid")
         {
             Dock_Area_2D_List.Add((Background_Grid_Main)area2D);
         }
     }
     protected virtual void Dock_Exited(Control_Area_2D area2D)
     {
-        if (area2D.Area2D_type == "Grid")
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Grid")
         {
             Dock_Area_2D_List.Remove((Background_Grid_Main)area2D);
         }

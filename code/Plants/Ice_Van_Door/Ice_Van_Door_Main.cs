@@ -76,7 +76,8 @@ public class Ice_Van_Door_Main : Normal_Plants
     }
     public void Bullets_Way_On(Control_Area_2D area_2D)
     {
-        if (area_2D.Area2D_type == "Zombies")
+        string Type_string = area_2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Zombies")
         {
             Bullets_Zombies_Area_2D = (Normal_Zombies_Area)area_2D;
             Bullets_Zombies_Area_2D_List.Add(Bullets_Zombies_Area_2D);
@@ -84,7 +85,8 @@ public class Ice_Van_Door_Main : Normal_Plants
     }
     public void Bullets_Way_Off(Control_Area_2D area_2D)
     {
-        if (area_2D.Area2D_type == "Zombies")
+        string Type_string = area_2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Zombies")
         {
             Bullets_Zombies_Area_2D = (Normal_Zombies_Area)area_2D;
             Bullets_Zombies_Area_2D_List.Remove(Bullets_Zombies_Area_2D);
