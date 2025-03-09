@@ -3,10 +3,17 @@ using System;
 
 public class Ice_Van_Door_Main : Normal_Plants
 {
+    //lock_protect
+    private readonly object _listLock = new object();
+    //lock
     [Export] public string Bullets_Path = null;
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
-        base._Process(delta);
+        if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
+        {
+            return;
+        }
+        base._PhysicsProcess(delta);
         if (has_planted)
         {
             if (Zombies_Area_2D_List.Count != 0)
@@ -36,24 +43,9 @@ public class Ice_Van_Door_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        GetNode<Area2D>("Main/Bullets_Way").PauseMode = PauseModeEnum.Process;
         GetNode<AudioStreamPlayer>("Main/Throw").Stream.Set("loop", false);
         base._Ready();
-    }
-    protected override void Area_Entered(Control_Area_2D area2D)
-    {
-        base.Area_Entered(area2D);
-    }
-    protected override void Area_Exited(Control_Area_2D area2D)
-    {
-        base.Area_Exited(area2D);
-    }
-    protected override void Dock_Entered(Control_Area_2D area2D)
-    {
-        base.Dock_Entered(area2D);
-    }
-    protected override void Dock_Exited(Control_Area_2D area2D)
-    {
-        base.Dock_Exited(area2D);
     }
     protected override void Plants_Add_List()
     {
@@ -74,22 +66,44 @@ public class Ice_Van_Door_Main : Normal_Plants
     {
         return ((In_Game_Main.Sun_Number >= card_parent_Button.sun && Dock_Area_2D.Normal_Plant_List.Count == 0 && Dock_Area_2D.now_type[Dock_Area_2D.now_type.Count - 1] == 1) || Public_Main.debuging) && on_lock_grid;
     }
-    public void Bullets_Way_On(Control_Area_2D area_2D)
+    public void Bullets_Way_On(Area2D area_node)
     {
-        string Type_string = area_2D?.Area2D_type;
-        if (Type_string != null && Type_string == "Zombies")
+        if (!(area_node is Control_Area_2D area_2D) || !IsInstanceValid(area_2D))
         {
-            Bullets_Zombies_Area_2D = (Normal_Zombies_Area)area_2D;
-            Bullets_Zombies_Area_2D_List.Add(Bullets_Zombies_Area_2D);
+            return;
+        }
+        lock (_listLock)
+        {
+            if (!IsInstanceValid(area_2D))
+            {
+                return;
+            }
+            string Type_string = area_2D?.Area2D_type;
+            if (Type_string != null && Type_string == "Zombies")
+            {
+                Bullets_Zombies_Area_2D = (Normal_Zombies_Area)area_2D;
+                Bullets_Zombies_Area_2D_List.Add(Bullets_Zombies_Area_2D);
+            }
         }
     }
-    public void Bullets_Way_Off(Control_Area_2D area_2D)
+    public void Bullets_Way_Off(Area2D area_node)
     {
-        string Type_string = area_2D?.Area2D_type;
-        if (Type_string != null && Type_string == "Zombies")
+        if (!(area_node is Control_Area_2D area_2D) || !IsInstanceValid(area_2D))
         {
-            Bullets_Zombies_Area_2D = (Normal_Zombies_Area)area_2D;
-            Bullets_Zombies_Area_2D_List.Remove(Bullets_Zombies_Area_2D);
+            return;
+        }
+        lock (_listLock)
+        {
+            if (!IsInstanceValid(area_2D))
+            {
+                return;
+            }
+            string Type_string = area_2D?.Area2D_type;
+            if (Type_string != null && Type_string == "Zombies")
+            {
+                Bullets_Zombies_Area_2D = (Normal_Zombies_Area)area_2D;
+                Bullets_Zombies_Area_2D_List.Remove(Bullets_Zombies_Area_2D);
+            }
         }
     }
     public void Bullets_Shot()
@@ -130,5 +144,16 @@ public class Ice_Van_Door_Main : Normal_Plants
                 In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, speed_y);
             }
         }
+    }
+    protected override void Free_Self()
+    {
+        if (GetNode<Area2D>("Main/Bullets_Way").IsConnected("area_entered", this, nameof(Bullets_Way_On)))
+        {
+            GetNode<Area2D>("Main/Bullets_Way").Disconnect("area_entered", this, nameof(Bullets_Way_On));
+            GetNode<Area2D>("Main/Bullets_Way").Disconnect("area_exited", this, nameof(Bullets_Way_Off));
+            GetNode<Area2D>("Main/Bullets_Way").Monitoring = false;
+            GetNode<Area2D>("Main/Bullets_Way").Monitorable = false;
+        }
+        base.Free_Self();
     }
 }

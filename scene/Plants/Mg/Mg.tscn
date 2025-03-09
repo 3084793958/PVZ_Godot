@@ -95,7 +95,7 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/3/type = "value"
@@ -164,7 +164,7 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/3/type = "value"
@@ -315,7 +315,7 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/3/type = "value"
@@ -428,7 +428,7 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 
@@ -480,13 +480,14 @@ tracks/1/keys = {
 "method": "hide"
 }, {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 
 [node name="Mg" type="Node2D"]
 z_index = 5
 script = ExtResource( 2 )
+health = 100
 normal_ZIndex = 5
 
 [node name="Dock" type="Control" parent="."]

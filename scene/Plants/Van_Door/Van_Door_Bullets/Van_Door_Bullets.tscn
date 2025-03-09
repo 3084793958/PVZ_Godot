@@ -257,7 +257,7 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/4/type = "value"
@@ -323,7 +323,7 @@ tracks/3/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/4/type = "value"

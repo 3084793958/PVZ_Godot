@@ -3,9 +3,13 @@ using System;
 
 public class Ignore_Cone_Zombies_Main : Normal_Zombies
 {
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
-        base._Process(delta);
+        if (!GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))
+        {
+            return;
+        }
+        base._PhysicsProcess(delta);
         if (has_planted)
         {
             if (is_Lock_Ice)
@@ -73,38 +77,6 @@ public class Ignore_Cone_Zombies_Main : Normal_Zombies
         health_list.Add(new Health_Container(270, false));
         base._Ready();
     }
-    protected override void Plants_Entered(Control_Area_2D area2D)
-    {
-        base.Plants_Entered(area2D);
-    }
-    protected override void Plants_Exited(Control_Area_2D area2D)
-    {
-        base.Plants_Exited(area2D);
-    }
-    protected override void Dock_Entered(Control_Area_2D area2D)
-    {
-        base.Dock_Entered(area2D);
-    }
-    protected override void Dock_Exited(Control_Area_2D area2D)
-    {
-        base.Dock_Exited(area2D);
-    }
-    protected override void Ice_Timer_timeout()
-    {
-        base.Ice_Timer_timeout();
-    }
-    protected override void Remove_Zombies_Number()
-    {
-        base.Remove_Zombies_Number();
-    }
-    protected override void Ice_Lock_Timer_timeout()
-    {
-        base.Ice_Lock_Timer_timeout();
-    }
-    protected override void Free_Self()
-    {
-        base.Free_Self();
-    }
     protected override void Walk_Mode(bool is_Walking)
     {
         if (is_Walking)
@@ -115,10 +87,6 @@ public class Ignore_Cone_Zombies_Main : Normal_Zombies
         {
             GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
         }
-    }
-    protected override void Bullets_Sound_Play()
-    {
-        base.Bullets_Sound_Play();
     }
     protected override bool Get_Walk_Mode()
     {

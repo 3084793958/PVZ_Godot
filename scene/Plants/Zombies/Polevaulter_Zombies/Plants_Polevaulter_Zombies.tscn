@@ -882,7 +882,7 @@ tracks/12/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/13/type = "method"
@@ -1028,7 +1028,7 @@ tracks/7/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/8/type = "value"
@@ -1540,6 +1540,7 @@ stream = ExtResource( 36 )
 script = ExtResource( 3 )
 
 [node name="Fire_Hurt" type="Timer" parent="Main/Main"]
+process_mode = 0
 one_shot = true
 
 [node name="Ice_Lock" type="Sprite" parent="Main/Main"]
@@ -1599,6 +1600,7 @@ stream = ExtResource( 4 )
 script = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
+process_mode = 0
 wait_time = 0.2
 one_shot = true
 

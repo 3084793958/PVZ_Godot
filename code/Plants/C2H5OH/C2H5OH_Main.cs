@@ -4,9 +4,13 @@ using System;
 public class C2H5OH_Main : Normal_Plants
 {
     public bool is_fire = true;
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
-        base._Process(delta);
+        if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
+        {
+            return;
+        }
+        base._PhysicsProcess(delta);
         if (has_planted)
         {
             if (Zombies_Area_2D_List.Count != 0)
@@ -50,24 +54,9 @@ public class C2H5OH_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        just_for_C2H5OH = true;
         health = 100;
         base._Ready();
-    }
-    protected override void Area_Entered(Control_Area_2D area2D)
-    {
-        base.Area_Entered(area2D);
-    }
-    protected override void Area_Exited(Control_Area_2D area2D)
-    {
-        base.Area_Exited(area2D);
-    }
-    protected override void Dock_Entered(Control_Area_2D area2D)
-    {
-        base.Dock_Entered(area2D);
-    }
-    protected override void Dock_Exited(Control_Area_2D area2D)
-    {
-        base.Dock_Exited(area2D);
     }
     protected override void Plants_Add_List()
     {
@@ -110,5 +99,13 @@ public class C2H5OH_Main : Normal_Plants
         GetNode<Node2D>("Main/Fire").Show();
         GetNode<AnimationPlayer>("Main/Player1").Play("Fire");
         GetNode<C2H5OH_Bullets_Fire_Area>("Main/Bullets_Fire_Area").can_work = true;
+    }
+    protected override void Free_Self()
+    {
+        GetNode<Area2D>("Main/Died_Fire_Area").Monitoring = false;
+        GetNode<Area2D>("Main/Died_Fire_Area").Monitorable = false;
+        GetNode<Area2D>("Main/Bullets_Fire_Area").Monitoring = false;
+        GetNode<Area2D>("Main/Bullets_Fire_Area").Monitorable = false;
+        base.Free_Self();
     }
 }

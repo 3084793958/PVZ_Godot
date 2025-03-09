@@ -1769,6 +1769,7 @@ stream = ExtResource( 31 )
 script = ExtResource( 11 )
 
 [node name="Timer" type="Timer" parent="."]
+process_mode = 0
 wait_time = 15.0
 one_shot = true
 autostart = true
@@ -1776,6 +1777,7 @@ autostart = true
 [node name="Object" type="Control" parent="."]
 
 [node name="Wave_Timer" type="Timer" parent="."]
+process_mode = 0
 wait_time = 20.0
 
 [node name="Lost_Brain" type="AnimationPlayer" parent="."]
@@ -1820,6 +1822,7 @@ flat = true
 script = ExtResource( 46 )
 
 [node name="End_Cold_Timer" type="Timer" parent="."]
+process_mode = 0
 one_shot = true
 
 [connection signal="pressed" from="Main/Next_Wave" to="." method="Next_Wave_pressed"]

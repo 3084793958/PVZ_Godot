@@ -82,7 +82,9 @@ runtime/unhandled_exception_policy=1
 
 [physics]
 
+common/physics_fps=40
 common/enable_pause_aware_picking=true
+common/thread_model=false
 
 [rendering]
 

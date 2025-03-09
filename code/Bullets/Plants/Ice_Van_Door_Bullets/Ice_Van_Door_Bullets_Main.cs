@@ -11,10 +11,14 @@ public class Ice_Van_Door_Bullets_Main : Normal_Plants_Bullets
         GetNode<AnimationPlayer>("Pea_Animation").Play("Pea");
         normal_ZIndex = 17;
     }
-    public void Dock_Enter(Control_Area_2D area2D)
+    public void Dock_Enter(Area2D area_node)
     {
         try
         {
+            if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+            {
+                return;
+            }
             if (area2D.Area2D_type == "Grid")
             {
                 dock_area_2d = (Background_Grid_Main)area2D;
@@ -26,17 +30,21 @@ public class Ice_Van_Door_Bullets_Main : Normal_Plants_Bullets
             return;
         }
     }
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
         try
         {
+            if (!GetNode<Area2D>("Area2D").IsConnected("area_entered", this, nameof(Touch_Zombies)))
+            {
+                return;
+            }
             if (dock_area_2d != null)
             {
                 ZIndex = normal_ZIndex + 20 * (dock_area_2d.pos[0] - 1);
             }
             if (!has_touch)
             {
-                this.Position += new Vector2(speed_x, speed_y);
+                this.Position += new Vector2(speed_x * delta * 60, speed_y * delta * 60);
             }
             if (Position.x > 1437)
             {
@@ -49,10 +57,14 @@ public class Ice_Van_Door_Bullets_Main : Normal_Plants_Bullets
             return;
         }
     }
-    public void Touch_Zombies(Control_Area_2D area_2D)
+    public void Touch_Zombies(Area2D area_node)
     {
         try
         {
+            if (!(area_node is Control_Area_2D area_2D) || !IsInstanceValid(area_2D))
+            {
+                return;
+            }
             if (!has_touch && area_2D.Area2D_type == "Zombies")
             {
                 Top_Zombies_Area = (Normal_Zombies_Area)area_2D;
@@ -119,6 +131,24 @@ public class Ice_Van_Door_Bullets_Main : Normal_Plants_Bullets
         {
             GD.Print("Warning:空指针");
             return;
+        }
+    }
+    protected async void Free_Self()
+    {
+        if (GetNode<Area2D>("Area2D").IsConnected("area_entered", this, nameof(Touch_Zombies)))
+        {
+            GetNode<Area2D>("Area2D").Disconnect("area_entered", this, nameof(Touch_Zombies));
+            GetNode<Area2D>("Shovel_Area2D").Disconnect("area_entered", this, nameof(Dock_Enter));
+            GetNode<Area2D>("Area2D").Monitoring = false;
+            GetNode<Area2D>("Area2D").Monitorable = false;
+            GetNode<Area2D>("Shovel_Area2D").Monitoring = false;
+            GetNode<Area2D>("Shovel_Area2D").Monitorable = false;
+        }
+        Hide();
+        await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
+        if (IsInstanceValid(this))
+        {
+            this.QueueFree();
         }
     }
 }

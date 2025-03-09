@@ -15,7 +15,7 @@ public class Pause_Main : Control
         Click.Stream.Set("loop", false);
         Hide();
     }
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
         if (!Public_Main.Starting)
         {

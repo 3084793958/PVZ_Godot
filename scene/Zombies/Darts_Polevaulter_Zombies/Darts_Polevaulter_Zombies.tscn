@@ -817,10 +817,10 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 2, 4.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 2, 4.4 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/8/type = "value"
 tracks/8/path = NodePath("Fall:playing")
@@ -1012,10 +1012,10 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 2, 4.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 2, 4.4 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 0, 0.588235, 1, 1 ), Color( 0, 0.588235, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [ Color( 0, 0.588235, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/8/type = "value"
 tracks/8/path = NodePath("Fall:playing")
@@ -1759,6 +1759,7 @@ stream = ExtResource( 36 )
 script = ExtResource( 3 )
 
 [node name="Fire_Hurt" type="Timer" parent="Main/Main"]
+process_mode = 0
 one_shot = true
 
 [node name="Ice_Lock" type="Sprite" parent="Main/Main"]
@@ -1821,6 +1822,7 @@ stream = ExtResource( 4 )
 script = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
+process_mode = 0
 wait_time = 0.2
 one_shot = true
 

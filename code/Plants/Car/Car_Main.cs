@@ -17,25 +17,33 @@ public class Car_Main : Node2D
             GetNode<AnimationPlayer>("Car/Start").Play("Start");
         }
     }
-    public void Start_Area2D(Control_Area_2D area2D)
+    public void Start_Area2D(Area2D area_node)
     {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Zombies")
         {
             Zombies_Area_2D_List.Add((Normal_Zombies_Area)area2D);
         }
     }
-    public void Start_Area2D_Out(Control_Area_2D area2D)
+    public void Start_Area2D_Out(Area2D area_node)
     {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Zombies")
         {
             Zombies_Area_2D_List.Remove((Normal_Zombies_Area)area2D);
         }
     }
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
         if (is_Started)
         {
-            this.Position += new Vector2(Speed, 0);
+            this.Position += new Vector2(Speed * delta * 60, 0);
             if (this.Position.x>1437)
             {
                 this.QueueFree();

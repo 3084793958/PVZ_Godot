@@ -275,7 +275,7 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 
@@ -324,7 +324,7 @@ tracks/1/keys = {
 "method": "Send_To_Area"
 }, {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/2/type = "value"
@@ -515,7 +515,7 @@ tracks/1/keys = {
 "method": "Send_To_Area"
 }, {
 "args": [  ],
-"method": "queue_free"
+"method": "Free_Self"
 } ]
 }
 tracks/2/type = "value"
@@ -852,6 +852,7 @@ script = ExtResource( 3 )
 anims/Free = SubResource( 7 )
 
 [node name="Timer" type="Timer" parent="."]
+process_mode = 0
 wait_time = 180.0
 one_shot = true
 

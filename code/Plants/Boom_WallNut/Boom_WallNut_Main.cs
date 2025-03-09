@@ -4,9 +4,13 @@ using System;
 public class Boom_WallNut_Main : Normal_Plants
 {
     public int NUT_type = 3;
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
-        base._Process(delta);
+        if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
+        {
+            return;
+        }
+        base._PhysicsProcess(delta);
         if (has_planted)
         {
             if (Zombies_Area_2D_List.Count != 0)
@@ -58,22 +62,6 @@ public class Boom_WallNut_Main : Normal_Plants
         health = 4000;
         base._Ready();
     }
-    protected override void Area_Entered(Control_Area_2D area2D)
-    {
-        base.Area_Entered(area2D);
-    }
-    protected override void Area_Exited(Control_Area_2D area2D)
-    {
-        base.Area_Exited(area2D);
-    }
-    protected override void Dock_Entered(Control_Area_2D area2D)
-    {
-        base.Dock_Entered(area2D);
-    }
-    protected override void Dock_Exited(Control_Area_2D area2D)
-    {
-        base.Dock_Exited(area2D);
-    }
     protected override void Plants_Add_List()
     {
         Dock_Area_2D.Normal_Plant_List.Add(this);
@@ -97,5 +85,11 @@ public class Boom_WallNut_Main : Normal_Plants
     {
         health += 3000;
         GetNode<AnimationPlayer>("Main/Hurt3").Play("Hurt");
+    }
+    protected override void Free_Self()
+    {
+        GetNode<Area2D>("Main/Boom").Monitoring = false;
+        GetNode<Area2D>("Main/Boom").Monitorable = false;
+        base.Free_Self();
     }
 }

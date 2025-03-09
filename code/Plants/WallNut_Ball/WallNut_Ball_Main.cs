@@ -6,14 +6,18 @@ public class WallNut_Ball_Main : Normal_Plants
     public float speed_x = 0, speed_y = 0;
     public bool first_Speed_Y = true;
     public int touch_ZIndex = 0;
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
-        base._Process(delta);
+        if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
+        {
+            return;
+        }
+        base._PhysicsProcess(delta);
         if (has_planted)
         {
             if (Position.x > 1437)
             {
-                this.QueueFree();
+                this.Free_Self();
             }
             else
             {
@@ -98,26 +102,6 @@ public class WallNut_Ball_Main : Normal_Plants
         speed_x = 5.5f;
         base._Ready();
     }
-    protected override void Area_Entered(Control_Area_2D area2D)
-    {
-        base.Area_Entered(area2D);
-    }
-    protected override void Area_Exited(Control_Area_2D area2D)
-    {
-        base.Area_Exited(area2D);
-    }
-    protected override void Dock_Entered(Control_Area_2D area2D)
-    {
-        base.Dock_Entered(area2D);
-    }
-    protected override void Dock_Exited(Control_Area_2D area2D)
-    {
-        base.Dock_Exited(area2D);
-    }
-    protected override void Plants_Add_List()
-    {}
-    protected override void Plants_Remove_List()
-    {}
     protected override void Plants_Init()
     {
         GetNode<AnimationPlayer>("Main/Player1").Play("Player1");
@@ -132,5 +116,11 @@ public class WallNut_Ball_Main : Normal_Plants
     public void Bug_Doing()
     {
         //NOTHING
+    }
+    protected override void Free_Self()
+    {
+        GetNode<Area2D>("Main/Crash_Area").Monitoring = false;
+        GetNode<Area2D>("Main/Crash_Area").Monitorable = false;
+        base.Free_Self();
     }
 }

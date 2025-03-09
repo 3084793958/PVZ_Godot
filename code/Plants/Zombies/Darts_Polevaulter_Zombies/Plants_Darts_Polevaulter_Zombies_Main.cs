@@ -7,16 +7,23 @@ public class Plants_Darts_Polevaulter_Zombies_Main : Normal_Plants_Zombies
     [Export] public bool has_lose_pole = false;
     [Export] public bool is_jumping = false;
     public List<Normal_Zombies_Area> Jump_Plants_List = new List<Normal_Zombies_Area>();
-    public void Jump_Area2D_area_entered(Control_Area_2D area2D)
+    public void Jump_Area2D_area_entered(Area2D area_node)
     {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Zombies")
         {
             Jump_Plants_List.Add((Normal_Zombies_Area)area2D);
         }
     }
-    public void Jump_Area2D_area_exited(Control_Area_2D area2D)
+    public void Jump_Area2D_area_exited(Area2D area_node)
     {
-
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
         if (area2D == null)
         {
             return;
@@ -27,9 +34,13 @@ public class Plants_Darts_Polevaulter_Zombies_Main : Normal_Plants_Zombies
         }
 
     }
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
-        base._Process(delta);
+        if (!GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))
+        {
+            return;
+        }
+        base._PhysicsProcess(delta);
         if (has_planted)
         {
             can_Eating = has_lose_pole && !is_jumping;
@@ -80,22 +91,6 @@ public class Plants_Darts_Polevaulter_Zombies_Main : Normal_Plants_Zombies
         health_list.Add(new Health_Container(640, false));
         base._Ready();
     }
-    protected override void Plants_Entered(Control_Area_2D area2D)
-    {
-        base.Plants_Entered(area2D);
-    }
-    protected override void Plants_Exited(Control_Area_2D area2D)
-    {
-        base.Plants_Exited(area2D);
-    }
-    protected override void Dock_Entered(Control_Area_2D area2D)
-    {
-        base.Dock_Entered(area2D);
-    }
-    protected override void Dock_Exited(Control_Area_2D area2D)
-    {
-        base.Dock_Exited(area2D);
-    }
     protected override void Walk_Mode(bool is_Walking)
     {
         if (is_Walking)
@@ -137,5 +132,16 @@ public class Plants_Darts_Polevaulter_Zombies_Main : Normal_Plants_Zombies
                 }
             }
         }
+    }
+    protected override void Free_Self()
+    {
+        if (GetNode<Area2D>("Main/Main/Jump_Area2D").IsConnected("area_entered", this, nameof(Jump_Area2D_area_entered)))
+        {
+            GetNode<Area2D>("Main/Main/Jump_Area2D").Disconnect("area_entered", this, nameof(Jump_Area2D_area_entered));
+            GetNode<Area2D>("Main/Main/Jump_Area2D").Disconnect("area_exited", this, nameof(Jump_Area2D_area_exited));
+            GetNode<Area2D>("Main/Main/Jump_Area2D").Monitoring = false;
+            GetNode<Area2D>("Main/Main/Jump_Area2D").Monitorable = false;
+        }
+        base.Free_Self();
     }
 }

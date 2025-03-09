@@ -53,6 +53,9 @@ public class Normal_Plants_Zombies : Node2D
     }
     public override void _Ready()
     {
+        Position = new Vector2(-1437, -1437);
+        GetNode<Area2D>("Main/Main/Zombies_Area").PauseMode = PauseModeEnum.Process;
+        GetNode<Area2D>("Dock/Area2D").PauseMode = PauseModeEnum.Process;
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;//C#核心技术
         AddChild(Android_Timer);
@@ -77,8 +80,12 @@ public class Normal_Plants_Zombies : Node2D
             GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").has_planted = true;
         }
     }
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
+        if (!GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))
+        {
+            return;
+        }
         if (Public_Main.for_Android && Input.IsActionJustReleased("Left_Mouse"))
         {
             if (Android_Timer.IsStopped())
@@ -285,12 +292,31 @@ public class Normal_Plants_Zombies : Node2D
                 {
                     continue;
                 }
+                if (!Zombies_Area_2D_List[i].Monitorable)
+                {
+                    Zombies_Area_2D_List.RemoveAt(i);
+                    i--;
+                    continue;
+                }
                 if (Zombies_Area_2D == null)
                 {
                     Zombies_Area_2D = Zombies_Area_2D_List[i];
                 }
                 else
                 {
+                    if (!Zombies_Area_2D.Monitoring)
+                    {
+                        Zombies_Area_2D = null;
+                        continue;
+                    }
+                    try
+                    {
+                        if (Zombies_Area_2D_List[i].ZIndex > Zombies_Area_2D.ZIndex) { }
+                    }
+                    catch (Exception)
+                    {
+                        Zombies_Area_2D = Zombies_Area_2D_List[i];//合理密植问题
+                    }
                     if (Zombies_Area_2D_List[i].ZIndex > Zombies_Area_2D.ZIndex)
                     {
                         Zombies_Area_2D = Zombies_Area_2D_List[i];
@@ -327,7 +353,7 @@ public class Normal_Plants_Zombies : Node2D
             }
             if (!eating && Get_Walk_Mode())
             {
-                this.Position += new Vector2(speed, 0);
+                this.Position += new Vector2(speed * delta * 60, 0);
             }
             if (GetNode<Control>("Main/Main").RectRotation < -45)
             {
@@ -353,16 +379,25 @@ public class Normal_Plants_Zombies : Node2D
                     Walk_Mode(true);
                 }
             }
+            if (Position.x > 1400)
+            {
+                GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").Monitoring = false;
+                GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").Monitorable = false;
+            }
             if (Position.x > 1437)
             {
-                this.QueueFree();
+                Free_Self();
             }
         }
     }
-    protected virtual void Plants_Entered(Control_Area_2D area2D)//函数名为历史遗留问题
+    protected virtual void Plants_Entered(Area2D area_node)//函数名为历史遗留问题
     {
         try
         {
+            if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+            {
+                return;
+            }
             string Type_string = area2D?.Area2D_type;
             if (Type_string != null && Type_string == "Zombies")
             {
@@ -374,10 +409,14 @@ public class Normal_Plants_Zombies : Node2D
             GD.Print(ex.Message);
         }
     }
-    protected virtual void Plants_Exited(Control_Area_2D area2D)
+    protected virtual void Plants_Exited(Area2D area_node)
     {
         try
         {
+            if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+            {
+                return;
+            }
             string Type_string = area2D?.Area2D_type;
             if (Type_string != null && Type_string == "Zombies")
             {
@@ -389,16 +428,24 @@ public class Normal_Plants_Zombies : Node2D
             GD.Print(ex.Message);
         }
     }
-    protected virtual void Dock_Entered(Control_Area_2D area2D)
+    protected virtual void Dock_Entered(Area2D area_node)
     {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
         string Type_string = area2D?.Area2D_type;
         if (Type_string != null && Type_string == "Grid")
         {
             Dock_Area_2D_List.Add((Background_Grid_Main)area2D);
         }
     }
-    protected virtual void Dock_Exited(Control_Area_2D area2D)
+    protected virtual void Dock_Exited(Area2D area_node)
     {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
         string Type_string = area2D?.Area2D_type;
         if (Type_string != null && Type_string == "Grid")
         {
@@ -410,5 +457,25 @@ public class Normal_Plants_Zombies : Node2D
     protected virtual bool Get_Walk_Mode()
     {
         return false;//形式意义
+    }
+    protected virtual async void Free_Self()
+    {
+        if (GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))
+        {
+            GetNode<Area2D>("Main/Main/Zombies_Area").Disconnect("area_entered", this, nameof(Plants_Entered));
+            GetNode<Area2D>("Main/Main/Zombies_Area").Disconnect("area_exited", this, nameof(Plants_Exited));
+            GetNode<Area2D>("Dock/Area2D").Disconnect("area_entered", this, nameof(Dock_Entered));
+            GetNode<Area2D>("Dock/Area2D").Disconnect("area_exited", this, nameof(Dock_Exited));
+            GetNode<Area2D>("Main/Main/Zombies_Area").Monitoring = false;
+            GetNode<Area2D>("Main/Main/Zombies_Area").Monitorable = false;
+            GetNode<Area2D>("Dock/Area2D").Monitoring = false;
+            GetNode<Area2D>("Dock/Area2D").Monitorable = false;
+        }
+        Hide();
+        await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
+        if (IsInstanceValid(this))
+        {
+            this.QueueFree();
+        }
     }
 }

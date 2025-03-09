@@ -804,10 +804,10 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 2, 4.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 2, 4.4 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/8/type = "value"
 tracks/8/path = NodePath("Fall:playing")
@@ -1011,10 +1011,10 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 2, 4.4 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
+"times": PoolRealArray( 2, 4.4 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Color( 0, 0.588235, 1, 1 ), Color( 0, 0.588235, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+"values": [ Color( 0, 0.588235, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/8/type = "value"
 tracks/8/path = NodePath("Fall:playing")
@@ -1545,6 +1545,7 @@ tracks/6/keys = {
 }
 
 [node name="Polevaulter_Zombies" type="Node2D"]
+modulate = Color( 1, 1, 1, 0.916667 )
 position = Vector2( -80, -80 )
 z_index = 7
 script = ExtResource( 2 )
@@ -1619,10 +1620,10 @@ anchor_left = 0.379016
 anchor_top = 1.13454
 anchor_right = 0.379016
 anchor_bottom = 1.13454
-margin_left = 459.704
-margin_top = -25.1984
-margin_right = 459.704
-margin_bottom = -25.1984
+margin_left = 459.705
+margin_top = -25.1991
+margin_right = 459.705
+margin_bottom = -25.1991
 rect_scale = Vector2( 0.75, 0.75 )
 mouse_filter = 2
 __meta__ = {
@@ -1833,6 +1834,7 @@ stream = ExtResource( 4 )
 script = ExtResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
+process_mode = 0
 wait_time = 0.2
 one_shot = true
 

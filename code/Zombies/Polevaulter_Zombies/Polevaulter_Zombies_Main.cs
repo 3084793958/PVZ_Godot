@@ -7,8 +7,12 @@ public class Polevaulter_Zombies_Main : Normal_Zombies
     [Export] public bool has_lose_pole = false;
     [Export] public bool is_jumping = false;
     public List<Normal_Plants_Area> Jump_Plants_List = new List<Normal_Plants_Area>();
-    public void Jump_Area2D_area_entered(Control_Area_2D area2D)
+    public void Jump_Area2D_area_entered(Area2D area_node)
     {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
         if (area2D == null)
         {
             return;
@@ -18,16 +22,24 @@ public class Polevaulter_Zombies_Main : Normal_Zombies
             Jump_Plants_List.Add((Normal_Plants_Area)area2D);
         }
     }
-    public void Jump_Area2D_area_exited(Control_Area_2D area2D)
+    public void Jump_Area2D_area_exited(Area2D area_node)
     {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Plants")
         {
             Jump_Plants_List.Remove((Normal_Plants_Area)area2D);
         }
     }
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
-        base._Process(delta);
+        if (!GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))
+        {
+            return;
+        }
+        base._PhysicsProcess(delta);
         if (has_planted)
         {
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").Should_Ignore = is_jumping;
@@ -93,36 +105,15 @@ public class Polevaulter_Zombies_Main : Normal_Zombies
         health_list.Add(new Health_Container(640, false));
         base._Ready();
     }
-    protected override void Plants_Entered(Control_Area_2D area2D)
-    {
-        base.Plants_Entered(area2D);
-    }
-    protected override void Plants_Exited(Control_Area_2D area2D)
-    {
-        base.Plants_Exited(area2D);
-    }
-    protected override void Dock_Entered(Control_Area_2D area2D)
-    {
-        base.Dock_Entered(area2D);
-    }
-    protected override void Dock_Exited(Control_Area_2D area2D)
-    {
-        base.Dock_Exited(area2D);
-    }
-    protected override void Ice_Timer_timeout()
-    {
-        base.Ice_Timer_timeout();
-    }
-    protected override void Remove_Zombies_Number()
-    {
-        base.Remove_Zombies_Number();
-    }
-    protected override void Ice_Lock_Timer_timeout()
-    {
-        base.Ice_Lock_Timer_timeout();
-    }
     protected override void Free_Self()
     {
+        if (GetNode<Area2D>("Main/Main/Jump_Area2D").IsConnected("area_entered", this, nameof(Jump_Area2D_area_entered)))
+        {
+            GetNode<Area2D>("Main/Main/Jump_Area2D").Disconnect("area_entered", this, nameof(Jump_Area2D_area_entered));
+            GetNode<Area2D>("Main/Main/Jump_Area2D").Disconnect("area_exited", this, nameof(Jump_Area2D_area_exited));
+            GetNode<Area2D>("Main/Main/Jump_Area2D").Monitoring = false;
+            GetNode<Area2D>("Main/Main/Jump_Area2D").Monitorable = false;
+        }
         base.Free_Self();
     }
     protected override void Walk_Mode(bool is_Walking)
@@ -145,10 +136,6 @@ public class Polevaulter_Zombies_Main : Normal_Zombies
             GetNode<AnimationPlayer>("Main/Main/Walk1").Stop();
             GetNode<AnimationPlayer>("Main/Main/Walk2").Stop();
         }
-    }
-    protected override void Bullets_Sound_Play()
-    {
-        base.Bullets_Sound_Play();
     }
     protected override bool Get_Walk_Mode()
     {

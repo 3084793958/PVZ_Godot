@@ -3,9 +3,13 @@ using System;
 
 public class Plants_Ignore_Cone_Zombies_Main : Normal_Plants_Zombies
 {
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
-        base._Process(delta);
+        if (!GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))
+        {
+            return;
+        }
+        base._PhysicsProcess(delta);
         if (has_planted)
         {
             if (health <= 640 && health >= 548)
@@ -59,22 +63,6 @@ public class Plants_Ignore_Cone_Zombies_Main : Normal_Plants_Zombies
         health_list.Add(new Health_Container(370, false));
         health_list.Add(new Health_Container(270, false));
         base._Ready();
-    }
-    protected override void Plants_Entered(Control_Area_2D area2D)
-    {
-        base.Plants_Entered(area2D);
-    }
-    protected override void Plants_Exited(Control_Area_2D area2D)
-    {
-        base.Plants_Exited(area2D);
-    }
-    protected override void Dock_Entered(Control_Area_2D area2D)
-    {
-        base.Dock_Entered(area2D);
-    }
-    protected override void Dock_Exited(Control_Area_2D area2D)
-    {
-        base.Dock_Exited(area2D);
     }
     protected override void Walk_Mode(bool is_Walking)
     {

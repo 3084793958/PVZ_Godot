@@ -4,14 +4,18 @@ using System;
 public class H2SO4_Main : Normal_Plants
 {
     public bool on_Mg = false;
-    public override void _Process(float delta)
+    public override void _PhysicsProcess(float delta)
     {
-        base._Process(delta);
+        if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
+        {
+            return;
+        }
+        base._PhysicsProcess(delta);
         if (has_planted)
         {
             if (on_Mg && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
             {
-                if (!GetNode<AnimationPlayer>("Open").IsPlaying())
+                if (!GetNode<AnimationPlayer>("Open").IsPlaying() && !GetNode<H2SO4_Area2D>("Main/H2SO4_Area").has_become) 
                 {
                     Is_Double_Click = false;
                     GetNode<H2SO4_Area2D>("Main/H2SO4_Area").has_become = true;
@@ -49,8 +53,12 @@ public class H2SO4_Main : Normal_Plants
         health = 100;
         base._Ready();
     }
-    protected override void Area_Entered(Control_Area_2D area2D)
+    protected override void Area_Entered(Area2D area_node)
     {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
         base.Area_Entered(area2D);
         string Type_string = area2D?.Area2D_type;
         if (Type_string != null && Type_string == "Mg_Shining")//TODO
@@ -58,22 +66,18 @@ public class H2SO4_Main : Normal_Plants
             on_Mg = true;
         }
     }
-    protected override void Area_Exited(Control_Area_2D area2D)
+    protected override void Area_Exited(Area2D area_node)
     {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
         base.Area_Exited(area2D);
         string Type_string = area2D?.Area2D_type;
         if (Type_string != null && Type_string == "Mg_Shining")//TODO
         {
             on_Mg = false;
         }
-    }
-    protected override void Dock_Entered(Control_Area_2D area2D)
-    {
-        base.Dock_Entered(area2D);
-    }
-    protected override void Dock_Exited(Control_Area_2D area2D)
-    {
-        base.Dock_Exited(area2D);
     }
     protected override void Plants_Add_List()
     {
