@@ -39,7 +39,6 @@ public class Darts_Polevaulter_Zombies_Main : Normal_Zombies
         {
             return;
         }
-        base._PhysicsProcess(delta);
         if (has_planted)
         {
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").Should_Ignore = is_jumping;
@@ -96,6 +95,7 @@ public class Darts_Polevaulter_Zombies_Main : Normal_Zombies
                 }
             }
         }
+        base._PhysicsProcess(delta);
     }
     public override void _Ready()
     {
@@ -103,6 +103,27 @@ public class Darts_Polevaulter_Zombies_Main : Normal_Zombies
         can_Eating = false;
         health_list.Clear();
         health_list.Add(new Health_Container(640, false));
+        int count_health = 0;
+        for (int i = 0; i < health_list.Count; i++)
+        {
+            if (health_list[i].Health < 0)
+            {
+                if (health_list[i].Is_lock)
+                {
+                    health_list[i].Health = 0;
+                }
+                else
+                {
+                    if (i + 1 < health_list.Count)
+                    {
+                        health_list[i + 1].Health += health_list[i].Health;
+                        health_list[i].Health = 0;
+                    }
+                }
+            }
+            count_health += health_list[i].Health;
+        }
+        health = count_health;
         base._Ready();
     }
     protected override void Free_Self()

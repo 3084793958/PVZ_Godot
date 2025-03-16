@@ -27,10 +27,16 @@ public class In_Game_Main : Node2D
     static public bool has_Lost_Brain = false;
     static public Vector2 Last_Zombies_Pos = new Vector2(512, 300);
     static public bool Cold_Timer_End = false;
+    static public int Card_mode = 1;
+    static public bool Belt_Card = false;//传送带
+    static public int Belt_Number = 0;
+    static public List<int> Belt_List = new List<int>();
     public override async void _Ready()
     {
+        GD.Randomize();
         Zombies_Number = 0;
         Public_Main.now_card_number = 0;
+        Belt_Number = 0;
         is_playing = false;
         var Click = GetNode<AudioStreamPlayer>("button_Click");
         GetNode<AudioStreamPlayer>("Cancel").Stream.Set("loop", false);
@@ -113,9 +119,12 @@ public class In_Game_Main : Node2D
                         }
                         else if (Level_Mode == 0 || Level_Mode == 1) //正常模式
                         {
+                            GetNode<TextureRect>("Main/Card/SeedBank").Show();
+                            GetNode<TextureRect>("Main/Card/M2Bank").Hide();
+                            Card_mode = 1;
                             int Sun = (int)file2.GetValue("Bank", "Sun", 1437);
                             Sun_Number = Sun;
-                            bool Shovel = (bool)file2.GetValue("Bank","Shovel",true);
+                            bool Shovel = (bool)file2.GetValue("Bank", "Shovel", true);
                             bool Bug = (bool)file2.GetValue("Bank", "Bug", true);
                             var Sun_Label = GetNode<Label>("Main/Card/SeedBank/Sun/Sun_Text");
                             Sun_Label.Text = Sun.ToString();
@@ -123,7 +132,7 @@ public class In_Game_Main : Node2D
                             var Bug_Main = GetNode<TextureRect>("Main/Card/BugBank");
                             Shovel_Main.Visible = Shovel;
                             Bug_Main.Visible = Bug;
-                            int Card = (int)file2.GetValue("Bank","Card",13);
+                            int Card = (int)file2.GetValue("Bank", "Card", 13);
                             int Car_Number = (int)file2.GetValue("Car", "Number", 5);
                             if (background_number == 3 || background_number == 4)
                             {
@@ -234,7 +243,7 @@ public class In_Game_Main : Node2D
                             int Max_Plant_Id = 0;
                             int Max_Plants_Zombies_Id = 0;
                             int Max_Zombies_Id = 0;
-                            int Card_Type= (int)file2.GetValue("Card", "Type", 1);
+                            int Card_Type = (int)file2.GetValue("Card", "Type", 1);
                             List<int> Card3_id_List = new List<int>();
                             if (Card_Type == 1)
                             {
@@ -285,6 +294,8 @@ public class In_Game_Main : Node2D
                             List<int> LevelMode3_id_List = new List<int>();
                             if (Level_Mode == 1)
                             {
+                                GetNode<TextureRect>("Main/Card/SeedBank").Show();
+                                GetNode<TextureRect>("Main/Card/M2Bank").Hide();
                                 int Adding_Number = 1;
                                 while (true)
                                 {
@@ -398,6 +409,151 @@ public class In_Game_Main : Node2D
                                 }
                             }
                         }
+                        else if (Level_Mode == 2)
+                        {
+                            GetNode<TextureRect>("Main/Card/SeedBank").Hide();
+                            GetNode<TextureRect>("Main/Card/M2Bank").Show();
+                            Card_mode = 2;
+                            int Sun = (int)file2.GetValue("Bank", "Sun", 1437);
+                            Sun_Number = Sun;
+                            bool Shovel = (bool)file2.GetValue("Bank", "Shovel", true);
+                            bool Bug = (bool)file2.GetValue("Bank", "Bug", true);
+                            var Sun_Label = GetNode<Label>("Main/Card/M2Bank/Sun/Sun_Text");
+                            Sun_Label.Text = Sun.ToString();
+                            var Shovel_Main = GetNode<TextureRect>("Main/Card/ShovelBank");
+                            var Bug_Main = GetNode<TextureRect>("Main/Card/BugBank");
+                            Shovel_Main.Visible = Shovel;
+                            Bug_Main.Visible = Bug;
+                            int Card = (int)file2.GetValue("Bank", "Card", 13);
+                            int Car_Number = (int)file2.GetValue("Car", "Number", 5);
+                            if (background_number == 3 || background_number == 4)
+                            {
+                                for (int i = 1; i <= 6; i++)
+                                {
+                                    var scene = GD.Load<PackedScene>("res://scene/Plants/Car/Car.tscn");
+                                    var plant_child = (Car_Main)scene.Instance();
+                                    int Car_type = (int)file2.GetValue("Car", i.ToString(), 1);
+                                    if (Car_type == 0)
+                                    {
+                                        continue;
+                                    }
+                                    if (i == 1)
+                                    {
+                                        plant_child.Position = new Vector2(25, 124);
+                                        plant_child.ZIndex = 2;
+                                    }
+                                    else if (i == 2)
+                                    {
+                                        plant_child.Position = new Vector2(25, 216);
+                                        plant_child.ZIndex = 22;
+                                    }
+                                    else if (i == 3)
+                                    {
+                                        plant_child.Position = new Vector2(25, 299);
+                                        plant_child.ZIndex = 42;
+                                    }
+                                    else if (i == 4)
+                                    {
+                                        plant_child.Position = new Vector2(25, 376);
+                                        plant_child.ZIndex = 62;
+                                    }
+                                    else if (i == 5)
+                                    {
+                                        plant_child.Position = new Vector2(25, 477);
+                                        plant_child.ZIndex = 82;
+                                    }
+                                    else if (i == 6)
+                                    {
+                                        plant_child.Position = new Vector2(25, 558);
+                                        plant_child.ZIndex = 102;
+                                    }
+                                    plant_child.doing_Start = true;
+                                    plant_child.car_type = Car_type;
+                                    //plant_child._Ready();//Warning:Can't Add Child
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                            }
+                            else if (background_number == 1 || background_number == 2)
+                            {
+                                for (int i = 1; i <= 5; i++)
+                                {
+                                    var scene = GD.Load<PackedScene>("res://scene/Plants/Car/Car.tscn");
+                                    var plant_child = (Car_Main)scene.Instance();
+                                    int Car_type = (int)file2.GetValue("Car", i.ToString(), 1);
+                                    if (Car_type == 0)
+                                    {
+                                        continue;
+                                    }
+                                    if (i == 1)
+                                    {
+                                        plant_child.Position = new Vector2(25, 128);
+                                        plant_child.ZIndex = 2;
+                                    }
+                                    else if (i == 2)
+                                    {
+                                        plant_child.Position = new Vector2(25, 224);
+                                        plant_child.ZIndex = 22;
+                                    }
+                                    else if (i == 3)
+                                    {
+                                        plant_child.Position = new Vector2(25, 328);
+                                        plant_child.ZIndex = 42;
+                                    }
+                                    else if (i == 4)
+                                    {
+                                        plant_child.Position = new Vector2(25, 424);
+                                        plant_child.ZIndex = 62;
+                                    }
+                                    else if (i == 5)
+                                    {
+                                        plant_child.Position = new Vector2(25, 520);
+                                        plant_child.ZIndex = 82;
+                                    }
+                                    plant_child.doing_Start = true;
+                                    plant_child.car_type = Car_type;
+                                    //plant_child._Ready();//Warning:Can't Add Child
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                            }
+                            Wave_number = (int)file2.GetValue("Zombies", "Wave", 0);
+                            Flag_number = (int)file2.GetValue("Zombies", "Flag", 0);
+                            GetNode<Flag_Control>("Main/Info/Flag").All_Flag_Number = Flag_number;
+                            GetNode<Flag_Control>("Main/Info/Flag").All_Wave_Number = Wave_number;
+                            for (int i = 1; i <= Flag_number; i++)
+                            {
+                                GetNode<Flag_Control>("Main/Info/Flag").Flag_In_Wave_Number.Add((int)file2.GetValue("Flag" + i.ToString(), "Wave", 0));
+                            }
+                            GetNode<Flag_Control>("Main/Info/Flag").Make_Flag();
+                            GetNode<Flag_Control>("Main/Info/Flag").Update_Flag();
+                            GetNode<Label>("Main/Info/Name").Text = (string)file2.GetValue("Name", "Name", "PVZ_Godot");
+                            Public_Main.allow_card_number = Card;
+                            Belt_Card = (int)file2.GetValue("Card", "Type", 0) == 4;
+                            if (Belt_Card)
+                            {
+                                Belt_List.Clear();
+                                int loop_number = 0;
+                                while (true)
+                                {
+                                    int get_card_number = (int)file2.GetValue("Plant_Card", loop_number.ToString(), -1);
+                                    if (get_card_number == -1)
+                                    {
+                                        break;
+                                    }
+                                    Belt_List.Add(get_card_number);
+                                    loop_number++;
+                                }
+                            }
+                            var player1 = GetNode<AnimationPlayer>("Main/AnimationPlayer");
+                            var player2 = GetNode<AnimationPlayer>("Main/Card_Player");
+                            player1.Play("C_to_R");
+                            await ToSignal(player1, "animation_finished");
+                            player2.Play("Belt_load");
+                            await ToSignal(player2, "animation_finished");
+                            player1.Play("R_to_C");
+                            await ToSignal(player1, "animation_finished");
+                            Game_Start_Effect(this);
+                            GetNode<Timer>("Belt_Timer").Start();
+                        }
                     }
                 }
                 else
@@ -417,18 +573,32 @@ public class In_Game_Main : Node2D
     }
     static public void Update_Sun(Node node)
     {
-        var Sun_Label = node.GetNode<Label>("/root/In_Game/Main/Card/SeedBank/Sun/Sun_Text");
-        Sun_Label.Text = Sun_Number.ToString();
+        node.GetNode<Label>("/root/In_Game/Main/Card/SeedBank/Sun/Sun_Text").Text = Sun_Number.ToString();
+        node.GetNode<Label>("/root/In_Game/Main/Card/M2Bank/Sun/Sun_Text").Text = Sun_Number.ToString();
     }
     static public void Warning_Sun(Node node)
     {
         node.GetNode<AudioStreamPlayer>("/root/In_Game/Main/Card/SeedBank/Sun/Pause").Stream.Set("loop", false);
-        var Sun_Warning = node.GetNode<AnimationPlayer>("/root/In_Game/Main/Card/SeedBank/Sun/Warning");
-        Sun_Warning.Play("Warning");
-        node.GetNode<AudioStreamPlayer>("/root/In_Game/Main/Card/SeedBank/Sun/Pause").Play();
+        node.GetNode<AudioStreamPlayer>("/root/In_Game/Main/Card/M2Bank/Sun/Pause").Stream.Set("loop", false);
+        if (In_Game_Main.Card_mode == 1)
+        {
+            var Sun_Warning = node.GetNode<AnimationPlayer>("/root/In_Game/Main/Card/SeedBank/Sun/Warning");
+            Sun_Warning.Play("Warning");
+            node.GetNode<AudioStreamPlayer>("/root/In_Game/Main/Card/SeedBank/Sun/Pause").Play();
+        }
+        else if (In_Game_Main.Card_mode == 2)
+        {
+            var Sun_Warning = node.GetNode<AnimationPlayer>("/root/In_Game/Main/Card/M2Bank/Sun/Warning");
+            Sun_Warning.Play("Warning");
+            node.GetNode<AudioStreamPlayer>("/root/In_Game/Main/Card/M2Bank/Sun/Pause").Play();
+        }
     }
     public override async void _Process(float delta)
     {
+        if (Public_Main.debuging && is_playing && Belt_Card) 
+        {
+            Belt_Timer_timeout();
+        }
         if (is_playing && GetNode<Timer>("Timer").IsStopped() && !GetTree().Paused)
         {
             GetNode<Timer>("Timer").Start();
@@ -522,6 +692,7 @@ public class In_Game_Main : Node2D
             Next_Wave_pressed();
             await ToSignal(GetTree().CreateTimer(0.3f), "timeout");
         }
+
     }
     public void Sun_Timeout()
     {
@@ -780,6 +951,17 @@ public class In_Game_Main : Node2D
     {
         Cold_Timer_End = true;
     }
+    public void Belt_Timer_timeout()
+    {
+        if (is_playing && Belt_Card && Belt_List.Count != 0 && In_Game_Main.Belt_Number < Public_Main.allow_card_number)   
+        {
+            int id = Belt_List[(int)(GD.Randi() % Belt_List.Count)];
+            var scene = GD.Load<PackedScene>("res://scene/Card_Tmp/Card_Tmp.tscn");
+            var plant_child = (Card_Tmp_Main)scene.Instance();
+            plant_child.Init_Tmp_Card(1, id, (int)(GD.Randi() % 4) <= 2, 0);
+            GetNode<Control>("/root/In_Game/Main/Card/M2Bank/Seed").AddChild(plant_child);
+        }
+    }
     static public void Zombies_Clone_Request(string Clone_String,Vector2 pos,int Z_index)
     {
         Zombies_Clone_Request_List.Add(new Tuple<string, Vector2, int>(Clone_String, pos, Z_index));
@@ -802,6 +984,32 @@ public class In_Game_Main : Node2D
         {
             Wave_Timer_Out();
             GetNode<Timer>("Wave_Timer").Stop();
+            var Click = GetNode<AudioStreamPlayer>("/root/In_Game/button_Click");
+            Click.Play();
+        }
+    }
+    static public async void Game_Start_Effect(Node node)
+    {
+        var Before_bgm = node.GetNode<AudioStreamPlayer>("/root/In_Game/Before_bgm");
+        Before_bgm.Stop();
+        var player3 = node.GetNode<AnimationPlayer>("/root/In_Game/Ready_Animation");
+        player3.Play("start");
+        In_Game_Main.is_playing = true;
+        await node.ToSignal(node.GetTree().CreateTimer(3), "timeout");
+        if (In_Game_Main.background_number == 1)
+        {
+            var B1_bgm = node.GetNode<AudioStreamPlayer>("/root/In_Game/Music/GrassWalk");
+            B1_bgm.Play();
+        }
+        else if (In_Game_Main.background_number == 2)
+        {
+            var B2_bgm = node.GetNode<AudioStreamPlayer>("/root/In_Game/Music/MoonGrains");
+            B2_bgm.Play();
+        }
+        else if (In_Game_Main.background_number == 3)
+        {
+            var B3_bgm = node.GetNode<AudioStreamPlayer>("/root/In_Game/Music/WateryGraves");
+            B3_bgm.Play();
         }
     }
 }

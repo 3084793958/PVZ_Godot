@@ -45,6 +45,8 @@ public class Normal_Zombies : Node2D
     protected bool in_water = false;
     protected bool now_in_water = false;
     public Card_Click_Button card_parent_Button = null;//Card使用
+    public bool Tmp_Card_Used = false;
+    public Card_Tmp_Main Tmp_card_parent = null;//Card_Tmp使用
     protected List<Normal_Plants_Bullets_Area> Bullets_Area_2D_List = new List<Normal_Plants_Bullets_Area>();
     protected List<Mg_Shining_Area> Shining_Area_2D_List = new List<Mg_Shining_Area>();
     protected List<H2SO4_Area2D> H2SO4_Area_2D_List = new List<H2SO4_Area2D>();
@@ -225,23 +227,47 @@ public class Normal_Zombies : Node2D
                     Normal_Plants.Choosing = false;
                     Position = new Vector2(-1437, -1437);
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
-                    card_parent_Button.Set_ColorRect_2(false);
+                    if (Tmp_Card_Used)
+                    {
+                        Tmp_card_parent.Hide_Shadow();
+                    }
+                    else
+                    {
+                        card_parent_Button.Set_ColorRect_2(false);
+                    }
                     this.Free();
                 }
                 if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
                 {
-                    card_parent_Button.Set_ColorRect_2(false);
+                    int this_sun = 0;
+                    if (Tmp_Card_Used)
+                    {
+                        this_sun = Tmp_card_parent.Sun;
+                        Tmp_card_parent.Hide_Shadow();
+                    }
+                    else
+                    {
+                        this_sun = card_parent_Button.sun;
+                        card_parent_Button.Set_ColorRect_2(false);
+                    }
                     Normal_Plants.Choosing = false;
                     if (Dock_Area_2D != null)
                     {
-                        if ((In_Game_Main.Sun_Number >= card_parent_Button.sun || Public_Main.debuging) && on_lock_grid)
+                        if ((In_Game_Main.Sun_Number >= this_sun || Public_Main.debuging) && on_lock_grid)
                         {
+                            if (Tmp_Card_Used)
+                            {
+                                Tmp_card_parent.Been_Used();
+                            }
                             has_planted = true;
                             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").has_plant = true;
                             this.GlobalPosition = Dock_Area_2D.GlobalPosition;
-                            In_Game_Main.Sun_Number -= card_parent_Button.sun;
+                            In_Game_Main.Sun_Number -= this_sun;
                             In_Game_Main.Update_Sun(this);
-                            card_parent_Button.now_time = card_parent_Button.wait_time;
+                            if (!Tmp_Card_Used)
+                            {
+                                card_parent_Button.now_time = card_parent_Button.wait_time;
+                            }
                             if (Dock_Area_2D.type == 2)
                             {
                                 GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Play();
@@ -359,8 +385,12 @@ public class Normal_Zombies : Node2D
                 {
                     continue;
                 }
-                if (has_planted && !GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").Should_Ignore) 
+                if (has_planted && !GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").Should_Ignore && !Doing_jumping) 
                 {
+                    if (Eating_Flower_Area_2D_List[i].Choose_Eating_Zombies_Area != null) 
+                    {
+                        continue;
+                    }
                     Eating_Flower_Area_2D_List[i].Choose_Eating_Zombies_Area = GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area");
                     if (!GetNode<AnimationPlayer>("Be_Eated").IsPlaying())
                     {

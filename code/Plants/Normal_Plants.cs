@@ -10,12 +10,15 @@ public class Normal_Plants : Node2D
     //SPEC
     static public bool Choosing = false;
     //SPEC
+    public int this_sun = 0;
     //define
     protected Timer Android_Timer = new Timer();
     protected bool Is_Double_Click = false;
     [Export] protected Color hover_color = new Color(1.3f, 1.3f, 1.3f, 1f);
     [Export] protected Color normal_color = new Color(1f, 1f, 1f, 1f);
     public Card_Click_Button card_parent_Button = null;//Card使用
+    public bool Tmp_Card_Used = false;
+    public Card_Tmp_Main Tmp_card_parent = null;//Card_Tmp使用
     protected List<Background_Grid_Main> Dock_Area_2D_List = new List<Background_Grid_Main>();
     protected Background_Grid_Main Dock_Area_2D = null;
     protected bool on_lock_grid = false;
@@ -168,23 +171,46 @@ public class Normal_Plants : Node2D
                     Normal_Plants.Choosing = false;
                     Position = new Vector2(-1437, -1437);
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
-                    card_parent_Button.Set_ColorRect_2(false);
+                    if (Tmp_Card_Used)
+                    {
+                        Tmp_card_parent.Hide_Shadow();
+                    }
+                    else
+                    {
+                        card_parent_Button.Set_ColorRect_2(false);
+                    }
                     this.Free();
                 }
                 if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
                 {
-                    card_parent_Button.Set_ColorRect_2(false);
+                    if (Tmp_Card_Used)
+                    {
+                        this_sun = Tmp_card_parent.Sun;
+                        Tmp_card_parent.Hide_Shadow();
+                    }
+                    else
+                    {
+                        this_sun = card_parent_Button.sun;
+                        card_parent_Button.Set_ColorRect_2(false);
+                    }
                     Normal_Plants.Choosing = false;
                     if (Dock_Area_2D != null)
                     {
                         if (Allow_Plants())
                         {
+                            if (Tmp_Card_Used)
+                            {
+                                Tmp_card_parent.Been_Used();
+                            }
                             has_planted = true;
                             Plants_Add_List();
                             this.GlobalPosition = Dock_Area_2D.GlobalPosition;
-                            In_Game_Main.Sun_Number -= card_parent_Button.sun;
+                            In_Game_Main.Sun_Number -= this_sun;
                             In_Game_Main.Update_Sun(this);
-                            card_parent_Button.now_time = card_parent_Button.wait_time;
+                            if (!Tmp_Card_Used)
+                            {
+                                card_parent_Button.now_time = card_parent_Button.wait_time;
+                            }
                             if (Dock_Area_2D.type == 2)
                             {
                                 GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Play();

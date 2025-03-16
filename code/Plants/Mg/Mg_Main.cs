@@ -200,7 +200,7 @@ public class Mg_Main : Normal_Plants
     }
     protected override bool Allow_Plants()
     {
-        return ((In_Game_Main.Sun_Number >= card_parent_Button.sun && Dock_Area_2D.Top_Plant_List.Count == 0) || Public_Main.debuging) && on_lock_grid;
+        return ((In_Game_Main.Sun_Number >= this_sun && Dock_Area_2D.Top_Plant_List.Count == 0) || Public_Main.debuging) && on_lock_grid;
     }
     protected override void Free_Self()
     {

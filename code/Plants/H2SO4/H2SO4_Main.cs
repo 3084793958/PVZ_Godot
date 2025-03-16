@@ -60,8 +60,11 @@ public class H2SO4_Main : Normal_Plants
             return;
         }
         base.Area_Entered(area2D);
-        string Type_string = area2D?.Area2D_type;
-        if (Type_string != null && Type_string == "Mg_Shining")//TODO
+        if (!(area_node is Mg_Shining_Area area_2D) || !IsInstanceValid(area_2D))
+        {
+            return;
+        }
+        if (!area_2D.start)//TODO
         {
             on_Mg = true;
         }
@@ -93,7 +96,7 @@ public class H2SO4_Main : Normal_Plants
     }
     protected override bool Allow_Plants()
     {
-        return ((In_Game_Main.Sun_Number >= card_parent_Button.sun && Dock_Area_2D.Normal_Plant_List.Count == 0 && Dock_Area_2D.now_type[Dock_Area_2D.now_type.Count - 1] == 1) || Public_Main.debuging) && on_lock_grid;
+        return ((In_Game_Main.Sun_Number >= this_sun && Dock_Area_2D.Normal_Plant_List.Count == 0 && Dock_Area_2D.now_type[Dock_Area_2D.now_type.Count - 1] == 1) || Public_Main.debuging) && on_lock_grid;
     }
     public void Bug_Doing()
     {

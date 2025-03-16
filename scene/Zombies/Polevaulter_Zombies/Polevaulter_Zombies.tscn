@@ -1575,6 +1575,7 @@ mouse_filter = 2
 texture = ExtResource( 31 )
 
 [node name="Area2D" type="Area2D" parent="Dock"]
+position = Vector2( 0, 21.333 )
 
 [node name="Shape" type="CollisionShape2D" parent="Dock/Area2D"]
 shape = SubResource( 1 )

@@ -1,0 +1,161 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=1]
+[ext_resource path="res://sound/Zombies/dirt_rise.ogg" type="AudioStream" id=2]
+[ext_resource path="res://sound/Plants/Normal/water.ogg" type="AudioStream" id=3]
+[ext_resource path="res://image/Zombies/Tomb/0.png" type="Texture" id=4]
+[ext_resource path="res://sound/Plants/Normal/plant2.ogg" type="AudioStream" id=5]
+[ext_resource path="res://sound/Plants/Normal/plant1.ogg" type="AudioStream" id=6]
+[ext_resource path="res://image/Plants/WallNut/Path/WallnutParticlesLarge.png" type="Texture" id=7]
+[ext_resource path="res://code/Zombies/Tomb/Tomb_Main.cs" type="Script" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 0.01, 0.01 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Out_Land"
+length = 1.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Effect:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../Effect:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 1.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 32 ), Vector2( 0, -12 ), Vector2( 0, 32 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Effect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1, 1.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.223529, 0.105882, 0.0627451, 1 ), Color( 0.223529, 0.105882, 0.0627451, 1 ), Color( 0.223529, 0.105882, 0.0627451, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Sound/Rise:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3, 1.7 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[node name="Tomb" type="Node2D"]
+z_index = 3
+script = ExtResource( 8 )
+
+[node name="Dock" type="Control" parent="."]
+mouse_filter = 2
+
+[node name="Help" type="Node2D" parent="Dock"]
+z_index = 118
+z_as_relative = false
+
+[node name="Texture" type="TextureRect" parent="Dock/Help"]
+modulate = Color( 1, 1, 1, 0.588235 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -43.0
+margin_top = -45.5
+margin_right = 43.0
+margin_bottom = 45.5
+mouse_filter = 2
+texture = ExtResource( 4 )
+
+[node name="Area2D" type="Area2D" parent="Dock"]
+
+[node name="Shape" type="CollisionShape2D" parent="Dock/Area2D"]
+shape = SubResource( 1 )
+
+[node name="Show" type="Control" parent="."]
+mouse_filter = 2
+
+[node name="Help" type="Node2D" parent="Show"]
+z_index = 118
+z_as_relative = false
+
+[node name="Texture" type="TextureRect" parent="Show/Help"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -43.0
+margin_top = -45.5
+margin_right = 43.0
+margin_bottom = 45.5
+mouse_filter = 2
+texture = ExtResource( 4 )
+
+[node name="Main" type="Control" parent="."]
+visible = false
+
+[node name="Tomb_Texture" type="Sprite" parent="Main"]
+texture = ExtResource( 4 )
+
+[node name="Effect" type="Sprite" parent="Main"]
+modulate = Color( 0.223529, 0.105882, 0.0627451, 1 )
+position = Vector2( 0, 32 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 7 )
+
+[node name="Sound" type="Node" parent="Main"]
+
+[node name="Rise" type="AudioStreamPlayer" parent="Main/Sound"]
+stream = ExtResource( 2 )
+script = ExtResource( 1 )
+
+[node name="Player" type="Node" parent="Main"]
+
+[node name="Out_Land" type="AnimationPlayer" parent="Main/Player"]
+anims/Out_Land = SubResource( 2 )
+
+[node name="Creating_Timer" type="Timer" parent="Main"]
+process_mode = 0
+wait_time = 20.0
+autostart = true
+
+[node name="Plant_Sound" type="Node" parent="."]
+
+[node name="Ok" type="Node" parent="Plant_Sound"]
+
+[node name="Plant1" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 6 )
+script = ExtResource( 1 )
+
+[node name="Plant2" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 5 )
+script = ExtResource( 1 )
+
+[node name="Water" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 3 )
+script = ExtResource( 1 )
+
+[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
+[connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
+[connection signal="timeout" from="Main/Creating_Timer" to="." method="Creating_Timer_timeout"]

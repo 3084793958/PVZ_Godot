@@ -56,11 +56,21 @@ public class Card_Click_Button : Node2D
                         var scene = GD.Load<PackedScene>(plant_path);
                         Normal_Plants.Choosing = true;
                         if (is_zombies)
-                        {
-                            var plant_child = (Normal_Zombies)scene.Instance();
-                            plant_child.player_put = true;
-                            plant_child.card_parent_Button = this;
-                            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                        {//为墓碑施工
+                            try
+                            {
+                                var plant_child = (Normal_Zombies)scene.Instance();
+                                plant_child.player_put = true;
+                                plant_child.card_parent_Button = this;
+                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            }
+                            catch(Exception)
+                            {
+                                var plant_child = (Tomb_Main)scene.Instance();
+                                plant_child.player_put = true;
+                                plant_child.card_parent_Button = this;
+                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            }
                         }
                         else if (isPlants_zombies)
                         {

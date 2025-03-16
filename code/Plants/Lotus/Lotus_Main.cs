@@ -65,7 +65,7 @@ public class Lotus_Main : Normal_Plants
     }
     protected override bool Allow_Plants()
     {
-        return ((In_Game_Main.Sun_Number >= card_parent_Button.sun && Dock_Area_2D.Down_Plant_List.Count == 0 && Dock_Area_2D.now_type[Dock_Area_2D.now_type.Count - 1] == 2) || Public_Main.debuging) && on_lock_grid;
+        return ((In_Game_Main.Sun_Number >= this_sun && Dock_Area_2D.Down_Plant_List.Count == 0 && Dock_Area_2D.now_type[Dock_Area_2D.now_type.Count - 1] == 2) || Public_Main.debuging) && on_lock_grid;
     }
     public void Bug_Doing()
     {

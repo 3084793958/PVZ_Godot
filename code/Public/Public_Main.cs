@@ -348,6 +348,16 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(225,"res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    9,
+    "墓碑",
+    "生产僵尸",
+    "生产僵尸",
+    GD.Load<Texture>("res://image/Zombies/Tomb/0.png"),
+    0f,
+    20f,
+    new Tuple<int,string>(50,"res://scene/Zombies/Tomb/Tomb.tscn")
     )
     };
     static public List<string> Zombies_Path_List = new List<string>
@@ -387,6 +397,9 @@ static public class Public_Main
         new Tuple<string, string,Texture, int>("第8关:重装出击","res://level/Mode1/Mode1_8.cfg",
         GD.Load<Texture>("res://image/Plants/Double_Van_Door/Double_Van_Door.png"),
         1),
+        new Tuple<string, string,Texture, int>("第9关:传送带","res://level/Mode1/Mode1_9.cfg",
+        GD.Load<Texture>("res://image/null/Null.png"),//(O^<)
+        1),                                           // V V 
         new Tuple<string, string,Texture, int>("白天草坪(测试专用)","res://level/Mode1/Mode1_demo_Day.cfg",
         GD.Load<Texture>("res://image/Plants/godot/godot.png"),
         1),
