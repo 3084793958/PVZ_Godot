@@ -96,6 +96,34 @@ public class Ice_Van_Door_Bullets_Main : Normal_Plants_Bullets
                     }
                 }
             }
+            else if (!has_touch && area_2D.Area2D_type == "Zombies_Tomb")
+            {
+                Top_Tomb_Area = (Zombies_Tomb_Area2D)area_2D;
+                if (Top_Tomb_Area.has_planted)
+                {
+                    has_touch = true;
+                    GetNode<Ice_Bullets_Area>("Area2D").on_Tomb = true;
+                    if (GetNode<Ice_Bullets_Area>("Area2D").Choose_Tomb_Area == null)
+                    {
+                        GetNode<Ice_Bullets_Area>("Area2D").Choose_Tomb_Area = Top_Tomb_Area;
+                    }
+                    else
+                    {
+                        if (Top_Tomb_Area.ZIndex > GetNode<Ice_Bullets_Area>("Area2D").Choose_Tomb_Area.ZIndex || (Top_Tomb_Area.ZIndex == GetNode<Bullets_Area>("Area2D").Choose_Tomb_Area.ZIndex && Top_Tomb_Area.GetParent().GetParent().GetIndex() > GetNode<Bullets_Area>("Area2D").Choose_Tomb_Area.GetParent().GetParent().GetIndex()))
+                        {
+                            GetNode<Ice_Bullets_Area>("Area2D").Choose_Tomb_Area = Top_Tomb_Area;
+                        }
+                    }
+                    if (Bullets_Type == 1)
+                    {
+                        GetNode<AnimationPlayer>("Touch_Animation").Play("Touch");
+                    }
+                    else
+                    {
+                        GetNode<AnimationPlayer>("Fire_Animation").Play("Touch");
+                    }
+                }
+            }
             if (area_2D.Area2D_type == "Bullets_Fire")
             {
                 var Bullets_Fire_Area = (C2H5OH_Bullets_Fire_Area)area_2D;

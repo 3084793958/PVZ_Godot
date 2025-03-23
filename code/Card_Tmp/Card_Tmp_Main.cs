@@ -105,19 +105,41 @@ public class Card_Tmp_Main : Node2D
                     Normal_Plants.Choosing = true;
                     if (is_zombies)
                     {
-                        var plant_child = (Normal_Zombies)scene.Instance();
-                        plant_child.player_put = true;
-                        plant_child.Tmp_card_parent = this;
-                        plant_child.Tmp_Card_Used = true;
-                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                        try
+                        {
+                            var plant_child = (Normal_Zombies)scene.Instance();
+                            plant_child.player_put = true;
+                            plant_child.Tmp_card_parent = this;
+                            plant_child.Tmp_Card_Used = true;
+                            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                        }
+                        catch (Exception)
+                        {
+                            var plant_child = (Tomb_Main)scene.Instance();
+                            plant_child.player_put = true;
+                            plant_child.Tmp_card_parent = this;
+                            plant_child.Tmp_Card_Used = true;
+                            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                        }
                     }
                     else if (isPlants_zombies)
                     {
-                        var plant_child = (Normal_Plants_Zombies)scene.Instance();
-                        plant_child.player_put = true;
-                        plant_child.Tmp_card_parent = this;
-                        plant_child.Tmp_Card_Used = true;
-                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                        try
+                        {
+                            var plant_child = (Normal_Plants_Zombies)scene.Instance();
+                            plant_child.player_put = true;
+                            plant_child.Tmp_card_parent = this;
+                            plant_child.Tmp_Card_Used = true;
+                            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                        }
+                        catch (Exception)
+                        {
+                            var plant_child = (Plants_Tomb_Main)scene.Instance();
+                            plant_child.player_put = true;
+                            plant_child.Tmp_card_parent = this;
+                            plant_child.Tmp_Card_Used = true;
+                            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                        }
                     }
                     else
                     {

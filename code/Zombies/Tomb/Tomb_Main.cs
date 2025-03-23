@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 public class Tomb_Main : Node2D
 {
+    [Export] protected Color hurt_color = new Color(1.3f, 1.3f, 1.3f, 1f);
+    [Export] protected Color normal_color = new Color(1f, 1f, 1f, 1f);
     [Export] protected int normal_ZIndex = 3;
     protected Timer Android_Timer = new Timer();
     protected bool Is_Double_Click = false;//for Android
@@ -15,6 +17,13 @@ public class Tomb_Main : Node2D
     public Card_Tmp_Main Tmp_card_parent = null;//Card_Tmp使用
     protected List<Background_Grid_Main> Dock_Area_2D_List = new List<Background_Grid_Main>();
     protected Background_Grid_Main Dock_Area_2D = null;
+    protected int health = 2000;
+    protected int Clone_Time = 0;
+    protected List<Normal_Plants_Bullets_Area> Bullets_Area_2D_List = new List<Normal_Plants_Bullets_Area>();
+    protected List<Mg_Shining_Area> Shining_Area_2D_List = new List<Mg_Shining_Area>();
+    protected List<Normal_Boom_Area> Boom_Area_2D_List = new List<Normal_Boom_Area>();
+    protected List<C2H5OH_Died_Fire_Area> C2H5OH_Fire_Area_2D_List = new List<C2H5OH_Died_Fire_Area>();
+    protected int hurt_time = 0;
     protected List<string> Clone_List = new List<string> 
     {
         "res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn",
@@ -145,8 +154,10 @@ public class Tomb_Main : Node2D
         {
             ZIndex = normal_ZIndex + 20 * (Dock_Area_2D.pos[0] - 1);
         }
+        GetNode<Zombies_Tomb_Area2D>("Main/Tomb_Area2D").has_planted = has_planted;
         if (!has_planted)
         {
+            GetNode<Node2D>("Health").Hide();
             if (Normal_Plants.Choosing)
             {
                 GlobalPosition = GetTree().Root.GetMousePosition();
@@ -206,6 +217,22 @@ public class Tomb_Main : Node2D
                             {
                                 Tmp_card_parent.Been_Used();
                             }//TODO delete Plant
+                            for (int i = 0; i < Dock_Area_2D.Normal_Plant_List.Count; i++)
+                            {
+                                if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                                {
+                                    Plant_object.Free_Self();
+                                }
+                            }
+                            for (int i = 0; i < Dock_Area_2D.Down_Plant_List.Count; i++)
+                            {
+                                if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                                {
+                                    Plant_object.Free_Self();
+                                }
+                            }
+                            Dock_Area_2D.Normal_Plant_List.Add(this);
+                            Dock_Area_2D.Down_Plant_List.Add(this);
                             has_planted = true;
                             this.GlobalPosition = Dock_Area_2D.GlobalPosition;
                             In_Game_Main.Sun_Number -= this_sun;
@@ -251,6 +278,114 @@ public class Tomb_Main : Node2D
                 }
             }
         }
+        else
+        {
+            if (health <= 0 || !Public_Main.Show_Zombies_Health)
+            {
+                GetNode<Node2D>("Health").Hide();
+            }
+            else
+            {
+                GetNode<Label>("Health/Health").Text = "PH:" + health.ToString();
+                GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(this.GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, this.GlobalPosition.y - 40 - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
+                GetNode<Node2D>("Health").ZIndex = 116;
+                GetNode<Node2D>("Health").Show();
+            }
+            if ((Clone_Time > 20 || health < 0) && !GetNode<AnimationPlayer>("Main/Free_Self").IsPlaying())
+            {
+                GetNode<AnimationPlayer>("Main/Free_Self").Play("Free");
+            }
+            for (int i = 0; i < Boom_Area_2D_List.Count; i++)
+            {
+                if (Boom_Area_2D_List[i].can_do && !Boom_Area_2D_List[i].end_hurt)
+                {
+                    health -= Boom_Area_2D_List[i].hurt;
+                    Boom_Area_2D_List.RemoveAt(i);
+                    i--;
+                }
+            }
+            if (GetNode<Timer>("Main/Fire_Hurt").IsStopped())
+            {
+                for (int i = 0; i < C2H5OH_Fire_Area_2D_List.Count; i++)
+                {
+                    if (C2H5OH_Fire_Area_2D_List[i].died)
+                    {
+                        health -= C2H5OH_Fire_Area_2D_List[i].hurt;
+                        if (health > 0)
+                        {
+                            this.Modulate = hurt_color;
+                        }
+                    }
+                }
+                for (int i = 0; i < Shining_Area_2D_List.Count; i++)
+                {
+                    if (Shining_Area_2D_List[i].start)
+                    {
+                        if (hurt_time < 20)
+                        {
+                            hurt_time += 10;
+                        }
+                        health -= 10;
+                        if (health > 0)
+                        {
+                            this.Modulate = hurt_color;
+                        }
+                    }
+                }
+                GetNode<Timer>("Main/Fire_Hurt").Start();
+            }
+            for (int i = 0; i < Bullets_Area_2D_List.Count; i++)
+            {
+                if (Bullets_Area_2D_List[i] == null)
+                {
+                    Bullets_Area_2D_List.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                if (!Bullets_Area_2D_List[i].Monitoring)
+                {
+                    Bullets_Area_2D_List.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                if (Bullets_Area_2D_List[i].Sec_Info == "Pea")
+                {
+                    if (Bullets_Area_2D_List[i].hurt_type == 2 || (Bullets_Area_2D_List[i].Choose_Tomb_Area == GetNode<Zombies_Tomb_Area2D>("Main/Tomb_Area2D") && Bullets_Area_2D_List[i].on_Tomb))
+                    {
+                        if (hurt_time < 20)
+                        {
+                            hurt_time += 15;
+                        }
+                        health -= Bullets_Area_2D_List[i].hurt;
+                    }
+                }
+                else if (Bullets_Area_2D_List[i].Sec_Info == "Ice_Pea")
+                {
+                    if (Bullets_Area_2D_List[i].hurt_type == 2 || (Bullets_Area_2D_List[i].Choose_Tomb_Area == GetNode<Zombies_Tomb_Area2D>("Main/Tomb_Area2D") && Bullets_Area_2D_List[i].on_Tomb))
+                    {
+                        if (hurt_time < 20)
+                        {
+                            hurt_time += 15;
+                        }
+                        health -= Bullets_Area_2D_List[i].hurt;
+                    }
+                }
+                Bullets_Area_2D_List.RemoveAt(i);
+                i--;
+            }
+            if (hurt_time > 0)
+            {
+                hurt_time -= (int)(delta * 60);
+            }
+            if (hurt_time == 0)
+            {
+                this.Modulate = normal_color;
+            }
+            else
+            {
+                this.Modulate = hurt_color;
+            }
+        }
     }
     protected void Dock_Entered(Area2D area_node)
     {
@@ -278,10 +413,80 @@ public class Tomb_Main : Node2D
     }
     protected void Creating_Timer_timeout()
     {
-        if (In_Game_Main.is_playing && has_planted) 
+        if (In_Game_Main.is_playing && has_planted && health > 0)  
         {
+            Clone_Time++;
             GetNode<AnimationPlayer>("Main/Player/Out_Land").Play("Out_Land");
             In_Game_Main.Zombies_Clone_Request(Clone_List[(int)(GD.Randi() % Clone_List.Count)], this.Position, this.ZIndex - normal_ZIndex + 7);
+        }
+    }
+    protected void Plants_Entered(Area2D area_node)
+    {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Plants_Bullets")
+        {
+            Bullets_Area_2D_List.Add((Normal_Plants_Bullets_Area)area2D);
+        }
+        else if (Type_string != null && Type_string == "Plants_Boom")
+        {
+            Boom_Area_2D_List.Add((Normal_Boom_Area)area2D);
+        }
+        else if (Type_string != null && Type_string == "Died_Fire")
+        {
+            C2H5OH_Fire_Area_2D_List.Add((C2H5OH_Died_Fire_Area)area2D);
+        }
+        else if (Type_string != null && Type_string == "Mg_Shining")
+        {
+            Shining_Area_2D_List.Add((Mg_Shining_Area)area2D);
+        }
+    }
+    protected void Plants_Exited(Area2D area_node)
+    {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Plants_Bullets")
+        {
+            Bullets_Area_2D_List.Remove((Normal_Plants_Bullets_Area)area2D);
+        }
+        else if (Type_string != null && Type_string == "Plants_Boom")
+        {
+            Boom_Area_2D_List.Remove((Normal_Boom_Area)area2D);
+        }
+        else if (Type_string != null && Type_string == "Died_Fire")
+        {
+            C2H5OH_Fire_Area_2D_List.Remove((C2H5OH_Died_Fire_Area)area2D);
+        }
+        else if (Type_string != null && Type_string == "Mg_Shining")
+        {
+            Shining_Area_2D_List.Remove((Mg_Shining_Area)area2D);
+        }
+    }
+    public async void Free_Self()
+    {
+        if (GetNode<Area2D>("Dock/Area2D").IsConnected("area_entered", this, nameof(Dock_Entered)))
+        {
+            GetNode<Area2D>("Main/Tomb_Area2D").Disconnect("area_entered", this, nameof(Plants_Entered));
+            GetNode<Area2D>("Main/Tomb_Area2D").Disconnect("area_exited", this, nameof(Plants_Exited));
+            GetNode<Area2D>("Dock/Area2D").Disconnect("area_entered", this, nameof(Dock_Entered));
+            GetNode<Area2D>("Dock/Area2D").Disconnect("area_exited", this, nameof(Dock_Exited));
+            GetNode<Area2D>("Main/Tomb_Area2D").Monitoring = false;
+            GetNode<Area2D>("Main/Tomb_Area2D").Monitorable = false;
+            GetNode<Area2D>("Dock/Area2D").Monitoring = false;
+            GetNode<Area2D>("Dock/Area2D").Monitorable = false;
+        }
+        Dock_Area_2D.Normal_Plant_List.Remove(this);
+        Dock_Area_2D.Down_Plant_List.Remove(this);
+        await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
+        if (IsInstanceValid(this))
+        {
+            this.QueueFree();
         }
     }
 }

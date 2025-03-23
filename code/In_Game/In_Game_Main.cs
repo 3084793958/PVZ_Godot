@@ -660,11 +660,22 @@ public class In_Game_Main : Node2D
                 if (Zombies_Clone_Request_List.Count != 0)
                 {
                     var scene = GD.Load<PackedScene>(Zombies_Clone_Request_List[0].Item1);
-                    var plant_child = (Normal_Zombies)scene.Instance();
-                    plant_child.ZIndex = Zombies_Clone_Request_List[0].Item3;
-                    plant_child.put_position = Zombies_Clone_Request_List[0].Item2;
-                    plant_child.player_put = false;
-                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                    if (Zombies_Clone_Request_List[0].Item1 == Public_Main.Zombies_Path_List[8])
+                    {
+                        var plant_child = (Tomb_Main)scene.Instance();
+                        plant_child.ZIndex = Zombies_Clone_Request_List[0].Item3 - 4;
+                        plant_child.put_position = new Vector2(710 - 80 * GD.Randi() % 3, Zombies_Clone_Request_List[0].Item2.y);
+                        plant_child.player_put = false;
+                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                    }
+                    else
+                    {
+                        var plant_child = (Normal_Zombies)scene.Instance();
+                        plant_child.ZIndex = Zombies_Clone_Request_List[0].Item3;
+                        plant_child.put_position = Zombies_Clone_Request_List[0].Item2;
+                        plant_child.player_put = false;
+                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                    }
                     Clone_Number++;
                     Zombies_Clone_Request_List.RemoveAt(0);
                     Must_Quit = false;

@@ -12,6 +12,10 @@ public class Setting_Main : Control
     }
     public override void _PhysicsProcess(float delta)
     {
+        if (GetNode<TextureRect>("/root/Setting/Setting/More").Visible)
+        {
+            GetNode<TextureRect>("/root/Setting/Setting/More").Visible = this.Visible;
+        }
         if (!Public_Main.Starting)
         {
             var Pause_main = GetNode<Pause_Main>("/root/Pause");

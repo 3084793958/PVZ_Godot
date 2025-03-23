@@ -21,9 +21,13 @@ public class Bug_Main : Node2D
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Sound/Press").Stream.Set("loop", false);
     }
-    public void Area2D_Entered(Control_Area_2D area2D)
+    public void Area2D_Entered(Area2D area_node)
     {
-        if (area2D.Area2D_type == "Plants")
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
+        if (area2D.Area2D_type == "Plants" && area2D.Sec_Info != "Zombies")
         {
             var plants_Area_2d = (Normal_Plants_Area)area2D;
             if (plants_Area_2d.has_planted)
@@ -48,8 +52,12 @@ public class Bug_Main : Node2D
             }
         }
     }
-    public void Area2D_Exited(Control_Area_2D area2D)
+    public void Area2D_Exited(Area2D area_node)
     {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
         if (area2D.Area2D_type == "Plants")
         {
             var plants_Area_2d = (Normal_Plants_Area)area2D;

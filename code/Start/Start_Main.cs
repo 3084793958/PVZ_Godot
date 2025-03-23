@@ -49,6 +49,9 @@ public class Start_Main : Node2D
                     Public_Main.for_Android = (bool)file3.GetValue("Setting", "Android", false);
                     Public_Main.Using_Clone_Limit = (bool)file3.GetValue("Setting", "Limit", true);
                     Public_Main.Max_Object_Clone_In_F = (int)file3.GetValue("Setting", "Limit_Number", 5);
+                    Public_Main.Show_Zombies_Health = (bool)file3.GetValue("Setting", "Zombies_Health", true);
+                    Public_Main.Show_Plants_Health = (bool)file3.GetValue("Setting", "Plants_Health", true);
+                    Public_Main.Show_Plants_Zombies_Health = (bool)file3.GetValue("Setting", "Plants_Zombies_Health", true);
                 }
                 else
                 {
@@ -56,6 +59,9 @@ public class Start_Main : Node2D
                     Public_Main.for_Android = false;
                     Public_Main.Using_Clone_Limit = true;
                     Public_Main.Max_Object_Clone_In_F = 5;
+                    Public_Main.Show_Zombies_Health = true;
+                    Public_Main.Show_Plants_Health = true;
+                    Public_Main.Show_Plants_Zombies_Health = true;
                 }
             }
         }
@@ -65,8 +71,11 @@ public class Start_Main : Node2D
         GetNode<Setting_sound_HSlider>("/root/Setting/Setting/Menu/Sound/HSlider").Update_This();
         GetNode<Setting_Button_Debug>("/root/Setting/Setting/Menu/Debug").Update_This();
         GetNode<Setting_Button_Android>("/root/Setting/Setting/Menu/Android").Update_This();
-        GetNode<Setting_Button_Limit>("/root/Setting/Setting/Menu/Limit").Update_This();
-        GetNode<LineEdit>("/root/Setting/Setting/Menu/Limit_LineEdit").Text = Public_Main.Max_Object_Clone_In_F.ToString();
+        GetNode<Setting_Button_Limit>("/root/Setting/Setting/More/More/Limit").Update_This();
+        GetNode<Setting_Zombies_Health>("/root/Setting/Setting/More/More/Zombies_Health").Update_This();
+        GetNode<Setting_Plants_Health>("/root/Setting/Setting/More/More/Plants_Health").Update_This();
+        GetNode<Setting_Plants_Zombies_Health>("/root/Setting/Setting/More/More/Plants_Zombies_Health").Update_This();
+        GetNode<LineEdit>("/root/Setting/Setting/More/More/Limit_LineEdit").Text = Public_Main.Max_Object_Clone_In_F.ToString();
         ChangeScene_Start.B_to_E(Shadow);
     }
 }

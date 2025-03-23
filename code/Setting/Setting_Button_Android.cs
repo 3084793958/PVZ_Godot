@@ -12,11 +12,6 @@ public class Setting_Button_Android : Button
         var Click = GetNode<AudioStreamPlayer>("/root/Setting/Setting/button_Click");
         Click.Play();
         Public_Main.for_Android = this.Pressed;
-        ConfigFile file = new ConfigFile();
-        file.SetValue("Setting", "debug", Public_Main.debuging);
-        file.SetValue("Setting", "Android", Public_Main.for_Android);
-        file.SetValue("Setting", "Limit", Public_Main.Using_Clone_Limit);
-        file.SetValue("Setting", "Limit_Number", Public_Main.Max_Object_Clone_In_F);
-        file.Save("user://Users/" + Public_Main.user_name + "/Develop_Setting.cfg");
+        Public_Main.Save_Value();
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://image/Plants/Ice_Van_Door/Ice_Van_Door.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/Ice_Van_Door/Ice_Van_Door_Main.cs" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://sound/Plants/Normal/plant2.ogg" type="AudioStream" id=6]
 [ext_resource path="res://sound/Plants/Normal/plant1.ogg" type="AudioStream" id=7]
 [ext_resource path="res://image/Plants/Ice_Van_Door/Path/eyes2.png" type="Texture" id=8]
+[ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=9]
 [ext_resource path="res://image/Plants/Ice_Van_Door/Path/eyes1.png" type="Texture" id=10]
 [ext_resource path="res://image/Plants/Ice_Van_Door/Path/leaves.png" type="Texture" id=11]
 [ext_resource path="res://sound/Zombies/bigchomp.ogg" type="AudioStream" id=12]
@@ -423,6 +424,27 @@ anims/Died = SubResource( 12 )
 
 [node name="Bug_player" type="AnimationPlayer" parent="."]
 anims/Bug = SubResource( 15 )
+
+[node name="Health" type="Node2D" parent="."]
+visible = false
+modulate = Color( 2, 2, 2, 0.6 )
+z_index = 118
+z_as_relative = false
+
+[node name="Health" type="Label" parent="Health"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -36.0
+margin_top = -67.0
+margin_right = 303.0
+margin_bottom = 66.0
+rect_scale = Vector2( 0.2, 0.2 )
+custom_colors/font_color = Color( 0, 1, 0, 1 )
+custom_fonts/font = ExtResource( 9 )
+text = "HP:300"
+align = 1
 
 [connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
 [connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]

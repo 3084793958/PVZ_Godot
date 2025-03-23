@@ -74,7 +74,7 @@ public class C_Boom_Main : Normal_Plants
     {
         return ((In_Game_Main.Sun_Number >= this_sun && Dock_Area_2D.Normal_Plant_List.Count == 0 && Dock_Area_2D.now_type[Dock_Area_2D.now_type.Count - 1] == 1) || Public_Main.debuging) && on_lock_grid;
     }
-    protected override void Free_Self()
+    public override void Free_Self()
     {
         GetNode<Area2D>("Main/Boom").Monitoring = false;
         GetNode<Area2D>("Main/Boom").Monitorable = false;

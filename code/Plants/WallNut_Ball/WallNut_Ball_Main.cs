@@ -117,7 +117,7 @@ public class WallNut_Ball_Main : Normal_Plants
     {
         //NOTHING
     }
-    protected override void Free_Self()
+    public override void Free_Self()
     {
         GetNode<Area2D>("Main/Crash_Area").Monitoring = false;
         GetNode<Area2D>("Main/Crash_Area").Monitorable = false;

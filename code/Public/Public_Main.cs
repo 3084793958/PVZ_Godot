@@ -18,6 +18,9 @@ static public class Public_Main
     static public int allow_card_number = 13;
     static public int now_card_number = 0;
     static public bool for_Android = false;//无鼠标模式,双击
+    static public bool Show_Zombies_Health = true;
+    static public bool Show_Plants_Health = true;
+    static public bool Show_Plants_Zombies_Health = true;
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int,string>>> Plant_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
     {
     //ID,Name,Info,More_Info,Texture(有搞头,可能变成List<Texture>),First_Time(Normal),Wait_Time(Normal),Sun(Normal),path
@@ -88,7 +91,7 @@ static public class Public_Main
     "也不一定要配合酒精灯使用",
     GD.Load<Texture>("res://image/Plants/Mg/Mg.png"),
     10f,
-    10f,
+    20f,
     new Tuple<int,string>(25,"res://scene/Plants/Mg/Mg.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
@@ -173,6 +176,16 @@ static public class Public_Main
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     16,
+    "小喷菇",
+    "小喷菇",
+    "小喷菇",
+    GD.Load<Texture>("res://image/Plants/Small_Shroom/Small_Shroom.png"),
+    0f,
+    5f,
+    new Tuple<int,string>(0,"res://scene/Plants/Small_Shroom/Small_Shroom.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    17,
     "莲叶",
     "莲叶",
     "莲叶",
@@ -264,6 +277,16 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(225,"res://scene/Plants/Zombies/Darts_Polevaulter_Zombies/Plants_Darts_Polevaulter_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    9,
+    "我方墓碑",
+    "生产魅惑僵尸",
+    "生产魅惑僵尸",
+    GD.Load<Texture>("res://image/Plants/Zombies/Tomb/0.png"),
+    0f,
+    20f,
+    new Tuple<int,string>(2000,"res://scene/Plants/Zombies/Tomb/Plants_Tomb.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -357,7 +380,7 @@ static public class Public_Main
     GD.Load<Texture>("res://image/Zombies/Tomb/0.png"),
     0f,
     20f,
-    new Tuple<int,string>(50,"res://scene/Zombies/Tomb/Tomb.tscn")
+    new Tuple<int,string>(2000,"res://scene/Zombies/Tomb/Tomb.tscn")
     )
     };
     static public List<string> Zombies_Path_List = new List<string>
@@ -369,7 +392,8 @@ static public class Public_Main
         "res://scene/Zombies/Ignore_Cone_Zombies/Ignore_Cone_Zombies.tscn",//5
         "res://scene/Zombies/Bucket_Zombies/Bucket_Zombies.tscn",
         "res://scene/Zombies/Polevaulter_Zombies/Polevaulter_Zombies.tscn",
-        "res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn"
+        "res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn",
+        "res://scene/Zombies/Tomb/Tomb.tscn"//9
     };
     static public List<Tuple<string, string, Texture, int>> Level_Mode1 = new List<Tuple<string, string, Texture, int>>
     { 
@@ -400,6 +424,9 @@ static public class Public_Main
         new Tuple<string, string,Texture, int>("第9关:传送带","res://level/Mode1/Mode1_9.cfg",
         GD.Load<Texture>("res://image/null/Null.png"),//(O^<)
         1),                                           // V V 
+        new Tuple<string, string,Texture, int>("第10关:小喷菇之梦","res://level/Mode1/Mode1_10.cfg",
+        GD.Load<Texture>("res://image/Plants/Small_Shroom/Small_Shroom.png"),
+        2),
         new Tuple<string, string,Texture, int>("白天草坪(测试专用)","res://level/Mode1/Mode1_demo_Day.cfg",
         GD.Load<Texture>("res://image/Plants/godot/godot.png"),
         1),
@@ -410,6 +437,18 @@ static public class Public_Main
         GD.Load<Texture>("res://image/Plants/godot/godot.png"),
         3)
     };
+    static public void Save_Value()
+    {
+        ConfigFile file = new ConfigFile();
+        file.SetValue("Setting", "debug", Public_Main.debuging);
+        file.SetValue("Setting", "Android", Public_Main.for_Android);
+        file.SetValue("Setting", "Limit", Public_Main.Using_Clone_Limit);
+        file.SetValue("Setting", "Limit_Number", Public_Main.Max_Object_Clone_In_F);
+        file.SetValue("Setting", "Zombies_Health", Public_Main.Show_Zombies_Health);
+        file.SetValue("Setting", "Plants_Health", Public_Main.Show_Plants_Health);
+        file.SetValue("Setting", "Plants_Zombies_Health", Public_Main.Show_Plants_Zombies_Health);
+        file.Save("user://Users/" + Public_Main.user_name + "/Develop_Setting.cfg");
+    }
 }
 public class Health_Container
 {

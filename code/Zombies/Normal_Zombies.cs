@@ -200,6 +200,7 @@ public class Normal_Zombies : Node2D
         health = count_health;
         if (!has_planted)
         {
+            GetNode<Node2D>("Health").Hide();
             if (Normal_Plants.Choosing)
             {
                 GlobalPosition = GetTree().Root.GetMousePosition();
@@ -312,6 +313,48 @@ public class Normal_Zombies : Node2D
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").Choose_Plants_Area = Plants_Area_2D;
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").has_lose_head = has_lose_Head;
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").health = health;
+            if (health <= 0 || !Public_Main.Show_Zombies_Health || On_Boom_Effect) 
+            {
+                GetNode<Node2D>("Health").Hide();
+            }
+            else
+            {
+                string health_text = null;
+                for (int i = 0; i < health_list.Count; i++)
+                {
+                    if (health_list[i].Health < 0)
+                    {
+                        if (health_list[i].Is_lock)
+                        {
+                            health_list[i].Health = 0;
+                        }
+                        else
+                        {
+                            if (i + 1 < health_list.Count)
+                            {
+                                health_list[i + 1].Health += health_list[i].Health;
+                                health_list[i].Health = 0;
+                            }
+                        }
+                    }
+                    if (health_list[i].Health == 0)
+                    {
+                        continue;
+                    }
+                    if (i + 1 == health_list.Count) 
+                    {
+                        health_text = "HP:" + health_list[i].Health.ToString() + health_text;
+                    }
+                    else
+                    {
+                        health_text = "+" + health_list[i].Health.ToString() + health_text;
+                    }
+                }
+                GetNode<Label>("Health/Health").Text = health_text;
+                GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, GetNode<Control>("Main/Main").RectGlobalPosition.y - 64 - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
+                GetNode<Node2D>("Health").ZIndex = 116;
+                GetNode<Node2D>("Health").Show();
+            }
             if (Position.x < -1437 / 2)
             {
                 this.Free_Self();
@@ -491,7 +534,7 @@ public class Normal_Zombies : Node2D
                         {
                             hurt_time += 10;
                         }
-                        health_list[0].Health -= 25;
+                        health_list[0].Health -= 10;
                         if (!this.On_Boom_Effect)
                         {
                             if (is_Ice)
@@ -609,6 +652,8 @@ public class Normal_Zombies : Node2D
             {
                 Plants_Area_2D = null;
             }
+            Normal_Plants_Area can_use_area = null;
+            bool can_used = false;
             for (int i = 0; i < Plants_Area_2D_List.Count; i++)
             {
                 if (Plants_Area_2D_List[i] == null)
@@ -641,6 +686,10 @@ public class Normal_Zombies : Node2D
                         i--;
                         continue;
                     }
+                }
+                if (can_use_area == null)
+                {
+                    can_use_area = Plants_Area_2D_List[i];
                 }
                 if (Plants_Area_2D == null)
                 {
@@ -724,6 +773,14 @@ public class Normal_Zombies : Node2D
                         }
                     }
                 }
+                if (Plants_Area_2D == Plants_Area_2D_List[i])
+                {
+                    can_used = true;
+                }
+            }
+            if (!can_used)
+            {
+                Plants_Area_2D = can_use_area;
             }
             for (int i = 0; i < Plants_Area_2D_List.Count; i++)
             {

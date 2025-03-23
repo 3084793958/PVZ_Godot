@@ -35,6 +35,8 @@ public class Normal_Plants : Node2D
     [Export] protected int normal_ZIndex = 3;
     protected bool just_for_MG = false;
     protected bool just_for_C2H5OH = false;
+    protected bool can_sleep = false;
+    protected bool sleep = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -144,6 +146,7 @@ public class Normal_Plants : Node2D
         }
         if (!has_planted)
         {
+            GetNode<Node2D>("Health").Hide();
             if (Normal_Plants.Choosing)
             {
                 GlobalPosition = GetTree().Root.GetMousePosition();
@@ -151,18 +154,18 @@ public class Normal_Plants : Node2D
                 {
                     if (Math.Abs(GlobalPosition.x - Dock_Area_2D.GlobalPosition.x) < 40 && Math.Abs(GlobalPosition.y - Dock_Area_2D.GlobalPosition.y) < 40)
                     {
-                        GetNode<Control>("Dock").RectGlobalPosition += Dock_Area_2D.GlobalPosition - GetNode<Area2D>("Dock/Area2D").GlobalPosition;
+                        GetNode<Control>("Dock").RectPosition += Dock_Area_2D.GlobalPosition - GetNode<Area2D>("Dock/Area2D").GlobalPosition;
                         on_lock_grid = true;
                     }
                     else
                     {
-                        GetNode<Control>("Dock").RectGlobalPosition = GetNode<Control>("Show").RectGlobalPosition;
+                        GetNode<Control>("Dock").RectPosition = GetNode<Control>("Show").RectPosition;
                         on_lock_grid = false;
                     }
                 }
                 else
                 {
-                    GetNode<Control>("Dock").RectGlobalPosition = GetNode<Control>("Show").RectGlobalPosition;
+                    GetNode<Control>("Dock").RectPosition = GetNode<Control>("Show").RectPosition;
                     on_lock_grid = false;
                 }
                 if (Input.IsActionPressed("Right_Mouse"))
@@ -251,6 +254,17 @@ public class Normal_Plants : Node2D
         }
         else
         {
+            if (health <= 0 || !Public_Main.Show_Plants_Health)
+            {
+                GetNode<Node2D>("Health").Hide();
+            }
+            else
+            {
+                GetNode<Label>("Health/Health").Text = "PH:" + health.ToString();
+                GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(this.GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, this.GlobalPosition.y - 40 - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
+                GetNode<Node2D>("Health").ZIndex = 116;
+                GetNode<Node2D>("Health").Show();
+            }
             if (Shovel_Area != null)
             {
                 if (Shovel_Area.Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Shovel_Area"))
@@ -461,7 +475,7 @@ public class Normal_Plants : Node2D
     }
     protected virtual void Plants_Init()
     { }
-    protected virtual async void Free_Self()
+    public virtual async void Free_Self()
     {
         if (GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
         {

@@ -149,7 +149,7 @@ public class Double_Van_Door_Main : Normal_Plants
             }
         }
     }
-    protected override void Free_Self()
+    public override void Free_Self()
     {
         if (GetNode<Area2D>("Main/Bullets_Way").IsConnected("area_entered", this, nameof(Bullets_Way_On)))
         {

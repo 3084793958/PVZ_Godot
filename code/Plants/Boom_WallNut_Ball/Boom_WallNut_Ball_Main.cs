@@ -89,7 +89,7 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
     {
         //NOTHING
     }
-    protected override void Free_Self()
+    public override void Free_Self()
     {
         GetNode<Area2D>("Main/Boom").Monitoring = false;
         GetNode<Area2D>("Main/Boom").Monitorable = false;

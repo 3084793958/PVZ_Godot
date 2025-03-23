@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://image/Plants/H2SO4/H2SO4.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/H2SO4/H2SO4_Main.cs" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://image/Plants/H2SO4/Path/Top.png" type="Texture" id=9]
 [ext_resource path="res://code/Control_Area_2D/H2SO4_Area2D.cs" type="Script" id=10]
 [ext_resource path="res://sound/button/click.ogg" type="AudioStream" id=11]
+[ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=12]
 [ext_resource path="res://code/Control_Area_2D/Normal_Plants_Area.cs" type="Script" id=17]
 [ext_resource path="res://image/shadow.png" type="Texture" id=18]
 
@@ -275,6 +276,27 @@ anims/Open = SubResource( 12 )
 [node name="Bug" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
 script = ExtResource( 3 )
+
+[node name="Health" type="Node2D" parent="."]
+visible = false
+modulate = Color( 2, 2, 2, 0.6 )
+z_index = 118
+z_as_relative = false
+
+[node name="Health" type="Label" parent="Health"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -36.0
+margin_top = -67.0
+margin_right = 303.0
+margin_bottom = 66.0
+rect_scale = Vector2( 0.2, 0.2 )
+custom_colors/font_color = Color( 0, 1, 0, 1 )
+custom_fonts/font = ExtResource( 12 )
+text = "HP:300"
+align = 1
 
 [connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
 [connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]

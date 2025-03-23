@@ -46,9 +46,8 @@ public class Polevaulter_Zombies_Main : Normal_Zombies
             Doing_jumping = is_jumping;
             if (is_Lock_Ice)
             {
-                GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
+                Walk_Mode(false);
                 GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
-                GetNode<AnimationPlayer>("Main/Main/Hat/Hat/Walk").Stop();
             }
             if (health < 340 && !has_lose_Arm)
             {

@@ -104,7 +104,7 @@ public class Eating_Flower_Main : Normal_Plants
             }
         }
     }
-    protected override void Free_Self()
+    public override void Free_Self()
     {
         GetNode<Area2D>("Main/Eating_Area").Monitoring = false;
         GetNode<Area2D>("Main/Eating_Area").Monitorable = false;

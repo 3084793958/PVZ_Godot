@@ -110,7 +110,7 @@ public class Potato_Main : Normal_Plants
             GetNode<AnimationPlayer>("Main/Out_Land").Play("Out_Land");
         }
     }
-    protected override void Free_Self()
+    public override void Free_Self()
     {
         GetNode<Area2D>("Main/Boom").Monitoring = false;
         GetNode<Area2D>("Main/Boom").Monitorable = false;

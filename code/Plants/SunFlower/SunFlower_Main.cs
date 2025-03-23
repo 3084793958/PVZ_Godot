@@ -81,7 +81,7 @@ public class SunFlower_Main : Normal_Plants
             }
             else
             {
-                GetNode<Timer>("Timer").WaitTime = (float)GD.RandRange(20d, 60d);
+                GetNode<Timer>("Timer").WaitTime = (float)GD.RandRange(25d, 60d);
             }
             GetNode<AudioStreamPlayer>("Sun").Play();
             int sun_value;

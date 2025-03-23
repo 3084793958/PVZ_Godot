@@ -6,8 +6,8 @@ public class Normal_Plants_Zombies : Node2D
 {
     //define
     [Export] protected int normal_ZIndex = 7;
-    [Export] protected Color hurt_color = new Color(1.3f, 1.3f, 1.3f, 1f);
-    [Export] protected Color normal_color = new Color(1f, 1f, 1f, 1f);
+    [Export] protected Color hurt_color = new Color(1.2f, 0f, 1.3f, 1f);
+    [Export] protected Color normal_color = new Color(0.92f, 0f, 1f, 1f);
     protected Timer Android_Timer = new Timer();
     protected bool Is_Double_Click = false;//for Android
     public Vector2 put_position = Vector2.Zero;//In_Game_Main使用
@@ -177,6 +177,7 @@ public class Normal_Plants_Zombies : Node2D
         health = count_health;
         if (!has_planted)
         {
+            GetNode<Node2D>("Health").Hide();
             if (Normal_Plants.Choosing)
             {
                 GlobalPosition = GetTree().Root.GetMousePosition();
@@ -288,6 +289,48 @@ public class Normal_Plants_Zombies : Node2D
         {
             GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").Choose_Zombies_Area = Zombies_Area_2D;
             GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").has_lose_head = has_lose_Head;
+            if (health <= 0 || !Public_Main.Show_Plants_Zombies_Health)
+            {
+                GetNode<Node2D>("Health").Hide();
+            }
+            else
+            {
+                string health_text = null;
+                for (int i = 0; i < health_list.Count; i++)
+                {
+                    if (health_list[i].Health < 0)
+                    {
+                        if (health_list[i].Is_lock)
+                        {
+                            health_list[i].Health = 0;
+                        }
+                        else
+                        {
+                            if (i + 1 < health_list.Count)
+                            {
+                                health_list[i + 1].Health += health_list[i].Health;
+                                health_list[i].Health = 0;
+                            }
+                        }
+                    }
+                    if (health_list[i].Health == 0)
+                    {
+                        continue;
+                    }
+                    if (i + 1 == health_list.Count)
+                    {
+                        health_text = "HP:" + health_list[i].Health.ToString() + health_text;
+                    }
+                    else
+                    {
+                        health_text = "+" + health_list[i].Health.ToString() + health_text;
+                    }
+                }
+                GetNode<Label>("Health/Health").Text = health_text;
+                GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, GetNode<Control>("Main/Main").RectGlobalPosition.y - 64 - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
+                GetNode<Node2D>("Health").ZIndex = 116;
+                GetNode<Node2D>("Health").Show();
+            }
             if (GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").lose_health)
             {
                 GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").lose_health = false;
@@ -307,6 +350,8 @@ public class Normal_Plants_Zombies : Node2D
             {
                 Zombies_Area_2D = null;
             }
+            Normal_Zombies_Area can_use_area = null;
+            bool can_used = false;
             for (int i = 0; i < Zombies_Area_2D_List.Count; i++)
             {
                 if (Zombies_Area_2D_List[i] == null)
@@ -323,6 +368,10 @@ public class Normal_Plants_Zombies : Node2D
                     Zombies_Area_2D_List.RemoveAt(i);
                     i--;
                     continue;
+                }
+                if (can_use_area == null)
+                {
+                    can_use_area = Zombies_Area_2D_List[i];
                 }
                 if (Zombies_Area_2D == null)
                 {
@@ -354,7 +403,19 @@ public class Normal_Plants_Zombies : Node2D
                             Zombies_Area_2D = Zombies_Area_2D_List[i];
                         }
                     }
+                    if (Zombies_Area_2D_List.Count == 1)
+                    {
+                        Zombies_Area_2D = Zombies_Area_2D_List[0];
+                    }
                 }
+                if (Zombies_Area_2D == Zombies_Area_2D_List[i])
+                {
+                    can_used = true;
+                }
+            }
+            if (!can_used)
+            {
+                Zombies_Area_2D = can_use_area;
             }
             if (Zombies_Area_2D_List.Count != 0)
             {

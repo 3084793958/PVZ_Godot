@@ -100,7 +100,7 @@ public class C2H5OH_Main : Normal_Plants
         GetNode<AnimationPlayer>("Main/Player1").Play("Fire");
         GetNode<C2H5OH_Bullets_Fire_Area>("Main/Bullets_Fire_Area").can_work = true;
     }
-    protected override void Free_Self()
+    public override void Free_Self()
     {
         GetNode<Area2D>("Main/Died_Fire_Area").Monitoring = false;
         GetNode<Area2D>("Main/Died_Fire_Area").Monitorable = false;

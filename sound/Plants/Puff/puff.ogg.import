@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/puff.ogg-30c238e909ce136ba08424fb06b13bb6.oggstr"
+
+[deps]
+
+source_file="res://sound/Plants/Puff/puff.ogg"
+dest_files=[ "res://.import/puff.ogg-30c238e909ce136ba08424fb06b13bb6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

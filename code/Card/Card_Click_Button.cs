@@ -74,10 +74,20 @@ public class Card_Click_Button : Node2D
                         }
                         else if (isPlants_zombies)
                         {
-                            var plant_child = (Normal_Plants_Zombies)scene.Instance();
-                            plant_child.player_put = true;
-                            plant_child.card_parent_Button = this;
-                            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            try
+                            {
+                                var plant_child = (Normal_Plants_Zombies)scene.Instance();
+                                plant_child.player_put = true;
+                                plant_child.card_parent_Button = this;
+                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            }
+                            catch (Exception)
+                            {
+                                var plant_child = (Plants_Tomb_Main)scene.Instance();
+                                plant_child.player_put = true;
+                                plant_child.card_parent_Button = this;
+                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            }
                         }
                         else
                         {
