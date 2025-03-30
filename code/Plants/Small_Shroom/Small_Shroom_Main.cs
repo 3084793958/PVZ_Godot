@@ -9,6 +9,7 @@ public class Small_Shroom_Main : Normal_Plants
     [Export] public string Bullets_Path = null;
     protected int dock_small_id = 0;
     protected Vector2 base_pos = Vector2.Zero;
+    private bool has_removed = false;
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
@@ -18,7 +19,7 @@ public class Small_Shroom_Main : Normal_Plants
         base._PhysicsProcess(delta);
         if (has_planted)
         {
-            if (Dock_Area_2D != null)
+            if (Dock_Area_2D != null && !has_removed) 
             {
                 if (Dock_Area_2D.small_number < dock_small_id)
                 {
@@ -26,15 +27,15 @@ public class Small_Shroom_Main : Normal_Plants
                 }
                 if (dock_small_id == 1)
                 {
-                    this.GlobalPosition = Dock_Area_2D.GlobalPosition + new Vector2(0, -15);
+                    this.GlobalPosition = Dock_Area_2D.GlobalPosition + new Vector2(-15, 15);
                 }
                 else if (dock_small_id == 2)
                 {
-                    this.GlobalPosition = Dock_Area_2D.GlobalPosition + new Vector2(15, 15);
+                    this.GlobalPosition = Dock_Area_2D.GlobalPosition + new Vector2(0, -15);
                 }
                 else
                 {
-                    this.GlobalPosition = Dock_Area_2D.GlobalPosition + new Vector2(-15, 15);
+                    this.GlobalPosition = Dock_Area_2D.GlobalPosition + new Vector2(15, 15);
                 }
             }
             if (Zombies_Area_2D_List.Count != 0)
@@ -56,9 +57,9 @@ public class Small_Shroom_Main : Normal_Plants
             {
                 if (!GetNode<AnimationPlayer>("Died").IsPlaying())
                 {
+                    GetNode<AnimationPlayer>("Died").Play("Died");
                     Dock_Area_2D.Normal_Plant_List.Remove(this);
                     Dock_Area_2D.small_number--;//!
-                    GetNode<AnimationPlayer>("Died").Play("Died");
                 }
             }
         }
@@ -127,6 +128,7 @@ public class Small_Shroom_Main : Normal_Plants
     protected override void Plants_Remove_List()
     {
         Dock_Area_2D.Normal_Plant_List.Remove(this);
+        has_removed = true;
         Dock_Area_2D.small_number--;
     }
     protected override void Plants_Init()

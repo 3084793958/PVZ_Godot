@@ -38,6 +38,7 @@ public class Plants_Polevaulter_Zombies_Main : Normal_Plants_Zombies
         base._PhysicsProcess(delta);
         if (has_planted)
         {
+            GetNode<Area2D>("Dock/Area2D").GlobalPosition = new Vector2(GetNode<Area2D>("Main/Main/Zombies_Area").GlobalPosition.x, GetNode<Area2D>("Dock/Area2D").GlobalPosition.y);
             can_Eating = has_lose_pole && !is_jumping;
             Doing_jumping = is_jumping;
             if (health < 340 && !has_lose_Arm)

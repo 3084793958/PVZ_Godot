@@ -39,6 +39,7 @@ public class SunFlower_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        GD.Randomize();
         GetNode<Timer>("Timer").Stop();
         GetNode<AudioStreamPlayer>("Sun").Stream.Set("loop", false);
         base._Ready();

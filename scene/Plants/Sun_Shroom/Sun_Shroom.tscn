@@ -1,0 +1,536 @@
+[gd_scene load_steps=29 format=2]
+
+[ext_resource path="res://image/Plants/Sun_Shroom/SunShroom.png" type="Texture" id=1]
+[ext_resource path="res://code/Plants/Sun_Shroom/Sun_Shroom_Main.cs" type="Script" id=2]
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=3]
+[ext_resource path="res://image/Plants/Sun_Shroom/eye1.png" type="Texture" id=4]
+[ext_resource path="res://sound/Plants/Normal/water.ogg" type="AudioStream" id=5]
+[ext_resource path="res://sound/Plants/Normal/plant2.ogg" type="AudioStream" id=6]
+[ext_resource path="res://sound/Plants/Normal/plant1.ogg" type="AudioStream" id=7]
+[ext_resource path="res://image/Plants/Sun_Shroom/SunShroom_All.png" type="Texture" id=8]
+[ext_resource path="res://image/Plants/Sun_Shroom/eye2.png" type="Texture" id=9]
+[ext_resource path="res://sound/Plants/Normal/throw.ogg" type="AudioStream" id=10]
+[ext_resource path="res://font/zh.otf" type="DynamicFontData" id=11]
+[ext_resource path="res://sound/Zombies/bigchomp.ogg" type="AudioStream" id=12]
+[ext_resource path="res://sound/Plants/Plants_Grow/plantgrow.ogg" type="AudioStream" id=13]
+[ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=15]
+[ext_resource path="res://code/Control_Area_2D/Normal_Plants_Area.cs" type="Script" id=17]
+[ext_resource path="res://image/shadow.png" type="Texture" id=18]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 0.01, 0.01 )
+
+[sub_resource type="DynamicFont" id=16]
+size = 100
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 11 )
+
+[sub_resource type="Animation" id=17]
+resource_name = "Sleep"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("1:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2, -9 ), Vector2( -10, -13 ), Vector2( -11, -18 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("1:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 25.7127, -33.8, 35.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("1:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("2:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1, 1.1, 2 ),
+"transitions": PoolRealArray( 1, 0, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -10, -13 ), Vector2( -11, -18 ), Vector2( -2, -9 ), Vector2( -10, -13 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("2:rect_rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1, 1.1, 2 ),
+"transitions": PoolRealArray( 1, 0, 1, 1 ),
+"update": 0,
+"values": [ -33.8476, 35.0, 25.7, -33.8476 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("2:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1, 1.1, 2 ),
+"transitions": PoolRealArray( 1, 0, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.5 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.5 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "Player1"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.6, 1.4, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -3.0, 3.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("eyes:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6, 1.4, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -3.0, 3.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "Player1"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("eyes/Eye1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.9, 1.1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("eyes/Eye2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9, 1.1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, false ]
+}
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 25, 25 )
+
+[sub_resource type="Animation" id=21]
+resource_name = "Grow"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Grow_Audio:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.01, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("..:Growed")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "Make_Sun"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1.3, 1.3, 1, 1 ), Color( 1.3, 1.3, 1, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Free"
+length = 0.6
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Free_Self"
+} ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Is_Eated"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1.3, 1.3, 1.3, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "Died"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Big_Chmop:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.001 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.01, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "show"
+}, {
+"args": [  ],
+"method": "hide"
+}, {
+"args": [  ],
+"method": "Free_Self"
+} ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "Bug"
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Bug_Doing"
+} ]
+}
+
+[node name="Sun_Shroom" type="Node2D"]
+z_index = 3
+script = ExtResource( 2 )
+
+[node name="Dock" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 0.4, 0.4 )
+rect_pivot_offset = Vector2( 40, 40 )
+
+[node name="Help" type="Node2D" parent="Dock"]
+z_index = 118
+z_as_relative = false
+
+[node name="80" type="Control" parent="Dock/Help"]
+margin_left = -8.0
+margin_top = 1.0
+margin_right = 86.0
+margin_bottom = 81.0
+rect_pivot_offset = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="Dock/Help/80"]
+modulate = Color( 1, 1, 1, 0.588235 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+
+[node name="Area2D" type="Area2D" parent="Dock"]
+position = Vector2( 40, 40 )
+
+[node name="Shape" type="CollisionShape2D" parent="Dock/Area2D"]
+shape = SubResource( 1 )
+
+[node name="Show" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 0.4, 0.4 )
+rect_pivot_offset = Vector2( 40, 40 )
+
+[node name="Help" type="Node2D" parent="Show"]
+z_index = 118
+z_as_relative = false
+
+[node name="80" type="Control" parent="Show/Help"]
+margin_left = -8.0
+margin_top = 1.0
+margin_right = 86.0
+margin_bottom = 81.0
+rect_pivot_offset = Vector2( 40, 40 )
+
+[node name="TextureRect" type="TextureRect" parent="Show/Help/80"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 6
+
+[node name="Main" type="Control" parent="."]
+visible = false
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 40, 40 )
+
+[node name="Shadow" type="Sprite" parent="Main"]
+modulate = Color( 1, 1, 1, 0.588235 )
+position = Vector2( 39.9999, 51 )
+scale = Vector2( 0.04, 0.024 )
+texture = ExtResource( 18 )
+
+[node name="Body" type="Sprite" parent="Main"]
+position = Vector2( 39.634, 40.333 )
+scale = Vector2( 0.064, 0.064 )
+texture = ExtResource( 1 )
+
+[node name="eyes" type="Node2D" parent="Main"]
+position = Vector2( 40, 42 )
+scale = Vector2( 0.028, 0.028 )
+
+[node name="Eye1" type="Sprite" parent="Main/eyes"]
+position = Vector2( -15, 105 )
+texture = ExtResource( 4 )
+
+[node name="Eye2" type="Sprite" parent="Main/eyes"]
+visible = false
+position = Vector2( -10, 105 )
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 9 )
+
+[node name="Sleep" type="Node2D" parent="Main"]
+visible = false
+position = Vector2( 40, 40 )
+scale = Vector2( 2, 2 )
+
+[node name="1" type="Label" parent="Main/Sleep"]
+margin_left = -2.0
+margin_top = -9.0
+margin_right = 60.0
+margin_bottom = 124.0
+rect_rotation = 25.7127
+rect_scale = Vector2( 0.07, 0.07 )
+custom_fonts/font = SubResource( 16 )
+text = "Z"
+
+[node name="2" type="Label" parent="Main/Sleep"]
+modulate = Color( 1, 1, 1, 0.5 )
+margin_left = -10.0
+margin_top = -13.0
+margin_right = 52.0
+margin_bottom = 120.0
+rect_rotation = -33.8476
+rect_scale = Vector2( 0.05, 0.05 )
+custom_fonts/font = SubResource( 16 )
+text = "Z"
+
+[node name="Sleep" type="AnimationPlayer" parent="Main/Sleep"]
+anims/Sleep = SubResource( 17 )
+
+[node name="Player1" type="AnimationPlayer" parent="Main"]
+anims/Player1 = SubResource( 18 )
+
+[node name="Player2" type="AnimationPlayer" parent="Main"]
+anims/Player1 = SubResource( 19 )
+
+[node name="Shovel_Area" type="Area2D" parent="Main"]
+position = Vector2( 40, 40 )
+script = ExtResource( 17 )
+
+[node name="Shape" type="CollisionShape2D" parent="Main/Shovel_Area"]
+shape = SubResource( 6 )
+
+[node name="Grow_Timer" type="Timer" parent="Main"]
+process_mode = 0
+wait_time = 40.0
+one_shot = true
+
+[node name="Grow_Player" type="AnimationPlayer" parent="Main"]
+anims/Grow = SubResource( 21 )
+
+[node name="Grow_Audio" type="AudioStreamPlayer" parent="Main"]
+stream = ExtResource( 13 )
+script = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
+[node name="Sun" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+script = ExtResource( 3 )
+
+[node name="Plant_Sound" type="Node" parent="."]
+
+[node name="Ok" type="Node" parent="Plant_Sound"]
+
+[node name="Plant1" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 7 )
+script = ExtResource( 3 )
+
+[node name="Plant2" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 6 )
+script = ExtResource( 3 )
+
+[node name="Water" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 5 )
+script = ExtResource( 3 )
+
+[node name="Make_Sun" type="AnimationPlayer" parent="."]
+anims/Make_Sun = SubResource( 20 )
+
+[node name="Free_player" type="AnimationPlayer" parent="."]
+anims/Free = SubResource( 7 )
+
+[node name="Is_Eated" type="AnimationPlayer" parent="."]
+anims/Is_Eated = SubResource( 11 )
+
+[node name="Big_Chmop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+script = ExtResource( 3 )
+
+[node name="Died" type="AnimationPlayer" parent="."]
+anims/Died = SubResource( 12 )
+
+[node name="Bug_player" type="AnimationPlayer" parent="."]
+anims/Bug = SubResource( 15 )
+
+[node name="Health" type="Node2D" parent="."]
+visible = false
+modulate = Color( 2, 2, 2, 0.6 )
+z_index = 118
+z_as_relative = false
+
+[node name="Health" type="Label" parent="Health"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -36.0
+margin_top = -67.0
+margin_right = 303.0
+margin_bottom = 66.0
+rect_scale = Vector2( 0.2, 0.2 )
+custom_colors/font_color = Color( 0, 1, 0, 1 )
+custom_fonts/font = ExtResource( 15 )
+text = "HP:300"
+align = 1
+
+[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
+[connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
+[connection signal="area_entered" from="Main/Shovel_Area" to="." method="Area_Entered"]
+[connection signal="area_exited" from="Main/Shovel_Area" to="." method="Area_Exited"]
+[connection signal="timeout" from="Main/Grow_Timer" to="." method="Grow_Timer_out"]
+[connection signal="timeout" from="Timer" to="." method="Sun_Flower_Up"]

@@ -91,9 +91,20 @@ public class Card_Click_Button : Node2D
                         }
                         else
                         {
-                            var plant_child = (Normal_Plants)scene.Instance();
-                            plant_child.card_parent_Button = this;
-                            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            try
+                            {
+                                var plant_child = (Normal_Plants)scene.Instance();
+                                plant_child.player_put = true;
+                                plant_child.card_parent_Button = this;
+                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            }
+                            catch (Exception)
+                            {
+                                var plant_child = (Random_Main)scene.Instance();
+                                plant_child.player_put = true;
+                                plant_child.card_parent_Button = this;
+                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            }
                         }
                     }
                 }

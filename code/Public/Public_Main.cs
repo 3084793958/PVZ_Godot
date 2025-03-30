@@ -177,7 +177,7 @@ static public class Public_Main
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     16,
     "小喷菇",
-    "小喷菇",
+    "国服小喷菇,可叠种",
     "小喷菇",
     GD.Load<Texture>("res://image/Plants/Small_Shroom/Small_Shroom.png"),
     0f,
@@ -186,6 +186,16 @@ static public class Public_Main
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     17,
+    "阳光菇",
+    "夜晚效率更快,可叠种",
+    "夜晚效率更快",
+    GD.Load<Texture>("res://image/Plants/Sun_Shroom/SunShroom_All.png"),
+    0f,
+    10f,
+    new Tuple<int,string>(25,"res://scene/Plants/Sun_Shroom/Sun_Shroom.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    19,
     "莲叶",
     "莲叶",
     "莲叶",
@@ -193,6 +203,16 @@ static public class Public_Main
     0f,
     15f,
     new Tuple<int,string>(25,"res://scene/Plants/Lotus/Lotus.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    20,
+    "随机种植",
+    "随机种植",
+    "随机种植",
+    GD.Load<Texture>("res://image/Plants/Random/Random.png"),
+    0f,
+    1437f,
+    new Tuple<int,string>(25,"res://scene/Plants/Random/Random.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Plants_Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -287,6 +307,16 @@ static public class Public_Main
     0f,
     20f,
     new Tuple<int,string>(2000,"res://scene/Plants/Zombies/Tomb/Plants_Tomb.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    10,
+    "魅惑铁门僵尸",
+    "区区致命伤",
+    "区区致命伤",
+    GD.Load<Texture>("res://image/Plants/Zombies/Screen_Door_Zombies/Plants_Screen_Door_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(125,"res://scene/Plants/Zombies/Screen_Door_Zombies/Plants_Screen_Door_Zombies.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -381,6 +411,16 @@ static public class Public_Main
     0f,
     20f,
     new Tuple<int,string>(2000,"res://scene/Zombies/Tomb/Tomb.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    10,
+    "铁门僵尸",
+    "专防寒冰射手",
+    "铁门僵尸",
+    GD.Load<Texture>("res://image/Zombies/Screen_Door_Zombies/Screen_Door_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(125,"res://scene/Zombies/Screen_Door_Zombies/Screen_Door_Zombies.tscn")
     )
     };
     static public List<string> Zombies_Path_List = new List<string>
@@ -393,7 +433,8 @@ static public class Public_Main
         "res://scene/Zombies/Bucket_Zombies/Bucket_Zombies.tscn",
         "res://scene/Zombies/Polevaulter_Zombies/Polevaulter_Zombies.tscn",
         "res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn",
-        "res://scene/Zombies/Tomb/Tomb.tscn"//9
+        "res://scene/Zombies/Tomb/Tomb.tscn",//9
+        "res://scene/Zombies/Screen_Door_Zombies/Screen_Door_Zombies.tscn"
     };
     static public List<Tuple<string, string, Texture, int>> Level_Mode1 = new List<Tuple<string, string, Texture, int>>
     { 
@@ -427,6 +468,9 @@ static public class Public_Main
         new Tuple<string, string,Texture, int>("第10关:小喷菇之梦","res://level/Mode1/Mode1_10.cfg",
         GD.Load<Texture>("res://image/Plants/Small_Shroom/Small_Shroom.png"),
         2),
+        new Tuple<string, string,Texture, int>("第11关:钢门批发","res://level/Mode1/Mode1_11.cfg",
+        GD.Load<Texture>("res://image/Plants/Sun_Shroom/SunShroom_All.png"),
+        2),
         new Tuple<string, string,Texture, int>("白天草坪(测试专用)","res://level/Mode1/Mode1_demo_Day.cfg",
         GD.Load<Texture>("res://image/Plants/godot/godot.png"),
         1),
@@ -436,6 +480,12 @@ static public class Public_Main
         new Tuple<string, string,Texture, int>("白天后院(测试专用)","res://level/Mode1/Mode1_demo_Day_Pool.cfg",
         GD.Load<Texture>("res://image/Plants/godot/godot.png"),
         3)
+    };
+    static public List<Tuple<string, string, Texture, int>> Level_Mode2 = new List<Tuple<string, string, Texture, int>>
+    {
+        new Tuple<string, string,Texture, int>("随机种植","res://level/Mode2/Mode2_1.cfg",
+        GD.Load<Texture>("res://image/Plants/Random/Random.png"),
+        2)
     };
     static public void Save_Value()
     {
@@ -454,9 +504,93 @@ public class Health_Container
 {
     public int Health { get; set; }
     public bool Is_lock { get; set; }
-    public Health_Container(int health, bool is_lock)
+    public string Info { get; set; }
+    public bool Effect { get; set; }
+    public Health_Container(int health, bool is_lock, string info = "Main", bool effect = false)
     {
         Health = health;
         Is_lock = is_lock;
+        Info = info;
+        Effect = effect;
+    }
+}
+public class Health_List : List<Health_Container>
+{ 
+    public void Update_Health()
+    {
+        for (int i = 0; i < this.Count; i++)
+        {
+            if (this[i].Health < 0)
+            {
+                if (this[i].Is_lock)
+                {
+                    this[i].Health = 0;
+                }
+                else
+                {
+                    if (i + 1 < this.Count)
+                    {
+                        this[i + 1].Health += this[i].Health;
+                        this[i].Health = 0;
+                    }
+                }
+            }
+            if (this[i].Health <= 0 && this.Count != 1)
+            {
+                this.RemoveAt(i);
+                i--;
+            }
+        }
+    }
+    public int Get_Health()
+    {
+        Update_Health();
+        int count_health = 0;
+        for (int i = 0; i < this.Count; i++)
+        {
+            count_health += this[i].Health;
+        }
+        return count_health;
+    }
+    public bool Get_Has_Sound()
+    {
+        Update_Health();
+        bool result = false;
+        for (int i = 0; i < this.Count; i++)
+        {
+            if (this[i].Effect)
+            {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+    public int Get_Can_Through_To_Index()
+    {
+        Update_Health();
+        int result = -1;
+        for (int i = 0; i < this.Count; i++)
+        {
+            if (this[i].Info != "Door")
+            {
+                result = i;
+                break;
+            }
+        }
+        return result;
+    }
+    public bool Get_Can_Ignore_Ice_Bullets()
+    {
+        bool result = false;
+        for (int i = 0; i < this.Count; i++)
+        {
+            if (this[i].Info == "Door")
+            {
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 }

@@ -40,18 +40,15 @@ public class Bucket_Zombies_Main : Normal_Zombies
                 if (!GetNode<AnimationPlayer>("Main/Main/Hat/Hat/Walk").IsPlaying() && GetNode<AnimationPlayer>("Main/Main/Walk").IsPlaying())
                 {
                     GetNode<AnimationPlayer>("Main/Main/Hat/Hat/Walk").Play("Walk");
-                    has_Lose_Hat = false;
                 }
                 else if (!GetNode<AnimationPlayer>("Main/Main/Walk").IsPlaying())
                 {
                     GetNode<AnimationPlayer>("Main/Main/Hat/Hat/Walk").Stop();
-                    has_Lose_Hat = true;
                 }
             }
             else
             {
                 GetNode<AnimationPlayer>("Main/Main/Hat/Hat/Walk").Stop();
-                has_Lose_Hat = true;
             }
             if (health < 180 && !has_lose_Arm)
             {
@@ -75,9 +72,8 @@ public class Bucket_Zombies_Main : Normal_Zombies
     }
     public override void _Ready()
     {
-        has_Bullets_Sound = true;
         health_list.Clear();
-        health_list.Add(new Health_Container(1100, false));//铁桶
+        health_list.Add(new Health_Container(1100, false, "Hat", true));//铁桶
         health_list.Add(new Health_Container(270, false));
         base._Ready();
     }

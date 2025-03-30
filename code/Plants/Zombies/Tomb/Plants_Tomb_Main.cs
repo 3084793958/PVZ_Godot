@@ -28,7 +28,8 @@ public class Plants_Tomb_Main : Node2D
         "res://scene/Plants/Zombies/Ignore_Zombies/Plants_Ignore_Cone_Zombies.tscn",//5
         "res://scene/Plants/Zombies/Bucket_Zombies/Plants_Bucket_Zombies.tscn",
         "res://scene/Plants/Zombies/Polevaulter_Zombies/Plants_Polevaulter_Zombies.tscn",
-        "res://scene/Plants/Zombies/Darts_Polevaulter_Zombies/Plants_Darts_Polevaulter_Zombies.tscn"
+        "res://scene/Plants/Zombies/Darts_Polevaulter_Zombies/Plants_Darts_Polevaulter_Zombies.tscn",
+        "res://scene/Plants/Zombies/Screen_Door_Zombies/Plants_Screen_Door_Zombies.tscn"
     };
     protected List<Texture> Tomb_Texture_List = new List<Texture>
     {
@@ -63,7 +64,7 @@ public class Plants_Tomb_Main : Node2D
         Position = new Vector2(-1437, -1437);
         GetNode<Area2D>("Dock/Area2D").PauseMode = PauseModeEnum.Process;
         AddChild(Android_Timer);
-        Android_Timer.WaitTime = 0.5f;
+        Android_Timer.WaitTime = 1f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
@@ -297,7 +298,7 @@ public class Plants_Tomb_Main : Node2D
             }
             else
             {
-                GetNode<Label>("Health/Health").Text = "PH:" + health.ToString();
+                GetNode<Label>("Health/Health").Text = "HP:" + health.ToString();
                 GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(this.GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, this.GlobalPosition.y - 40 - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
                 GetNode<Node2D>("Health").ZIndex = 116;
                 GetNode<Node2D>("Health").Show();

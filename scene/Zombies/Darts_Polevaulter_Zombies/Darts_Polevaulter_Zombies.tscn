@@ -339,6 +339,18 @@ tracks/23/keys = {
 "update": 0,
 "values": [ Vector2( 0, 21.333 ), Vector2( -37.333, 21.333 ), Vector2( -450.667, 21.333 ) ]
 }
+tracks/24/type = "value"
+tracks/24/path = NodePath("Ice_Lock:position")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/keys = {
+"times": PoolRealArray( 0, 1.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 14.6667, 15.9999 ), Vector2( -321.333, 16 ) ]
+}
 
 [sub_resource type="Animation" id=18]
 resource_name = "Walk"

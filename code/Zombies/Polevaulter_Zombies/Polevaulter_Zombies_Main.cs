@@ -41,6 +41,7 @@ public class Polevaulter_Zombies_Main : Normal_Zombies
         }
         if (has_planted)
         {
+            GetNode<Area2D>("Dock/Area2D").GlobalPosition = new Vector2(GetNode<Area2D>("Main/Main/Zombies_Area").GlobalPosition.x, GetNode<Area2D>("Dock/Area2D").GlobalPosition.y);
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").Should_Ignore = is_jumping;
             can_Eating = has_lose_pole && !is_jumping;
             Doing_jumping = is_jumping;
@@ -85,7 +86,7 @@ public class Polevaulter_Zombies_Main : Normal_Zombies
                     }
                     if (can_work)
                     {
-                        if (!GetNode<AnimationPlayer>("Main/Main/Up").IsPlaying() && !has_lose_Head)
+                        if (!GetNode<AnimationPlayer>("Main/Main/Up").IsPlaying() && !has_lose_Head && !is_Lock_Ice) 
                         {
                             Walk_Mode(false);
                             GetNode<AnimationPlayer>("Main/Main/Up").Play("Up");

@@ -7,6 +7,7 @@ public class In_Game_Main : Node2D
     //Clone_List
     static public List<Tuple<string, Vector2,int>> Zombies_Clone_Request_List = new List<Tuple<string, Vector2,int>>();
     static public List<Tuple<string, Vector2, int>> Plant_Zombies_Clone_Request_List = new List<Tuple<string, Vector2, int>>();
+    static public List<Tuple<string, Vector2, int>> Plant_Clone_Request_List = new List<Tuple<string, Vector2, int>>();
     static public List<Tuple<int, Vector2, float, bool>> Sun_Clone_Request_List = new List<Tuple<int, Vector2, float, bool>>();
     static public List<Tuple<string, Vector2, float>> Plants_Bullets_Clone_Request_List = new List<Tuple<string, Vector2, float>>();
     //Clone_List
@@ -31,12 +32,18 @@ public class In_Game_Main : Node2D
     static public bool Belt_Card = false;//传送带
     static public int Belt_Number = 0;
     static public List<int> Belt_List = new List<int>();
+    static public int Tomb_Lock_To_Number = -1;
+    static public int from_type = 1;
     public override async void _Ready()
     {
         GD.Randomize();
         Zombies_Number = 0;
         Public_Main.now_card_number = 0;
         Belt_Number = 0;
+        Has_Made_Trophy = false;
+        Lost_Brain = false;
+        has_Lost_Brain = false;
+        Ended = false;
         is_playing = false;
         var Click = GetNode<AudioStreamPlayer>("button_Click");
         GetNode<AudioStreamPlayer>("Cancel").Stream.Set("loop", false);
@@ -111,6 +118,7 @@ public class In_Game_Main : Node2D
                             }
                         }
                         int Level_Mode = (int)file2.GetValue("Level_Mode", "mode", -1);
+                        Tomb_Lock_To_Number = (int)file2.GetValue("Tomb", "LockTo", -1);
                         if (Level_Mode == -1)
                         {
                             GD.PushError("错误:关卡文件错误!Level_Mode=-1");
@@ -638,10 +646,10 @@ public class In_Game_Main : Node2D
                     var scene = GD.Load<PackedScene>("res://scene/Plants/SunFlower/Sun/Sun.tscn");
                     var sun_child = (Sun_Main)scene.Instance();
                     sun_child.size = Sun_Clone_Request_List[0].Item3;
-                    sun_child.sun_value = Sun_Clone_Request_List[0].Item1;
-                    sun_child.Position = Sun_Clone_Request_List[0].Item2;
                     sun_child.is_from_plant = Sun_Clone_Request_List[0].Item4;
+                    sun_child.sun_value = Sun_Clone_Request_List[0].Item1;
                     GetNode<Control>("/root/In_Game/Object").AddChild(sun_child);
+                    sun_child.GlobalPosition = Sun_Clone_Request_List[0].Item2;
                     Sun_Clone_Request_List.RemoveAt(0);
                     Clone_Number++;
                     Must_Quit = false;
@@ -650,9 +658,9 @@ public class In_Game_Main : Node2D
                 {
                     var scene = GD.Load<PackedScene>(Plants_Bullets_Clone_Request_List[0].Item1);
                     var Bullets_child = (Normal_Plants_Bullets)scene.Instance();
-                    Bullets_child.GlobalPosition = Plants_Bullets_Clone_Request_List[0].Item2;
                     Bullets_child.speed_y = Plants_Bullets_Clone_Request_List[0].Item3;
                     GetNode<Control>("/root/In_Game/Object").AddChild(Bullets_child);
+                    Bullets_child.GlobalPosition = Plants_Bullets_Clone_Request_List[0].Item2;
                     Plants_Bullets_Clone_Request_List.RemoveAt(0);
                     Clone_Number++;
                     Must_Quit = false;
@@ -664,7 +672,7 @@ public class In_Game_Main : Node2D
                     {
                         var plant_child = (Tomb_Main)scene.Instance();
                         plant_child.ZIndex = Zombies_Clone_Request_List[0].Item3 - 4;
-                        plant_child.put_position = new Vector2(710 - 80 * GD.Randi() % 3, Zombies_Clone_Request_List[0].Item2.y);
+                        plant_child.put_position = new Vector2(710 - 80 * (GD.Randi() % 3), Zombies_Clone_Request_List[0].Item2.y);
                         plant_child.player_put = false;
                         GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
                     }
@@ -683,13 +691,36 @@ public class In_Game_Main : Node2D
                 if (Plant_Zombies_Clone_Request_List.Count != 0)
                 {
                     var scene = GD.Load<PackedScene>(Plant_Zombies_Clone_Request_List[0].Item1);
-                    var plant_child = (Normal_Plants_Zombies)scene.Instance();
-                    plant_child.ZIndex = Plant_Zombies_Clone_Request_List[0].Item3;
-                    plant_child.put_position = Plant_Zombies_Clone_Request_List[0].Item2;
+                    if (Plant_Zombies_Clone_Request_List[0].Item1 == Public_Main.Plants_Zombies_list[8].Rest.Item2)
+                    {
+                        var plant_child = (Plants_Tomb_Main)scene.Instance();
+                        plant_child.ZIndex = Plant_Zombies_Clone_Request_List[0].Item3 - 4;
+                        plant_child.put_position = Plant_Zombies_Clone_Request_List[0].Item2;
+                        plant_child.player_put = false;
+                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                    }
+                    else
+                    {
+                        var plant_child = (Normal_Plants_Zombies)scene.Instance();
+                        plant_child.ZIndex = Plant_Zombies_Clone_Request_List[0].Item3;
+                        plant_child.put_position = Plant_Zombies_Clone_Request_List[0].Item2;
+                        plant_child.player_put = false;
+                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                    }
+                    Clone_Number++;
+                    Plant_Zombies_Clone_Request_List.RemoveAt(0);
+                    Must_Quit = false;
+                }
+                if (Plant_Clone_Request_List.Count != 0)
+                {
+                    var scene = GD.Load<PackedScene>(Plant_Clone_Request_List[0].Item1);
+                    var plant_child = (Normal_Plants)scene.Instance();
+                    plant_child.ZIndex = Plant_Clone_Request_List[0].Item3;
+                    plant_child.put_position = Plant_Clone_Request_List[0].Item2;
                     plant_child.player_put = false;
                     GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
                     Clone_Number++;
-                    Plant_Zombies_Clone_Request_List.RemoveAt(0);
+                    Plant_Clone_Request_List.RemoveAt(0);
                     Must_Quit = false;
                 }
                 if (Must_Quit)
@@ -981,6 +1012,10 @@ public class In_Game_Main : Node2D
     {
         Plant_Zombies_Clone_Request_List.Add(new Tuple<string, Vector2, int>(Clone_String, pos, Z_index));
     }
+    static public void Plants_Clone_Request(string Clone_String, Vector2 pos, int Z_index)
+    {
+        Plant_Clone_Request_List.Add(new Tuple<string, Vector2, int>(Clone_String, pos, Z_index));
+    }
     static public void Sun_Clone_Request(int Value, Vector2 pos, float size, bool from_Plants)
     {
         Sun_Clone_Request_List.Add(new Tuple<int, Vector2, float, bool>(Value, pos, size, from_Plants));
@@ -995,8 +1030,6 @@ public class In_Game_Main : Node2D
         {
             Wave_Timer_Out();
             GetNode<Timer>("Wave_Timer").Stop();
-            var Click = GetNode<AudioStreamPlayer>("/root/In_Game/button_Click");
-            Click.Play();
         }
     }
     static public async void Game_Start_Effect(Node node)

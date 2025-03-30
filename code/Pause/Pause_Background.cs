@@ -20,6 +20,10 @@ public class Pause_Background : TextureRect
     }
     public override void _Process(float delta)
     {
+        if (!GetTree().Paused)
+        {
+            Press_Left_Mouse = false;
+        }
         if (Press_Left_Mouse)
         {
             var Pause_main = GetNode<Node2D>("..");

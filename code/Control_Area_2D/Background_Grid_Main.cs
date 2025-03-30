@@ -23,7 +23,7 @@ public class Background_Grid_Main : Control_Area_2D
         bool result = true;
         for (int i = 0; i < Normal_Plant_List.Count; i++)
         {
-            if (!(Normal_Plant_List[i] is Small_Shroom_Main)) 
+            if (!(Normal_Plant_List[i] is Small_Shroom_Main|| Normal_Plant_List[i] is Sun_Shroom_Main)) 
             {
                 result = false;
                 break;

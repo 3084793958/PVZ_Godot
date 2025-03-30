@@ -54,7 +54,7 @@ public class Lotus_Main : Normal_Plants
     }
     protected override void Plants_Init()
     {
-        if (Dock_Area_2D.type == 2)
+        if (Dock_Area_2D != null && Dock_Area_2D.type == 2) 
         {
             GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Play();
             GetNode<AnimationPlayer>("Main/Splash_Player").Play("Splash");

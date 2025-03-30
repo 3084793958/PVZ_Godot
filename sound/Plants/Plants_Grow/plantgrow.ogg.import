@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/plantgrow.ogg-3373a6b12ea1c3682de2ae533161d0b6.oggstr"
+
+[deps]
+
+source_file="res://sound/Plants/Plants_Grow/plantgrow.ogg"
+dest_files=[ "res://.import/plantgrow.ogg-3373a6b12ea1c3682de2ae533161d0b6.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

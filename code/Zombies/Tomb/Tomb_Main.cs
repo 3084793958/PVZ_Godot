@@ -24,6 +24,7 @@ public class Tomb_Main : Node2D
     protected List<Normal_Boom_Area> Boom_Area_2D_List = new List<Normal_Boom_Area>();
     protected List<C2H5OH_Died_Fire_Area> C2H5OH_Fire_Area_2D_List = new List<C2H5OH_Died_Fire_Area>();
     protected int hurt_time = 0;
+    public int lock_to_number = -1;
     protected List<string> Clone_List = new List<string> 
     {
         "res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn",
@@ -33,7 +34,8 @@ public class Tomb_Main : Node2D
         "res://scene/Zombies/Ignore_Cone_Zombies/Ignore_Cone_Zombies.tscn",//5
         "res://scene/Zombies/Bucket_Zombies/Bucket_Zombies.tscn",
         "res://scene/Zombies/Polevaulter_Zombies/Polevaulter_Zombies.tscn",
-        "res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn"
+        "res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn",
+        "res://scene/Zombies/Screen_Door_Zombies/Screen_Door_Zombies.tscn"
     };
     protected List<Texture> Tomb_Texture_List = new List<Texture>
     {
@@ -61,6 +63,7 @@ public class Tomb_Main : Node2D
     public override void _Ready()
     {
         GD.Randomize();
+        lock_to_number = In_Game_Main.Tomb_Lock_To_Number;
         var tomb_Texture = Tomb_Texture_List[(int)(GD.Randi() % Tomb_Texture_List.Count)];
         GetNode<TextureRect>("Dock/Help/Texture").Texture = tomb_Texture;
         GetNode<TextureRect>("Show/Help/Texture").Texture = tomb_Texture;
@@ -68,7 +71,7 @@ public class Tomb_Main : Node2D
         Position = new Vector2(-1437, -1437);
         GetNode<Area2D>("Dock/Area2D").PauseMode = PauseModeEnum.Process;
         AddChild(Android_Timer);
-        Android_Timer.WaitTime = 0.5f;
+        Android_Timer.WaitTime = 1f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
@@ -80,7 +83,7 @@ public class Tomb_Main : Node2D
             GetNode<Control>("Dock").Hide();
             GetNode<Control>("Show").Hide();
             GetNode<Control>("Main").Show();
-            Position = put_position;
+            GlobalPosition = put_position;
         }
     }
     public override void _PhysicsProcess(float delta)
@@ -286,7 +289,7 @@ public class Tomb_Main : Node2D
             }
             else
             {
-                GetNode<Label>("Health/Health").Text = "PH:" + health.ToString();
+                GetNode<Label>("Health/Health").Text = "HP:" + health.ToString();
                 GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(this.GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, this.GlobalPosition.y - 40 - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
                 GetNode<Node2D>("Health").ZIndex = 116;
                 GetNode<Node2D>("Health").Show();
@@ -370,6 +373,17 @@ public class Tomb_Main : Node2D
                         health -= Bullets_Area_2D_List[i].hurt;
                     }
                 }
+                else if (Bullets_Area_2D_List[i].Sec_Info == "Small_Shroom")
+                {
+                    if (Bullets_Area_2D_List[i].hurt_type == 2 || (Bullets_Area_2D_List[i].Choose_Tomb_Area == GetNode<Zombies_Tomb_Area2D>("Main/Tomb_Area2D") && Bullets_Area_2D_List[i].on_Tomb))
+                    {
+                        if (hurt_time < 20)
+                        {
+                            hurt_time += 15;
+                        }
+                        health -= Bullets_Area_2D_List[i].hurt;
+                    }
+                }
                 Bullets_Area_2D_List.RemoveAt(i);
                 i--;
             }
@@ -417,7 +431,14 @@ public class Tomb_Main : Node2D
         {
             Clone_Time++;
             GetNode<AnimationPlayer>("Main/Player/Out_Land").Play("Out_Land");
-            In_Game_Main.Zombies_Clone_Request(Clone_List[(int)(GD.Randi() % Clone_List.Count)], this.Position, this.ZIndex - normal_ZIndex + 7);
+            if (lock_to_number <= 0)
+            {
+                In_Game_Main.Zombies_Clone_Request(Clone_List[(int)(GD.Randi() % Clone_List.Count)], this.Position, this.ZIndex - normal_ZIndex + 7);
+            }
+            else
+            {
+                In_Game_Main.Zombies_Clone_Request(Clone_List[(int)(GD.Randi() % lock_to_number)], this.Position, this.ZIndex - normal_ZIndex + 7);
+            }
         }
     }
     protected void Plants_Entered(Area2D area_node)

@@ -61,7 +61,7 @@ public class Normal_Plants_Zombies : Node2D
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;//C#核心技术
         AddChild(Android_Timer);
-        Android_Timer.WaitTime = 0.5f;
+        Android_Timer.WaitTime = 1f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
@@ -118,13 +118,13 @@ public class Normal_Plants_Zombies : Node2D
                     i--;
                     continue;
                 }
-                if (Math.Abs(GlobalPosition.x - Dock_Area_2D_List[i].GlobalPosition.x) >= 40 || Math.Abs(GlobalPosition.y - Dock_Area_2D_List[i].GlobalPosition.y) >= 40)
+                if (Math.Abs(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - Dock_Area_2D_List[i].GlobalPosition.x) >= 40 || Math.Abs(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.y - Dock_Area_2D_List[i].GlobalPosition.y) >= 40)
                 {
                     continue;
                 }
                 if (Dock_Area_2D != null)
                 {
-                    if (Math.Abs(GlobalPosition.x - Dock_Area_2D.GlobalPosition.x) >= 40 || Math.Abs(GlobalPosition.y - Dock_Area_2D.GlobalPosition.y) >= 40)
+                    if (Math.Abs(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - Dock_Area_2D.GlobalPosition.x) >= 40 || Math.Abs(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.y - Dock_Area_2D.GlobalPosition.y) >= 40)
                     {
                         Dock_Area_2D = Dock_Area_2D_List[i];
                     }
@@ -173,6 +173,11 @@ public class Normal_Plants_Zombies : Node2D
                 }
             }
             count_health += health_list[i].Health;
+            if (health_list[i].Health <= 0 && health_list.Count != 1)
+            {
+                health_list.RemoveAt(i);
+                i--;
+            }
         }
         health = count_health;
         if (!has_planted)
@@ -344,6 +349,11 @@ public class Normal_Plants_Zombies : Node2D
             if (!in_water && !GetNode<AnimationPlayer>("Out_Water").IsPlaying() && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && now_in_water)
             {
                 GetNode<AnimationPlayer>("Out_Water").Play("Water");
+                now_in_water = false;
+            }
+            if (!GetNode<Control>("Main").RectClipContent && now_in_water && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !GetNode<AnimationPlayer>("Out_Water").IsPlaying())
+            {
+                in_water = false;
                 now_in_water = false;
             }
             if (Zombies_Area_2D_List.Count == 0)

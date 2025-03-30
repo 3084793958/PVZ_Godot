@@ -115,12 +115,12 @@ public class Card_Main : Control
                 }
             }
         }
-        if (Seed_Pos==-1)
+        if (Seed_Pos == -1) 
         {
             Card_enabled = false;
             var Main_Texture = GetNode<Control>("Main/Main/Texture");
             Main_Texture.Hide();
-            var Main_Button = GetNode<Button>("Main/Main/Click_Button");
+            var Main_Button = GetNode<Card_Click_Button>("Main/Main/Click_Button");
             Main_Button.Hide();
             var Shadow_Main_Texture = GetNode<Control>("Shadow/Texture");
             Shadow_Main_Texture.Hide();

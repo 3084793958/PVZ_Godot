@@ -7,7 +7,7 @@ public class Button_Back : Button
     {
         var Click = GetNode<AudioStreamPlayer>("/root/Mode1/button_Click");
         Click.Play();
-        await ToSignal(Click, "finished");
+        await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
         GetTree().ChangeScene("res://scene/Login/Login.tscn");
     }
 }

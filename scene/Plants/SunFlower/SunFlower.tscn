@@ -448,6 +448,7 @@ autostart = true
 
 [node name="Sun" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 19 )
+script = ExtResource( 3 )
 
 [node name="Make_Sun" type="AnimationPlayer" parent="."]
 anims/Make_Sun = SubResource( 8 )

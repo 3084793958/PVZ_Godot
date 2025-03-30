@@ -14,6 +14,8 @@ public class Normal_Plants : Node2D
     //define
     protected Timer Android_Timer = new Timer();
     protected bool Is_Double_Click = false;
+    public Vector2 put_position = Vector2.Zero;//In_Game_Main使用
+    public bool player_put = true;//In_Game_Main使用
     [Export] protected Color hover_color = new Color(1.3f, 1.3f, 1.3f, 1f);
     [Export] protected Color normal_color = new Color(1f, 1f, 1f, 1f);
     public Card_Click_Button card_parent_Button = null;//Card使用
@@ -61,13 +63,23 @@ public class Normal_Plants : Node2D
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;//C#核心技术
         this.AddChild(Android_Timer);
-        Android_Timer.WaitTime = 0.3f;
+        Android_Timer.WaitTime = 1f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Big_Chmop").Stream.Set("loop", false);
+        if (!player_put)
+        {
+            has_planted = true;
+            GetNode<Control>("Dock").Hide();
+            GetNode<Control>("Show").Hide();
+            GetNode<Control>("Main").Show();
+            Position = put_position;
+            GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Play();
+            Plants_Init();
+        }
     }
     public override void _PhysicsProcess(float delta)
     {
@@ -260,7 +272,7 @@ public class Normal_Plants : Node2D
             }
             else
             {
-                GetNode<Label>("Health/Health").Text = "PH:" + health.ToString();
+                GetNode<Label>("Health/Health").Text = "HP:" + health.ToString();
                 GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(this.GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, this.GlobalPosition.y - 40 - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
                 GetNode<Node2D>("Health").ZIndex = 116;
                 GetNode<Node2D>("Health").Show();
