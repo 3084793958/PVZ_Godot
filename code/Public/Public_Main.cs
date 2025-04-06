@@ -195,7 +195,17 @@ static public class Public_Main
     new Tuple<int,string>(25,"res://scene/Plants/Sun_Shroom/Sun_Shroom.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
-    19,
+    18,
+    "氢气",
+    "验纯!",
+    "氢气",
+    GD.Load<Texture>("res://image/Plants/H2/H2.png"),
+    0f,
+    25f,
+    new Tuple<int,string>(25,"res://scene/Plants/H2/H2.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    20,
     "莲叶",
     "莲叶",
     "莲叶",
@@ -203,16 +213,19 @@ static public class Public_Main
     0f,
     15f,
     new Tuple<int,string>(25,"res://scene/Plants/Lotus/Lotus.tscn")
-    ),
+    )
+    };
+    static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Spec_Plants_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
+    {
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
-    20,
+    1,
     "随机种植",
     "随机种植",
     "随机种植",
     GD.Load<Texture>("res://image/Plants/Random/Random.png"),
     0f,
     1437f,
-    new Tuple<int,string>(25,"res://scene/Plants/Random/Random.tscn")
+    new Tuple<int,string>(100,"res://scene/Plants/Random/Random.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Plants_Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -317,6 +330,26 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(125,"res://scene/Plants/Zombies/Screen_Door_Zombies/Plants_Screen_Door_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    11,
+    "魅惑火炬僵尸",
+    "移动酒精灯",
+    "(O^<)",
+    GD.Load<Texture>("res://image/Plants/Zombies/Fire_Zombies/Fire_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(150,"res://scene/Plants/Zombies/Fire_Zombies/Plants_Fire_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    12,
+    "我方氢气战神",
+    "都是氢气战神",
+    "H2+O2",
+    GD.Load<Texture>("res://image/Plants/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(150,"res://scene/Plants/Zombies/H2_maker_Zombies/Plants_H2_maker_Zombies.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -421,6 +454,26 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(125,"res://scene/Zombies/Screen_Door_Zombies/Screen_Door_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    11,
+    "火炬僵尸",
+    "防寒冰",
+    "(O^<)",
+    GD.Load<Texture>("res://image/Zombies/Fire_Zombies/Fire_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(150,"res://scene/Zombies/Fire_Zombies/Fire_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    12,
+    "氢气战神",
+    "致敬我班氢气战神",
+    "H2+O2",
+    GD.Load<Texture>("res://image/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(150,"res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn")
     )
     };
     static public List<string> Zombies_Path_List = new List<string>
@@ -434,7 +487,9 @@ static public class Public_Main
         "res://scene/Zombies/Polevaulter_Zombies/Polevaulter_Zombies.tscn",
         "res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn",
         "res://scene/Zombies/Tomb/Tomb.tscn",//9
-        "res://scene/Zombies/Screen_Door_Zombies/Screen_Door_Zombies.tscn"
+        "res://scene/Zombies/Screen_Door_Zombies/Screen_Door_Zombies.tscn",//10
+        "res://scene/Zombies/Fire_Zombies/Fire_Zombies.tscn",
+        "res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn"
     };
     static public List<Tuple<string, string, Texture, int>> Level_Mode1 = new List<Tuple<string, string, Texture, int>>
     { 

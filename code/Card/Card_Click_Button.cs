@@ -100,7 +100,7 @@ public class Card_Click_Button : Node2D
                             }
                             catch (Exception)
                             {
-                                var plant_child = (Random_Main)scene.Instance();
+                                var plant_child = (Limited_Plants)scene.Instance();
                                 plant_child.player_put = true;
                                 plant_child.card_parent_Button = this;
                                 GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);

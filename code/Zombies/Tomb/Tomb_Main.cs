@@ -25,6 +25,7 @@ public class Tomb_Main : Node2D
     protected List<C2H5OH_Died_Fire_Area> C2H5OH_Fire_Area_2D_List = new List<C2H5OH_Died_Fire_Area>();
     protected int hurt_time = 0;
     public int lock_to_number = -1;
+    protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
     protected List<string> Clone_List = new List<string> 
     {
         "res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn",
@@ -35,7 +36,9 @@ public class Tomb_Main : Node2D
         "res://scene/Zombies/Bucket_Zombies/Bucket_Zombies.tscn",
         "res://scene/Zombies/Polevaulter_Zombies/Polevaulter_Zombies.tscn",
         "res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn",
-        "res://scene/Zombies/Screen_Door_Zombies/Screen_Door_Zombies.tscn"
+        "res://scene/Zombies/Screen_Door_Zombies/Screen_Door_Zombies.tscn",
+        "res://scene/Zombies/Fire_Zombies/Fire_Zombies.tscn",
+        "res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn"
     };
     protected List<Texture> Tomb_Texture_List = new List<Texture>
     {
@@ -92,7 +95,8 @@ public class Tomb_Main : Node2D
         {
             return;
         }
-        if (Public_Main.for_Android && Input.IsActionJustReleased("Left_Mouse"))
+        Android_Timer.OneShot = Public_Main.for_Android;
+        if (Input.IsActionJustReleased("Left_Mouse"))
         {
             if (Android_Timer.IsStopped())
             {
@@ -198,8 +202,9 @@ public class Tomb_Main : Node2D
                     }
                     this.Free();
                 }
-                if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
+                if (Is_Double_Click) 
                 {
+                    Is_Double_Click = false;
                     int this_sun = 0;
                     if (Tmp_Card_Used)
                     {
@@ -294,7 +299,7 @@ public class Tomb_Main : Node2D
                 GetNode<Node2D>("Health").ZIndex = 116;
                 GetNode<Node2D>("Health").Show();
             }
-            if ((Clone_Time > 20 || health < 0) && !GetNode<AnimationPlayer>("Main/Free_Self").IsPlaying())
+            if ((Clone_Time > 20 || health <= 0) && !GetNode<AnimationPlayer>("Main/Free_Self").IsPlaying())
             {
                 GetNode<AnimationPlayer>("Main/Free_Self").Play("Free");
             }
@@ -399,6 +404,15 @@ public class Tomb_Main : Node2D
             {
                 this.Modulate = hurt_color;
             }
+            for (int i = 0; i < All_Boom_Area_2D_List.Count; i++)
+            {
+                if (All_Boom_Area_2D_List[i].can_do && !All_Boom_Area_2D_List[i].end_hurt)
+                {
+                    health -= All_Boom_Area_2D_List[i].hurt;
+                    All_Boom_Area_2D_List.RemoveAt(i);
+                    i--;
+                }
+            }
         }
     }
     protected void Dock_Entered(Area2D area_node)
@@ -464,6 +478,10 @@ public class Tomb_Main : Node2D
         {
             Shining_Area_2D_List.Add((Mg_Shining_Area)area2D);
         }
+        else if (Type_string != null && Type_string == "All_Boom")
+        {
+            All_Boom_Area_2D_List.Add((All_Boom_Area)area2D);
+        }
     }
     protected void Plants_Exited(Area2D area_node)
     {
@@ -487,6 +505,10 @@ public class Tomb_Main : Node2D
         else if (Type_string != null && Type_string == "Mg_Shining")
         {
             Shining_Area_2D_List.Remove((Mg_Shining_Area)area2D);
+        }
+        else if (Type_string != null && Type_string == "All_Boom")
+        {
+            All_Boom_Area_2D_List.Remove((All_Boom_Area)area2D);
         }
     }
     public async void Free_Self()

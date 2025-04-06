@@ -21,10 +21,6 @@ public class Small_Shroom_Main : Normal_Plants
         {
             if (Dock_Area_2D != null && !has_removed) 
             {
-                if (Dock_Area_2D.small_number < dock_small_id)
-                {
-                    dock_small_id--;
-                }
                 if (dock_small_id == 1)
                 {
                     this.GlobalPosition = Dock_Area_2D.GlobalPosition + new Vector2(-15, 15);
@@ -33,9 +29,13 @@ public class Small_Shroom_Main : Normal_Plants
                 {
                     this.GlobalPosition = Dock_Area_2D.GlobalPosition + new Vector2(0, -15);
                 }
-                else
+                else if (dock_small_id == 3)
                 {
                     this.GlobalPosition = Dock_Area_2D.GlobalPosition + new Vector2(15, 15);
+                }
+                else
+                {
+                    this.GlobalPosition = Dock_Area_2D.GlobalPosition;
                 }
             }
             if (Zombies_Area_2D_List.Count != 0)
@@ -58,8 +58,7 @@ public class Small_Shroom_Main : Normal_Plants
                 if (!GetNode<AnimationPlayer>("Died").IsPlaying())
                 {
                     GetNode<AnimationPlayer>("Died").Play("Died");
-                    Dock_Area_2D.Normal_Plant_List.Remove(this);
-                    Dock_Area_2D.small_number--;//!
+                    Plants_Remove_List();
                 }
             }
         }
@@ -85,7 +84,7 @@ public class Small_Shroom_Main : Normal_Plants
                 }
                 if (!just_for_MG)
                 {
-                    if (has_planted && Type_string != null && Type_string == "Shovel"&& Dock_Area_2D.small_number == dock_small_id)
+                    if (has_planted && Type_string != null && Type_string == "Shovel" && (Dock_Area_2D.Empty_Small_Pos() == dock_small_id || (Dock_Area_2D.Empty_Small_Pos() == -1 && dock_small_id >= 3))) 
                     {
                         Shovel_Area = (Shovel_Area2D)area2D;
                     }
@@ -105,6 +104,10 @@ public class Small_Shroom_Main : Normal_Plants
                         }
                     }
                 }
+                else if (Type_string != null && Type_string == "All_Boom")
+                {
+                    All_Boom_Area_2D_List.Add((All_Boom_Area)area2D);
+                }
             }
         }
         catch (Exception ex)
@@ -123,13 +126,19 @@ public class Small_Shroom_Main : Normal_Plants
     protected override void Plants_Add_List()
     {
         Dock_Area_2D.Normal_Plant_List.Add(this);
-        Dock_Area_2D.small_number++;
+        if (dock_small_id > 0)
+        {
+            Dock_Area_2D.Small_Plants_List[dock_small_id - 1] = true;
+        }
     }
     protected override void Plants_Remove_List()
     {
         Dock_Area_2D.Normal_Plant_List.Remove(this);
         has_removed = true;
-        Dock_Area_2D.small_number--;
+        if (dock_small_id > 0)
+        {
+            Dock_Area_2D.Small_Plants_List[dock_small_id - 1] = false;
+        }
     }
     protected override void Plants_Init()
     {
@@ -154,17 +163,9 @@ public class Small_Shroom_Main : Normal_Plants
     }
     protected override bool Allow_Plants()
     {
-        dock_small_id = Dock_Area_2D.small_number + 1;
         base_pos = Dock_Area_2D.GlobalPosition;
-        if (dock_small_id > 3)
-        {
-            dock_small_id = 3;
-        }
-        else if (dock_small_id < 1)
-        {
-            dock_small_id = 1;
-        }
-        return ((In_Game_Main.Sun_Number >= this_sun && (Dock_Area_2D.Normal_Plant_List.Count == 0 || (Dock_Area_2D.small_number < 3 && Dock_Area_2D.Is_All_Small_in_normal())) && Dock_Area_2D.now_type[Dock_Area_2D.now_type.Count - 1] == 1) || Public_Main.debuging) && on_lock_grid;
+        dock_small_id = Dock_Area_2D.Empty_Small_Pos() + 1;
+        return (In_Game_Main.Sun_Number >= this_sun && ((Dock_Area_2D.Normal_Plant_List.Count == 0 || (dock_small_id > 0 && Dock_Area_2D.Is_All_Small_in_normal())) && Dock_Area_2D.now_type[Dock_Area_2D.now_type.Count - 1] == 1) || Public_Main.debuging) && on_lock_grid;
     }
     public void Bullets_Way_On(Area2D area_node)
     {

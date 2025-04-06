@@ -4,6 +4,7 @@ using System;
 public class H2SO4_Main : Normal_Plants
 {
     public bool on_Mg = false;
+    [Export] public bool has_open = false;
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
@@ -19,8 +20,16 @@ public class H2SO4_Main : Normal_Plants
                 {
                     Is_Double_Click = false;
                     GetNode<H2SO4_Area2D>("Main/H2SO4_Area").has_become = true;
+                    has_open = true;
                     GetNode<AnimationPlayer>("Open").Play("Open");
+                    In_Game_Main.Plants_Clone_Request("res://scene/Plants/H2/H2.tscn", this.GlobalPosition, this.ZIndex - this.normal_ZIndex + 5);
                 }
+            }
+            if (!GetNode<AnimationPlayer>("Open").IsPlaying() && !has_open && GetNode<H2SO4_Area2D>("Main/H2SO4_Area").has_become) 
+            {
+                has_open = true;
+                GetNode<AnimationPlayer>("Open").Play("Open");
+                In_Game_Main.Plants_Clone_Request("res://scene/Plants/H2/H2.tscn", this.GlobalPosition, this.ZIndex - this.normal_ZIndex + 5);
             }
             if (Zombies_Area_2D_List.Count != 0)
             {

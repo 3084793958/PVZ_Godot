@@ -39,6 +39,7 @@ public class Normal_Plants : Node2D
     protected bool just_for_C2H5OH = false;
     protected bool can_sleep = false;
     protected bool sleep = false;
+    protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -91,7 +92,8 @@ public class Normal_Plants : Node2D
         {
             return;
         }
-        if (Public_Main.for_Android && Input.IsActionJustReleased("Left_Mouse"))
+        Android_Timer.OneShot = Public_Main.for_Android;
+        if (Input.IsActionJustReleased("Left_Mouse"))
         {
             if (Android_Timer.IsStopped())
             {
@@ -162,6 +164,44 @@ public class Normal_Plants : Node2D
             if (Normal_Plants.Choosing)
             {
                 GlobalPosition = GetTree().Root.GetMousePosition();
+                for (int i = 0; i < Dock_Area_2D_List.Count; i++)
+                {
+                    if (Dock_Area_2D_List[i] == null)
+                    {
+                        Dock_Area_2D_List.RemoveAt(i);
+                        i--;
+                        continue;
+                    }
+                    if (Math.Abs(GlobalPosition.x - Dock_Area_2D_List[i].GlobalPosition.x) >= 40 || Math.Abs(GlobalPosition.y - Dock_Area_2D_List[i].GlobalPosition.y) >= 40)
+                    {
+                        continue;
+                    }
+                    if (Dock_Area_2D != null)
+                    {
+                        if (Math.Abs(GlobalPosition.x - Dock_Area_2D.GlobalPosition.x) >= 40 || Math.Abs(GlobalPosition.y - Dock_Area_2D.GlobalPosition.y) >= 40)
+                        {
+                            Dock_Area_2D = Dock_Area_2D_List[i];
+                        }
+                    }
+                    if (Dock_Area_2D == null)
+                    {
+                        Dock_Area_2D = Dock_Area_2D_List[i];
+                    }
+                    else
+                    {
+                        if (Dock_Area_2D.pos[1] < Dock_Area_2D_List[i].pos[1])
+                        {
+                            Dock_Area_2D = Dock_Area_2D_List[i];
+                        }
+                        else if (Dock_Area_2D.pos[1] == Dock_Area_2D_List[i].pos[1])
+                        {
+                            if (Dock_Area_2D.pos[0] < Dock_Area_2D_List[i].pos[0])
+                            {
+                                Dock_Area_2D = Dock_Area_2D_List[i];
+                            }
+                        }
+                    }
+                }
                 if (Dock_Area_2D != null)
                 {
                     if (Math.Abs(GlobalPosition.x - Dock_Area_2D.GlobalPosition.x) < 40 && Math.Abs(GlobalPosition.y - Dock_Area_2D.GlobalPosition.y) < 40)
@@ -196,8 +236,9 @@ public class Normal_Plants : Node2D
                     }
                     this.Free();
                 }
-                if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
+                if (Is_Double_Click)
                 {
+                    Is_Double_Click = false;
                     if (Tmp_Card_Used)
                     {
                         this_sun = Tmp_card_parent.Sun;
@@ -353,6 +394,15 @@ public class Normal_Plants : Node2D
                     }
                 }
             }
+            for (int i = 0; i < All_Boom_Area_2D_List.Count; i++)
+            {
+                if (All_Boom_Area_2D_List[i].can_do && !All_Boom_Area_2D_List[i].end_hurt)
+                {
+                    health -= All_Boom_Area_2D_List[i].hurt;
+                    All_Boom_Area_2D_List.RemoveAt(i);
+                    i--;
+                }
+            }
         }
     }
     protected virtual void Area_Entered(Area2D area_node)
@@ -395,6 +445,10 @@ public class Normal_Plants : Node2D
                             Zombies_Area_2D_List.Add(Zombies_Area_2D);
                         }
                     }
+                }
+                else if (Type_string != null && Type_string == "All_Boom")
+                {
+                    All_Boom_Area_2D_List.Add((All_Boom_Area)area2D);
                 }
             }
         }
@@ -440,6 +494,10 @@ public class Normal_Plants : Node2D
                 if (Type_string != null && Type_string == "Zombies")
                 {
                     Zombies_Area_2D_List.Remove((Normal_Zombies_Area)area2D);
+                }
+                else if (Type_string != null && Type_string == "All_Boom")
+                {
+                    All_Boom_Area_2D_List.Remove((All_Boom_Area)area2D);
                 }
             }
         }

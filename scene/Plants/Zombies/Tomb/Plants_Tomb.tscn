@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=1]
 [ext_resource path="res://code/Plants/Zombies/Tomb/Plants_Tomb_Main.cs" type="Script" id=2]
@@ -95,6 +95,9 @@ tracks/1/keys = {
 } ]
 }
 
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 30, 40 )
+
 [node name="Tomb" type="Node2D"]
 modulate = Color( 0.92, 0, 1, 1 )
 scale = Vector2( -1, 1 )
@@ -176,6 +179,11 @@ autostart = true
 [node name="Free_Self" type="AnimationPlayer" parent="Main"]
 anims/Free = SubResource( 4 )
 
+[node name="Tomb_Area2D" type="Area2D" parent="Main"]
+
+[node name="Shape" type="CollisionShape2D" parent="Main/Tomb_Area2D"]
+shape = SubResource( 5 )
+
 [node name="Plant_Sound" type="Node" parent="."]
 
 [node name="Ok" type="Node" parent="Plant_Sound"]
@@ -217,3 +225,5 @@ align = 1
 [connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
 [connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
 [connection signal="timeout" from="Main/Creating_Timer" to="." method="Creating_Timer_timeout"]
+[connection signal="area_entered" from="Main/Tomb_Area2D" to="." method="Plants_Entered"]
+[connection signal="area_exited" from="Main/Tomb_Area2D" to="." method="Plants_Exited"]

@@ -1,20 +1,8 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-public class Random_Main : Node2D
+public class Random_Main : Limited_Plants
 {
-    [Export] protected int normal_ZIndex = 3;
-    protected Timer Android_Timer = new Timer();
-    protected bool Is_Double_Click = false;//for Android
-    public Vector2 put_position = Vector2.Zero;//In_Game_Main使用
-    public bool player_put = false;//In_Game_Main使用
-    protected bool on_lock_grid = false;
-    protected bool has_planted = false;
-    public Card_Click_Button card_parent_Button = null;//Card使用
-    public bool Tmp_Card_Used = false;
-    public Card_Tmp_Main Tmp_card_parent = null;//Card_Tmp使用
-    protected List<Background_Grid_Main> Dock_Area_2D_List = new List<Background_Grid_Main>();
-    protected Background_Grid_Main Dock_Area_2D = null;
     public override void _Ready()
     {
         GD.Randomize();
@@ -38,7 +26,8 @@ public class Random_Main : Node2D
         {
             return;
         }
-        if (Public_Main.for_Android && Input.IsActionJustReleased("Left_Mouse"))
+        Android_Timer.OneShot = Public_Main.for_Android;
+        if (Input.IsActionJustReleased("Left_Mouse"))
         {
             if (Android_Timer.IsStopped())
             {
@@ -142,8 +131,9 @@ public class Random_Main : Node2D
                     }
                     this.Free();
                 }
-                if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
+                if (Is_Double_Click) 
                 {
+                    Is_Double_Click = false;
                     int this_sun = 0;
                     if (Tmp_Card_Used)
                     {
@@ -178,8 +168,6 @@ public class Random_Main : Node2D
                                     Plant_object.Free_Self();
                                 }
                             }
-                            Dock_Area_2D.Normal_Plant_List.Add(this);
-                            Dock_Area_2D.Down_Plant_List.Add(this);
                             has_planted = true;
                             this.GlobalPosition = Dock_Area_2D.GlobalPosition;
                             In_Game_Main.Sun_Number -= this_sun;
@@ -211,18 +199,14 @@ public class Random_Main : Node2D
         }
         else
         {
-            int Clone_Type = (int)(GD.Randi() % 3);
+            int Clone_Type = (int)(GD.Randi() % 2);
             if (Clone_Type == 0)
             {
-                In_Game_Main.Plants_Clone_Request(Public_Main.Plant_list[(int)(GD.Randi() % (Public_Main.Plant_list.Count - 1))].Rest.Item2, this.GlobalPosition, this.ZIndex - normal_ZIndex + 3);
+                In_Game_Main.Plants_Clone_Request(Public_Main.Plant_list[(int)(GD.Randi() % (Public_Main.Plant_list.Count))].Rest.Item2, this.GlobalPosition, this.ZIndex - normal_ZIndex + 3);
             }
             else if (Clone_Type == 1)
             {
                 In_Game_Main.Plants_Zombies_Clone_Request(Public_Main.Plants_Zombies_list[(int)(GD.Randi() % Public_Main.Plants_Zombies_list.Count)].Rest.Item2, this.GlobalPosition, this.ZIndex - normal_ZIndex + 7);
-            }
-            else
-            {
-                In_Game_Main.Zombies_Clone_Request(Public_Main.Zombies_Path_List[(int)(GD.Randi() % Public_Main.Zombies_Path_List.Count)], this.GlobalPosition, this.ZIndex - normal_ZIndex + 7);
             }
             this.QueueFree();
         }

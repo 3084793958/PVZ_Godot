@@ -37,6 +37,9 @@ public class Normal_Plants_Zombies : Node2D
     protected Normal_Zombies_Area Zombies_Area_2D = null;
     protected List<Background_Grid_Main> Dock_Area_2D_List = new List<Background_Grid_Main>();
     protected List<Normal_Zombies_Area> Zombies_Area_2D_List = new List<Normal_Zombies_Area>();
+    protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
+    protected int await_press_time = 1;
+    protected bool use_press_time = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -88,7 +91,8 @@ public class Normal_Plants_Zombies : Node2D
         {
             return;
         }
-        if (Public_Main.for_Android && Input.IsActionJustReleased("Left_Mouse"))
+        Android_Timer.OneShot = Public_Main.for_Android;
+        if (Input.IsActionJustReleased("Left_Mouse"))
         {
             if (Android_Timer.IsStopped())
             {
@@ -220,8 +224,9 @@ public class Normal_Plants_Zombies : Node2D
                     }
                     this.Free();
                 }
-                if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
+                if (Is_Double_Click)
                 {
+                    Is_Double_Click = false;
                     int this_sun = 0;
                     if (Tmp_Card_Used)
                     {
@@ -356,6 +361,38 @@ public class Normal_Plants_Zombies : Node2D
                 in_water = false;
                 now_in_water = false;
             }
+
+            for (int i = 0; i < All_Boom_Area_2D_List.Count; i++)
+            {
+                if (All_Boom_Area_2D_List[i].can_do && !All_Boom_Area_2D_List[i].end_hurt)
+                {
+                    health_list[0].Health -= All_Boom_Area_2D_List[i].hurt;
+                    count_health = 0;
+                    for (int j = 0; j < health_list.Count; j++)
+                    {
+                        if (health_list[j].Health < 0)
+                        {
+                            if (health_list[j].Is_lock)
+                            {
+                                health_list[j].Health = 0;
+                            }
+                            else
+                            {
+                                if (j + 1 < health_list.Count)
+                                {
+                                    health_list[j + 1].Health += health_list[j].Health;
+                                    health_list[j].Health = 0;
+                                }
+                            }
+                        }
+                        count_health += health_list[j].Health;
+                    }
+                    health = count_health;
+                    All_Boom_Area_2D_List.RemoveAt(i);
+                    i--;
+                }
+            }
+
             if (Zombies_Area_2D_List.Count == 0)
             {
                 Zombies_Area_2D = null;
@@ -500,6 +537,10 @@ public class Normal_Plants_Zombies : Node2D
             {
                 Zombies_Area_2D_List.Add((Normal_Zombies_Area)area2D);
             }
+            else if (Type_string != null && Type_string == "All_Boom")
+            {
+                All_Boom_Area_2D_List.Add((All_Boom_Area)area2D);
+            }
         }
         catch (Exception ex)
         {
@@ -518,6 +559,10 @@ public class Normal_Plants_Zombies : Node2D
             if (Type_string != null && Type_string == "Zombies")
             {
                 Zombies_Area_2D_List.Remove((Normal_Zombies_Area)area2D);
+            }
+            else if (Type_string != null && Type_string == "All_Boom")
+            {
+                All_Boom_Area_2D_List.Remove((All_Boom_Area)area2D);
             }
         }
         catch (Exception ex)

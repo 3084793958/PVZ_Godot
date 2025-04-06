@@ -16,7 +16,6 @@ public class Simple_Zombies_Main : Normal_Zombies
             {
                 GetNode<AnimationPlayer>("Main/Main/Walk").Stop();
                 GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
-                GetNode<AnimationPlayer>("Main/Main/Hat/Hat/Walk").Stop();
             }
             if (health < 180 && !has_lose_Arm)
             {

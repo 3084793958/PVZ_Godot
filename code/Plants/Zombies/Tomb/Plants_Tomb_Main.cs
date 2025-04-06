@@ -19,6 +19,8 @@ public class Plants_Tomb_Main : Node2D
     protected Background_Grid_Main Dock_Area_2D = null;
     protected int Clone_Time = 0;
     protected int health = 2000;
+    protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
+    public int lock_to_number = -1;
     protected List<string> Clone_List = new List<string>
     {
         "res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn",
@@ -29,7 +31,9 @@ public class Plants_Tomb_Main : Node2D
         "res://scene/Plants/Zombies/Bucket_Zombies/Plants_Bucket_Zombies.tscn",
         "res://scene/Plants/Zombies/Polevaulter_Zombies/Plants_Polevaulter_Zombies.tscn",
         "res://scene/Plants/Zombies/Darts_Polevaulter_Zombies/Plants_Darts_Polevaulter_Zombies.tscn",
-        "res://scene/Plants/Zombies/Screen_Door_Zombies/Plants_Screen_Door_Zombies.tscn"
+        "res://scene/Plants/Zombies/Screen_Door_Zombies/Plants_Screen_Door_Zombies.tscn",
+        "res://scene/Plants/Zombies/Fire_Zombies/Plants_Fire_Zombies.tscn",
+        "res://scene/Plants/Zombies/H2_maker_Zombies/Plants_H2_maker_Zombies.tscn"
     };
     protected List<Texture> Tomb_Texture_List = new List<Texture>
     {
@@ -57,6 +61,7 @@ public class Plants_Tomb_Main : Node2D
     public async override void _Ready()
     {
         GD.Randomize();
+        lock_to_number = In_Game_Main.Tomb_Lock_To_Number;
         var tomb_Texture = Tomb_Texture_List[(int)(GD.Randi() % Tomb_Texture_List.Count)];
         GetNode<TextureRect>("Dock/Help/Texture").Texture = tomb_Texture;
         GetNode<TextureRect>("Show/Help/Texture").Texture = tomb_Texture;
@@ -102,7 +107,8 @@ public class Plants_Tomb_Main : Node2D
         {
             return;
         }
-        if (Public_Main.for_Android && Input.IsActionJustReleased("Left_Mouse"))
+        Android_Timer.OneShot = Public_Main.for_Android;
+        if (Input.IsActionJustReleased("Left_Mouse"))
         {
             if (Android_Timer.IsStopped())
             {
@@ -207,8 +213,9 @@ public class Plants_Tomb_Main : Node2D
                     }
                     this.Free();
                 }
-                if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
+                if (Is_Double_Click)
                 {
+                    Is_Double_Click = false;
                     int this_sun = 0;
                     if (Tmp_Card_Used)
                     {
@@ -303,9 +310,18 @@ public class Plants_Tomb_Main : Node2D
                 GetNode<Node2D>("Health").ZIndex = 116;
                 GetNode<Node2D>("Health").Show();
             }
-            if ((Clone_Time > 20 || health < 0) && !GetNode<AnimationPlayer>("Main/Free_Self").IsPlaying())
+            if ((Clone_Time > 20 || health <= 0) && !GetNode<AnimationPlayer>("Main/Free_Self").IsPlaying())
             {
                 GetNode<AnimationPlayer>("Main/Free_Self").Play("Free");
+            }
+            for (int i = 0; i < All_Boom_Area_2D_List.Count; i++)
+            {
+                if (All_Boom_Area_2D_List[i].can_do && !All_Boom_Area_2D_List[i].end_hurt)
+                {
+                    health -= All_Boom_Area_2D_List[i].hurt;
+                    All_Boom_Area_2D_List.RemoveAt(i);
+                    i--;
+                }
             }
         }
     }
@@ -339,7 +355,38 @@ public class Plants_Tomb_Main : Node2D
         {
             Clone_Time++;
             GetNode<AnimationPlayer>("Main/Player/Out_Land").Play("Out_Land");
-            In_Game_Main.Plants_Zombies_Clone_Request(Clone_List[(int)(GD.Randi() % Clone_List.Count)], this.Position, this.ZIndex - normal_ZIndex + 7);
+            if (lock_to_number <= 0)
+            {
+                In_Game_Main.Plants_Zombies_Clone_Request(Clone_List[(int)(GD.Randi() % Clone_List.Count)], this.Position, this.ZIndex - normal_ZIndex + 7);
+            }
+            else
+            {
+                In_Game_Main.Plants_Zombies_Clone_Request(Clone_List[(int)(GD.Randi() % lock_to_number)], this.Position, this.ZIndex - normal_ZIndex + 7);
+            }
+        }
+    }
+    protected void Plants_Entered(Area2D area_node)
+    {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "All_Boom")
+        {
+            All_Boom_Area_2D_List.Add((All_Boom_Area)area2D);
+        }
+    }
+    protected void Plants_Exited(Area2D area_node)
+    {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "All_Boom")
+        {
+            All_Boom_Area_2D_List.Remove((All_Boom_Area)area2D);
         }
     }
     public async void Free_Self()

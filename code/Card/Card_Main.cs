@@ -13,13 +13,14 @@ public class Card_Main : Control
     public bool self_Wait_Time_Set = false;
     public override void _Ready()
     {
-        Card_Background = Card_Number[0];
+        Card_Background = 1;
         GetNode<Card_Click_Button>("Main/Main/Click_Button").sun = Sun;
         var Sun_Label = GetNode<Label>("Main/Main/Texture/Sun");
         var Shadow_Sun_Label = GetNode<Label>("Shadow/Texture/Sun");
         int Seed_Pos = -1;
         if (Card_Number[0] == 1)
         {
+            Card_Background = 1;
             if (Card_Number[1] <= Public_Main.Plant_list.Count)
             {
                 if (Public_Main.Plant_list[Card_Number[1] - 1].Item1 == Card_Number[1])
@@ -83,8 +84,42 @@ public class Card_Main : Control
                 }
             }
         }
+        else if (Card_Number[0] == 4)//Spec
+        {
+            Card_Background = 1;
+            if (Card_Number[1] <= Public_Main.Spec_Plants_list.Count)
+            {
+                if (Public_Main.Spec_Plants_list[Card_Number[1] - 1].Item1 == Card_Number[1])
+                {
+                    Seed_Pos = Card_Number[1] - 1;
+                }
+                else
+                {
+                    for (int i = 0; i < Public_Main.Spec_Plants_list.Count; i++)
+                    {
+                        if (Public_Main.Spec_Plants_list[i].Item1 == Card_Number[1])
+                        {
+                            Seed_Pos = i;
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Public_Main.Spec_Plants_list.Count; i++)
+                {
+                    if (Public_Main.Spec_Plants_list[i].Item1 == Card_Number[1])
+                    {
+                        Seed_Pos = i;
+                        break;
+                    }
+                }
+            }
+        }
         else
         {
+            Card_Background = 2;
             if (Card_Number[1] <= Public_Main.Zombies_list.Count)
             {
                 if (Public_Main.Zombies_list[Card_Number[1] - 1].Item1 == Card_Number[1])
@@ -138,13 +173,31 @@ public class Card_Main : Control
                         wait_time = Public_Main.Plant_list[Seed_Pos].Item7;
                     }
                 }
-                else
+                else if (Card_Number[0] == 2)
                 {
                     Sun = Public_Main.Zombies_list[Seed_Pos].Rest.Item1;
                     now_time = Public_Main.Zombies_list[Seed_Pos].Item6;
                     if (!self_Wait_Time_Set)
                     {
                         wait_time = Public_Main.Zombies_list[Seed_Pos].Item7;
+                    }
+                }
+                else if (Card_Number[0] == 3)
+                {
+                    Sun = Public_Main.Plants_Zombies_list[Seed_Pos].Rest.Item1;
+                    now_time = Public_Main.Plants_Zombies_list[Seed_Pos].Item6;
+                    if (!self_Wait_Time_Set)
+                    {
+                        wait_time = Public_Main.Plants_Zombies_list[Seed_Pos].Item7;
+                    }
+                }
+                else
+                {
+                    Sun = Public_Main.Spec_Plants_list[Seed_Pos].Rest.Item1;
+                    now_time = Public_Main.Spec_Plants_list[Seed_Pos].Item6;
+                    if (!self_Wait_Time_Set)
+                    {
+                        wait_time = Public_Main.Spec_Plants_list[Seed_Pos].Item7;
                     }
                 }
             }
@@ -184,6 +237,13 @@ public class Card_Main : Control
                 Info_Label.Text = Public_Main.Plants_Zombies_list[Seed_Pos].Item3;
                 Main_Button.plant_path = Public_Main.Plants_Zombies_list[Seed_Pos].Rest.Item2;
                 Main_Button.isPlants_zombies = true;
+            }
+            else
+            {
+                Main_Card_Texture.Texture = Public_Main.Spec_Plants_list[Seed_Pos].Item5;
+                Name_Label.Text = Public_Main.Spec_Plants_list[Seed_Pos].Item2;
+                Info_Label.Text = Public_Main.Spec_Plants_list[Seed_Pos].Item3;
+                Main_Button.plant_path = Public_Main.Spec_Plants_list[Seed_Pos].Rest.Item2;
             }
             var Shadow_Main_Card_Texture = GetNode<TextureRect>("Shadow/Texture/Main/Card_Texture");
             Shadow_Main_Card_Texture.Texture = Main_Card_Texture.Texture;
