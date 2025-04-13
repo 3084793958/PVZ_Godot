@@ -21,6 +21,7 @@ public class Plants_Tomb_Main : Node2D
     protected int health = 2000;
     protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
     public int lock_to_number = -1;
+    protected bool real_touching = false;
     protected List<string> Clone_List = new List<string>
     {
         "res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn",
@@ -69,7 +70,7 @@ public class Plants_Tomb_Main : Node2D
         Position = new Vector2(-1437, -1437);
         GetNode<Area2D>("Dock/Area2D").PauseMode = PauseModeEnum.Process;
         AddChild(Android_Timer);
-        Android_Timer.WaitTime = 1f;
+        Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
@@ -83,22 +84,25 @@ public class Plants_Tomb_Main : Node2D
             GetNode<Control>("Main").Show();
             Position = put_position;
             await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
-            for (int i = 0; i < Dock_Area_2D.Normal_Plant_List.Count; i++)
+            if (Dock_Area_2D != null)
             {
-                if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                for (int i = 0; i < Dock_Area_2D.Normal_Plant_List.Count; i++)
                 {
-                    Plant_object.Free_Self();
+                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                    {
+                        Plant_object.Free_Self();
+                    }
                 }
-            }
-            for (int i = 0; i < Dock_Area_2D.Down_Plant_List.Count; i++)
-            {
-                if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                for (int i = 0; i < Dock_Area_2D.Down_Plant_List.Count; i++)
                 {
-                    Plant_object.Free_Self();
+                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                    {
+                        Plant_object.Free_Self();
+                    }
                 }
+                Dock_Area_2D.Normal_Plant_List.Add(this);
+                Dock_Area_2D.Down_Plant_List.Add(this);
             }
-            Dock_Area_2D.Normal_Plant_List.Add(this);
-            Dock_Area_2D.Down_Plant_List.Add(this);
         }
     }
     public override void _PhysicsProcess(float delta)
@@ -213,7 +217,7 @@ public class Plants_Tomb_Main : Node2D
                     }
                     this.Free();
                 }
-                if (Is_Double_Click)
+                if (Is_Double_Click || (Input.IsActionPressed("Left_Mouse") && !real_touching))
                 {
                     Is_Double_Click = false;
                     int this_sun = 0;
@@ -404,6 +408,13 @@ public class Plants_Tomb_Main : Node2D
         if (IsInstanceValid(this))
         {
             this.QueueFree();
+        }
+    }
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventScreenTouch touchEvent)
+        {
+            real_touching = touchEvent.Device != -1;//真触摸
         }
     }
 }

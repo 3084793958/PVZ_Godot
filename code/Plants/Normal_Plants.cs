@@ -40,6 +40,7 @@ public class Normal_Plants : Node2D
     protected bool can_sleep = false;
     protected bool sleep = false;
     protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
+    protected bool real_touching = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -64,7 +65,7 @@ public class Normal_Plants : Node2D
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;//C#核心技术
         this.AddChild(Android_Timer);
-        Android_Timer.WaitTime = 1f;
+        Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
@@ -236,7 +237,7 @@ public class Normal_Plants : Node2D
                     }
                     this.Free();
                 }
-                if (Is_Double_Click)
+                if (Is_Double_Click || (Input.IsActionPressed("Left_Mouse") && !real_touching)) 
                 {
                     Is_Double_Click = false;
                     if (Tmp_Card_Used)
@@ -563,6 +564,13 @@ public class Normal_Plants : Node2D
         if (IsInstanceValid(this)) 
         {
             this.QueueFree();
+        }
+    }
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventScreenTouch touchEvent)
+        {
+            real_touching = touchEvent.Device != -1;//真触摸
         }
     }
 }

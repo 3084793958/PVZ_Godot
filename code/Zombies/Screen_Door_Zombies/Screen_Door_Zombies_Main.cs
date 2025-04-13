@@ -13,11 +13,6 @@ public class Screen_Door_Zombies_Main : Normal_Zombies
         base._PhysicsProcess(delta);
         if (has_planted)
         {
-            if (health_list.Get_Can_Ignore_Ice_Bullets()) 
-            {
-                is_Lock_Ice = false;
-                is_Ice = false;
-            }
             if (is_Lock_Ice)
             {
                 GetNode<AnimationPlayer>("Main/Main/Walk").Stop();

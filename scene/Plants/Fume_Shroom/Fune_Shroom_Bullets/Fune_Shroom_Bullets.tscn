@@ -1,0 +1,99 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://image/Plants/Fume_Shroom/Bullets/PuffShroom_puff1.png" type="Texture" id=1]
+[ext_resource path="res://code/Bullets/Plants/Fume_Shroom_Bullets/Fune_Shroom_Bullets_Main.cs" type="Script" id=2]
+[ext_resource path="res://code/Bullets/Plants/Fume_Shroom_Bullets/Fune_Shroom_Bullets.shader" type="Shader" id=3]
+[ext_resource path="res://code/Control_Area_2D/Fune_Shroom_Bullets_Area.cs" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 535, 11 )
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 3 )
+shader_param/shader_rect = Vector2( 2140, 46 )
+shader_param/Bullets_width = 32
+shader_param/density_falloff = 0.5
+shader_param/time_frequency = 3.0
+shader_param/start_time = 0.0
+shader_param/Bullets_Texture = ExtResource( 1 )
+
+[sub_resource type="ImageTexture" id=2]
+size = Vector2( 2140, 46 )
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Shader:material:shader_param/start_time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Shader"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Shader:material:shader_param/start_time")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.5 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 0.01, 0.01 )
+
+[node name="Fune_Shroom_Bullets" type="Node2D"]
+position = Vector2( 0, 20 )
+z_index = 17
+script = ExtResource( 2 )
+
+[node name="Touch_Area" type="Area2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="Shape" type="CollisionShape2D" parent="Touch_Area"]
+position = Vector2( 535, 0 )
+shape = SubResource( 5 )
+
+[node name="Shader" type="Sprite" parent="."]
+material = SubResource( 4 )
+position = Vector2( 535, 0 )
+scale = Vector2( 0.5, 0.7 )
+texture = SubResource( 2 )
+
+[node name="Shader_Ani" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 6 )
+anims/Shader = SubResource( 7 )
+
+[node name="Shovel_Area2D" type="Area2D" parent="."]
+
+[node name="Shape" type="CollisionShape2D" parent="Shovel_Area2D"]
+shape = SubResource( 8 )
+
+[connection signal="area_entered" from="Shovel_Area2D" to="." method="Dock_Enter"]

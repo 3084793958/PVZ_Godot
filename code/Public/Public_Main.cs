@@ -205,7 +205,37 @@ static public class Public_Main
     new Tuple<int,string>(25,"res://scene/Plants/H2/H2.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    19,
+    "新视野号",
+    "New Horizons\n只是个人喜好(O^<)",
+    "New Horizons",
+    GD.Load<Texture>("res://image/Plants/New_Horizons/New_Horizons.png"),
+    0f,
+    50f,
+    new Tuple<int,string>(385,"res://scene/Plants/New_Horizons/New_Horizons.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     20,
+    "大喷菇",
+    "大喷菇",
+    "大喷菇",
+    GD.Load<Texture>("res://image/Plants/Fume_Shroom/FumeShroom_Main.png"),
+    0f,
+    15f,
+    new Tuple<int,string>(75,"res://scene/Plants/Fume_Shroom/Fume_Shroom.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    21,
+    "寒冰大喷菇",
+    "伤害降低,攻速减慢",
+    "大喷菇",
+    GD.Load<Texture>("res://image/Plants/Ice_Fume_Shroom/Ice_FumeShroom_Main.png"),
+    20f,
+    45f,
+    new Tuple<int,string>(125,"res://scene/Plants/Ice_Fume_Shroom/Ice_Fume_Shroom.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    22,
     "莲叶",
     "莲叶",
     "莲叶",
@@ -225,7 +255,7 @@ static public class Public_Main
     GD.Load<Texture>("res://image/Plants/Random/Random.png"),
     0f,
     1437f,
-    new Tuple<int,string>(100,"res://scene/Plants/Random/Random.tscn")
+    new Tuple<int,string>(50,"res://scene/Plants/Random/Random.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Plants_Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -339,7 +369,7 @@ static public class Public_Main
     GD.Load<Texture>("res://image/Plants/Zombies/Fire_Zombies/Fire_Zombies.png"),
     0f,
     0f,
-    new Tuple<int,string>(150,"res://scene/Plants/Zombies/Fire_Zombies/Plants_Fire_Zombies.tscn")
+    new Tuple<int,string>(200,"res://scene/Plants/Zombies/Fire_Zombies/Plants_Fire_Zombies.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     12,
@@ -463,7 +493,7 @@ static public class Public_Main
     GD.Load<Texture>("res://image/Zombies/Fire_Zombies/Fire_Zombies.png"),
     0f,
     0f,
-    new Tuple<int,string>(150,"res://scene/Zombies/Fire_Zombies/Fire_Zombies.tscn")
+    new Tuple<int,string>(200,"res://scene/Zombies/Fire_Zombies/Fire_Zombies.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     12,

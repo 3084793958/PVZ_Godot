@@ -13,10 +13,11 @@ public class Bug_Main : Node2D
     public List<Normal_Plants_Area> Plants_Area_2D_List = new List<Normal_Plants_Area>();
     //public Control_Area_2D plants_Area_2d=null;
     private bool playing = false;
+    protected bool real_touching = false;
     public override void _Ready()
     {
         this.AddChild(Android_Timer);
-        Android_Timer.WaitTime = 0.3f;
+        Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Sound/Press").Stream.Set("loop", false);
@@ -104,7 +105,8 @@ public class Bug_Main : Node2D
                 this.QueueFree();
                 GetNode<TextureRect>("/root/In_Game/Main/Card/BugBank/Bug").Show();
             }
-            if (Public_Main.for_Android && Input.IsActionJustReleased("Left_Mouse"))
+            Android_Timer.OneShot = Public_Main.for_Android;
+            if (Input.IsActionJustReleased("Left_Mouse"))
             {
                 if (Android_Timer.IsStopped())
                 {
@@ -113,10 +115,10 @@ public class Bug_Main : Node2D
                 else
                 {
                     Is_Double_Click = true;
-                    Android_Timer.Stop();
+                    Android_Timer.Start();
                 }
             }
-            if ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click))
+            if (Is_Double_Click || (Input.IsActionPressed("Left_Mouse") && !real_touching))
             {
                 Is_Double_Click = false;
                 if (Plants_Area_2D_List.Count == 0)
@@ -157,6 +159,13 @@ public class Bug_Main : Node2D
                     }
                 }
             }
+        }
+    }
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventScreenTouch touchEvent)
+        {
+            real_touching = touchEvent.Device != -1;//真触摸
         }
     }
 }

@@ -60,6 +60,8 @@ public class Normal_Zombies : Node2D
     protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
     protected List<Zombies_Fire_Area> Zombies_Fire_Area_2D_List = new List<Zombies_Fire_Area>();
     protected bool On_Zombies_Fire = false;
+    protected bool real_touching = false;
+    protected List<Fune_Shroom_Bullets_Area> Fune_Shroom_Bullets_Area_2D_List = new List<Fune_Shroom_Bullets_Area>();
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -84,7 +86,7 @@ public class Normal_Zombies : Node2D
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;//C#核心技术
         AddChild(Android_Timer);
-        Android_Timer.WaitTime = 1f;
+        Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
@@ -245,7 +247,7 @@ public class Normal_Zombies : Node2D
                     }
                     this.Free();
                 }
-                if (Is_Double_Click)
+                if (Is_Double_Click || (Input.IsActionPressed("Left_Mouse") && !real_touching))
                 {
                     Is_Double_Click = false;
                     int this_sun = 0;
@@ -712,6 +714,49 @@ public class Normal_Zombies : Node2D
                 Bullets_Area_2D_List.RemoveAt(i);
                 i--;
             }
+            for (int i = 0; i < Fune_Shroom_Bullets_Area_2D_List.Count; i++)
+            {
+                if (Fune_Shroom_Bullets_Area_2D_List[i] == null)
+                {
+                    Fune_Shroom_Bullets_Area_2D_List.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                if (!Fune_Shroom_Bullets_Area_2D_List[i].Monitoring)
+                {
+                    Fune_Shroom_Bullets_Area_2D_List.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                if (Fune_Shroom_Bullets_Area_2D_List[i].Sec_Info == "Ice")
+                {
+                    if (hurt_time < 20)
+                    {
+                        hurt_time += 15;
+                    }
+                    health_list[0].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                    if (health_list.Count != 1 && health_list.Get_Can_Through_To_Index() != -1) 
+                    {
+                        health_list[health_list.Get_Can_Through_To_Index()].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                    }
+                    is_Ice = true;
+                    GetNode<Timer>("Ice_Timer").Start();
+                }
+                else
+                {
+                    if (hurt_time < 20)
+                    {
+                        hurt_time += 15;
+                    }
+                    health_list[0].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                    if (health_list.Count != 1 && health_list.Get_Can_Through_To_Index() != -1)
+                    {
+                        health_list[health_list.Get_Can_Through_To_Index()].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                    }
+                }
+                Fune_Shroom_Bullets_Area_2D_List.RemoveAt(i);
+                i--;
+            }
             if (hurt_time > 0)
             {
                 hurt_time -= (int)(delta * 60);
@@ -997,6 +1042,10 @@ public class Normal_Zombies : Node2D
                 {
                     Car_Area_2D_List.Add((Car_Area2D)area2D);
                 }
+                else if (Type_string != null && Type_string == "Fune_Shroom")
+                {
+                    Fune_Shroom_Bullets_Area_2D_List.Add((Fune_Shroom_Bullets_Area)area2D);
+                }
             }
         }
         catch (Exception ex)
@@ -1070,6 +1119,10 @@ public class Normal_Zombies : Node2D
                 else if (Type_string != null && Type_string == "Car")
                 {
                     Car_Area_2D_List.Remove((Car_Area2D)area2D);
+                }
+                else if (Type_string != null && Type_string == "Fune_Shroom")
+                {
+                    Fune_Shroom_Bullets_Area_2D_List.Remove((Fune_Shroom_Bullets_Area)area2D);
                 }
             }
         }
@@ -1182,6 +1235,13 @@ public class Normal_Zombies : Node2D
                 size = 1.0f;
             }
             In_Game_Main.Sun_Clone_Request(sun_value, GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition, size, true);
+        }
+    }
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventScreenTouch touchEvent)
+        {
+            real_touching = touchEvent.Device != -1;//真触摸
         }
     }
 }

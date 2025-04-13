@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 public class Random_Main : Limited_Plants
 {
+    protected bool real_touching = false;
     public override void _Ready()
     {
         GD.Randomize();
         Position = new Vector2(-1437, -1437);
         GetNode<Area2D>("Dock/Area2D").PauseMode = PauseModeEnum.Process;
         AddChild(Android_Timer);
-        Android_Timer.WaitTime = 1f;
+        Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         if (!player_put)
@@ -27,7 +28,7 @@ public class Random_Main : Limited_Plants
             return;
         }
         Android_Timer.OneShot = Public_Main.for_Android;
-        if (Input.IsActionJustReleased("Left_Mouse"))
+        if (Input.IsActionJustReleased("Left_Mouse")) 
         {
             if (Android_Timer.IsStopped())
             {
@@ -131,7 +132,7 @@ public class Random_Main : Limited_Plants
                     }
                     this.Free();
                 }
-                if (Is_Double_Click) 
+                if (Is_Double_Click || (Input.IsActionPressed("Left_Mouse") && !real_touching)) 
                 {
                     Is_Double_Click = false;
                     int this_sun = 0;
@@ -233,6 +234,13 @@ public class Random_Main : Limited_Plants
         if (Type_string != null && Type_string == "Grid")
         {
             Dock_Area_2D_List.Remove((Background_Grid_Main)area2D);
+        }
+    }
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventScreenTouch touchEvent)
+        {
+            real_touching = touchEvent.Device != -1;//真触摸
         }
     }
 }

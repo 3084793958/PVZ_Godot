@@ -26,6 +26,8 @@ public class Tomb_Main : Node2D
     protected int hurt_time = 0;
     public int lock_to_number = -1;
     protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
+    protected List<Fune_Shroom_Bullets_Area> Fune_Shroom_Bullets_Area_2D_List = new List<Fune_Shroom_Bullets_Area>();
+    protected bool real_touching = false;
     protected List<string> Clone_List = new List<string> 
     {
         "res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn",
@@ -63,7 +65,7 @@ public class Tomb_Main : Node2D
         GD.Load<Texture>("res://image/Zombies/Tomb/18.png"),
         GD.Load<Texture>("res://image/Zombies/Tomb/19.png")
     };
-    public override void _Ready()
+    public async override void _Ready()
     {
         GD.Randomize();
         lock_to_number = In_Game_Main.Tomb_Lock_To_Number;
@@ -74,7 +76,7 @@ public class Tomb_Main : Node2D
         Position = new Vector2(-1437, -1437);
         GetNode<Area2D>("Dock/Area2D").PauseMode = PauseModeEnum.Process;
         AddChild(Android_Timer);
-        Android_Timer.WaitTime = 1f;
+        Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
@@ -87,6 +89,26 @@ public class Tomb_Main : Node2D
             GetNode<Control>("Show").Hide();
             GetNode<Control>("Main").Show();
             GlobalPosition = put_position;
+            await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
+            if (Dock_Area_2D != null)
+            {
+                for (int i = 0; i < Dock_Area_2D.Normal_Plant_List.Count; i++)
+                {
+                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                    {
+                        Plant_object.Free_Self();
+                    }
+                }
+                for (int i = 0; i < Dock_Area_2D.Down_Plant_List.Count; i++)
+                {
+                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                    {
+                        Plant_object.Free_Self();
+                    }
+                }
+                Dock_Area_2D.Normal_Plant_List.Add(this);
+                Dock_Area_2D.Down_Plant_List.Add(this);
+            }
         }
     }
     public override void _PhysicsProcess(float delta)
@@ -202,7 +224,7 @@ public class Tomb_Main : Node2D
                     }
                     this.Free();
                 }
-                if (Is_Double_Click) 
+                if (Is_Double_Click || (Input.IsActionPressed("Left_Mouse") && !real_touching)) 
                 {
                     Is_Double_Click = false;
                     int this_sun = 0;
@@ -392,6 +414,39 @@ public class Tomb_Main : Node2D
                 Bullets_Area_2D_List.RemoveAt(i);
                 i--;
             }
+            for (int i = 0; i < Fune_Shroom_Bullets_Area_2D_List.Count; i++)
+            {
+                if (Fune_Shroom_Bullets_Area_2D_List[i] == null)
+                {
+                    Fune_Shroom_Bullets_Area_2D_List.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                if (!Fune_Shroom_Bullets_Area_2D_List[i].Monitoring)
+                {
+                    Fune_Shroom_Bullets_Area_2D_List.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                if (Fune_Shroom_Bullets_Area_2D_List[i].Sec_Info == "Ice")
+                {
+                    if (hurt_time < 20)
+                    {
+                        hurt_time += 15;
+                    }
+                    health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                }
+                else
+                {
+                    if (hurt_time < 20)
+                    {
+                        hurt_time += 15;
+                    }
+                    health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                }
+                Fune_Shroom_Bullets_Area_2D_List.RemoveAt(i);
+                i--;
+            }
             if (hurt_time > 0)
             {
                 hurt_time -= (int)(delta * 60);
@@ -482,6 +537,10 @@ public class Tomb_Main : Node2D
         {
             All_Boom_Area_2D_List.Add((All_Boom_Area)area2D);
         }
+        else if (Type_string != null && Type_string == "Fune_Shroom")
+        {
+            Fune_Shroom_Bullets_Area_2D_List.Add((Fune_Shroom_Bullets_Area)area2D);
+        }
     }
     protected void Plants_Exited(Area2D area_node)
     {
@@ -510,6 +569,10 @@ public class Tomb_Main : Node2D
         {
             All_Boom_Area_2D_List.Remove((All_Boom_Area)area2D);
         }
+        else if (Type_string != null && Type_string == "Fune_Shroom")
+        {
+            Fune_Shroom_Bullets_Area_2D_List.Remove((Fune_Shroom_Bullets_Area)area2D);
+        }
     }
     public async void Free_Self()
     {
@@ -530,6 +593,13 @@ public class Tomb_Main : Node2D
         if (IsInstanceValid(this))
         {
             this.QueueFree();
+        }
+    }
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventScreenTouch touchEvent)
+        {
+            real_touching = touchEvent.Device != -1;//真触摸
         }
     }
 }

@@ -38,8 +38,7 @@ public class Normal_Plants_Zombies : Node2D
     protected List<Background_Grid_Main> Dock_Area_2D_List = new List<Background_Grid_Main>();
     protected List<Normal_Zombies_Area> Zombies_Area_2D_List = new List<Normal_Zombies_Area>();
     protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
-    protected int await_press_time = 1;
-    protected bool use_press_time = false;
+    protected bool real_touching = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -64,7 +63,7 @@ public class Normal_Plants_Zombies : Node2D
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;//C#核心技术
         AddChild(Android_Timer);
-        Android_Timer.WaitTime = 1f;
+        Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
@@ -224,7 +223,7 @@ public class Normal_Plants_Zombies : Node2D
                     }
                     this.Free();
                 }
-                if (Is_Double_Click)
+                if (Is_Double_Click || (Input.IsActionPressed("Left_Mouse") && !real_touching))
                 {
                     Is_Double_Click = false;
                     int this_sun = 0;
@@ -275,7 +274,6 @@ public class Normal_Plants_Zombies : Node2D
                             GetNode<Control>("Show").Hide();
                             GetNode<Control>("Main").Show();
                             Walk_Mode(true);
-                            In_Game_Main.Zombies_Number++;
                         }
                         else
                         {
@@ -618,6 +616,13 @@ public class Normal_Plants_Zombies : Node2D
         if (IsInstanceValid(this))
         {
             this.QueueFree();
+        }
+    }
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventScreenTouch touchEvent)
+        {
+            real_touching = touchEvent.Device != -1;//真触摸
         }
     }
 }

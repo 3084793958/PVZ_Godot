@@ -1,0 +1,633 @@
+[gd_scene load_steps=36 format=2]
+
+[ext_resource path="res://image/Plants/New_Horizons/Path/Eyes2.png" type="Texture" id=1]
+[ext_resource path="res://code/Plants/New_Horizons/New_Horizons_Main.cs" type="Script" id=2]
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=3]
+[ext_resource path="res://image/Plants/New_Horizons/New_Horizons.png" type="Texture" id=4]
+[ext_resource path="res://sound/Plants/Normal/water.ogg" type="AudioStream" id=5]
+[ext_resource path="res://sound/Plants/Normal/plant2.ogg" type="AudioStream" id=6]
+[ext_resource path="res://sound/Plants/Normal/plant1.ogg" type="AudioStream" id=7]
+[ext_resource path="res://image/Plants/New_Horizons/Path/Body.png" type="Texture" id=8]
+[ext_resource path="res://image/Plants/New_Horizons/Path/Back_Hair.png" type="Texture" id=9]
+[ext_resource path="res://sound/Plants/Fume/fume.ogg" type="AudioStream" id=10]
+[ext_resource path="res://font/zh.otf" type="DynamicFontData" id=11]
+[ext_resource path="res://sound/Zombies/bigchomp.ogg" type="AudioStream" id=12]
+[ext_resource path="res://code/Control_Area_2D/Bullets_Way_Area.cs" type="Script" id=13]
+[ext_resource path="res://image/Plants/New_Horizons/Path/Eye1.png" type="Texture" id=14]
+[ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=15]
+[ext_resource path="res://image/Plants/New_Horizons/Path/Hair.png" type="Texture" id=16]
+[ext_resource path="res://code/Control_Area_2D/Normal_Plants_Area.cs" type="Script" id=17]
+[ext_resource path="res://image/shadow.png" type="Texture" id=18]
+[ext_resource path="res://image/Plants/New_Horizons/Path/Space.png" type="Texture" id=19]
+[ext_resource path="res://image/Plants/New_Horizons/Path/Move_Hair1.png" type="Texture" id=20]
+[ext_resource path="res://image/Plants/New_Horizons/Path/Move_Hair2.png" type="Texture" id=21]
+[ext_resource path="res://image/Plants/New_Horizons/Path/L_Hand.png" type="Texture" id=22]
+[ext_resource path="res://image/Plants/New_Horizons/Path/R_Hand.png" type="Texture" id=23]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 0.01, 0.01 )
+
+[sub_resource type="DynamicFont" id=16]
+size = 100
+outline_size = 5
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 11 )
+
+[sub_resource type="Animation" id=17]
+resource_name = "Sleep"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("1:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -2, -9 ), Vector2( -10, -13 ), Vector2( -11, -18 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("1:rect_rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 25.7127, -33.8, 35.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("1:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("2:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1, 1.1, 2 ),
+"transitions": PoolRealArray( 1, 0, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -10, -13 ), Vector2( -11, -18 ), Vector2( -2, -9 ), Vector2( -10, -13 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("2:rect_rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1, 1.1, 2 ),
+"transitions": PoolRealArray( 1, 0, 1, 1 ),
+"update": 0,
+"values": [ -33.8476, 35.0, 25.7, -33.8476 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("2:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1, 1.1, 2 ),
+"transitions": PoolRealArray( 1, 0, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.5 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.5 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "Player1"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Body:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -1.5, 1.5, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("eyes:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -1.5, 1.5, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Body/Space:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -3, -3 ), Vector2( -3, -7 ), Vector2( -3, -3 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "Player1"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("eyes/Eye1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.9, 1.1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("eyes/Eye2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.9, 1.1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, false ]
+}
+
+[sub_resource type="RectangleShape2D" id=20]
+extents = Vector2( 30, 30 )
+
+[sub_resource type="RectangleShape2D" id=21]
+extents = Vector2( 535, 23 )
+
+[sub_resource type="Animation" id=14]
+resource_name = "Shoot"
+tracks/0/type = "method"
+tracks/0/path = NodePath("..")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "Clone_Bullets"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Throw:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("eyes/Eye1:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, true, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("eyes/Eye2:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, true, false, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Body:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2, 1 ),
+"transitions": PoolRealArray( 1, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 40, 40 ), Vector2( 20, 40 ), Vector2( 40, 40 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("eyes:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.2, 1 ),
+"transitions": PoolRealArray( 1, 0.5, 1 ),
+"update": 0,
+"values": [ Vector2( 40, 40 ), Vector2( 20, 40 ), Vector2( 40, 40 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Body/Space:position:x")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ -3.0, -10.0, -3.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Free"
+length = 0.6
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Free_Self"
+} ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Is_Eated"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1.3, 1.3, 1.3, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "Died"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Big_Chmop:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.001 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.01, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "show"
+}, {
+"args": [  ],
+"method": "hide"
+}, {
+"args": [  ],
+"method": "Free_Self"
+} ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "Bug"
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Bug_Doing"
+} ]
+}
+
+[node name="New_Horizons" type="Node2D"]
+z_index = 3
+script = ExtResource( 2 )
+Bullets_Path = "res://scene/Plants/Ice_Fume_Shroom/Ice_Fune_Shroom_Bullets/Ice_Fune_Shroom_Bullets.tscn"
+
+[node name="Dock" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 40, 40 )
+
+[node name="Help" type="Node2D" parent="Dock"]
+z_index = 118
+z_as_relative = false
+
+[node name="80" type="Control" parent="Dock/Help"]
+margin_left = -8.0
+margin_top = 1.0
+margin_right = 86.0
+margin_bottom = 81.0
+rect_pivot_offset = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="Dock/Help/80"]
+modulate = Color( 1, 1, 1, 0.588235 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -18.0
+margin_top = -60.0
+margin_right = 14.0
+margin_bottom = -3.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="Area2D" type="Area2D" parent="Dock"]
+position = Vector2( 40, 40 )
+
+[node name="Shape" type="CollisionShape2D" parent="Dock/Area2D"]
+shape = SubResource( 1 )
+
+[node name="Show" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 40, 40 )
+
+[node name="Help" type="Node2D" parent="Show"]
+z_index = 118
+z_as_relative = false
+
+[node name="80" type="Control" parent="Show/Help"]
+margin_left = -8.0
+margin_top = 1.0
+margin_right = 86.0
+margin_bottom = 81.0
+rect_pivot_offset = Vector2( 40, 40 )
+
+[node name="Texture" type="TextureRect" parent="Show/Help/80"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -18.0
+margin_top = -60.0
+margin_right = 14.0
+margin_bottom = -3.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+
+[node name="Main" type="Control" parent="."]
+visible = false
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Shadow" type="Sprite" parent="Main"]
+modulate = Color( 1, 1, 1, 0.588235 )
+position = Vector2( 49, 63 )
+scale = Vector2( 0.12, 0.072 )
+texture = ExtResource( 18 )
+
+[node name="Body" type="Node2D" parent="Main"]
+position = Vector2( 40, 40 )
+
+[node name="Space" type="Sprite" parent="Main/Body"]
+position = Vector2( -3, -3 )
+scale = Vector2( 0.275, 0.275 )
+texture = ExtResource( 19 )
+
+[node name="Back_Hair" type="Sprite" parent="Main/Body"]
+position = Vector2( 7.5, -43.667 )
+scale = Vector2( 0.275, 0.275 )
+texture = ExtResource( 9 )
+
+[node name="Move_Hair2" type="Sprite" parent="Main/Body"]
+position = Vector2( -22, -42 )
+scale = Vector2( 0.275, 0.275 )
+texture = ExtResource( 21 )
+
+[node name="Body" type="Sprite" parent="Main/Body"]
+position = Vector2( 8, -18 )
+scale = Vector2( 0.275, 0.275 )
+texture = ExtResource( 8 )
+
+[node name="Move_Hair1" type="Sprite" parent="Main/Body"]
+position = Vector2( 30, -38 )
+scale = Vector2( 0.275, 0.275 )
+texture = ExtResource( 20 )
+
+[node name="Hair" type="Sprite" parent="Main/Body"]
+position = Vector2( 4.333, -60.3 )
+scale = Vector2( 0.275, 0.275 )
+texture = ExtResource( 16 )
+
+[node name="L_Hand" type="Sprite" parent="Main/Body"]
+position = Vector2( -7, -3 )
+scale = Vector2( 0.275, 0.275 )
+texture = ExtResource( 22 )
+
+[node name="R_Hand" type="Sprite" parent="Main/Body"]
+position = Vector2( 23, -5 )
+scale = Vector2( 0.275, 0.275 )
+texture = ExtResource( 23 )
+
+[node name="eyes" type="Node2D" parent="Main"]
+position = Vector2( 40, 40 )
+
+[node name="Eye1" type="Sprite" parent="Main/eyes"]
+position = Vector2( 9, -42 )
+scale = Vector2( 0.265, 0.265 )
+texture = ExtResource( 14 )
+
+[node name="Eye2" type="Sprite" parent="Main/eyes"]
+visible = false
+position = Vector2( 9, -42 )
+scale = Vector2( 0.265, 0.265 )
+texture = ExtResource( 1 )
+
+[node name="Sleep" type="Node2D" parent="Main"]
+visible = false
+position = Vector2( 36, -14 )
+scale = Vector2( 3, 3 )
+
+[node name="1" type="Label" parent="Main/Sleep"]
+margin_left = -2.0
+margin_top = -9.0
+margin_right = 60.0
+margin_bottom = 124.0
+rect_rotation = 25.7127
+rect_scale = Vector2( 0.07, 0.07 )
+custom_fonts/font = SubResource( 16 )
+text = "Z"
+
+[node name="2" type="Label" parent="Main/Sleep"]
+modulate = Color( 1, 1, 1, 0.5 )
+margin_left = -10.0
+margin_top = -13.0
+margin_right = 52.0
+margin_bottom = 120.0
+rect_rotation = -33.8476
+rect_scale = Vector2( 0.05, 0.05 )
+custom_fonts/font = SubResource( 16 )
+text = "Z"
+
+[node name="Sleep" type="AnimationPlayer" parent="Main/Sleep"]
+anims/Sleep = SubResource( 17 )
+
+[node name="Player1" type="AnimationPlayer" parent="Main"]
+anims/Player1 = SubResource( 18 )
+
+[node name="Player2" type="AnimationPlayer" parent="Main"]
+anims/Player1 = SubResource( 19 )
+
+[node name="Shovel_Area" type="Area2D" parent="Main"]
+position = Vector2( 40, 40 )
+script = ExtResource( 17 )
+
+[node name="Shape" type="CollisionShape2D" parent="Main/Shovel_Area"]
+shape = SubResource( 20 )
+
+[node name="Bullets_Way" type="Area2D" parent="Main"]
+position = Vector2( 23, 26 )
+script = ExtResource( 13 )
+
+[node name="Shape" type="CollisionShape2D" parent="Main/Bullets_Way"]
+position = Vector2( 514.25, 0 )
+shape = SubResource( 21 )
+
+[node name="Timer" type="Timer" parent="Main"]
+process_mode = 0
+wait_time = 1.5
+autostart = true
+
+[node name="Shoot" type="AnimationPlayer" parent="Main"]
+anims/Shoot = SubResource( 14 )
+
+[node name="Throw" type="AudioStreamPlayer" parent="Main"]
+stream = ExtResource( 10 )
+script = ExtResource( 3 )
+
+[node name="Plant_Sound" type="Node" parent="."]
+
+[node name="Ok" type="Node" parent="Plant_Sound"]
+
+[node name="Plant1" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 7 )
+script = ExtResource( 3 )
+
+[node name="Plant2" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 6 )
+script = ExtResource( 3 )
+
+[node name="Water" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 5 )
+script = ExtResource( 3 )
+
+[node name="Free_player" type="AnimationPlayer" parent="."]
+anims/Free = SubResource( 7 )
+
+[node name="Is_Eated" type="AnimationPlayer" parent="."]
+anims/Is_Eated = SubResource( 11 )
+
+[node name="Big_Chmop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+script = ExtResource( 3 )
+
+[node name="Died" type="AnimationPlayer" parent="."]
+anims/Died = SubResource( 12 )
+
+[node name="Bug_player" type="AnimationPlayer" parent="."]
+anims/Bug = SubResource( 15 )
+
+[node name="Health" type="Node2D" parent="."]
+visible = false
+modulate = Color( 2, 2, 2, 0.6 )
+z_index = 118
+z_as_relative = false
+
+[node name="Health" type="Label" parent="Health"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -36.0
+margin_top = -67.0
+margin_right = 303.0
+margin_bottom = 66.0
+rect_scale = Vector2( 0.2, 0.2 )
+custom_colors/font_color = Color( 0, 1, 0, 1 )
+custom_fonts/font = ExtResource( 15 )
+text = "HP:300"
+align = 1
+
+[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
+[connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
+[connection signal="area_entered" from="Main/Shovel_Area" to="." method="Area_Entered"]
+[connection signal="area_exited" from="Main/Shovel_Area" to="." method="Area_Exited"]
+[connection signal="area_entered" from="Main/Bullets_Way" to="." method="Bullets_Way_On"]
+[connection signal="area_exited" from="Main/Bullets_Way" to="." method="Bullets_Way_Off"]
+[connection signal="timeout" from="Main/Timer" to="." method="Bullets_Shot"]

@@ -5,6 +5,7 @@ public class H2_Main : Limited_Plants
 {
     public List<C2H5OH_Bullets_Fire_Area> Center_C2H5OH_Fire_Area_2D_List = new List<C2H5OH_Bullets_Fire_Area>();
     public List<C2H5OH_Bullets_Fire_Area> Out_C2H5OH_Fire_Area_2D_List = new List<C2H5OH_Bullets_Fire_Area>();
+    protected bool real_touching = false;
     public override void _Ready()
     {
         normal_ZIndex = 5;
@@ -12,7 +13,7 @@ public class H2_Main : Limited_Plants
         Position = new Vector2(-1437, -1437);
         GetNode<Area2D>("Dock/Area2D").PauseMode = PauseModeEnum.Process;
         AddChild(Android_Timer);
-        Android_Timer.WaitTime = 1f;
+        Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         if (!player_put)
@@ -136,7 +137,7 @@ public class H2_Main : Limited_Plants
                     }
                     this.Free();
                 }
-                if (Is_Double_Click)
+                if (Is_Double_Click || (Input.IsActionPressed("Left_Mouse") && !real_touching))
                 {
                     Is_Double_Click = false;
                     int this_sun = 0;
@@ -312,6 +313,13 @@ public class H2_Main : Limited_Plants
         if (IsInstanceValid(this))
         {
             this.QueueFree();
+        }
+    }
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventScreenTouch touchEvent)
+        {
+            real_touching = touchEvent.Device != -1;//真触摸
         }
     }
 }
