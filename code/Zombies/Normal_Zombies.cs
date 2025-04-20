@@ -378,6 +378,10 @@ public class Normal_Zombies : Node2D
             {
                 GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").lose_health = false;
                 health_list[0].Health -= GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").lose_health_number;
+                if (hurt_time < 20)
+                {
+                    hurt_time += 15;
+                }
             }
             if (in_water && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !GetNode<AnimationPlayer>("Out_Water").IsPlaying() && !now_in_water)
             {
@@ -701,7 +705,26 @@ public class Normal_Zombies : Node2D
                             hurt_time += 15;
                         }
                         health_list[0].Health -= Bullets_Area_2D_List[i].hurt;
-                        if (health_list.Count != 1 && Bullets_Area_2D_List[i].hurt_type == 2 && health_list.Get_Can_Through_To_Index() != -1) 
+                        if (health_list.Count != 1 && Bullets_Area_2D_List[i].hurt_type == 2 && health_list.Get_Can_Through_To_Index() != -1 && health_list.Get_Can_Through_To_Index() != 0) 
+                        {
+                            health_list[health_list.Get_Can_Through_To_Index()].Health -= Bullets_Area_2D_List[i].hurt;
+                        }
+                        if (health_list.Get_Has_Sound())
+                        {
+                            Bullets_Sound_Play();
+                        }
+                    }
+                }
+                else if (Bullets_Area_2D_List[i].Sec_Info == "New_Horizons")
+                {
+                    if (true)
+                    {
+                        if (hurt_time < 20)
+                        {
+                            hurt_time += 15;
+                        }
+                        health_list[0].Health -= Bullets_Area_2D_List[i].hurt;
+                        if (health_list.Count != 1 && health_list.Get_Can_Through_To_Index() != -1 && health_list.Get_Can_Through_To_Index() != 0) 
                         {
                             health_list[health_list.Get_Can_Through_To_Index()].Health -= Bullets_Area_2D_List[i].hurt;
                         }

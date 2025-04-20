@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://code/Bullets/Plants/New_Horizons_Bullets/New_Horizons_Bullets_shader.shader" type="Shader" id=1]
+[ext_resource path="res://code/Bullets/Plants/New_Horizons_Bullets/New_Horizons_Bullets_Main.cs" type="Script" id=2]
+[ext_resource path="res://code/Control_Area_2D/New_Horizons_Bullets_Area.cs" type="Script" id=3]
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/progression = 0.62
+shader_param/fade = 0.9
+shader_param/thickness = 0.4
+shader_param/wavelet_factor = 4.0
+shader_param/deformation_length = 16.0
+shader_param/screen_pos = null
+shader_param/screen_size = null
+shader_param/tint = Color( 0.5, 0.5, 0.9, 1 )
+
+[sub_resource type="ImageTexture" id=1]
+size = Vector2( 40, 40 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 6, 15 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 0.01, 0.01 )
+
+[node name="New_Horizons_Bullets" type="Node2D"]
+z_index = 17
+script = ExtResource( 2 )
+
+[node name="Shader" type="Sprite" parent="."]
+material = SubResource( 5 )
+texture = SubResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="Shape" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 7, 0 )
+shape = SubResource( 6 )
+
+[node name="Shovel_Area2D" type="Area2D" parent="."]
+
+[node name="Shape" type="CollisionShape2D" parent="Shovel_Area2D"]
+shape = SubResource( 4 )
+
+[connection signal="area_entered" from="Area2D" to="." method="Touch_Zombies"]
+[connection signal="area_entered" from="Shovel_Area2D" to="." method="Dock_Enter"]

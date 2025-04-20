@@ -83,7 +83,7 @@ public class Card_Tmp_Main : Node2D
     {
         GetNode<CanvasLayer>("All/Info").Hide();
     }
-    protected void Button_Click()
+    public void Button_Click()//适应键盘选择
     {
         if (has_Clicked)//?
         {

@@ -367,6 +367,7 @@ public class Normal_Plants : Node2D
             {
                 GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health = false;
                 health -= GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health_number;
+                GetNode<AnimationPlayer>("Is_Eated").Play("Is_Eated");
             }
             if (on_Shovel && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
             {

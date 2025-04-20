@@ -6,7 +6,7 @@ public class Level_Main : Control
     public int from_type = 1; 
     public override void _Ready()
     {
-        int Level_Number = this.GetIndex();
+        int Level_Number = this.GetParent().GetIndex() * 15 + this.GetIndex();
         if (from_type == 1)
         {
             GetNode<Label>("Number/level_number").Text = Public_Main.Level_Mode1[Level_Number].Item1;
@@ -26,7 +26,7 @@ public class Level_Main : Control
     }
     public async void Go_In_Game()
     {
-        int Level_Number = this.GetIndex();
+        int Level_Number = this.GetParent().GetIndex() * 15 + this.GetIndex();
         AudioStreamPlayer Click;
         if (from_type == 1)
         {

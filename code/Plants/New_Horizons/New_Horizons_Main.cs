@@ -142,16 +142,19 @@ public class New_Horizons_Main : Normal_Plants
             }
         }
     }
-    public async void Bug_Doing()
+    public void Bug_Doing()
     {
         if (sleep)
         {
             return;
         }
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 5; i++)
         {
-            await ToSignal(GetTree(), "idle_frame");
-            In_Game_Main.Plants_Bullets_Clone_Request("res://scene/Plants/Small_Shroom/Small_Shroom_Bullets/Small_Shroom_Bullets.tscn", GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition);//炼丹炉
+            Clone_Bullets(-30f);
+            Clone_Bullets(-15f);
+            Clone_Bullets(0f);
+            Clone_Bullets(15f);
+            Clone_Bullets(30f);
         }
     }
     public void Clone_Bullets(float sita = 0)

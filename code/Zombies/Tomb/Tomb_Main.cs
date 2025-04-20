@@ -39,8 +39,10 @@ public class Tomb_Main : Node2D
         "res://scene/Zombies/Polevaulter_Zombies/Polevaulter_Zombies.tscn",
         "res://scene/Zombies/Darts_Polevaulter_Zombies/Darts_Polevaulter_Zombies.tscn",
         "res://scene/Zombies/Screen_Door_Zombies/Screen_Door_Zombies.tscn",
-        "res://scene/Zombies/Fire_Zombies/Fire_Zombies.tscn",
-        "res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn"
+        "res://scene/Zombies/Fire_Zombies/Fire_Zombies.tscn",//10
+        "res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn",
+        "res://scene/Zombies/Bucket_Screen_Door_Zombies/Bucket_Screen_Door_Zombies.tscn",
+        "res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn"
     };
     protected List<Texture> Tomb_Texture_List = new List<Texture>
     {
@@ -403,6 +405,17 @@ public class Tomb_Main : Node2D
                 else if (Bullets_Area_2D_List[i].Sec_Info == "Small_Shroom")
                 {
                     if (Bullets_Area_2D_List[i].hurt_type == 2 || (Bullets_Area_2D_List[i].Choose_Tomb_Area == GetNode<Zombies_Tomb_Area2D>("Main/Tomb_Area2D") && Bullets_Area_2D_List[i].on_Tomb))
+                    {
+                        if (hurt_time < 20)
+                        {
+                            hurt_time += 15;
+                        }
+                        health -= Bullets_Area_2D_List[i].hurt;
+                    }
+                }
+                else if (Bullets_Area_2D_List[i].Sec_Info == "New_Horizons")
+                {
+                    if (true)
                     {
                         if (hurt_time < 20)
                         {

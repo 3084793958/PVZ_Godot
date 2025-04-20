@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=2]
+[gd_scene load_steps=76 format=2]
 
 [ext_resource path="res://image/background/background1.jpg" type="Texture" id=1]
 [ext_resource path="res://image/background/background3.png" type="Texture" id=2]
@@ -48,6 +48,7 @@
 [ext_resource path="res://code/In_Game/Zombies_Won/Zombies_Won_Button_Main.cs" type="Script" id=46]
 [ext_resource path="res://sound/bgm/Moongrains.mp3" type="AudioStream" id=47]
 [ext_resource path="res://code/In_Game/In_Game_Next_Wave.cs" type="Script" id=48]
+[ext_resource path="res://code/In_Game/Choose_Card_Page_Control.cs" type="Script" id=49]
 
 [sub_resource type="Animation" id=2]
 resource_name = "C_to_L"
@@ -1461,8 +1462,18 @@ margin_left = 11.0
 margin_top = 31.0
 margin_right = 600.0
 margin_bottom = 483.0
+script = ExtResource( 49 )
 
 [node name="Page1" type="GridContainer" parent="Main/Choose_Card/Background/Page"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 585.0
+margin_bottom = 445.0
+theme = SubResource( 16 )
+columns = 10
+
+[node name="Page2" type="GridContainer" parent="Main/Choose_Card/Background/Page"]
+visible = false
 margin_left = 2.0
 margin_top = 2.0
 margin_right = 585.0
@@ -1927,6 +1938,8 @@ process_mode = 0
 wait_time = 7.5
 
 [connection signal="pressed" from="Main/Next_Wave" to="." method="Next_Wave_pressed"]
+[connection signal="pressed" from="Main/Choose_Card/Background/Up_Page" to="Main/Choose_Card/Background/Page" method="Up"]
+[connection signal="pressed" from="Main/Choose_Card/Background/Down_Page" to="Main/Choose_Card/Background/Page" method="Down"]
 [connection signal="timeout" from="Timer" to="." method="Sun_Timeout"]
 [connection signal="timeout" from="Wave_Timer" to="." method="Wave_Timer_Out"]
 [connection signal="timeout" from="End_Cold_Timer" to="." method="End_Cold_Timer_timeout"]

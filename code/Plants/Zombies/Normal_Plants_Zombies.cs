@@ -343,6 +343,7 @@ public class Normal_Plants_Zombies : Node2D
             {
                 GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").lose_health = false;
                 health_list[0].Health -= GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").lose_health_number;
+                GetNode<AnimationPlayer>("Is_Eated").Play("Is_Eated");
             }
             if (in_water && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !GetNode<AnimationPlayer>("Out_Water").IsPlaying() && !now_in_water)
             {

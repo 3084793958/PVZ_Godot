@@ -135,6 +135,10 @@ public class Card_Click_Button : Node2D
                 Card_Node.AddChild(this.GetParent().GetParent());
                 this.GetNode<Control>("../..").RectPosition = Vector2.Zero;
                 Info.Hide();
+                if (this.GetParent().GetParent().GetParent() != Card_Node)
+                {
+                    Public_Main.now_card_number++;
+                }
             }//seed bank
             else
             {
@@ -163,6 +167,10 @@ public class Card_Click_Button : Node2D
                     Card_Node.RemoveChild(this.GetParent().GetParent());
                     Seed_Bank.AddChild(this.GetParent().GetParent());
                     Info.Hide();
+                    if (this.GetParent().GetParent().GetParent() == Card_Node)
+                    {
+                        Public_Main.now_card_number--;
+                    }
                 }
             }//card
         }

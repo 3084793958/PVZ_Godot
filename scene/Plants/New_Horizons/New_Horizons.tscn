@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://image/Plants/New_Horizons/Path/Eyes2.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/New_Horizons/New_Horizons_Main.cs" type="Script" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://sound/Plants/Normal/plant1.ogg" type="AudioStream" id=7]
 [ext_resource path="res://image/Plants/New_Horizons/Path/Body.png" type="Texture" id=8]
 [ext_resource path="res://image/Plants/New_Horizons/Path/Back_Hair.png" type="Texture" id=9]
-[ext_resource path="res://sound/Plants/Fume/fume.ogg" type="AudioStream" id=10]
+[ext_resource path="res://sound/Plants/Normal/throw.ogg" type="AudioStream" id=10]
 [ext_resource path="res://font/zh.otf" type="DynamicFontData" id=11]
 [ext_resource path="res://sound/Zombies/bigchomp.ogg" type="AudioStream" id=12]
 [ext_resource path="res://code/Control_Area_2D/Bullets_Way_Area.cs" type="Script" id=13]
@@ -23,6 +23,7 @@
 [ext_resource path="res://image/Plants/New_Horizons/Path/Move_Hair2.png" type="Texture" id=21]
 [ext_resource path="res://image/Plants/New_Horizons/Path/L_Hand.png" type="Texture" id=22]
 [ext_resource path="res://image/Plants/New_Horizons/Path/R_Hand.png" type="Texture" id=23]
+[ext_resource path="res://image/Plants/New_Horizons/Shining.png" type="Texture" id=24]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -149,6 +150,54 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Vector2( -3, -3 ), Vector2( -3, -7 ), Vector2( -3, -3 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Body/R_Hand:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 8.29766, -8.87695, 0.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Body/L_Hand:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -11.1319, 4.01451, 0.0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Body/L_Hand:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -7, -3 ), Vector2( -4.94593, -2.1302 ), Vector2( -9.10162, -3.76304 ), Vector2( -7, -3 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Body/R_Hand:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 23, -5 ), Vector2( 23.123, -4.39622 ), Vector2( 23.8347, -6.62619 ), Vector2( 23, -5 ) ]
+}
 
 [sub_resource type="Animation" id=19]
 resource_name = "Player1"
@@ -180,7 +229,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=20]
-extents = Vector2( 30, 30 )
+extents = Vector2( 40, 40 )
 
 [sub_resource type="RectangleShape2D" id=21]
 extents = Vector2( 535, 23 )
@@ -208,7 +257,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ false, true, false ]
@@ -262,7 +311,7 @@ tracks/5/keys = {
 "values": [ Vector2( 40, 40 ), Vector2( 20, 40 ), Vector2( 40, 40 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Body/Space:position:x")
+tracks/6/path = NodePath("Body/Space/Space:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -271,7 +320,67 @@ tracks/6/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ -3.0, -10.0, -3.0 ]
+"values": [ Vector2( -3, -3 ), Vector2( -10, -3 ), Vector2( -3, -3 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Body/Move_Hair1:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 30, -38 ), Vector2( 30.6523, -40.5081 ), Vector2( 27.1528, -40.4507 ), Vector2( 30, -38 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Body/Move_Hair1:rotation_degrees")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -19.4518, 14.1939, 0.0 ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Body/Move_Hair2:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -22, -42 ), Vector2( -17.3576, -40.7208 ), Vector2( -20.9228, -44.6629 ), Vector2( -22, -42 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Body/Move_Hair2:rotation_degrees")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.3, 0.7, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -18.0027, 22.5857, 0.0 ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Body/Space/Space/Shining:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, false ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -364,7 +473,7 @@ tracks/0/keys = {
 [node name="New_Horizons" type="Node2D"]
 z_index = 3
 script = ExtResource( 2 )
-Bullets_Path = "res://scene/Plants/Ice_Fume_Shroom/Ice_Fune_Shroom_Bullets/Ice_Fune_Shroom_Bullets.tscn"
+Bullets_Path = "res://scene/Plants/New_Horizons/New_Horizons_Bullets/New_Horizons_Bullets.tscn"
 
 [node name="Dock" type="Control" parent="."]
 anchor_left = 0.5
@@ -454,11 +563,23 @@ texture = ExtResource( 18 )
 
 [node name="Body" type="Node2D" parent="Main"]
 position = Vector2( 40, 40 )
+rotation = 0.0164006
 
-[node name="Space" type="Sprite" parent="Main/Body"]
+[node name="Space" type="Node2D" parent="Main/Body"]
+position = Vector2( -3, -4.50349 )
+
+[node name="Space" type="Sprite" parent="Main/Body/Space"]
 position = Vector2( -3, -3 )
 scale = Vector2( 0.275, 0.275 )
 texture = ExtResource( 19 )
+
+[node name="Shining" type="Sprite" parent="Main/Body/Space/Space"]
+visible = false
+modulate = Color( 1, 1, 1, 0.588235 )
+position = Vector2( -104.841, 65.7314 )
+scale = Vector2( 0.15, 0.15 )
+z_index = 1
+texture = ExtResource( 24 )
 
 [node name="Back_Hair" type="Sprite" parent="Main/Body"]
 position = Vector2( 7.5, -43.667 )
@@ -486,17 +607,20 @@ scale = Vector2( 0.275, 0.275 )
 texture = ExtResource( 16 )
 
 [node name="L_Hand" type="Sprite" parent="Main/Body"]
-position = Vector2( -7, -3 )
+position = Vector2( -8.31657, -3.47801 )
+rotation = 0.0438935
 scale = Vector2( 0.275, 0.275 )
 texture = ExtResource( 22 )
 
 [node name="R_Hand" type="Sprite" parent="Main/Body"]
-position = Vector2( 23, -5 )
+position = Vector2( 23.5229, -6.01874 )
+rotation = -0.0970581
 scale = Vector2( 0.275, 0.275 )
 texture = ExtResource( 23 )
 
 [node name="eyes" type="Node2D" parent="Main"]
 position = Vector2( 40, 40 )
+rotation = 0.0164006
 
 [node name="Eye1" type="Sprite" parent="Main/eyes"]
 position = Vector2( 9, -42 )
@@ -545,14 +669,14 @@ anims/Player1 = SubResource( 18 )
 anims/Player1 = SubResource( 19 )
 
 [node name="Shovel_Area" type="Area2D" parent="Main"]
-position = Vector2( 40, 40 )
+position = Vector2( 45, 40 )
 script = ExtResource( 17 )
 
 [node name="Shape" type="CollisionShape2D" parent="Main/Shovel_Area"]
 shape = SubResource( 20 )
 
 [node name="Bullets_Way" type="Area2D" parent="Main"]
-position = Vector2( 23, 26 )
+position = Vector2( 4, 38 )
 script = ExtResource( 13 )
 
 [node name="Shape" type="CollisionShape2D" parent="Main/Bullets_Way"]
@@ -561,7 +685,7 @@ shape = SubResource( 21 )
 
 [node name="Timer" type="Timer" parent="Main"]
 process_mode = 0
-wait_time = 1.5
+wait_time = 2.0
 autostart = true
 
 [node name="Shoot" type="AnimationPlayer" parent="Main"]

@@ -5,16 +5,19 @@ public class Mode1_Page : Control
 {
     public override void _Ready()
     {
-        var Page1 = GetNode<GridContainer>("Page1");
+        var Page1 = GetNode<GridContainer>("Page_Control/Page1");
+        var Page2 = GetNode<GridContainer>("Page_Control/Page2");
         for (int i = 0; i < Public_Main.Level_Mode1.Count; i++)
         {
-            if (Page1.GetChildCount() > 15)
-            { }
-            else
+            var scene = GD.Load<PackedScene>("res://scene/Level/Level.tscn");
+            var card_child = (Level_Main)scene.Instance();
+            if (Page1.GetChildCount() < 15)
             {
-                var scene = GD.Load<PackedScene>("res://scene/Level/Level.tscn");
-                var card_child = (Level_Main)scene.Instance();
                 Page1.AddChild(card_child);
+            }
+            else if (Page2.GetChildCount() < 15)
+            {
+                Page2.AddChild(card_child);
             }
         }
     }

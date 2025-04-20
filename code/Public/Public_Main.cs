@@ -380,6 +380,26 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(150,"res://scene/Plants/Zombies/H2_maker_Zombies/Plants_H2_maker_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    13,
+    "魅惑三爷",
+    "魅惑三爷",
+    "魅惑三爷",
+    GD.Load<Texture>("res://image/Plants/Zombies/Bucket_Screen_Door_Zombies/Plants_Bucket_Screen_Door_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(550,"res://scene/Plants/Zombies/Bucket_Screen_Door_Zombies/Plants_Bucket_Screen_Door_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    14,
+    "魅惑标枪铁门僵尸",
+    "WC挂!",
+    "WC挂!",
+    GD.Load<Texture>("res://image/Plants/Zombies/Dart_Screen_Door_Zombies/Dart_Screen_Door_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(750,"res://scene/Plants/Zombies/Darts_Screen_Door_Zombies/Plants_Darts_Screen_Door_Zombies.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -504,6 +524,26 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(150,"res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    13,
+    "三爷",
+    "3170血量",
+    "你三爷",
+    GD.Load<Texture>("res://image/Zombies/Bucket_Screen_Door_Zombies/Bucket_Screen_Door_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(550,"res://scene/Zombies/Bucket_Screen_Door_Zombies/Bucket_Screen_Door_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    14,
+    "标枪铁门僵尸",
+    "破阵神器",
+    "破阵神器",
+    GD.Load<Texture>("res://image/Zombies/Darts_Screen_Door_Zombies/Dart_Screen_Door_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(750,"res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn")
     )
     };
     static public List<string> Zombies_Path_List = new List<string>
@@ -519,7 +559,9 @@ static public class Public_Main
         "res://scene/Zombies/Tomb/Tomb.tscn",//9
         "res://scene/Zombies/Screen_Door_Zombies/Screen_Door_Zombies.tscn",//10
         "res://scene/Zombies/Fire_Zombies/Fire_Zombies.tscn",
-        "res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn"
+        "res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn",
+        "res://scene/Zombies/Bucket_Screen_Door_Zombies/Bucket_Screen_Door_Zombies.tscn",
+        "res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn"
     };
     static public List<Tuple<string, string, Texture, int>> Level_Mode1 = new List<Tuple<string, string, Texture, int>>
     { 
@@ -555,6 +597,12 @@ static public class Public_Main
         2),
         new Tuple<string, string,Texture, int>("第11关:钢门批发","res://level/Mode1/Mode1_11.cfg",
         GD.Load<Texture>("res://image/Plants/Sun_Shroom/SunShroom_All.png"),
+        2),
+        new Tuple<string, string,Texture, int>("第12关:特刊","res://level/Mode1/Mode1_12.cfg",
+        GD.Load<Texture>("res://image/Plants/H2/H2.png"),
+        2),
+        new Tuple<string, string,Texture, int>("第13关:总有一天","res://level/Mode1/Mode1_13.cfg",
+        GD.Load<Texture>("res://image/Plants/Fume_Shroom/FumeShroom_Main.png"),
         2),
         new Tuple<string, string,Texture, int>("白天草坪(测试专用)","res://level/Mode1/Mode1_demo_Day.cfg",
         GD.Load<Texture>("res://image/Plants/godot/godot.png"),
