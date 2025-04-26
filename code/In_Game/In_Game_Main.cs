@@ -37,6 +37,7 @@ public class In_Game_Main : Node2D
     static public bool Zombies_Died_Sun = false;
     public override async void _Ready()
     {
+        OS.RequestPermissions();//Andorid请求读取文件
         GD.Randomize();
         Zombies_Number = 0;
         Public_Main.now_card_number = 0;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=2]
+[gd_scene load_steps=74 format=2]
 
 [ext_resource path="res://image/Login/title.png" type="Texture" id=1]
 [ext_resource path="res://sound/bgm/Login.mp3" type="AudioStream" id=2]
@@ -48,6 +48,9 @@
 [ext_resource path="res://image/background/PVZ_PlayButton.png" type="Texture" id=46]
 [ext_resource path="res://sound/button/ZombiesOnYourLawn.ogg" type="AudioStream" id=47]
 [ext_resource path="res://code/Login/Button_PVZ.cs" type="Script" id=48]
+[ext_resource path="res://image/Login/Open_File.png" type="Texture" id=49]
+[ext_resource path="res://code/Login/Open_File_Button.cs" type="Script" id=50]
+[ext_resource path="res://code/Login/Open_File.cs" type="Script" id=51]
 
 [sub_resource type="Animation" id=21]
 resource_name = "Run"
@@ -268,6 +271,15 @@ size = 25
 outline_size = 3
 outline_color = Color( 0, 0, 0, 1 )
 font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=22]
+size = 20
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 6 )
+
+[sub_resource type="Theme" id=23]
+default_font = SubResource( 22 )
 
 [node name="Login" type="Node2D"]
 script = ExtResource( 18 )
@@ -717,10 +729,10 @@ flat = true
 script = ExtResource( 39 )
 
 [node name="PVZ" type="TextureButton" parent="Main"]
-margin_left = 115.0
-margin_top = 458.0
-margin_right = 174.0
-margin_bottom = 519.0
+margin_left = 191.0
+margin_top = 448.0
+margin_right = 250.0
+margin_bottom = 509.0
 rect_rotation = 25.3368
 texture_normal = ExtResource( 46 )
 script = ExtResource( 48 )
@@ -729,6 +741,31 @@ script = ExtResource( 48 )
 pause_mode = 2
 stream = ExtResource( 47 )
 script = ExtResource( 40 )
+
+[node name="Open_File" type="FileDialog" parent="Main"]
+margin_left = 178.0
+margin_top = 102.0
+margin_right = 876.0
+margin_bottom = 454.0
+theme = SubResource( 23 )
+window_title = "打开文件"
+dialog_text = "导入关卡文件(.cfg)"
+dialog_hide_on_ok = true
+mode = 0
+access = 2
+filters = PoolStringArray( "*.cfg" )
+show_hidden_files = true
+script = ExtResource( 51 )
+
+[node name="Open_File_Button" type="TextureButton" parent="Main"]
+margin_left = 4.0
+margin_top = 504.0
+margin_right = 93.0
+margin_bottom = 593.0
+texture_normal = ExtResource( 49 )
+expand = true
+stretch_mode = 4
+script = ExtResource( 50 )
 
 [node name="bgm" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
@@ -743,3 +780,5 @@ script = ExtResource( 40 )
 [node name="button_Hover" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 19 )
 script = ExtResource( 40 )
+
+[connection signal="file_selected" from="Main/Open_File" to="Main/Open_File_Button" method="Choose_File_OK"]

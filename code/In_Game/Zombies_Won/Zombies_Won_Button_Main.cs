@@ -15,5 +15,9 @@ public class Zombies_Won_Button_Main : Button
         {
             GetTree().ChangeScene("res://scene/Mode2/Mode2.tscn");
         }
+        else
+        {
+            GetTree().ChangeScene("res://scene/Login/Login.tscn");
+        }
     }
 }

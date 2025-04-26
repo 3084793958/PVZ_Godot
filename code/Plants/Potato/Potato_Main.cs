@@ -4,6 +4,7 @@ using System;
 public class Potato_Main : Normal_Plants
 {
     public bool has_up = false;
+    public bool doing_bug = false;
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
@@ -40,7 +41,14 @@ public class Potato_Main : Normal_Plants
                                 can_touch = true;
                                 if (has_up)
                                 {
-                                    GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
+                                    if (doing_bug)
+                                    {
+                                        GetNode<Normal_Boom_Area>("Main/Boom").hurt = 3000;
+                                    }
+                                    else
+                                    {
+                                        GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
+                                    }
                                     GetNode<Normal_Boom_Area>("Main/Boom").can_do = true;
                                     GetNode<Normal_Boom_Area>("Main/Boom").Start_hurting();
                                     GetNode<AnimationPlayer>("Died").Play("Died");
@@ -55,7 +63,14 @@ public class Potato_Main : Normal_Plants
             {
                 if (has_up)
                 {
-                    GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
+                    if (doing_bug)
+                    {
+                        GetNode<Normal_Boom_Area>("Main/Boom").hurt = 3000;
+                    }
+                    else
+                    {
+                        GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
+                    }
                     GetNode<Normal_Boom_Area>("Main/Boom").can_do = true;
                     GetNode<Normal_Boom_Area>("Main/Boom").Start_hurting();
                     GetNode<AnimationPlayer>("Died").Play("Died");
@@ -100,13 +115,21 @@ public class Potato_Main : Normal_Plants
         {
             GetNode<Timer>("Up_Timer").Stop();
             Up_Timer_timeout();
+            doing_bug = true;
         }
+    }
+    public void Just_Up()
+    {
+        has_up = true;
+        GetNode<Timer>("Up_Timer").Stop();
+        GetNode<AnimationPlayer>("Main/Out_Land").Play("Out_Land");
     }
     public void Up_Timer_timeout()
     {
-        if (health > 0)
+        if (health > 0 && !has_up) 
         {
             has_up = true;
+            GetNode<Timer>("Up_Timer").Stop();
             GetNode<AnimationPlayer>("Main/Out_Land").Play("Out_Land");
         }
     }

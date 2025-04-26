@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/puff_S.mp3-03df9f51f5188c3dc0ca4462e674035b.mp3str"
+
+[deps]
+
+source_file="res://sound/Plants/Puff/puff_S.mp3"
+dest_files=[ "res://.import/puff_S.mp3-03df9f51f5188c3dc0ca4462e674035b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

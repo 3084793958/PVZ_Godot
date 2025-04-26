@@ -1,0 +1,107 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://code/Mouse_Wave/Mouse_Wave_Main_Shader.shader" type="Shader" id=1]
+[ext_resource path="res://code/Mouse_Wave/Mouse_Wave_Main.cs" type="Script" id=2]
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=3]
+[ext_resource path="res://sound/Plants/Puff/puff_S.mp3" type="AudioStream" id=4]
+
+[sub_resource type="ShaderMaterial" id=6]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/r = 0.27
+shader_param/DR = 0.05
+shader_param/DR2 = 0.02
+shader_param/DR3 = 0.05
+shader_param/DR4 = 0.05
+shader_param/DR5 = 0.1
+shader_param/Color = Color( 0.403922, 0.980392, 0.517647, 1 )
+shader_param/k = 40.0
+
+[sub_resource type="ImageTexture" id=1]
+size = Vector2( 50, 50 )
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Wave:material:shader_param/r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.27 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Run"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Wave:material:shader_param/r")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Wave:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.01 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Puff:playing")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.001, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, false ]
+}
+
+[node name="Mouse_Wave_Main" type="Node2D"]
+z_index = 150
+script = ExtResource( 2 )
+
+[node name="Wave" type="Sprite" parent="."]
+visible = false
+material = SubResource( 6 )
+texture = SubResource( 1 )
+
+[node name="Player" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 4 )
+anims/Run = SubResource( 5 )
+
+[node name="Puff" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+script = ExtResource( 3 )

@@ -26,6 +26,7 @@ default_bus_layout=""
 Change_Scene="*res://scene/Change_Scene/Change_Scene.tscn"
 Setting="*res://scene/Setting/Setting.tscn"
 Pause="*res://scene/Pause/Pause.tscn"
+Mouse_Wave="*res://scene/Mouse_Wave/Mouse_Wave.tscn"
 
 [display]
 

@@ -20,9 +20,18 @@ public class Trophy_Main : Node2D
     {
         if (!In_Game_Main.has_Lost_Brain)
         {
+            Mode = In_Game_Main.from_type;
             if (Mode == 1)
             {
                 GetTree().ChangeScene("res://scene/Mode1/Mode1.tscn");
+            }
+            else if (Mode == 2)
+            {
+                GetTree().ChangeScene("res://scene/Mode2/Mode2.tscn");
+            }
+            else
+            {
+                GetTree().ChangeScene("res://scene/Login/Login.tscn");
             }
         }
     }

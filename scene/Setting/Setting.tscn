@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://env/Name_Label_theme.tres" type="Theme" id=1]
 [ext_resource path="res://font/zh.otf" type="DynamicFontData" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://code/Setting/Setting_Plants_Health.cs" type="Script" id=21]
 [ext_resource path="res://code/Setting/Setting_Plants_Zombies_Health.cs" type="Script" id=22]
 [ext_resource path="res://code/Setting/Setting_Open_ReStart.cs" type="Script" id=23]
+[ext_resource path="res://code/Setting/Setting_Mouse_Effect.cs" type="Script" id=24]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -328,6 +329,22 @@ toggle_mode = true
 pressed = true
 text = "显示魅惑僵尸血量"
 script = ExtResource( 22 )
+
+[node name="Mouse_Effect" type="Button" parent="Setting/More/More"]
+margin_left = 242.0
+margin_top = 137.0
+margin_right = 370.0
+margin_bottom = 182.0
+custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+toggle_mode = true
+pressed = true
+text = "鼠标效果"
+script = ExtResource( 24 )
 
 [node name="button_Click" type="AudioStreamPlayer" parent="Setting"]
 stream = ExtResource( 8 )

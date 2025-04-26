@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/gravebusterchomp.ogg-efce1e34b4efa10ce9b4ebc6dbb6e78e.oggstr"
+
+[deps]
+
+source_file="res://sound/Plants/GraveBuster/gravebusterchomp.ogg"
+dest_files=[ "res://.import/gravebusterchomp.ogg-efce1e34b4efa10ce9b4ebc6dbb6e78e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

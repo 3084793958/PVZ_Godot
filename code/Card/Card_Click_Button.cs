@@ -3,6 +3,7 @@ using System;
 
 public class Card_Click_Button : Node2D
 {
+    public bool Card_Is_Running = false;
     public Control Card_Node=null;
     public string plant_path = null;
     public int sun = 0;
@@ -12,6 +13,7 @@ public class Card_Click_Button : Node2D
     public bool is_zombies = false;
     public bool isPlants_zombies = false;
     public bool has_Clicked = false;
+    public bool Await_Running = false;
     //private Object
     public override void _Ready()
     {
@@ -64,7 +66,7 @@ public class Card_Click_Button : Node2D
                                 plant_child.card_parent_Button = this;
                                 GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
                             }
-                            catch(Exception)
+                            catch (Exception)
                             {
                                 var plant_child = (Tomb_Main)scene.Instance();
                                 plant_child.player_put = true;
@@ -118,61 +120,66 @@ public class Card_Click_Button : Node2D
         {
             var button_Click = GetNode<AudioStreamPlayer>("../button_Click");
             button_Click.Play();
-            if (this.GetParent().GetParent().GetParent() != Card_Node)
+            if (!Card_Is_Running)
             {
-                Public_Main.now_card_number--;
-                var Info = GetNode<Node2D>("../Info");
-                Info.Hide();
-                Vector2 Delta_Vector2 = (Card_Node.RectGlobalPosition - this.GetNode<Control>("../..").RectGlobalPosition) / 5;
-                GetNode<Node2D>("..").ZIndex = 120;
-                for (int i = 0; i < 5; i++)
-                {
-                    await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
-                    this.GetNode<Control>("../..").RectGlobalPosition += Delta_Vector2;
-                }
-                GetNode<Node2D>("..").ZIndex = 1;
-                this.GetParent().GetParent().GetParent().RemoveChild(this.GetParent().GetParent());
-                Card_Node.AddChild(this.GetParent().GetParent());
-                this.GetNode<Control>("../..").RectPosition = Vector2.Zero;
-                Info.Hide();
+                Card_Is_Running = true;
                 if (this.GetParent().GetParent().GetParent() != Card_Node)
                 {
-                    Public_Main.now_card_number++;
-                }
-            }//seed bank
-            else
-            {
-                var Seed_Bank = GetNode<HBoxContainer>("/root/In_Game/Main/Card/SeedBank/Seed");
-                if (Public_Main.allow_card_number > Public_Main.now_card_number)
-                {
+                    Public_Main.now_card_number--;
                     var Info = GetNode<Node2D>("../Info");
                     Info.Hide();
-                    Vector2 Delta_Vector2;
-                    if (Public_Main.now_card_number == 0)
-                    {
-                        Delta_Vector2 = (Card_Node.RectGlobalPosition - Seed_Bank.RectGlobalPosition) / 5;
-                    }
-                    else
-                    {
-                        Delta_Vector2 = (Card_Node.RectGlobalPosition - Seed_Bank.RectGlobalPosition - new Vector2(Public_Main.now_card_number * 55, 0)) / 5;
-                    }
-                    Public_Main.now_card_number++;
+                    Vector2 Delta_Vector2 = (Card_Node.RectGlobalPosition - this.GetNode<Control>("../..").RectGlobalPosition) / 5;
                     GetNode<Node2D>("..").ZIndex = 120;
                     for (int i = 0; i < 5; i++)
                     {
                         await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
-                        this.GetNode<Control>("../..").RectGlobalPosition -= Delta_Vector2;
+                        this.GetNode<Control>("../..").RectGlobalPosition += Delta_Vector2;
                     }
                     GetNode<Node2D>("..").ZIndex = 1;
-                    Card_Node.RemoveChild(this.GetParent().GetParent());
-                    Seed_Bank.AddChild(this.GetParent().GetParent());
+                    this.GetParent().GetParent().GetParent().RemoveChild(this.GetParent().GetParent());
+                    Card_Node.AddChild(this.GetParent().GetParent());
+                    this.GetNode<Control>("../..").RectPosition = Vector2.Zero;
                     Info.Hide();
-                    if (this.GetParent().GetParent().GetParent() == Card_Node)
+                    if (this.GetParent().GetParent().GetParent() != Card_Node)
                     {
-                        Public_Main.now_card_number--;
+                        Public_Main.now_card_number++;
                     }
-                }
-            }//card
+                }//seed bank
+                else
+                {
+                    var Seed_Bank = GetNode<HBoxContainer>("/root/In_Game/Main/Card/SeedBank/Seed");
+                    if (Public_Main.allow_card_number > Public_Main.now_card_number)
+                    {
+                        var Info = GetNode<Node2D>("../Info");
+                        Info.Hide();
+                        Vector2 Delta_Vector2;
+                        if (Public_Main.now_card_number == 0)
+                        {
+                            Delta_Vector2 = (Card_Node.RectGlobalPosition - Seed_Bank.RectGlobalPosition) / 5;
+                        }
+                        else
+                        {
+                            Delta_Vector2 = (Card_Node.RectGlobalPosition - Seed_Bank.RectGlobalPosition - new Vector2(Public_Main.now_card_number * 55, 0)) / 5;
+                        }
+                        Public_Main.now_card_number++;
+                        GetNode<Node2D>("..").ZIndex = 120;
+                        for (int i = 0; i < 5; i++)
+                        {
+                            await ToSignal(GetTree().CreateTimer(0.03f), "timeout");
+                            this.GetNode<Control>("../..").RectGlobalPosition -= Delta_Vector2;
+                        }
+                        GetNode<Node2D>("..").ZIndex = 1;
+                        Card_Node.RemoveChild(this.GetParent().GetParent());
+                        Seed_Bank.AddChild(this.GetParent().GetParent());
+                        Info.Hide();
+                        if (this.GetParent().GetParent().GetParent() != Seed_Bank)
+                        {
+                            Public_Main.now_card_number--;
+                        }
+                    }
+                }//card
+                Card_Is_Running = false;
+            }
         }
     }
     public override void _Process(float delta)

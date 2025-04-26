@@ -10,13 +10,40 @@ public class Background_Grid_Main : Control_Area_2D
     public List<Node2D> Down_Plant_List = new List<Node2D>();
     public List<Node2D> Top_Plant_List = new List<Node2D>();
     public List<int> now_type = new List<int>();//末项
-    public List<bool> Small_Plants_List = new List<bool> { false, false, false };
+    public List<Node2D> Small_Plants_List = new List<Node2D> { null, null, null };
     public override void _Ready()
     {
         now_type.Add(type);
         pos[1] = int.Parse(this.GetParent().Name);
         pos[0] = int.Parse(this.Name);
         Area2D_type = "Grid";
+    }
+    public override void _PhysicsProcess(float delta)
+    {
+        for (int i = 0; i < Normal_Plant_List.Count; i++)
+        {
+            if (Normal_Plant_List[i] == null)
+            {
+                Normal_Plant_List.RemoveAt(i);
+                i--;
+            }
+        }
+        for (int i = 0; i < Down_Plant_List.Count; i++)
+        {
+            if (Down_Plant_List[i] == null)
+            {
+                Down_Plant_List.RemoveAt(i);
+                i--;
+            }
+        }
+        for (int i = 0; i < Top_Plant_List.Count; i++)
+        {
+            if (Top_Plant_List[i] == null)
+            {
+                Top_Plant_List.RemoveAt(i);
+                i--;
+            }
+        }
     }
     public bool Is_All_Small_in_normal()
     {
@@ -36,7 +63,7 @@ public class Background_Grid_Main : Control_Area_2D
         int result = -1;
         for (int i = 0; i < Small_Plants_List.Count; i++)
         {
-            if (!Small_Plants_List[i])
+            if (Small_Plants_List[i] == null) 
             {
                 result = i;
                 break;

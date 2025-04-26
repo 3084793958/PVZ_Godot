@@ -52,6 +52,7 @@ public class Start_Main : Node2D
                     Public_Main.Show_Zombies_Health = (bool)file3.GetValue("Setting", "Zombies_Health", true);
                     Public_Main.Show_Plants_Health = (bool)file3.GetValue("Setting", "Plants_Health", true);
                     Public_Main.Show_Plants_Zombies_Health = (bool)file3.GetValue("Setting", "Plants_Zombies_Health", true);
+                    Public_Main.Show_Mouse_Effect = (bool)file3.GetValue("Setting", "Mouse_Effect", true);
                 }
                 else
                 {
@@ -62,6 +63,7 @@ public class Start_Main : Node2D
                     Public_Main.Show_Zombies_Health = true;
                     Public_Main.Show_Plants_Health = true;
                     Public_Main.Show_Plants_Zombies_Health = true;
+                    Public_Main.Show_Mouse_Effect = true;
                 }
             }
         }
@@ -75,6 +77,7 @@ public class Start_Main : Node2D
         GetNode<Setting_Zombies_Health>("/root/Setting/Setting/More/More/Zombies_Health").Update_This();
         GetNode<Setting_Plants_Health>("/root/Setting/Setting/More/More/Plants_Health").Update_This();
         GetNode<Setting_Plants_Zombies_Health>("/root/Setting/Setting/More/More/Plants_Zombies_Health").Update_This();
+        GetNode<Setting_Mouse_Effect>("/root/Setting/Setting/More/More/Mouse_Effect").Update_This();
         GetNode<LineEdit>("/root/Setting/Setting/More/More/Limit_LineEdit").Text = Public_Main.Max_Object_Clone_In_F.ToString();
         ChangeScene_Start.B_to_E(Shadow);
     }

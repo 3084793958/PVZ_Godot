@@ -69,7 +69,7 @@ public class Sun_Main : Node2D
         if (In_Game_Main.is_playing && !GetTree().Paused) 
         {
             var Mouse_position = GetTree().Root.GetMousePosition();
-            if (Math.Abs(GetNode<Control>("Sun").RectGlobalPosition.x - Mouse_position.x) < 40 && Math.Abs(GetNode<Control>("Sun").RectGlobalPosition.y - Mouse_position.y) < 40)
+            if (Math.Abs(GetNode<Control>("Sun").RectGlobalPosition.x - Mouse_position.x) < 80 * size && Math.Abs(GetNode<Control>("Sun").RectGlobalPosition.y - Mouse_position.y) < 80 * size) 
             {
                 if (Input.IsActionPressed("Left_Mouse") && !is_lock) 
                 {

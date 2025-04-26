@@ -21,6 +21,7 @@ static public class Public_Main
     static public bool Show_Zombies_Health = true;
     static public bool Show_Plants_Health = true;
     static public bool Show_Plants_Zombies_Health = true;
+    static public bool Show_Mouse_Effect = true;
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int,string>>> Plant_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
     {
     //ID,Name,Info,More_Info,Texture(有搞头,可能变成List<Texture>),First_Time(Normal),Wait_Time(Normal),Sun(Normal),path
@@ -82,7 +83,7 @@ static public class Public_Main
     GD.Load<Texture>("res://image/Plants/H2SO4/H2SO4.png"),
     0f,
     20f,
-    new Tuple<int,string>(75,"res://scene/Plants/H2SO4/H2SO4.tscn")
+    new Tuple<int,string>(50,"res://scene/Plants/H2SO4/H2SO4.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     7,
@@ -201,8 +202,8 @@ static public class Public_Main
     "氢气",
     GD.Load<Texture>("res://image/Plants/H2/H2.png"),
     0f,
-    25f,
-    new Tuple<int,string>(25,"res://scene/Plants/H2/H2.tscn")
+    15f,
+    new Tuple<int,string>(5,"res://scene/Plants/H2/H2.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     19,
@@ -236,6 +237,16 @@ static public class Public_Main
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     22,
+    "墓碑吞",
+    "死亡生成土豆雷",
+    "75",
+    GD.Load<Texture>("res://image/Plants/Grave_Buster/Grave_Buster_Main.png"),
+    10f,
+    15f,
+    new Tuple<int,string>(75,"res://scene/Plants/Grave_Buster/Grave_Buster.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    23,
     "莲叶",
     "莲叶",
     "莲叶",
@@ -400,6 +411,16 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(750,"res://scene/Plants/Zombies/Darts_Screen_Door_Zombies/Plants_Darts_Screen_Door_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    15,
+    "魅惑墓碑僵尸",
+    "死亡生成墓碑",
+    "死亡生成墓碑",
+    GD.Load<Texture>("res://image/Plants/Zombies/Bucket_Tomb_Zombies/Plants_Bucket_Tomb_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(325,"res://scene/Plants/Zombies/Bucket_Tomb_Zombies/Plants_Bucket_Tomb_Zombies.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -544,6 +565,16 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(750,"res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    15,
+    "墓碑僵尸",
+    "死亡生成墓碑",
+    "死亡生成墓碑",
+    GD.Load<Texture>("res://image/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(325,"res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn")
     )
     };
     static public List<string> Zombies_Path_List = new List<string>
@@ -561,7 +592,8 @@ static public class Public_Main
         "res://scene/Zombies/Fire_Zombies/Fire_Zombies.tscn",
         "res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn",
         "res://scene/Zombies/Bucket_Screen_Door_Zombies/Bucket_Screen_Door_Zombies.tscn",
-        "res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn"
+        "res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn",
+        "res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn"
     };
     static public List<Tuple<string, string, Texture, int>> Level_Mode1 = new List<Tuple<string, string, Texture, int>>
     { 
@@ -630,6 +662,7 @@ static public class Public_Main
         file.SetValue("Setting", "Zombies_Health", Public_Main.Show_Zombies_Health);
         file.SetValue("Setting", "Plants_Health", Public_Main.Show_Plants_Health);
         file.SetValue("Setting", "Plants_Zombies_Health", Public_Main.Show_Plants_Zombies_Health);
+        file.SetValue("Setting", "Mouse_Effect", Public_Main.Show_Mouse_Effect);
         file.Save("user://Users/" + Public_Main.user_name + "/Develop_Setting.cfg");
     }
 }

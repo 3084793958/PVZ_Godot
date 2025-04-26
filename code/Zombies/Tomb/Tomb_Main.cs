@@ -42,7 +42,8 @@ public class Tomb_Main : Node2D
         "res://scene/Zombies/Fire_Zombies/Fire_Zombies.tscn",//10
         "res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn",
         "res://scene/Zombies/Bucket_Screen_Door_Zombies/Bucket_Screen_Door_Zombies.tscn",
-        "res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn"
+        "res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn",
+        "res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn"
     };
     protected List<Texture> Tomb_Texture_List = new List<Texture>
     {

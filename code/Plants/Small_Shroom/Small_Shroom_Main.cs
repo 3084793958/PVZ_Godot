@@ -128,7 +128,7 @@ public class Small_Shroom_Main : Normal_Plants
         Dock_Area_2D.Normal_Plant_List.Add(this);
         if (dock_small_id > 0)
         {
-            Dock_Area_2D.Small_Plants_List[dock_small_id - 1] = true;
+            Dock_Area_2D.Small_Plants_List[dock_small_id - 1] = this;
         }
     }
     protected override void Plants_Remove_List()
@@ -137,7 +137,7 @@ public class Small_Shroom_Main : Normal_Plants
         has_removed = true;
         if (dock_small_id > 0)
         {
-            Dock_Area_2D.Small_Plants_List[dock_small_id - 1] = false;
+            Dock_Area_2D.Small_Plants_List[dock_small_id - 1] = null;
         }
     }
     protected override void Plants_Init()
