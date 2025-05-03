@@ -63,7 +63,7 @@ public class Screen_Door_Zombies_Main : Normal_Zombies
     public override void _Ready()
     {
         health_list.Clear();
-        health_list.Add(new Health_Container(1600, true, "Door", true));//铁门
+        health_list.Add(new Health_Container(1600, true, "Door", true, "Iron"));//铁门
         health_list.Add(new Health_Container(270, false));
         base._Ready();
     }

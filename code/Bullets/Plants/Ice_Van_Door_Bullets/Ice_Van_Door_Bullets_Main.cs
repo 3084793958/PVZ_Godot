@@ -6,7 +6,7 @@ public class Ice_Van_Door_Bullets_Main : Normal_Plants_Bullets
     public int Bullets_Type = 1;
     public override void _Ready()
     {
-        GetNode<Ice_Bullets_Area>("Area2D").hurt = 20;
+        GetNode<Ice_Bullets_Area>("Area2D").hurt = 40;
         GetNode<AudioStreamPlayer>("Touch").Stream.Set("loop", false);
         GetNode<AnimationPlayer>("Pea_Animation").Play("Pea");
         normal_ZIndex = 17;
@@ -46,7 +46,7 @@ public class Ice_Van_Door_Bullets_Main : Normal_Plants_Bullets
             {
                 this.Position += new Vector2(speed_x * delta * 60, speed_y * delta * 60);
             }
-            if (Position.x > 1437)
+            if (Position.x > 1437 || Position.x < -512 || Position.y > 800 || Position.y < -200)
             {
                 this.QueueFree();
             }

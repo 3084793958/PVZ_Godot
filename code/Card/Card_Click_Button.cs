@@ -109,6 +109,10 @@ public class Card_Click_Button : Node2D
                             }
                         }
                     }
+                    else if (Normal_Plants.Choosing)
+                    {
+                        Normal_Plants.Choosing = false;
+                    }
                 }
                 else
                 {

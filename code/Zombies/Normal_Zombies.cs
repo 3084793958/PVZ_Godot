@@ -25,7 +25,7 @@ public class Normal_Zombies : Node2D
     [Export] protected float speed_Normal = -1.5f;
     [Export] protected bool can_Eating = true;
     protected bool Doing_jumping = false;//for Pole...
-    protected int eating_speed = 1;
+    protected float eating_speed = 1f;
     protected bool Allow_Hurt_Time = true;
     protected float speed_x = 1f;
     protected bool has_planted = false;
@@ -62,6 +62,8 @@ public class Normal_Zombies : Node2D
     protected bool On_Zombies_Fire = false;
     protected bool real_touching = false;
     protected List<Fune_Shroom_Bullets_Area> Fune_Shroom_Bullets_Area_2D_List = new List<Fune_Shroom_Bullets_Area>();
+    [Export] protected bool Never_Died = false;
+    [Export] protected bool is_Angry = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -377,7 +379,10 @@ public class Normal_Zombies : Node2D
             if (GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").lose_health)
             {
                 GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").lose_health = false;
-                health_list[0].Health -= GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").lose_health_number;
+                if (!Never_Died)
+                {
+                    health_list[0].Health -= GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").lose_health_number;
+                }
                 if (hurt_time < 20)
                 {
                     hurt_time += 15;
@@ -417,6 +422,7 @@ public class Normal_Zombies : Node2D
                 }
             }
             GetNode<AnimationPlayer>("Main/Main/Eating").PlaybackSpeed = eating_speed * speed_x;
+            Set_Walk_Speed(eating_speed * speed_x);
             Allow_Hurt_Time = !GetNode<AnimationPlayer>("Is_Eated").IsPlaying();
             if (Car_Area_2D_List.Count > 0)
             {
@@ -467,7 +473,10 @@ public class Normal_Zombies : Node2D
             {
                 if (Crash_Area_2D_List[i].has_planted && Crash_Area_2D_List[i].Crash_Area == GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area"))
                 {
-                    health_list[0].Health -= Crash_Area_2D_List[i].hurt;
+                    if (!Never_Died)
+                    {
+                        health_list[0].Health -= Crash_Area_2D_List[i].hurt;
+                    }
                     if (!this.On_Boom_Effect)
                     {
                         if (is_Ice)
@@ -487,7 +496,10 @@ public class Normal_Zombies : Node2D
             {
                 if (Boom_Area_2D_List[i].can_do && !Boom_Area_2D_List[i].end_hurt)
                 {
-                    health_list[0].Health -= Boom_Area_2D_List[i].hurt;
+                    if (!Never_Died)
+                    {
+                        health_list[0].Health -= Boom_Area_2D_List[i].hurt;
+                    }
                     count_health = 0;
                     for (int j = 0; j < health_list.Count; j++)
                     {
@@ -524,7 +536,10 @@ public class Normal_Zombies : Node2D
             {
                 if (All_Boom_Area_2D_List[i].can_do && !All_Boom_Area_2D_List[i].end_hurt)
                 {
-                    health_list[0].Health -= All_Boom_Area_2D_List[i].hurt;
+                    if (!Never_Died)
+                    {
+                        health_list[0].Health -= All_Boom_Area_2D_List[i].hurt;
+                    }
                     count_health = 0;
                     for (int j = 0; j < health_list.Count; j++)
                     {
@@ -569,7 +584,10 @@ public class Normal_Zombies : Node2D
                 {
                     if (C2H5OH_Fire_Area_2D_List[i].died)
                     {
-                        health_list[0].Health -= C2H5OH_Fire_Area_2D_List[i].hurt;
+                        if (!Never_Died)
+                        {
+                            health_list[0].Health -= C2H5OH_Fire_Area_2D_List[i].hurt;
+                        }
                         if (!this.On_Boom_Effect)
                         {
                             Allow_Hurt_Time = false;
@@ -590,7 +608,10 @@ public class Normal_Zombies : Node2D
                         {
                             hurt_time += 10;
                         }
-                        health_list[0].Health -= 10;
+                        if (!Never_Died)
+                        {
+                            health_list[0].Health -= 10;
+                        }
                         if (!this.On_Boom_Effect)
                         {
                             if (is_Ice)
@@ -614,7 +635,10 @@ public class Normal_Zombies : Node2D
             {
                 if (H2SO4_Area_2D_List[i].has_died && !H2SO4_Area_2D_List[i].has_become)
                 {
-                    health_list[0].Health -= H2SO4_Area_2D_List[i].hurt;
+                    if (!Never_Died)
+                    {
+                        health_list[0].Health -= H2SO4_Area_2D_List[i].hurt;
+                    }
                     H2SO4_Area_2D_List.RemoveAt(i);
                     i--;
                 }
@@ -656,8 +680,18 @@ public class Normal_Zombies : Node2D
                         {
                             hurt_time += 15;
                         }
-                        health_list[0].Health -= Bullets_Area_2D_List[i].hurt;
-                        if (health_list.Get_Has_Sound())  
+                        if (!Never_Died)
+                        {
+                            if (Bullets_Area_2D_List[i].hurt_type == 2 && health_list[0].Material == "Paper") 
+                            {
+                                health_list[0].Health -= Bullets_Area_2D_List[i].hurt * 2;
+                            }
+                            else
+                            {
+                                health_list[0].Health -= Bullets_Area_2D_List[i].hurt;
+                            }
+                        }
+                        if (health_list.Get_Has_Sound(false))  
                         {
                             Bullets_Sound_Play();
                         }
@@ -677,8 +711,18 @@ public class Normal_Zombies : Node2D
                         {
                             hurt_time += 15;
                         }
-                        health_list[0].Health -= Bullets_Area_2D_List[i].hurt;
-                        if (health_list.Get_Has_Sound())
+                        if (!Never_Died)
+                        {
+                            if (health_list[0].Material == "Iron")
+                            {
+                                health_list[0].Health -= Bullets_Area_2D_List[i].hurt * 2;
+                            }
+                            else
+                            {
+                                health_list[0].Health -= Bullets_Area_2D_List[i].hurt;
+                            }
+                        }
+                        if (health_list.Get_Has_Sound(false))
                         {
                             Bullets_Sound_Play();
                         }
@@ -704,12 +748,18 @@ public class Normal_Zombies : Node2D
                         {
                             hurt_time += 15;
                         }
-                        health_list[0].Health -= Bullets_Area_2D_List[i].hurt;
+                        if (!Never_Died)
+                        {
+                            health_list[0].Health -= Bullets_Area_2D_List[i].hurt;
+                        }
                         if (health_list.Count != 1 && Bullets_Area_2D_List[i].hurt_type == 2 && health_list.Get_Can_Through_To_Index() != -1 && health_list.Get_Can_Through_To_Index() != 0) 
                         {
-                            health_list[health_list.Get_Can_Through_To_Index()].Health -= Bullets_Area_2D_List[i].hurt;
+                            if (!Never_Died)
+                            {
+                                health_list[health_list.Get_Can_Through_To_Index()].Health -= Bullets_Area_2D_List[i].hurt;
+                            }
                         }
-                        if (health_list.Get_Has_Sound())
+                        if (health_list.Get_Has_Sound(Bullets_Area_2D_List[i].hurt_type == 2))
                         {
                             Bullets_Sound_Play();
                         }
@@ -723,12 +773,18 @@ public class Normal_Zombies : Node2D
                         {
                             hurt_time += 15;
                         }
-                        health_list[0].Health -= Bullets_Area_2D_List[i].hurt;
+                        if (!Never_Died)
+                        {
+                            health_list[0].Health -= Bullets_Area_2D_List[i].hurt;
+                        }
                         if (health_list.Count != 1 && health_list.Get_Can_Through_To_Index() != -1 && health_list.Get_Can_Through_To_Index() != 0) 
                         {
-                            health_list[health_list.Get_Can_Through_To_Index()].Health -= Bullets_Area_2D_List[i].hurt;
+                            if (!Never_Died)
+                            {
+                                health_list[health_list.Get_Can_Through_To_Index()].Health -= Bullets_Area_2D_List[i].hurt;
+                            }
                         }
-                        if (health_list.Get_Has_Sound())
+                        if (health_list.Get_Has_Sound(true))
                         {
                             Bullets_Sound_Play();
                         }
@@ -757,10 +813,16 @@ public class Normal_Zombies : Node2D
                     {
                         hurt_time += 15;
                     }
-                    health_list[0].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                    if (!Never_Died)
+                    {
+                        health_list[0].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                    }
                     if (health_list.Count != 1 && health_list.Get_Can_Through_To_Index() != -1) 
                     {
-                        health_list[health_list.Get_Can_Through_To_Index()].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                        if (!Never_Died)
+                        {
+                            health_list[health_list.Get_Can_Through_To_Index()].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                        }
                     }
                     is_Ice = true;
                     GetNode<Timer>("Ice_Timer").Start();
@@ -771,10 +833,16 @@ public class Normal_Zombies : Node2D
                     {
                         hurt_time += 15;
                     }
-                    health_list[0].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                    if (!Never_Died)
+                    {
+                        health_list[0].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                    }
                     if (health_list.Count != 1 && health_list.Get_Can_Through_To_Index() != -1)
                     {
-                        health_list[health_list.Get_Can_Through_To_Index()].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                        if (!Never_Died)
+                        {
+                            health_list[health_list.Get_Can_Through_To_Index()].Health -= Fune_Shroom_Bullets_Area_2D_List[i].hurt;
+                        }
                     }
                 }
                 Fune_Shroom_Bullets_Area_2D_List.RemoveAt(i);
@@ -959,7 +1027,10 @@ public class Normal_Zombies : Node2D
                         if (Plants_Zombies.is_eating_show && !Plants_Zombies.has_lose_head)
                         {
                             Plants_Zombies.is_eating_show = false;
-                            health_list[0].Health -= Plants_Zombies.hurt;
+                            if (!Never_Died)
+                            {
+                                health_list[0].Health -= Plants_Zombies.hurt;
+                            }
                             if (is_Ice)
                             {
                                 GetNode<AnimationPlayer>("Is_Eated_Ice").Play("Is_Eated");
@@ -972,7 +1043,7 @@ public class Normal_Zombies : Node2D
                     }
                 }
             }//zombies
-            if (!eating && Get_Walk_Mode() && !On_Boom_Effect && !Is_Shining && !is_Lock_Ice)
+            if (!eating && Get_Walk_Mode() && !On_Boom_Effect && !Is_Shining && !is_Lock_Ice && !is_Angry) 
             {
                 this.Position += new Vector2(speed * speed_x * delta * 60, 0);
             }
@@ -981,8 +1052,13 @@ public class Normal_Zombies : Node2D
                 GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
                 Walk_Mode(false);
             }
-            if (Doing_jumping)
+            if (Doing_jumping)  
             {
+                Walk_Mode(false);
+            }
+            if (is_Angry)
+            {
+                GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
                 Walk_Mode(false);
             }
             if (Plants_Area_2D != null && !has_lose_Head && can_Eating)
@@ -1221,13 +1297,15 @@ public class Normal_Zombies : Node2D
             }
         }
         Hide();
-        await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
+        await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
         if (IsInstanceValid(this))
         {
             this.QueueFree();
         }
     }
     protected virtual void Walk_Mode(bool is_Walking)
+    { }
+    protected virtual void Set_Walk_Speed(float Walk_speed)
     { }
     protected virtual bool Get_Walk_Mode()
     {

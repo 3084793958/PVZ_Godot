@@ -1937,6 +1937,20 @@ one_shot = true
 process_mode = 0
 wait_time = 7.5
 
+[node name="Text1" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 42.0
+margin_top = 88.0
+margin_right = 323.0
+margin_bottom = 258.0
+rect_scale = Vector2( 0.2, 0.2 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 17 )
+text = "level"
+
 [connection signal="pressed" from="Main/Next_Wave" to="." method="Next_Wave_pressed"]
 [connection signal="pressed" from="Main/Choose_Card/Background/Up_Page" to="Main/Choose_Card/Background/Page" method="Up"]
 [connection signal="pressed" from="Main/Choose_Card/Background/Down_Page" to="Main/Choose_Card/Background/Page" method="Down"]

@@ -49,10 +49,18 @@ public class Ice_Van_Door_Main : Normal_Plants
     }
     protected override void Plants_Add_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Add(this);
     }
     protected override void Plants_Remove_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Remove(this);
     }
     protected override void Plants_Init()
@@ -130,9 +138,13 @@ public class Ice_Van_Door_Main : Normal_Plants
         for (int i = 0; i < 5; i++)
         {
             await ToSignal(GetTree(), "idle_frame");
+            Clone_Bullets(-1.5f);
+            Clone_Bullets(-1f);
+            Clone_Bullets(-0.5f);
             Clone_Bullets(0f);
             Clone_Bullets(1.5f);
-            Clone_Bullets(-1.5f);
+            Clone_Bullets(1f);
+            Clone_Bullets(0.5f);
         }
     }
     public void Clone_Bullets(float speed_y = 0f)

@@ -5,6 +5,7 @@ public class Potato_Main : Normal_Plants
 {
     public bool has_up = false;
     public bool doing_bug = false;
+    [Export] public bool has_boom = false;
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
@@ -39,7 +40,7 @@ public class Potato_Main : Normal_Plants
                             if (!Zombies_Area_2D_List[i].has_lose_head && Zombies_Area_2D_List[i].has_plant)
                             {
                                 can_touch = true;
-                                if (has_up)
+                                if (has_up && !has_boom)
                                 {
                                     if (doing_bug)
                                     {
@@ -52,7 +53,7 @@ public class Potato_Main : Normal_Plants
                                     GetNode<Normal_Boom_Area>("Main/Boom").can_do = true;
                                     GetNode<Normal_Boom_Area>("Main/Boom").Start_hurting();
                                     GetNode<AnimationPlayer>("Died").Play("Died");
-                                    Dock_Area_2D.Normal_Plant_List.Remove(this);
+                                    Plants_Remove_List();
                                 }
                             }
                         }
@@ -61,27 +62,30 @@ public class Potato_Main : Normal_Plants
             }
             if (health <= 0)
             {
-                if (has_up)
+                if (has_up && !has_boom) 
                 {
-                    if (doing_bug)
+                    if (!GetNode<AnimationPlayer>("Died").IsPlaying())
                     {
-                        GetNode<Normal_Boom_Area>("Main/Boom").hurt = 3000;
+                        if (doing_bug)
+                        {
+                            GetNode<Normal_Boom_Area>("Main/Boom").hurt = 3000;
+                        }
+                        else
+                        {
+                            GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
+                        }
+                        GetNode<Normal_Boom_Area>("Main/Boom").can_do = true;
+                        GetNode<Normal_Boom_Area>("Main/Boom").Start_hurting();
+                        GetNode<AnimationPlayer>("Died").Play("Died");
+                        Plants_Remove_List();
                     }
-                    else
-                    {
-                        GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
-                    }
-                    GetNode<Normal_Boom_Area>("Main/Boom").can_do = true;
-                    GetNode<Normal_Boom_Area>("Main/Boom").Start_hurting();
-                    GetNode<AnimationPlayer>("Died").Play("Died");
-                    Dock_Area_2D.Normal_Plant_List.Remove(this);
                 }
                 else
                 {
                     if (!GetNode<AnimationPlayer>("Died2").IsPlaying())
                     {
                         GetNode<AnimationPlayer>("Died2").Play("Died");
-                        Dock_Area_2D.Normal_Plant_List.Remove(this);
+                        Plants_Remove_List();
                     }
                 }
             }
@@ -93,10 +97,18 @@ public class Potato_Main : Normal_Plants
     }
     protected override void Plants_Add_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Add(this);
     }
     protected override void Plants_Remove_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Remove(this);
     }
     protected override void Plants_Init()
@@ -135,8 +147,26 @@ public class Potato_Main : Normal_Plants
     }
     public override void Free_Self()
     {
-        GetNode<Area2D>("Main/Boom").Monitoring = false;
-        GetNode<Area2D>("Main/Boom").Monitorable = false;
-        base.Free_Self();
+        if (!has_boom && has_up && !on_Shovel)
+        {
+            if (doing_bug)
+            {
+                GetNode<Normal_Boom_Area>("Main/Boom").hurt = 3000;
+            }
+            else
+            {
+                GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
+            }
+            GetNode<Normal_Boom_Area>("Main/Boom").can_do = true;
+            GetNode<Normal_Boom_Area>("Main/Boom").Start_hurting();
+            GetNode<AnimationPlayer>("Died").Play("Died");
+            Plants_Remove_List();
+        }
+        else
+        {
+            GetNode<Area2D>("Main/Boom").Monitoring = false;
+            GetNode<Area2D>("Main/Boom").Monitorable = false;
+            base.Free_Self();
+        }
     }
 }

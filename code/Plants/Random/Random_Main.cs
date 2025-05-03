@@ -164,7 +164,14 @@ public class Random_Main : Limited_Plants
                             }
                             for (int i = 0; i < Dock_Area_2D.Down_Plant_List.Count; i++)
                             {
-                                if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                                if (Dock_Area_2D.Down_Plant_List[i] is Normal_Plants Plant_object)
+                                {
+                                    Plant_object.Free_Self();
+                                }
+                            }
+                            for (int i = 0; i < Dock_Area_2D.Small_Plants_List.Count; i++)
+                            {
+                                if (Dock_Area_2D.Small_Plants_List[i] is Normal_Plants Plant_object)
                                 {
                                     Plant_object.Free_Self();
                                 }

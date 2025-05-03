@@ -39,6 +39,8 @@ public class Normal_Plants_Zombies : Node2D
     protected List<Normal_Zombies_Area> Zombies_Area_2D_List = new List<Normal_Zombies_Area>();
     protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
     protected bool real_touching = false;
+    [Export] protected bool Never_Died = false;
+    [Export] protected bool is_Angry = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -342,7 +344,10 @@ public class Normal_Plants_Zombies : Node2D
             if (GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").lose_health)
             {
                 GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").lose_health = false;
-                health_list[0].Health -= GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").lose_health_number;
+                if (!Never_Died)
+                {
+                    health_list[0].Health -= GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").lose_health_number;
+                }
                 GetNode<AnimationPlayer>("Is_Eated").Play("Is_Eated");
             }
             if (in_water && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !GetNode<AnimationPlayer>("Out_Water").IsPlaying() && !now_in_water)
@@ -365,7 +370,10 @@ public class Normal_Plants_Zombies : Node2D
             {
                 if (All_Boom_Area_2D_List[i].can_do && !All_Boom_Area_2D_List[i].end_hurt)
                 {
-                    health_list[0].Health -= All_Boom_Area_2D_List[i].hurt;
+                    if (!Never_Died)
+                    {
+                        health_list[0].Health -= All_Boom_Area_2D_List[i].hurt;
+                    }
                     count_health = 0;
                     for (int j = 0; j < health_list.Count; j++)
                     {
@@ -478,13 +486,16 @@ public class Normal_Plants_Zombies : Node2D
                         if (Zombies_Area_2D_List[i].is_eating_show && !Zombies_Area_2D_List[i].has_lose_head)
                         {
                             Zombies_Area_2D_List[i].is_eating_show = false;
-                            health_list[0].Health -= Zombies_Area_2D_List[i].hurt;
+                            if (!Never_Died)
+                            {
+                                health_list[0].Health -= Zombies_Area_2D_List[i].hurt;
+                            }
                             GetNode<AnimationPlayer>("Is_Eated").Play("Is_Eated");
                         }
                     }
                 }
             }
-            if (!eating && Get_Walk_Mode())
+            if (!eating && Get_Walk_Mode() && !is_Angry) 
             {
                 this.Position += new Vector2(speed * delta * 60, 0);
             }
@@ -496,6 +507,11 @@ public class Normal_Plants_Zombies : Node2D
             if (Doing_jumping)
             {
                 Walk_Mode(false);
+            }
+            if (is_Angry)
+            {
+                Walk_Mode(false);
+                GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
             }
             if (Zombies_Area_2D != null && !has_lose_Head && can_Eating)
             {
@@ -613,7 +629,7 @@ public class Normal_Plants_Zombies : Node2D
             GetNode<Area2D>("Dock/Area2D").Monitorable = false;
         }
         Hide();
-        await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
+        await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
         if (IsInstanceValid(this))
         {
             this.QueueFree();

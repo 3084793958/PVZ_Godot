@@ -43,7 +43,7 @@ public class Boom_WallNut_Main : Normal_Plants
                 if (!GetNode<AnimationPlayer>("Died").IsPlaying())
                 {
                     NUT_type = 0;
-                    Dock_Area_2D.Normal_Plant_List.Remove(this);
+                    Plants_Remove_List();
                     GetNode<Normal_Boom_Area>("Main/Boom").hurt = 1800;
                     GetNode<Normal_Boom_Area>("Main/Boom").can_do = true;
                     GetNode<Normal_Boom_Area>("Main/Boom").Start_hurting();
@@ -64,10 +64,18 @@ public class Boom_WallNut_Main : Normal_Plants
     }
     protected override void Plants_Add_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Add(this);
     }
     protected override void Plants_Remove_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Remove(this);
     }
     protected override void Plants_Init()

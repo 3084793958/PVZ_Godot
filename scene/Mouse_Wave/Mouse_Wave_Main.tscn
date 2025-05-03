@@ -77,16 +77,16 @@ tracks/2/keys = {
 } ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Puff:playing")
+tracks/3/path = NodePath("Fume:playing")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.001, 0.1, 0.3 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ false, false, true, false ]
+"values": [ false, true, false ]
 }
 
 [node name="Mouse_Wave_Main" type="Node2D"]
@@ -102,6 +102,6 @@ texture = SubResource( 1 )
 anims/RESET = SubResource( 4 )
 anims/Run = SubResource( 5 )
 
-[node name="Puff" type="AudioStreamPlayer" parent="."]
+[node name="Fume" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 script = ExtResource( 3 )

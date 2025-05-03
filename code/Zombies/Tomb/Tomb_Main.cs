@@ -28,6 +28,7 @@ public class Tomb_Main : Node2D
     protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
     protected List<Fune_Shroom_Bullets_Area> Fune_Shroom_Bullets_Area_2D_List = new List<Fune_Shroom_Bullets_Area>();
     protected bool real_touching = false;
+    protected bool has_Add_List = true;
     protected List<string> Clone_List = new List<string> 
     {
         "res://scene/Zombies/Simple_Zombies/Simple_Zombies.tscn",
@@ -43,7 +44,8 @@ public class Tomb_Main : Node2D
         "res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn",
         "res://scene/Zombies/Bucket_Screen_Door_Zombies/Bucket_Screen_Door_Zombies.tscn",
         "res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn",
-        "res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn"
+        "res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn",
+        "res://scene/Zombies/Paper_Zombies/Paper_Zombies.tscn"
     };
     protected List<Texture> Tomb_Texture_List = new List<Texture>
     {
@@ -68,7 +70,7 @@ public class Tomb_Main : Node2D
         GD.Load<Texture>("res://image/Zombies/Tomb/18.png"),
         GD.Load<Texture>("res://image/Zombies/Tomb/19.png")
     };
-    public async override void _Ready()
+    public override void _Ready()
     {
         GD.Randomize();
         lock_to_number = In_Game_Main.Tomb_Lock_To_Number;
@@ -92,26 +94,7 @@ public class Tomb_Main : Node2D
             GetNode<Control>("Show").Hide();
             GetNode<Control>("Main").Show();
             GlobalPosition = put_position;
-            await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
-            if (Dock_Area_2D != null)
-            {
-                for (int i = 0; i < Dock_Area_2D.Normal_Plant_List.Count; i++)
-                {
-                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
-                    {
-                        Plant_object.Free_Self();
-                    }
-                }
-                for (int i = 0; i < Dock_Area_2D.Down_Plant_List.Count; i++)
-                {
-                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
-                    {
-                        Plant_object.Free_Self();
-                    }
-                }
-                Dock_Area_2D.Normal_Plant_List.Add(this);
-                Dock_Area_2D.Down_Plant_List.Add(this);
-            }
+            has_Add_List = false;
         }
     }
     public override void _PhysicsProcess(float delta)
@@ -185,6 +168,33 @@ public class Tomb_Main : Node2D
         if (Dock_Area_2D != null)
         {
             ZIndex = normal_ZIndex + 20 * (Dock_Area_2D.pos[0] - 1);
+            if (!has_Add_List)
+            {
+                has_Add_List = true;
+                for (int i = 0; i < Dock_Area_2D.Normal_Plant_List.Count; i++)
+                {
+                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                    {
+                        Plant_object.Free_Self();
+                    }
+                }
+                for (int i = 0; i < Dock_Area_2D.Down_Plant_List.Count; i++)
+                {
+                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                    {
+                        Plant_object.Free_Self();
+                    }
+                }
+                for (int i = 0; i < Dock_Area_2D.Small_Plants_List.Count; i++)
+                {
+                    if (Dock_Area_2D.Small_Plants_List[i] is Normal_Plants Plant_object)
+                    {
+                        Plant_object.Free_Self();
+                    }
+                }
+                Dock_Area_2D.Normal_Plant_List.Add(this);
+                Dock_Area_2D.Down_Plant_List.Add(this);
+            }
         }
         GetNode<Zombies_Tomb_Area2D>("Main/Tomb_Area2D").has_planted = has_planted;
         if (!has_planted)
@@ -260,6 +270,13 @@ public class Tomb_Main : Node2D
                             for (int i = 0; i < Dock_Area_2D.Down_Plant_List.Count; i++)
                             {
                                 if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                                {
+                                    Plant_object.Free_Self();
+                                }
+                            }
+                            for (int i = 0; i < Dock_Area_2D.Small_Plants_List.Count; i++)
+                            {
+                                if (Dock_Area_2D.Small_Plants_List[i] is Normal_Plants Plant_object)
                                 {
                                     Plant_object.Free_Self();
                                 }
@@ -601,9 +618,12 @@ public class Tomb_Main : Node2D
             GetNode<Area2D>("Dock/Area2D").Monitoring = false;
             GetNode<Area2D>("Dock/Area2D").Monitorable = false;
         }
-        Dock_Area_2D.Normal_Plant_List.Remove(this);
-        Dock_Area_2D.Down_Plant_List.Remove(this);
-        await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
+        if (Dock_Area_2D != null)
+        {
+            Dock_Area_2D.Normal_Plant_List.Remove(this);
+            Dock_Area_2D.Down_Plant_List.Remove(this);
+        }
+        await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
         if (IsInstanceValid(this))
         {
             this.QueueFree();

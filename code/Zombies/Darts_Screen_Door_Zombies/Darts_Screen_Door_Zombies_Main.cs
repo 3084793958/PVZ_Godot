@@ -63,7 +63,7 @@ public class Darts_Screen_Door_Zombies_Main : Normal_Zombies
     public override void _Ready()
     {
         health_list.Clear();
-        health_list.Add(new Health_Container(1600, true, "Door", true));//铁门
+        health_list.Add(new Health_Container(1600, true, "Door", true, "Iron"));//铁门
         health_list.Add(new Health_Container(270, false));
         base._Ready();
     }
@@ -118,11 +118,8 @@ public class Darts_Screen_Door_Zombies_Main : Normal_Zombies
             {
                 for (int i = 0; i < Plants_Area_2D_List.Count; i++)
                 {
-                    if (Plants_Area_2D_List[i].has_planted && Plants_Area_2D_List[i].plants_type != "Top")
-                    {
-                        Plants_Area_2D_List[i].lose_health_number = 250;
-                        Plants_Area_2D_List[i].lose_health = true;
-                    }
+                    Plants_Area_2D_List[i].lose_health_number = 250;
+                    Plants_Area_2D_List[i].lose_health = true;
                 }
             }
         }

@@ -71,6 +71,7 @@ public class Boom_WallNut_Ball_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        Use_Move_Area = false;
         health = 4000;
         speed_x = 5.5f;
         base._Ready();

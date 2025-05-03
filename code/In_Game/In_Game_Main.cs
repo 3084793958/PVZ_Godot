@@ -37,8 +37,12 @@ public class In_Game_Main : Node2D
     static public bool Zombies_Died_Sun = false;
     public override async void _Ready()
     {
-        OS.RequestPermissions();//Andorid请求读取文件
         GD.Randomize();
+        Zombies_Clone_Request_List.Clear();
+        Plant_Zombies_Clone_Request_List.Clear();
+        Plant_Clone_Request_List.Clear();
+        Sun_Clone_Request_List.Clear();
+        Plants_Bullets_Clone_Request_List.Clear();
         Zombies_Number = 0;
         Public_Main.now_card_number = 0;
         Belt_Number = 0;
@@ -61,12 +65,27 @@ public class In_Game_Main : Node2D
             if (error == Error.Ok)
             {
                 level_file = (string)file.GetValue("Level", "Level_Name", string.Empty);
+                GetNode<Label>("Text1").Text = level_file;
                 if (level_file != string.Empty)
                 {
+                    if (from_type == 0 && OS.RequestPermissions()) 
+                    {
+                        var file_Android1 = new File();
+                        var file_Android2 = new File();
+                        file_Android1.Open(level_file, File.ModeFlags.Read);
+                        string File_Text = file_Android1.GetAsText();
+                        file_Android1.Close();
+                        string save_path = "user://Users/" + Public_Main.user_name + "/Android_Load_Level.cfg";
+                        file_Android2.Open(save_path, File.ModeFlags.Write);
+                        file_Android2.StoreString(File_Text);
+                        file_Android2.Close();
+                        level_file = save_path;
+                    }
                     ConfigFile file2 = new ConfigFile();
                     Error error2 = file2.Load(level_file);
                     if (error2==Error.Ok)
                     {
+                        GetNode<Label>("Text1").Hide();
                         background_number = (int)file2.GetValue("Background", "background", 0);
                         if (background_number==0)
                         {

@@ -42,7 +42,7 @@ public class Van_Door_Bullets_Main : Normal_Plants_Bullets
             {
                 this.Position += new Vector2(speed_x * delta * 60, speed_y * delta * 60);
             }
-            if (Position.x > 1437)
+            if (Position.x > 1437 || Position.x < -512 || Position.y > 800 || Position.y < -200) 
             {
                 this.QueueFree();
             }

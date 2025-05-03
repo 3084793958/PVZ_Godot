@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://image/Login/title.png" type="Texture" id=1]
 [ext_resource path="res://sound/bgm/Login.mp3" type="AudioStream" id=2]
@@ -51,6 +51,7 @@
 [ext_resource path="res://image/Login/Open_File.png" type="Texture" id=49]
 [ext_resource path="res://code/Login/Open_File_Button.cs" type="Script" id=50]
 [ext_resource path="res://code/Login/Open_File.cs" type="Script" id=51]
+[ext_resource path="res://code/Login/Dropped_Level_Main.cs" type="Script" id=52]
 
 [sub_resource type="Animation" id=21]
 resource_name = "Run"
@@ -729,10 +730,10 @@ flat = true
 script = ExtResource( 39 )
 
 [node name="PVZ" type="TextureButton" parent="Main"]
-margin_left = 191.0
-margin_top = 448.0
-margin_right = 250.0
-margin_bottom = 509.0
+margin_left = 140.0
+margin_top = 447.0
+margin_right = 199.0
+margin_bottom = 508.0
 rect_rotation = 25.3368
 texture_normal = ExtResource( 46 )
 script = ExtResource( 48 )
@@ -751,6 +752,7 @@ theme = SubResource( 23 )
 window_title = "打开文件"
 dialog_text = "导入关卡文件(.cfg)"
 dialog_hide_on_ok = true
+mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.cfg" )
@@ -767,6 +769,67 @@ expand = true
 stretch_mode = 4
 script = ExtResource( 50 )
 
+[node name="Dropped_Level_Main" type="TextureRect" parent="Main"]
+margin_left = 349.0
+margin_top = 149.0
+margin_right = 669.0
+margin_bottom = 414.0
+texture = ExtResource( 27 )
+script = ExtResource( 52 )
+
+[node name="Ok" type="Button" parent="Main/Dropped_Level_Main"]
+margin_left = 164.333
+margin_top = 175.667
+margin_right = 243.333
+margin_bottom = 213.667
+rect_scale = Vector2( 1.5, 1.5 )
+custom_colors/font_color_disabled = Color( 0.25098, 0.25098, 0.25098, 1 )
+custom_fonts/font = SubResource( 9 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
+disabled = true
+text = "确定"
+
+[node name="Cancel" type="Button" parent="Main/Dropped_Level_Main"]
+margin_left = 19.3333
+margin_top = 176.667
+margin_right = 98.3333
+margin_bottom = 214.667
+rect_scale = Vector2( 1.5, 1.5 )
+custom_fonts/font = SubResource( 9 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/focus = SubResource( 12 )
+custom_styles/disabled = SubResource( 13 )
+custom_styles/normal = SubResource( 14 )
+text = "取消"
+
+[node name="LineEdit" type="LineEdit" parent="Main/Dropped_Level_Main"]
+margin_left = 35.0
+margin_top = 63.0
+margin_right = 375.0
+margin_bottom = 146.0
+rect_scale = Vector2( 0.7, 0.7 )
+custom_fonts/font = SubResource( 15 )
+custom_styles/read_only = SubResource( 16 )
+custom_styles/focus = SubResource( 17 )
+custom_styles/normal = SubResource( 18 )
+align = 1
+clear_button_enabled = true
+placeholder_text = "输入关卡路径..."
+caret_blink = true
+
+[node name="Text" type="Label" parent="Main/Dropped_Level_Main"]
+margin_left = 64.6666
+margin_top = 35.3336
+margin_right = 180.667
+margin_bottom = 57.3336
+rect_scale = Vector2( 1.5, 1.5 )
+custom_fonts/font = SubResource( 3 )
+text = "将打开关卡文件:"
+
 [node name="bgm" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
 stream = ExtResource( 2 )
@@ -782,3 +845,5 @@ stream = ExtResource( 19 )
 script = ExtResource( 40 )
 
 [connection signal="file_selected" from="Main/Open_File" to="Main/Open_File_Button" method="Choose_File_OK"]
+[connection signal="pressed" from="Main/Dropped_Level_Main/Ok" to="Main/Dropped_Level_Main" method="Ok"]
+[connection signal="pressed" from="Main/Dropped_Level_Main/Cancel" to="Main/Dropped_Level_Main" method="Cancel"]

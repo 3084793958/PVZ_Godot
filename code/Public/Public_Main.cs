@@ -233,7 +233,7 @@ static public class Public_Main
     GD.Load<Texture>("res://image/Plants/Ice_Fume_Shroom/Ice_FumeShroom_Main.png"),
     20f,
     45f,
-    new Tuple<int,string>(125,"res://scene/Plants/Ice_Fume_Shroom/Ice_Fume_Shroom.tscn")
+    new Tuple<int,string>(225,"res://scene/Plants/Ice_Fume_Shroom/Ice_Fume_Shroom.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     22,
@@ -247,6 +247,16 @@ static public class Public_Main
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     23,
+    "小盆菇",
+    "小喷菇+花盆",
+    "小喷菇+花盆",
+    GD.Load<Texture>("res://image/Plants/Small_Shroom_Pot/Small_Shroom_Pot.png"),
+    5f,
+    15f,
+    new Tuple<int,string>(0,"res://scene/Plants/Small_Shroom_Pot/Small_Shroom_Pot.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    24,
     "莲叶",
     "莲叶",
     "莲叶",
@@ -420,7 +430,17 @@ static public class Public_Main
     GD.Load<Texture>("res://image/Plants/Zombies/Bucket_Tomb_Zombies/Plants_Bucket_Tomb_Zombies.png"),
     0f,
     0f,
-    new Tuple<int,string>(325,"res://scene/Plants/Zombies/Bucket_Tomb_Zombies/Plants_Bucket_Tomb_Zombies.tscn")
+    new Tuple<int,string>(725,"res://scene/Plants/Zombies/Bucket_Tomb_Zombies/Plants_Bucket_Tomb_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    16,
+    "魅惑二爷",
+    "不再怜悯",
+    "你二爷还是你二爷",
+    GD.Load<Texture>("res://image/Plants/Zombies/Paper_Zombies/Plants_Paper_Zombies_Main.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(1000,"res://scene/Plants/Zombies/Paper_Zombies/Plants_Paper_Zombies.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -574,7 +594,17 @@ static public class Public_Main
     GD.Load<Texture>("res://image/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.png"),
     0f,
     0f,
-    new Tuple<int,string>(325,"res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn")
+    new Tuple<int,string>(725,"res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    16,
+    "二爷",
+    "不再怜悯",
+    "你二爷",
+    GD.Load<Texture>("res://image/Zombies/Paper_Zombies/Paper_Zombies_Main.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(1000,"res://scene/Zombies/Paper_Zombies/Paper_Zombies.tscn")
     )
     };
     static public List<string> Zombies_Path_List = new List<string>
@@ -593,7 +623,8 @@ static public class Public_Main
         "res://scene/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.tscn",
         "res://scene/Zombies/Bucket_Screen_Door_Zombies/Bucket_Screen_Door_Zombies.tscn",
         "res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn",
-        "res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn"
+        "res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn",//15
+        "res://scene/Zombies/Paper_Zombies/Paper_Zombies.tscn"
     };
     static public List<Tuple<string, string, Texture, int>> Level_Mode1 = new List<Tuple<string, string, Texture, int>>
     { 
@@ -636,6 +667,9 @@ static public class Public_Main
         new Tuple<string, string,Texture, int>("第13关:总有一天","res://level/Mode1/Mode1_13.cfg",
         GD.Load<Texture>("res://image/Plants/Fume_Shroom/FumeShroom_Main.png"),
         2),
+        new Tuple<string, string,Texture, int>("第14关:千坟山","res://level/Mode1/Mode1_14.cfg",
+        GD.Load<Texture>("res://image/Plants/Grave_Buster/Grave_Buster_Main.png"),
+        2),
         new Tuple<string, string,Texture, int>("白天草坪(测试专用)","res://level/Mode1/Mode1_demo_Day.cfg",
         GD.Load<Texture>("res://image/Plants/godot/godot.png"),
         1),
@@ -650,6 +684,9 @@ static public class Public_Main
     {
         new Tuple<string, string,Texture, int>("随机种植","res://level/Mode2/Mode2_1.cfg",
         GD.Load<Texture>("res://image/Plants/Random/Random.png"),
+        2),
+        new Tuple<string, string,Texture, int>("噩梦1","res://level/Mode2/Mode2_2.cfg",
+        GD.Load<Texture>("res://image/Zombies/Bucket_Screen_Door_Zombies/Bucket_Screen_Door_Zombies.png"),
         2)
     };
     static public void Save_Value()
@@ -672,12 +709,14 @@ public class Health_Container
     public bool Is_lock { get; set; }
     public string Info { get; set; }
     public bool Effect { get; set; }
-    public Health_Container(int health, bool is_lock, string info = "Main", bool effect = false)
+    public string Material { get; set; }
+    public Health_Container(int health, bool is_lock, string info = "Main", bool effect = false, string material = "Main")
     {
         Health = health;
         Is_lock = is_lock;
         Info = info;
         Effect = effect;
+        Material = material;
     }
 }
 public class Health_List : List<Health_Container>
@@ -718,17 +757,24 @@ public class Health_List : List<Health_Container>
         }
         return count_health;
     }
-    public bool Get_Has_Sound()
+    public bool Get_Has_Sound(bool Through)
     {
         Update_Health();
         bool result = false;
-        for (int i = 0; i < this.Count; i++)
+        if (Through && Get_Can_Through_To_Index() != -1) 
         {
-            if (this[i].Effect)
+            for (int i = 0; i < this.Count; i++)
             {
-                result = true;
-                break;
+                if (this[i].Effect)
+                {
+                    result = true;
+                    break;
+                }
             }
+        }
+        else
+        {
+            result = this[0].Effect;
         }
         return result;
     }

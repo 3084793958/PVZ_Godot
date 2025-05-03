@@ -38,6 +38,7 @@ public class Small_Shroom_Main : Normal_Plants
                     this.GlobalPosition = Dock_Area_2D.GlobalPosition;
                 }
             }
+            GetNode<Area2D>("Dock/Area2D").GlobalPosition = Dock_Area_2D.GlobalPosition;
             if (Zombies_Area_2D_List.Count != 0)
             {
                 for (int i = 0; i < Zombies_Area_2D_List.Count; i++)
@@ -63,58 +64,6 @@ public class Small_Shroom_Main : Normal_Plants
             }
         }
     }
-    protected override void Area_Entered(Area2D area_node)
-    {
-        try
-        {
-            if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
-            {
-                return;
-            }
-            string Type_string = area2D?.Area2D_type;
-            if (Type_string != null && Type_string == "Plants" && area2D?.Sec_Info != "Zombies")
-            {
-                return;
-            }
-            lock (_listLock)
-            {
-                if (!IsInstanceValid(area2D))
-                {
-                    return;
-                }
-                if (!just_for_MG)
-                {
-                    if (has_planted && Type_string != null && Type_string == "Shovel" && (Dock_Area_2D.Empty_Small_Pos() == dock_small_id || (Dock_Area_2D.Empty_Small_Pos() == -1 && dock_small_id >= 3))) 
-                    {
-                        Shovel_Area = (Shovel_Area2D)area2D;
-                    }
-                    else if (has_planted && Type_string != null && Type_string == "Bug")
-                    {
-                        Bug_Area = (Bug_Area2D)area2D;
-                    }
-                }
-                if (Type_string != null && Type_string == "Zombies")
-                {
-                    Zombies_Area_2D = (Normal_Zombies_Area)area2D;
-                    if (Zombies_Area_2D != null)
-                    {
-                        if (Zombies_Area_2D.can_hurt)//屎山造成
-                        {
-                            Zombies_Area_2D_List.Add(Zombies_Area_2D);
-                        }
-                    }
-                }
-                else if (Type_string != null && Type_string == "All_Boom")
-                {
-                    All_Boom_Area_2D_List.Add((All_Boom_Area)area2D);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            GD.Print(ex.Message);
-        }
-    }
     public override void _Ready()
     {
         GD.Randomize();
@@ -125,6 +74,10 @@ public class Small_Shroom_Main : Normal_Plants
     }
     protected override void Plants_Add_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Add(this);
         if (dock_small_id > 0)
         {
@@ -133,6 +86,10 @@ public class Small_Shroom_Main : Normal_Plants
     }
     protected override void Plants_Remove_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Remove(this);
         has_removed = true;
         if (dock_small_id > 0)

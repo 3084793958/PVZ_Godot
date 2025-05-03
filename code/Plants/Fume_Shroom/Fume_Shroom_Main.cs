@@ -51,10 +51,18 @@ public class Fume_Shroom_Main : Normal_Plants
     }
     protected override void Plants_Add_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Add(this);
     }
     protected override void Plants_Remove_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Remove(this);
     }
     protected override void Plants_Init()
@@ -147,10 +155,12 @@ public class Fume_Shroom_Main : Normal_Plants
         {
             return;
         }
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 17; i++)
         {
             await ToSignal(GetTree(), "idle_frame");
-            In_Game_Main.Plants_Bullets_Clone_Request("res://scene/Plants/Small_Shroom/Small_Shroom_Bullets/Small_Shroom_Bullets.tscn", GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition);//炼丹炉
+            In_Game_Main.Plants_Bullets_Clone_Request("res://scene/Plants/Small_Shroom/Small_Shroom_Bullets/Small_Shroom_Bullets.tscn", GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, -15f);
+            In_Game_Main.Plants_Bullets_Clone_Request("res://scene/Plants/Small_Shroom/Small_Shroom_Bullets/Small_Shroom_Bullets.tscn", GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, 15f);
+            In_Game_Main.Plants_Bullets_Clone_Request("res://scene/Plants/Small_Shroom/Small_Shroom_Bullets/Small_Shroom_Bullets.tscn", GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, 0f);
         }
     }
     public void Clone_Bullets()

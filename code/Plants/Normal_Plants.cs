@@ -41,6 +41,17 @@ public class Normal_Plants : Node2D
     protected bool sleep = false;
     protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
     protected bool real_touching = false;
+    protected bool has_Add_List = true;
+    //for Grave_Buster
+    protected bool just_for_Grave_Buster = false;
+    protected List<Zombies_Tomb_Area2D> Tomb_Area_2D_List = new List<Zombies_Tomb_Area2D>();
+    protected Zombies_Tomb_Area2D Tomb_Area_2D = null;
+    protected bool Use_Move_Area = true;
+    protected int Up_Number = -1;//Auto
+    protected List<string> Move_Area_2D_Path = new List<string>();
+    protected List<Vector2> Path_Init_Delta_Pos = new List<Vector2>();
+    protected Vector2 Main_Pos = Vector2.Zero;
+    //for Grave_Buster
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -72,6 +83,23 @@ public class Normal_Plants : Node2D
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Big_Chmop").Stream.Set("loop", false);
+        Move_Area_2D_Path.Clear();
+        Path_Init_Delta_Pos.Clear();
+        if (Use_Move_Area)
+        {
+            for (int i = 0; i < GetNode<Control>("Main").GetChildCount(); i++)
+            {
+                if (GetNode<Control>("Main").GetChildren()[i] is Area2D)
+                {
+                    Move_Area_2D_Path.Add(GetPathTo((Area2D)GetNode<Control>("Main").GetChildren()[i]));
+                }
+            }
+            for (int i = 0; i < Move_Area_2D_Path.Count; i++)
+            {
+                Path_Init_Delta_Pos.Add(GetNode<Area2D>(Move_Area_2D_Path[i]).Position);
+            }
+            Main_Pos = GetNode<Control>("Main").RectPosition;
+        }
         if (!player_put)
         {
             has_planted = true;
@@ -80,6 +108,7 @@ public class Normal_Plants : Node2D
             GetNode<Control>("Main").Show();
             Position = put_position;
             GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Play();
+            has_Add_List = false;
             Plants_Init();
         }
     }
@@ -158,6 +187,11 @@ public class Normal_Plants : Node2D
         if (Dock_Area_2D != null)
         {
             ZIndex = normal_ZIndex + 20 * (Dock_Area_2D.pos[0] - 1);
+            if (!has_Add_List)
+            {
+                has_Add_List = true;
+                Plants_Add_List();
+            }
         }
         if (!has_planted)
         {
@@ -203,7 +237,61 @@ public class Normal_Plants : Node2D
                         }
                     }
                 }
-                if (Dock_Area_2D != null)
+                if (just_for_Grave_Buster)
+                {
+                    if (Tomb_Area_2D_List.Count == 0)
+                    {
+                        Tomb_Area_2D = null;
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Tomb_Area_2D_List.Count; i++)
+                        {
+                            if (Tomb_Area_2D_List[i] == null)
+                            {
+                                Tomb_Area_2D_List.RemoveAt(i);
+                                i--;
+                                continue;
+                            }
+                            if (Math.Abs(GlobalPosition.x - Tomb_Area_2D_List[i].GlobalPosition.x) >= 40 || Math.Abs(GlobalPosition.y - Tomb_Area_2D_List[i].GlobalPosition.y) >= 40)
+                            {
+                                continue;
+                            }
+                            if (Tomb_Area_2D != null)
+                            {
+                                if (Math.Abs(GlobalPosition.x - Tomb_Area_2D.GlobalPosition.x) >= 40 || Math.Abs(GlobalPosition.y - Tomb_Area_2D.GlobalPosition.y) >= 40)
+                                {
+                                    Tomb_Area_2D = Tomb_Area_2D_List[i];
+                                }
+                            }
+                            if (Tomb_Area_2D == null)
+                            {
+                                Tomb_Area_2D = Tomb_Area_2D_List[i];
+                            }
+                            else
+                            {
+                                if (Tomb_Area_2D.GetParent().GetParent().GetIndex() < Tomb_Area_2D_List[i].GetParent().GetParent().GetIndex())
+                                {
+                                    Tomb_Area_2D = Tomb_Area_2D_List[i];
+                                }
+                            }
+                        }
+                    }
+                }
+                if (just_for_Grave_Buster && Tomb_Area_2D != null) 
+                {
+                    if (Math.Abs(GlobalPosition.x - Tomb_Area_2D.GlobalPosition.x) < 40 && Math.Abs(GlobalPosition.y - Tomb_Area_2D.GlobalPosition.y) < 40)
+                    {
+                        GetNode<Control>("Dock").RectPosition += Tomb_Area_2D.GlobalPosition - GetNode<Area2D>("Dock/Area2D").GlobalPosition;
+                        on_lock_grid = true;
+                    }
+                    else
+                    {
+                        GetNode<Control>("Dock").RectPosition = GetNode<Control>("Show").RectPosition;
+                        on_lock_grid = false;
+                    }
+                }
+                else if (Dock_Area_2D != null)
                 {
                     if (Math.Abs(GlobalPosition.x - Dock_Area_2D.GlobalPosition.x) < 40 && Math.Abs(GlobalPosition.y - Dock_Area_2D.GlobalPosition.y) < 40)
                     {
@@ -251,7 +339,77 @@ public class Normal_Plants : Node2D
                         card_parent_Button.Set_ColorRect_2(false);
                     }
                     Normal_Plants.Choosing = false;
-                    if (Dock_Area_2D != null)
+                    if (Dock_Area_2D != null || (just_for_Grave_Buster && Tomb_Area_2D != null)) 
+                    {
+                        if (just_for_Grave_Buster || (Dock_Area_2D != null && Allow_Plants())) 
+                        {
+                            if (Tmp_Card_Used)
+                            {
+                                Tmp_card_parent.Been_Used();
+                            }
+                            has_planted = true;
+                            if (Dock_Area_2D != null)
+                            {
+                                Plants_Add_List();
+                            }
+                            if (just_for_Grave_Buster && Tomb_Area_2D != null)
+                            {
+                                this.GlobalPosition = Tomb_Area_2D.GlobalPosition;
+                                ZIndex = normal_ZIndex + Tomb_Area_2D.GetNode<Node2D>("../..").ZIndex - 3;
+                            }
+                            else
+                            {
+                                this.GlobalPosition = Dock_Area_2D.GlobalPosition;
+                            }
+                            In_Game_Main.Sun_Number -= this_sun;
+                            In_Game_Main.Update_Sun(this);
+                            if (!Tmp_Card_Used)
+                            {
+                                card_parent_Button.now_time = card_parent_Button.wait_time;
+                            }
+                            if (Dock_Area_2D != null)
+                            {
+                                if (Dock_Area_2D.type == 2)
+                                {
+                                    GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Play();
+                                }
+                                else
+                                {
+                                    if (GD.Randf() > 0.5f)
+                                    {
+                                        GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Play();
+                                    }
+                                    else
+                                    {
+                                        GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Play();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (GD.Randf() > 0.5f)
+                                {
+                                    GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Play();
+                                }
+                                else
+                                {
+                                    GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Play();
+                                }
+                            }
+                            GetNode<Control>("Dock").Hide();
+                            GetNode<Control>("Show").Hide();
+                            GetNode<Control>("Main").Show();
+                            Plants_Init();
+                        }
+                        else
+                        {
+                            Hide();
+                            Position = new Vector2(-1437, -1437);
+                            GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
+                            this.Free();
+                        }
+                    }
+                    else if (just_for_Grave_Buster && Tomb_Area_2D != null)
                     {
                         if (Allow_Plants())
                         {
@@ -308,6 +466,35 @@ public class Normal_Plants : Node2D
         }
         else
         {
+            if (Dock_Area_2D != null)
+            {
+                if (health > 0 && Use_Move_Area)
+                {
+                    Vector2 move_pos = Vector2.Zero;
+                    int For_Time = 0;
+                    if (Up_Number == -1)
+                    {
+                        For_Time = Dock_Area_2D.Plants_Up_Pos_List.Count;
+                    }
+                    else
+                    {
+                        For_Time = Up_Number;
+                    }
+                    if (For_Time > Dock_Area_2D.Plants_Up_Pos_List.Count)
+                    {
+                        For_Time = Dock_Area_2D.Plants_Up_Pos_List.Count;
+                    }
+                    for (int i = 0; i < For_Time; i++)
+                    {
+                        move_pos += Dock_Area_2D.Plants_Up_Pos_List[i];
+                    }
+                    for (int i = 0; i < Move_Area_2D_Path.Count; i++)
+                    {
+                        GetNode<Area2D>(Move_Area_2D_Path[i]).Position = Path_Init_Delta_Pos[i] - move_pos;
+                    }
+                    GetNode<Control>("Main").RectPosition = Main_Pos + move_pos;
+                }
+            }
             if (health <= 0 || !Public_Main.Show_Plants_Health)
             {
                 GetNode<Node2D>("Health").Hide();
@@ -369,8 +556,9 @@ public class Normal_Plants : Node2D
                 health -= GetNode<Normal_Plants_Area>("Main/Shovel_Area").lose_health_number;
                 GetNode<AnimationPlayer>("Is_Eated").Play("Is_Eated");
             }
-            if (on_Shovel && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
+            if (on_Shovel && ((Input.IsActionJustReleased("Left_Mouse") && real_touching) || (Input.IsActionJustPressed("Left_Mouse") && !real_touching))) 
             {
+                Is_Double_Click = false;
                 if (!GetNode<AnimationPlayer>("Free_player").IsPlaying())
                 {
                     if (Shovel_Area != null)
@@ -383,7 +571,7 @@ public class Normal_Plants : Node2D
                     }
                 }
             }
-            if (on_Bug && ((Input.IsActionPressed("Left_Mouse") && !Public_Main.for_Android) || (Public_Main.for_Android && Is_Double_Click)))
+            if (on_Bug)
             {
                 if (!GetNode<AnimationPlayer>("Bug_player").IsPlaying())
                 {
@@ -519,6 +707,13 @@ public class Normal_Plants : Node2D
         {
             Dock_Area_2D_List.Add((Background_Grid_Main)area2D);
         }
+        if (just_for_Grave_Buster)
+        {
+            if (Type_string != null && Type_string == "Zombies_Tomb")
+            {
+                Tomb_Area_2D_List.Add((Zombies_Tomb_Area2D)area2D);
+            }
+        }
     }
     protected virtual void Dock_Exited(Area2D area_node)
     {
@@ -530,6 +725,13 @@ public class Normal_Plants : Node2D
         if (Type_string != null && Type_string == "Grid")
         {
             Dock_Area_2D_List.Remove((Background_Grid_Main)area2D);
+        }
+        if (just_for_Grave_Buster)
+        {
+            if (Type_string != null && Type_string == "Zombies_Tomb")
+            {
+                Tomb_Area_2D_List.Remove((Zombies_Tomb_Area2D)area2D);
+            }
         }
     }
     protected virtual void Plants_Add_List()
@@ -549,6 +751,7 @@ public class Normal_Plants : Node2D
     { }
     public virtual async void Free_Self()
     {
+        Plants_Remove_List();
         if (GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
         {
             GetNode<Area2D>("Main/Shovel_Area").Disconnect("area_entered", this, nameof(Area_Entered));
@@ -561,7 +764,7 @@ public class Normal_Plants : Node2D
             GetNode<Area2D>("Dock/Area2D").Monitorable = false;
         }
         Hide();
-        await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
+        await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
         if (IsInstanceValid(this)) 
         {
             this.QueueFree();

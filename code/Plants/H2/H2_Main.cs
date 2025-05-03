@@ -309,7 +309,7 @@ public class H2_Main : Limited_Plants
             GetNode<Area2D>("Dock/Area2D").Monitorable = false;
         }
         Hide();
-        await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
+        await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
         if (IsInstanceValid(this))
         {
             this.QueueFree();

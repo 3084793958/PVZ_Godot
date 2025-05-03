@@ -426,6 +426,7 @@ margin_top = -72.0
 margin_right = 24.0
 margin_bottom = 8.0
 rect_scale = Vector2( 1.5, 1.5 )
+mouse_filter = 2
 
 [node name="Shadow" type="Sprite" parent="Main"]
 modulate = Color( 1, 1, 1, 0.588235 )

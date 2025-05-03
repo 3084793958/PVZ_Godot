@@ -5,6 +5,7 @@ public class H2SO4_Main : Normal_Plants
 {
     public bool on_Mg = false;
     [Export] public bool has_open = false;
+    [Export] public bool has_Died = false;
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
@@ -50,7 +51,7 @@ public class H2SO4_Main : Normal_Plants
             {
                 if (!GetNode<AnimationPlayer>("Died").IsPlaying())
                 {
-                    Dock_Area_2D.Normal_Plant_List.Remove(this);
+                    Plants_Remove_List();
                     GetNode<AnimationPlayer>("Died").Play("Died");
                     GetNode<H2SO4_Area2D>("Main/H2SO4_Area").has_died = true;
                 }
@@ -93,10 +94,18 @@ public class H2SO4_Main : Normal_Plants
     }
     protected override void Plants_Add_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Add(this);
     }
     protected override void Plants_Remove_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Remove(this);
     }
     protected override void Plants_Init()
@@ -124,9 +133,25 @@ public class H2SO4_Main : Normal_Plants
                 Normal_Plants.Choosing = true;
                 GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
                 Hide();
-                Dock_Area_2D.Normal_Plant_List.Remove(this);
+                Plants_Remove_List();
                 GetNode<AnimationPlayer>("Free_player").Play("Free");
             }
+        }
+    }
+    public override void Free_Self()
+    {
+        if (!has_Died && !has_open && !on_Shovel) 
+        {
+            if (!GetNode<AnimationPlayer>("Died").IsPlaying())
+            {
+                Plants_Remove_List();
+                GetNode<AnimationPlayer>("Died").Play("Died");
+                GetNode<H2SO4_Area2D>("Main/H2SO4_Area").has_died = true;
+            }
+        }
+        else
+        {
+            base.Free_Self();
         }
     }
 }

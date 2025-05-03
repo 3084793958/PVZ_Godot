@@ -90,6 +90,18 @@ tracks/1/keys = {
 "method": "Free_Self"
 } ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:has_Died")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=11]
 resource_name = "Bug"

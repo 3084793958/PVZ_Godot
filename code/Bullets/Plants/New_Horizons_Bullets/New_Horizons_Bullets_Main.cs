@@ -24,7 +24,7 @@ public class New_Horizons_Bullets_Main : Normal_Plants_Bullets
             this.Position += new Vector2((float)(speed_x * Math.Cos(sita_rad) * delta * 60), (float)(speed_x * Math.Sin(sita_rad) * delta * 60));
             GetNode<New_Horizons_Bullets_Area>("Area2D").hurt = 50 / (touch_zombies_number + 1);
         }
-        if (Position.x > 1437)
+        if (Position.x > 1437 || Position.x < -512 || Position.y > 800 || Position.y < -200)
         {
             this.QueueFree();
         }

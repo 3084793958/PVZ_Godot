@@ -73,7 +73,7 @@ public class Bucket_Zombies_Main : Normal_Zombies
     public override void _Ready()
     {
         health_list.Clear();
-        health_list.Add(new Health_Container(1100, false, "Hat", true));//铁桶
+        health_list.Add(new Health_Container(1100, false, "Hat", true, "Iron"));//铁桶
         health_list.Add(new Health_Container(270, false));
         base._Ready();
     }

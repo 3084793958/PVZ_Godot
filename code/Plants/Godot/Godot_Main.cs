@@ -34,7 +34,7 @@ public class Godot_Main : Normal_Plants
                 if (!GetNode<AnimationPlayer>("Died").IsPlaying())
                 {
                     Clone_DO();
-                    Dock_Area_2D.Normal_Plant_List.Remove(this);
+                    Plants_Remove_List();
                     GetNode<AnimationPlayer>("Died").Play("Died");
                 }
             }
@@ -46,10 +46,18 @@ public class Godot_Main : Normal_Plants
     }
     protected override void Plants_Add_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Add(this);
     }
     protected override void Plants_Remove_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Remove(this);
     }
     protected override void Plants_Init()
@@ -85,7 +93,7 @@ public class Godot_Main : Normal_Plants
     }
     public void Clean_Area()
     {
-        Dock_Area_2D.Normal_Plant_List.Remove(this);
+        Plants_Remove_List();
     }
     public void Clone_Self_Zombies()
     {
@@ -167,6 +175,22 @@ public class Godot_Main : Normal_Plants
                     In_Game_Main.Plants_Zombies_Clone_Request("res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn", Zombies_put_position, _ZIndex);
                 }
             }
+        }
+    }
+    public override void Free_Self()
+    {
+        if (!has_clone && !on_Shovel) 
+        {
+            if (!GetNode<AnimationPlayer>("Died").IsPlaying())
+            {
+                Clone_DO();
+                Plants_Remove_List();
+                GetNode<AnimationPlayer>("Died").Play("Died");
+            }
+        }
+        else
+        {
+            base.Free_Self();
         }
     }
 }

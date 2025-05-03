@@ -35,7 +35,7 @@ public class Double_Van_Door_Main : Normal_Plants
             {
                 if (!GetNode<AnimationPlayer>("Died").IsPlaying())
                 {
-                    Dock_Area_2D.Normal_Plant_List.Remove(this);
+                    Plants_Remove_List();
                     GetNode<AnimationPlayer>("Died").Play("Died");
                 }
             }
@@ -49,10 +49,18 @@ public class Double_Van_Door_Main : Normal_Plants
     }
     protected override void Plants_Add_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Add(this);
     }
     protected override void Plants_Remove_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Remove(this);
     }
     protected override void Plants_Init()
@@ -127,14 +135,14 @@ public class Double_Van_Door_Main : Normal_Plants
     }
     public async void Bug_Doing()
     {
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
             await ToSignal(GetTree(), "idle_frame");
-            Clone_Bullets(-3f);
+            Clone_Bullets(-2.5f);
             Clone_Bullets(-2f);
             Clone_Bullets(-1f);
             Clone_Bullets(0f);
-            Clone_Bullets(3f);
+            Clone_Bullets(2.5f);
             Clone_Bullets(2f);
             Clone_Bullets(1f);
         }

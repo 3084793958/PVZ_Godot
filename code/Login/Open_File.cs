@@ -27,6 +27,10 @@ public class Open_File : FileDialog
                 Android_Timer.Start();
             }
         }
+        if (Android_Timer.IsStopped() && !Input.IsActionJustReleased("Left_Mouse")) 
+        {
+            Is_Double_Click = false;
+        }
     }
     public override void _Input(InputEvent @event)
     {

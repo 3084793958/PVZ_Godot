@@ -4,6 +4,7 @@ using System;
 public class C2H5OH_Main : Normal_Plants
 {
     public bool is_fire = true;
+    [Export] public bool has_fire = false;
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
@@ -36,7 +37,7 @@ public class C2H5OH_Main : Normal_Plants
                     GetNode<Node2D>("Main/Hurt_Fire").ZIndex = normal_ZIndex + 20 * (Dock_Area_2D.pos[0] - 1) + 6;
                     if (!GetNode<AnimationPlayer>("Died2").IsPlaying())
                     {
-                        Dock_Area_2D.Normal_Plant_List.Remove(this);
+                        Plants_Remove_List();
                         GetNode<AnimationPlayer>("Died2").Play("Died");
                     }
                 }
@@ -44,7 +45,7 @@ public class C2H5OH_Main : Normal_Plants
                 {
                     if (!GetNode<AnimationPlayer>("Died1").IsPlaying())
                     {
-                        Dock_Area_2D.Normal_Plant_List.Remove(this);
+                        Plants_Remove_List();
                         GetNode<AnimationPlayer>("Died1").Play("Died");
                     }
                 }
@@ -60,10 +61,18 @@ public class C2H5OH_Main : Normal_Plants
     }
     protected override void Plants_Add_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Add(this);
     }
     protected override void Plants_Remove_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Remove(this);
     }
     protected override void Plants_Init()
@@ -102,10 +111,22 @@ public class C2H5OH_Main : Normal_Plants
     }
     public override void Free_Self()
     {
-        GetNode<Area2D>("Main/Died_Fire_Area").Monitoring = false;
-        GetNode<Area2D>("Main/Died_Fire_Area").Monitorable = false;
-        GetNode<Area2D>("Main/Bullets_Fire_Area").Monitoring = false;
-        GetNode<Area2D>("Main/Bullets_Fire_Area").Monitorable = false;
-        base.Free_Self();
+        if (is_fire && !has_fire && !on_Shovel)
+        {
+            GetNode<Node2D>("Main/Hurt_Fire").ZIndex = normal_ZIndex + 20 * (Dock_Area_2D.pos[0] - 1) + 6;
+            if (!GetNode<AnimationPlayer>("Died2").IsPlaying())
+            {
+                Plants_Remove_List();
+                GetNode<AnimationPlayer>("Died2").Play("Died");
+            }
+        }
+        else
+        {
+            GetNode<Area2D>("Main/Died_Fire_Area").Monitoring = false;
+            GetNode<Area2D>("Main/Died_Fire_Area").Monitorable = false;
+            GetNode<Area2D>("Main/Bullets_Fire_Area").Monitoring = false;
+            GetNode<Area2D>("Main/Bullets_Fire_Area").Monitorable = false;
+            base.Free_Self();
+        }
     }
 }

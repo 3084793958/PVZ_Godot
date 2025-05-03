@@ -13,6 +13,7 @@ public class Shovel_Main : Node2D
     //public Control_Area_2D plants_Area_2d=null;
     private bool playing = false;
     protected bool real_touching = false;
+    protected bool has_Done = false;
     public override void _Ready()
     {
         this.AddChild(Android_Timer);
@@ -29,27 +30,7 @@ public class Shovel_Main : Node2D
         }
         if (area2D.Area2D_type == "Plants" && area2D.Sec_Info != "Zombies") 
         {
-            var plants_Area_2d = (Normal_Plants_Area)area2D;
-            if (plants_Area_2d.has_planted)
-            {
-                Plants_Area_2D_List.Add(plants_Area_2d);
-                Top_Area_2D = Plants_Area_2D_List[0];
-                for (int i = 0; i < Plants_Area_2D_List.Count; i++)
-                {
-                    if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
-                    {
-                        Top_Area_2D = Plants_Area_2D_List[i];
-                    }
-                    else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
-                    {
-                        if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
-                        {
-                            Top_Area_2D = Plants_Area_2D_List[i];
-                        }
-                    }
-                }
-                GetNode<Shovel_Area2D>("Main/Area2D").Choose_Plants_Area = Top_Area_2D;
-            }
+            Plants_Area_2D_List.Add((Normal_Plants_Area)area2D);
         }
     }
     public void Area2D_Exited(Area2D area_node)
@@ -60,67 +41,75 @@ public class Shovel_Main : Node2D
         }
         if (area2D.Area2D_type == "Plants")
         {
-            var plants_Area_2d = (Normal_Plants_Area)area2D;
-            if (plants_Area_2d.has_planted)
-            {
-                Plants_Area_2D_List.Remove(plants_Area_2d);
-                if (Plants_Area_2D_List.Count == 0)
-                {
-                    Top_Area_2D = null;
-                }
-                else
-                {
-                    Top_Area_2D = Plants_Area_2D_List[0];
-                    for (int i = 0; i < Plants_Area_2D_List.Count; i++)
-                    {
-                        if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
-                        {
-                            Top_Area_2D = Plants_Area_2D_List[i];
-                        }
-                        else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
-                        {
-                            if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
-                            {
-                                Top_Area_2D = Plants_Area_2D_List[i];
-                            }
-                        }
-                    }
-                }
-                GetNode<Shovel_Area2D>("Main/Area2D").Choose_Plants_Area = Top_Area_2D;
-            }
+            Plants_Area_2D_List.Remove((Normal_Plants_Area)area2D);
         }
     }
     public override void _Process(float delta)
     {
-        if (Normal_Plants.Choosing&&!playing)
+        Android_Timer.OneShot = Public_Main.for_Android;
+        if (Input.IsActionJustReleased("Left_Mouse"))
+        {
+            if (Android_Timer.IsStopped())
+            {
+                Android_Timer.Start();
+            }
+            else
+            {
+                Is_Double_Click = true;
+                Android_Timer.Start();
+            }
+        }
+        if (Android_Timer.IsStopped() && Public_Main.for_Android && !Input.IsActionJustReleased("Left_Mouse"))
+        {
+            Is_Double_Click = false;
+        }
+        if (Normal_Plants.Choosing && !playing && !has_Done) 
         {
             Show();
             this.GlobalPosition = GetTree().Root.GetMousePosition();
+            Top_Area_2D = null;
+            for (int i = 0; i < Plants_Area_2D_List.Count; i++)
+            {
+                if (Plants_Area_2D_List[i] == null)
+                {
+                    Plants_Area_2D_List.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                if (!Plants_Area_2D_List[i].has_planted)
+                {
+                    continue;
+                }
+                if (Top_Area_2D == null)
+                {
+                    Top_Area_2D = Plants_Area_2D_List[i];
+                }
+                if (Plants_Area_2D_List[i].ZIndex > Top_Area_2D.ZIndex)
+                {
+                    Top_Area_2D = Plants_Area_2D_List[i];
+                }
+                else if (Plants_Area_2D_List[i].ZIndex == Top_Area_2D.ZIndex)
+                {
+                    if (Plants_Area_2D_List[i].GetParent().GetParent().GetIndex() > Top_Area_2D.GetParent().GetParent().GetIndex())
+                    {
+                        Top_Area_2D = Plants_Area_2D_List[i];
+                    }
+                }
+            }
+            GetNode<Shovel_Area2D>("Main/Area2D").Choose_Plants_Area = Top_Area_2D;
             if (Input.IsActionPressed("Right_Mouse"))
             {
                 GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
                 Normal_Plants.Choosing = false;
                 Hide();
-                this.QueueFree();
                 GetNode<TextureRect>("/root/In_Game/Main/Card/ShovelBank/Shovel").Show();
-            }
-            Android_Timer.OneShot = Public_Main.for_Android;
-            if (Input.IsActionJustReleased("Left_Mouse"))
-            {
-                if (Android_Timer.IsStopped())
-                {
-                    Android_Timer.Start();
-                }
-                else
-                {
-                    Is_Double_Click = true;
-                    Android_Timer.Start();
-                }
+                this.QueueFree();
             }
             if (Is_Double_Click || (Input.IsActionPressed("Left_Mouse") && !real_touching))
             {
                 Is_Double_Click = false;
-                if (Plants_Area_2D_List.Count == 0)
+                has_Done = true;
+                if (Top_Area_2D == null) 
                 {
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
                     Normal_Plants.Choosing = false;

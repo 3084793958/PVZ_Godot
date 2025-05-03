@@ -1395,7 +1395,6 @@ tracks/5/keys = {
 }
 
 [node name="Bucket_Screen_Door_Zombies" type="Node2D"]
-modulate = Color( 1, 1, 1, 1 )
 position = Vector2( -80, -80 )
 z_index = 7
 script = ExtResource( 22 )
@@ -1486,18 +1485,20 @@ scale = Vector2( 0.153335, 0.06 )
 texture = ExtResource( 27 )
 
 [node name="In_Arm" type="Node2D" parent="Main/Main"]
-position = Vector2( -14.667, -36 )
+position = Vector2( -14.507, -36.1067 )
 
 [node name="1" type="Sprite" parent="Main/Main/In_Arm"]
 position = Vector2( -1.33334, 8 )
 texture = ExtResource( 32 )
 
 [node name="3" type="Sprite" parent="Main/Main/In_Arm"]
-position = Vector2( -4, 48 )
+position = Vector2( -19.9292, 33.2419 )
+rotation = 0.684907
 texture = ExtResource( 21 )
 
 [node name="2" type="Sprite" parent="Main/Main/In_Arm"]
-position = Vector2( -4, 26.6667 )
+position = Vector2( -7.30836, 20.2187 )
+rotation = 0.727394
 texture = ExtResource( 8 )
 
 [node name="Head" type="Sprite" parent="Main/Main"]
@@ -1505,7 +1506,7 @@ position = Vector2( -14.534, -62.667 )
 texture = ExtResource( 20 )
 
 [node name="Jaw" type="Sprite" parent="Main/Main/Head"]
-position = Vector2( -1.466, 24.0003 )
+position = Vector2( -4.13267, 21.3337 )
 texture = ExtResource( 2 )
 
 [node name="Hat" type="Node2D" parent="Main/Main/Head"]
@@ -1548,22 +1549,25 @@ position = Vector2( -4, 38.6667 )
 texture = ExtResource( 17 )
 
 [node name="Out_leg" type="Node2D" parent="Main/Main"]
-position = Vector2( 26.6667, -12 )
+position = Vector2( 26.5579, -12.1633 )
+rotation = 0.0127858
 
 [node name="3" type="Sprite" parent="Main/Main/Out_leg"]
-position = Vector2( -2.66667, 56 )
+position = Vector2( -3.10856, 55.9346 )
+rotation = -0.0104977
 texture = ExtResource( 9 )
 
 [node name="2" type="Sprite" parent="Main/Main/Out_leg"]
-position = Vector2( 6.66666, 41.3333 )
+position = Vector2( 6.6891, 41.4386 )
 texture = ExtResource( 7 )
 
 [node name="1" type="Sprite" parent="Main/Main/Out_leg"]
-position = Vector2( 0, 14.6667 )
+position = Vector2( 0.0459233, 14.7397 )
 texture = ExtResource( 26 )
 
 [node name="Body" type="Sprite" parent="Main/Main"]
-position = Vector2( 9.33334, -22.6667 )
+position = Vector2( 9.38667, -22.8267 )
+rotation = 0.0261494
 texture = ExtResource( 25 )
 
 [node name="Tie" type="Sprite" parent="Main/Main/Body"]
@@ -1572,7 +1576,8 @@ texture = ExtResource( 35 )
 
 [node name="Out_Arm" type="Node2D" parent="Main/Main"]
 visible = false
-position = Vector2( 8, -38.667 )
+position = Vector2( 8.16, -38.8537 )
+rotation = 0.442951
 
 [node name="1" type="Sprite" parent="Main/Main/Out_Arm"]
 position = Vector2( -1.33333, 10.6667 )
@@ -1592,7 +1597,7 @@ position = Vector2( -1.45132, 12.4949 )
 texture = ExtResource( 12 )
 
 [node name="Screen_Door" type="Node2D" parent="Main/Main"]
-position = Vector2( -24, -2.66667 )
+position = Vector2( -23.4667, -3.46667 )
 
 [node name="Main" type="Node2D" parent="Main/Main/Screen_Door"]
 

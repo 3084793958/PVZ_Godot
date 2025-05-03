@@ -52,10 +52,18 @@ public class New_Horizons_Main : Normal_Plants
     }
     protected override void Plants_Add_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Add(this);
     }
     protected override void Plants_Remove_List()
     {
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
         Dock_Area_2D.Normal_Plant_List.Remove(this);
     }
     protected override void Plants_Init()
@@ -148,11 +156,13 @@ public class New_Horizons_Main : Normal_Plants
         {
             return;
         }
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
             Clone_Bullets(-30f);
             Clone_Bullets(-15f);
+            Clone_Bullets(-7f);
             Clone_Bullets(0f);
+            Clone_Bullets(7f);
             Clone_Bullets(15f);
             Clone_Bullets(30f);
         }
