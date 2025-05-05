@@ -192,6 +192,7 @@ margin_left = -4.0
 margin_top = 3.0
 margin_right = 22.0
 margin_bottom = 25.0
+mouse_filter = 2
 texture = ExtResource( 3 )
 
 [node name="Bug" type="TextureRect" parent="Main"]
@@ -199,6 +200,7 @@ margin_left = 1.0
 margin_top = -3.0
 margin_right = 43.0
 margin_bottom = 67.0
+mouse_filter = 2
 texture = ExtResource( 2 )
 
 [node name="Spray" type="Control" parent="Main"]
@@ -208,6 +210,7 @@ margin_top = 33.0
 margin_right = -40.0
 margin_bottom = 33.0
 rect_rotation = -60.5162
+mouse_filter = 2
 
 [node name="1" type="TextureRect" parent="Main/Spray"]
 visible = false

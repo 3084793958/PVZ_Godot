@@ -495,6 +495,7 @@ public class Normal_Plants : Node2D
                     GetNode<Control>("Main").RectPosition = Main_Pos + move_pos;
                 }
             }
+            GetNode<Control>("Health/Health").MouseFilter = Control.MouseFilterEnum.Ignore;
             if (health <= 0 || !Public_Main.Show_Plants_Health)
             {
                 GetNode<Node2D>("Health").Hide();

@@ -112,6 +112,7 @@ margin_left = -17.0
 margin_top = -68.0
 margin_right = 63.0
 margin_bottom = 12.0
+mouse_filter = 2
 texture = ExtResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="Main"]

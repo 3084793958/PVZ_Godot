@@ -158,12 +158,19 @@ public class In_Game_Main : Node2D
                             Sun_Number = Sun;
                             bool Shovel = (bool)file2.GetValue("Bank", "Shovel", true);
                             bool Bug = (bool)file2.GetValue("Bank", "Bug", true);
+                            bool Hammer = (bool)file2.GetValue("Bank", "Hammer", false);
                             var Sun_Label = GetNode<Label>("Main/Card/SeedBank/Sun/Sun_Text");
                             Sun_Label.Text = Sun.ToString();
                             var Shovel_Main = GetNode<TextureRect>("Main/Card/ShovelBank");
                             var Bug_Main = GetNode<TextureRect>("Main/Card/BugBank");
                             Shovel_Main.Visible = Shovel;
                             Bug_Main.Visible = Bug;
+                            if (Hammer)
+                            {
+                                var scene = GD.Load<PackedScene>("res://scene/Hammer/Hammer.tscn");
+                                var plant_child = (Hammer_Main)scene.Instance();
+                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            }
                             int Card = (int)file2.GetValue("Bank", "Card", 13);
                             int Car_Number = (int)file2.GetValue("Car", "Number", 5);
                             if (background_number == 3 || background_number == 4)
@@ -550,12 +557,19 @@ public class In_Game_Main : Node2D
                             Sun_Number = Sun;
                             bool Shovel = (bool)file2.GetValue("Bank", "Shovel", true);
                             bool Bug = (bool)file2.GetValue("Bank", "Bug", true);
+                            bool Hammer = (bool)file2.GetValue("Bank", "Hammer", false);
                             var Sun_Label = GetNode<Label>("Main/Card/M2Bank/Sun/Sun_Text");
                             Sun_Label.Text = Sun.ToString();
                             var Shovel_Main = GetNode<TextureRect>("Main/Card/ShovelBank");
                             var Bug_Main = GetNode<TextureRect>("Main/Card/BugBank");
                             Shovel_Main.Visible = Shovel;
                             Bug_Main.Visible = Bug;
+                            if (Hammer)
+                            {
+                                var scene = GD.Load<PackedScene>("res://scene/Hammer/Hammer.tscn");
+                                var plant_child = (Hammer_Main)scene.Instance();
+                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            }
                             int Card = (int)file2.GetValue("Bank", "Card", 13);
                             int Car_Number = (int)file2.GetValue("Car", "Number", 5);
                             if (background_number == 3 || background_number == 4)

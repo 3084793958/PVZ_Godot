@@ -64,6 +64,7 @@ public class Normal_Zombies : Node2D
     protected List<Fune_Shroom_Bullets_Area> Fune_Shroom_Bullets_Area_2D_List = new List<Fune_Shroom_Bullets_Area>();
     [Export] protected bool Never_Died = false;
     [Export] protected bool is_Angry = false;
+    protected int back_speed = 0;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -325,6 +326,7 @@ public class Normal_Zombies : Node2D
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").Choose_Plants_Area = Plants_Area_2D;
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").has_lose_head = has_lose_Head;
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").health = health;
+            GetNode<Control>("Health/Health").MouseFilter = Control.MouseFilterEnum.Ignore;
             if (health <= 0 || !Public_Main.Show_Zombies_Health || On_Boom_Effect) 
             {
                 GetNode<Node2D>("Health").Hide();
@@ -471,11 +473,15 @@ public class Normal_Zombies : Node2D
             }
             for (int i = 0; i < Crash_Area_2D_List.Count; i++)
             {
-                if (Crash_Area_2D_List[i].has_planted && Crash_Area_2D_List[i].Crash_Area == GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area"))
+                if (Crash_Area_2D_List[i].has_planted && Crash_Area_2D_List[i].Crash_Area == GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area") && (!Crash_Area_2D_List[i].Re_Used || (Crash_Area_2D_List[i].Re_Used && !Crash_Area_2D_List[i].has_Hurt))) 
                 {
                     if (!Never_Died)
                     {
                         health_list[0].Health -= Crash_Area_2D_List[i].hurt;
+                    }
+                    if (health_list.Get_Has_Sound(false))
+                    {
+                        Bullets_Sound_Play();
                     }
                     if (!this.On_Boom_Effect)
                     {
@@ -488,8 +494,15 @@ public class Normal_Zombies : Node2D
                             GetNode<AnimationPlayer>("Is_Eated").Play("Is_Eated");
                         }
                     }
-                    Crash_Area_2D_List.RemoveAt(i);
-                    i--;
+                    if (Crash_Area_2D_List[i].Re_Used)
+                    {
+                        Crash_Area_2D_List[i].has_Hurt = true;
+                    }
+                    else
+                    {
+                        Crash_Area_2D_List.RemoveAt(i);
+                        i--;
+                    }
                 }
             }
             for (int i = 0; i < Boom_Area_2D_List.Count; i++)
@@ -784,6 +797,10 @@ public class Normal_Zombies : Node2D
                                 health_list[health_list.Get_Can_Through_To_Index()].Health -= Bullets_Area_2D_List[i].hurt;
                             }
                         }
+                        if (back_speed <= -15)
+                        {
+                            back_speed = 15;
+                        }
                         if (health_list.Get_Has_Sound(true))
                         {
                             Bullets_Sound_Play();
@@ -792,6 +809,10 @@ public class Normal_Zombies : Node2D
                 }
                 Bullets_Area_2D_List.RemoveAt(i);
                 i--;
+            }
+            if (back_speed > -15)
+            {
+                back_speed -= (int)(delta * 60);
             }
             for (int i = 0; i < Fune_Shroom_Bullets_Area_2D_List.Count; i++)
             {
@@ -1043,9 +1064,16 @@ public class Normal_Zombies : Node2D
                     }
                 }
             }//zombies
-            if (!eating && Get_Walk_Mode() && !On_Boom_Effect && !Is_Shining && !is_Lock_Ice && !is_Angry) 
+            if (!eating && Get_Walk_Mode() && !On_Boom_Effect && !Is_Shining && !is_Lock_Ice && !is_Angry && back_speed <= 0)  
             {
                 this.Position += new Vector2(speed * speed_x * delta * 60, 0);
+            }
+            else if (back_speed > 0)
+            {
+                if (GD.Randi() % 2 == 1) 
+                {
+                    this.Position -= new Vector2(speed * 0.5f * delta * 60, 0);
+                }
             }
             if (GetNode<Control>("Main/Main").RectRotation < -45)
             {

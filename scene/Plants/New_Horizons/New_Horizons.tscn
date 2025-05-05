@@ -554,6 +554,7 @@ margin_left = -40.0
 margin_top = -40.0
 margin_right = 40.0
 margin_bottom = 40.0
+mouse_filter = 2
 
 [node name="Shadow" type="Sprite" parent="Main"]
 modulate = Color( 1, 1, 1, 0.588235 )
@@ -578,7 +579,6 @@ visible = false
 modulate = Color( 1, 1, 1, 0.588235 )
 position = Vector2( -104.841, 65.7314 )
 scale = Vector2( 0.15, 0.15 )
-z_index = 1
 texture = ExtResource( 24 )
 
 [node name="Back_Hair" type="Sprite" parent="Main/Body"]

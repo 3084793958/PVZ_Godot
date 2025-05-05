@@ -299,6 +299,7 @@ public class Normal_Plants_Zombies : Node2D
         {
             GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").Choose_Zombies_Area = Zombies_Area_2D;
             GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").has_lose_head = has_lose_Head;
+            GetNode<Control>("Health/Health").MouseFilter = Control.MouseFilterEnum.Ignore;
             if (health <= 0 || !Public_Main.Show_Plants_Zombies_Health)
             {
                 GetNode<Node2D>("Health").Hide();

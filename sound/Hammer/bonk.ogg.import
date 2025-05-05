@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/bonk.ogg-0f71f5991273c839268d0d373257e3a2.oggstr"
+
+[deps]
+
+source_file="res://sound/Hammer/bonk.ogg"
+dest_files=[ "res://.import/bonk.ogg-0f71f5991273c839268d0d373257e3a2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

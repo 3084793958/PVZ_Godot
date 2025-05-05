@@ -26,7 +26,21 @@ public class New_Horizons_Bullets_Main : Normal_Plants_Bullets
         }
         if (Position.x > 1437 || Position.x < -512 || Position.y > 800 || Position.y < -200)
         {
-            this.QueueFree();
+            if (this.Visible)
+            {
+                Hide();
+                Free_Self();
+            }
+        }
+        if (touch_zombies_number < 5)
+        { }
+        else
+        {
+            if (this.Visible)
+            {
+                Hide();
+                Free_Self();
+            }
         }
     }
     public void Dock_Enter(Area2D area_node)
@@ -75,7 +89,7 @@ public class New_Horizons_Bullets_Main : Normal_Plants_Bullets
                 }
                 else
                 {
-                    if (Top_Zombies_Area.ZIndex > GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Zombies_Area.ZIndex || (Top_Zombies_Area.ZIndex == GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Zombies_Area.ZIndex && Top_Zombies_Area.GetParent().GetParent().GetIndex() > GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Zombies_Area.GetParent().GetParent().GetIndex()))
+                    if (Top_Zombies_Area.ZIndex > GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Zombies_Area.ZIndex || (Top_Zombies_Area.ZIndex == GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Zombies_Area.ZIndex && Top_Zombies_Area.GetParent().GetParent().GetParent().GetIndex() > GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Zombies_Area.GetParent().GetParent().GetParent().GetIndex()))
                     {
                         GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Zombies_Area = Top_Zombies_Area;
                     }
@@ -95,20 +109,13 @@ public class New_Horizons_Bullets_Main : Normal_Plants_Bullets
                 }
                 else
                 {
-                    if (Top_Tomb_Area.ZIndex > GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Tomb_Area.ZIndex || (Top_Tomb_Area.ZIndex == GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Tomb_Area.ZIndex && Top_Tomb_Area.GetParent().GetParent().GetIndex() > GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Tomb_Area.GetParent().GetParent().GetIndex()))
+                    if (Top_Tomb_Area.ZIndex > GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Tomb_Area.ZIndex || (Top_Tomb_Area.ZIndex == GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Tomb_Area.ZIndex && Top_Tomb_Area.GetParent().GetParent().GetParent().GetIndex() > GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Tomb_Area.GetParent().GetParent().GetParent().GetIndex()))
                     {
                         GetNode<New_Horizons_Bullets_Area>("Area2D").Choose_Tomb_Area = Top_Tomb_Area;
                     }
                 }
                 touch_zombies_number++;
             }
-        }
-        if (touch_zombies_number < 5)
-        { }
-        else
-        {
-            Hide();
-            Free_Self();
         }
     }
     protected async void Free_Self()
@@ -123,7 +130,7 @@ public class New_Horizons_Bullets_Main : Normal_Plants_Bullets
             GetNode<Area2D>("Shovel_Area2D").Monitorable = false;
         }
         Hide();
-        await ToSignal(GetTree().CreateTimer(0.72f), "timeout");
+        await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
         if (IsInstanceValid(this))
         {
             this.QueueFree();

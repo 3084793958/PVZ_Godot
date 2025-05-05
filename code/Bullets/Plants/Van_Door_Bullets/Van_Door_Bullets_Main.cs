@@ -75,7 +75,7 @@ public class Van_Door_Bullets_Main : Normal_Plants_Bullets
                 }
                 else
                 {
-                    if (Top_Zombies_Area.ZIndex > GetNode<Bullets_Area>("Area2D").Choose_Zombies_Area.ZIndex || (Top_Zombies_Area.ZIndex == GetNode<Bullets_Area>("Area2D").Choose_Zombies_Area.ZIndex && Top_Zombies_Area.GetParent().GetParent().GetIndex() > GetNode<Bullets_Area>("Area2D").Choose_Zombies_Area.GetParent().GetParent().GetIndex()))
+                    if (Top_Zombies_Area.ZIndex > GetNode<Bullets_Area>("Area2D").Choose_Zombies_Area.ZIndex || (Top_Zombies_Area.ZIndex == GetNode<Bullets_Area>("Area2D").Choose_Zombies_Area.ZIndex && Top_Zombies_Area.GetParent().GetParent().GetParent().GetIndex() > GetNode<Bullets_Area>("Area2D").Choose_Zombies_Area.GetParent().GetParent().GetParent().GetIndex()))
                     {
                         GetNode<Bullets_Area>("Area2D").Choose_Zombies_Area = Top_Zombies_Area;
                     }
@@ -103,7 +103,7 @@ public class Van_Door_Bullets_Main : Normal_Plants_Bullets
                 }
                 else
                 {
-                    if (Top_Tomb_Area.ZIndex > GetNode<Bullets_Area>("Area2D").Choose_Tomb_Area.ZIndex || (Top_Tomb_Area.ZIndex == GetNode<Bullets_Area>("Area2D").Choose_Tomb_Area.ZIndex && Top_Tomb_Area.GetParent().GetParent().GetIndex() > GetNode<Bullets_Area>("Area2D").Choose_Tomb_Area.GetParent().GetParent().GetIndex()))
+                    if (Top_Tomb_Area.ZIndex > GetNode<Bullets_Area>("Area2D").Choose_Tomb_Area.ZIndex || (Top_Tomb_Area.ZIndex == GetNode<Bullets_Area>("Area2D").Choose_Tomb_Area.ZIndex && Top_Tomb_Area.GetParent().GetParent().GetParent().GetIndex() > GetNode<Bullets_Area>("Area2D").Choose_Tomb_Area.GetParent().GetParent().GetParent().GetIndex()))
                     {
                         GetNode<Bullets_Area>("Area2D").Choose_Tomb_Area = Top_Tomb_Area;
                     }
