@@ -212,7 +212,7 @@ static public class Public_Main
     "New Horizons",
     GD.Load<Texture>("res://image/Plants/New_Horizons/New_Horizons.png"),
     0f,
-    50f,
+    40f,
     new Tuple<int,string>(385,"res://scene/Plants/New_Horizons/New_Horizons.tscn")
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
@@ -257,6 +257,26 @@ static public class Public_Main
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     24,
+    "球形盾",
+    "简单护盾",
+    "简单护盾",
+    GD.Load<Texture>("res://image/Plants/PL_Casing/PL.png"),
+    10f,
+    20f,
+    new Tuple<int,string>(50,"res://scene/Plants/PL_Casing/PL_Casing.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    25,
+    "魅惑菇",
+    "魅惑菇",
+    "魅惑菇",
+    GD.Load<Texture>("res://image/Plants/Hypno_Shroom/Hypno_Shroom.png"),
+    10f,
+    30f,
+    new Tuple<int,string>(75,"res://scene/Plants/Hypno_Shroom/Hypno_Shroom.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    26,
     "莲叶",
     "莲叶",
     "莲叶",

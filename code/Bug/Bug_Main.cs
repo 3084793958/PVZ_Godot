@@ -22,6 +22,7 @@ public class Bug_Main : Node2D
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
         GetNode<AudioStreamPlayer>("Sound/Press").Stream.Set("loop", false);
+        In_Game_Main.Choosing_List.Add(this);
     }
     public void Area2D_Entered(Area2D area_node)
     {
@@ -102,6 +103,7 @@ public class Bug_Main : Node2D
             {
                 GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
                 Normal_Plants.Choosing = false;
+                In_Game_Main.Choosing_List.Remove(this);
                 Hide();
                 this.QueueFree();
                 GetNode<TextureRect>("/root/In_Game/Main/Card/BugBank/Bug").Show();
@@ -114,6 +116,7 @@ public class Bug_Main : Node2D
                 {
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
                     Normal_Plants.Choosing = false;
+                    In_Game_Main.Choosing_List.Remove(this);
                     Hide();
                     GetNode<TextureRect>("/root/In_Game/Main/Card/BugBank/Bug").Show();
                     this.QueueFree();
@@ -123,6 +126,7 @@ public class Bug_Main : Node2D
                     if (by_H2SO4 || Public_Main.debuging)
                     {
                         Normal_Plants.Choosing = false;
+                        In_Game_Main.Choosing_List.Remove(this);
                         playing = true;
                         GlobalPosition = Top_Area_2D.GlobalPosition;
                         GetNode<Bug_Area2D>("Main/Area2D").Choose_Plants_Area = Top_Area_2D;
@@ -133,6 +137,7 @@ public class Bug_Main : Node2D
                     else if (In_Game_Main.Sun_Number >= 150)
                     {
                         Normal_Plants.Choosing = false;
+                        In_Game_Main.Choosing_List.Remove(this);
                         playing = true;
                         GlobalPosition = Top_Area_2D.GlobalPosition;
                         GetNode<Bug_Area2D>("Main/Area2D").Choose_Plants_Area = Top_Area_2D;

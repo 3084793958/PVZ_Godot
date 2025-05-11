@@ -13,12 +13,18 @@ public class Random_Main : Limited_Plants
         Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
+        GetNode<Control>("Dock").Show();
+        GetNode<Control>("Show").Show();
         if (!player_put)
         {
             has_planted = true;
             GetNode<Control>("Dock").Hide();
             GetNode<Control>("Show").Hide();
             GlobalPosition = put_position;
+        }
+        else
+        {
+            In_Game_Main.Choosing_List.Add(this);
         }
     }
     public override void _PhysicsProcess(float delta)
@@ -120,6 +126,7 @@ public class Random_Main : Limited_Plants
                 {
                     on_lock_grid = false;
                     Normal_Plants.Choosing = false;
+                    In_Game_Main.Choosing_List.Remove(this);
                     Position = new Vector2(-1437, -1437);
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
                     if (Tmp_Card_Used)
@@ -147,6 +154,7 @@ public class Random_Main : Limited_Plants
                         card_parent_Button.Set_ColorRect_2(false);
                     }
                     Normal_Plants.Choosing = false;
+                    In_Game_Main.Choosing_List.Remove(this);
                     if (Dock_Area_2D != null)
                     {
                         if ((In_Game_Main.Sun_Number >= this_sun || Public_Main.debuging) && on_lock_grid)
@@ -207,12 +215,12 @@ public class Random_Main : Limited_Plants
         }
         else
         {
-            int Clone_Type = (int)(GD.Randi() % 2);
-            if (Clone_Type == 0)
+            int Clone_Type = (int)(GD.Randi() % 5);
+            if (Clone_Type < 4)
             {
                 In_Game_Main.Plants_Clone_Request(Public_Main.Plant_list[(int)(GD.Randi() % (Public_Main.Plant_list.Count))].Rest.Item2, this.GlobalPosition, this.ZIndex - normal_ZIndex + 3);
             }
-            else if (Clone_Type == 1)
+            else if (Clone_Type == 4)
             {
                 In_Game_Main.Plants_Zombies_Clone_Request(Public_Main.Plants_Zombies_list[(int)(GD.Randi() % Public_Main.Plants_Zombies_list.Count)].Rest.Item2, this.GlobalPosition, this.ZIndex - normal_ZIndex + 7);
             }

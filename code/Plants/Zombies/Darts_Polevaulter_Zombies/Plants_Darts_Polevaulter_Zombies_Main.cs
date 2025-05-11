@@ -7,6 +7,12 @@ public class Plants_Darts_Polevaulter_Zombies_Main : Normal_Plants_Zombies
     [Export] public bool has_lose_pole = false;
     [Export] public bool is_jumping = false;
     public List<Normal_Zombies_Area> Jump_Plants_List = new List<Normal_Zombies_Area>();
+    protected override void Self_Hypno_Process()
+    {
+        //338
+        GetNode<AnimationPlayer>("Main/Main/Up").Play("Just_Set");
+        this.GlobalPosition = Hypno_Pos - new Vector2(338, 0);
+    }
     public void Jump_Area2D_area_entered(Area2D area_node)
     {
         if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))

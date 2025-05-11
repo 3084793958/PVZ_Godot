@@ -96,6 +96,7 @@ public class Bucket_Screen_Door_Zombies_Main : Normal_Zombies
         health_list.Add(new Health_Container(1800, true, "Door", true, "Iron"));//铁门
         health_list.Add(new Health_Container(1100, false, "Hat", true, "Iron"));//铁桶
         health_list.Add(new Health_Container(270, false));
+        Hypno_Path = "res://scene/Plants/Zombies/Bucket_Screen_Door_Zombies/Plants_Bucket_Screen_Door_Zombies.tscn";
         base._Ready();
     }
     protected override void Walk_Mode(bool is_Walking)

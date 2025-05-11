@@ -16,6 +16,9 @@ public class H2_Main : Limited_Plants
         Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
+        GetNode<Control>("Dock").Show();
+        GetNode<Control>("Show").Show();
+        GetNode<Control>("Main").Hide();
         if (!player_put)
         {
             has_planted = true;
@@ -24,6 +27,10 @@ public class H2_Main : Limited_Plants
             GetNode<Control>("Main").Show();
             GetNode<AnimationPlayer>("Main/Player").Play("Player");
             GlobalPosition = put_position;
+        }
+        else
+        {
+            In_Game_Main.Choosing_List.Add(this);
         }
     }
     public override void _PhysicsProcess(float delta)
@@ -125,6 +132,7 @@ public class H2_Main : Limited_Plants
                 {
                     on_lock_grid = false;
                     Normal_Plants.Choosing = false;
+                    In_Game_Main.Choosing_List.Remove(this);
                     Position = new Vector2(-1437, -1437);
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
                     if (Tmp_Card_Used)
@@ -152,6 +160,7 @@ public class H2_Main : Limited_Plants
                         card_parent_Button.Set_ColorRect_2(false);
                     }
                     Normal_Plants.Choosing = false;
+                    In_Game_Main.Choosing_List.Remove(this);
                     if (Dock_Area_2D != null)
                     {
                         if ((In_Game_Main.Sun_Number >= this_sun || Public_Main.debuging) && on_lock_grid)

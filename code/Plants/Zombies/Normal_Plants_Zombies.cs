@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 public class Normal_Plants_Zombies : Node2D
 {
+    public Health_List Hypno_Health = new Health_List();
+    public Vector2 Hypno_Pos = Vector2.Zero;
+    public string Hypno_Spec_Info = null;
+    public bool is_Hypnoed = false;
     //define
     [Export] protected int normal_ZIndex = 7;
     [Export] protected Color hurt_color = new Color(1.2f, 0f, 1.3f, 1f);
@@ -57,6 +61,8 @@ public class Normal_Plants_Zombies : Node2D
             GD.Print("未观测异常:" + e.Exception);
         }
     }
+    protected virtual void Self_Hypno_Process()
+    { }
     public override void _Ready()
     {
         Position = new Vector2(-1437, -1437);
@@ -74,6 +80,9 @@ public class Normal_Plants_Zombies : Node2D
         GetNode<AudioStreamPlayer>("Main/Main/Eat_Sound1").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Main/Main/Eat_Sound2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Main/Main/Fall").Stream.Set("loop", false);
+        GetNode<Control>("Dock").Show();
+        GetNode<Control>("Show").Show();
+        GetNode<Control>("Main").Hide();
         speed = speed_Normal * (float)GD.RandRange(0.1, 0.2);
         if (!player_put)
         {
@@ -82,8 +91,31 @@ public class Normal_Plants_Zombies : Node2D
             GetNode<Control>("Show").Hide();
             GetNode<Control>("Main").Show();
             Walk_Mode(true);
-            Position = put_position;
+            if (is_Hypnoed)
+            {
+                health_list.Clear();
+                for (int i = 0; i < Hypno_Health.Count; i++)
+                {
+                    health_list.Add(Hypno_Health[i]);
+                }
+                if (Hypno_Spec_Info == null)
+                {
+                    this.GlobalPosition = Hypno_Pos;
+                }
+                else
+                {
+                    Self_Hypno_Process();
+                }
+            }
+            else
+            {
+                Position = put_position;
+            }
             GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").has_planted = true;
+        }
+        else
+        {
+            In_Game_Main.Choosing_List.Add(this);
         }
     }
     public override void _PhysicsProcess(float delta)
@@ -213,6 +245,7 @@ public class Normal_Plants_Zombies : Node2D
                 {
                     on_lock_grid = false;
                     Normal_Plants.Choosing = false;
+                    In_Game_Main.Choosing_List.Remove(this);
                     Position = new Vector2(-1437, -1437);
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
                     if (Tmp_Card_Used)
@@ -240,6 +273,7 @@ public class Normal_Plants_Zombies : Node2D
                         card_parent_Button.Set_ColorRect_2(false);
                     }
                     Normal_Plants.Choosing = false;
+                    In_Game_Main.Choosing_List.Remove(this);
                     if (Dock_Area_2D != null)
                     {
                         if ((In_Game_Main.Sun_Number >= this_sun || Public_Main.debuging) && on_lock_grid)

@@ -54,6 +54,7 @@ public class Fire_Zombies_Main : Normal_Zombies
         speed_Normal = -3.5f;
         health_list.Clear();
         health_list.Add(new Health_Container(514, false));
+        Hypno_Path = "res://scene/Plants/Zombies/Fire_Zombies/Plants_Fire_Zombies.tscn";
         base._Ready();
         GetNode<AnimationPlayer>("Main/Main/In_Arm/3/Hurt_Fire/1/turn_fire").Play("fire");
         GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").hurt = 150;//强大的啃咬伤害

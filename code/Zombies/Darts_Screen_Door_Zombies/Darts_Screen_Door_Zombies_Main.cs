@@ -65,6 +65,7 @@ public class Darts_Screen_Door_Zombies_Main : Normal_Zombies
         health_list.Clear();
         health_list.Add(new Health_Container(1600, true, "Door", true, "Iron"));//铁门
         health_list.Add(new Health_Container(270, false));
+        Hypno_Path = "res://scene/Plants/Zombies/Darts_Screen_Door_Zombies/Plants_Darts_Screen_Door_Zombies.tscn";
         base._Ready();
     }
     protected override void Walk_Mode(bool is_Walking)

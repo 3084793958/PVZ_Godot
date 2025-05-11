@@ -75,6 +75,7 @@ public class Bucket_Zombies_Main : Normal_Zombies
         health_list.Clear();
         health_list.Add(new Health_Container(1100, false, "Hat", true, "Iron"));//铁桶
         health_list.Add(new Health_Container(270, false));
+        Hypno_Path = "res://scene/Plants/Zombies/Bucket_Zombies/Plants_Bucket_Zombies.tscn";
         base._Ready();
     }
     protected override void Walk_Mode(bool is_Walking)

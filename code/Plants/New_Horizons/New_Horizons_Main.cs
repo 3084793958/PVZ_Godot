@@ -1,12 +1,13 @@
 using Godot;
 using System;
-
+using System.Collections.Generic;
 public class New_Horizons_Main : Normal_Plants
 {
     //lock_protect
     private readonly object _listLock = new object();
     //lock
     [Export] public string Bullets_Path = null;
+    protected List<Background_Grid_Main> Find_Area_List = new List<Background_Grid_Main>();
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
@@ -187,5 +188,69 @@ public class New_Horizons_Main : Normal_Plants
             GetNode<Area2D>("Main/Bullets_Way").Monitorable = false;
         }
         base.Free_Self();
+    }
+    public void Casing_Timer_timeout()
+    {
+        if (!has_planted)
+        {
+            return;
+        }
+        bool self_Dock_Clone = true;
+        if (Dock_Area_2D != null)
+        { 
+            if (Dock_Area_2D.on_PL_Casing_Save)
+            {
+                self_Dock_Clone = false;
+            }
+        }
+        if (self_Dock_Clone)
+        {
+            In_Game_Main.Plants_Clone_Request("res://scene/Plants/PL_Casing/PL_Casing.tscn", this.GlobalPosition, ZIndex - normal_ZIndex + 4);
+        }
+        List<int> random_List = new List<int>();
+        Find_Area_List.Remove(this.Dock_Area_2D);
+        int PL_Casing_Number = 0;
+        for (int i = 0; i < Find_Area_List.Count; i++)
+        { 
+            if (Find_Area_List[i].on_PL_Casing_Save)
+            {
+                PL_Casing_Number++;
+                continue;
+            }
+            if (Find_Area_List[i].Normal_Plant_List.Count + Find_Area_List[i].Down_Plant_List.Count != 0 && Find_Area_List[i].Casing_Plant_List.Count == 0)
+            {
+                random_List.Add(i);
+            }
+        }
+        if (random_List.Count != 0 && PL_Casing_Number < 2) 
+        {
+            GD.Randomize();
+            int res_number = random_List[(int)(GD.Randi() % random_List.Count)];
+            In_Game_Main.Plants_Clone_Request("res://scene/Plants/PL_Casing/PL_Casing.tscn", Find_Area_List[res_number].GlobalPosition, ZIndex - normal_ZIndex + 4);
+        }
+    }
+    protected void Find_Area_Entered(Area2D area_node)
+    {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Grid")
+        {
+            Find_Area_List.Add((Background_Grid_Main)area2D);
+        }
+    }
+    protected void Find_Area_Exited(Area2D area_node)
+    {
+        if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
+        {
+            return;
+        }
+        string Type_string = area2D?.Area2D_type;
+        if (Type_string != null && Type_string == "Grid")
+        {
+            Find_Area_List.Remove((Background_Grid_Main)area2D);
+        }
     }
 }

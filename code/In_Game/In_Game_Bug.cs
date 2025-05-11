@@ -11,6 +11,10 @@ public class In_Game_Bug : Button
     {
         if (In_Game_Main.is_playing)
         {
+            if (In_Game_Main.Choosing_List.Count == 0)
+            {
+                Normal_Plants.Choosing = false;
+            }
             if (!Normal_Plants.Choosing)
             {
                 GetNode<AudioStreamPlayer>("Bug").Play();

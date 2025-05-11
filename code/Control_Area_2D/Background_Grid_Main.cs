@@ -9,9 +9,11 @@ public class Background_Grid_Main : Control_Area_2D
     public List<Node2D> Normal_Plant_List=new List<Node2D>();
     public List<Node2D> Down_Plant_List = new List<Node2D>();
     public List<Node2D> Top_Plant_List = new List<Node2D>();
+    public List<Node2D> Casing_Plant_List = new List<Node2D>();
     public List<int> now_type = new List<int>();//末项
     public List<Node2D> Small_Plants_List = new List<Node2D> { null, null, null };
     public List<Vector2> Plants_Up_Pos_List = new List<Vector2>();
+    public bool on_PL_Casing_Save = false;
     //-23,0
     public override void _Ready()
     {
@@ -62,6 +64,21 @@ public class Background_Grid_Main : Control_Area_2D
                 i--;
             }
         }
+        bool has_PL_Casing = false;
+        for (int i = 0; i < Casing_Plant_List.Count; i++)
+        {
+            if (Casing_Plant_List[i] == null || !IsInstanceValid(Casing_Plant_List[i]))
+            {
+                Casing_Plant_List.RemoveAt(i);
+                i--;
+                continue;
+            }
+            if (Casing_Plant_List[i] is PL_Casing_Main PL_Casing_Plant)
+            {
+                has_PL_Casing = true;
+            }
+        }
+        on_PL_Casing_Save = has_PL_Casing;
     }
     public bool Allow_Down_Plant(int type)
     {

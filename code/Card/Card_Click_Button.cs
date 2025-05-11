@@ -51,6 +51,10 @@ public class Card_Click_Button : Node2D
             {
                 if (now_time <= 0f || Public_Main.debuging)
                 {
+                    if (In_Game_Main.Choosing_List.Count == 0)
+                    {
+                        Normal_Plants.Choosing = false;
+                    }
                     if (!plant_path.Empty() && !Normal_Plants.Choosing)
                     {
                         GetNode<ColorRect>("../Texture/Shadow_2").Show();

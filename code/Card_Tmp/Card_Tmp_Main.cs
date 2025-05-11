@@ -97,6 +97,10 @@ public class Card_Tmp_Main : Node2D
             }
             else
             {
+                if (In_Game_Main.Choosing_List.Count == 0)
+                {
+                    Normal_Plants.Choosing = false;
+                }
                 if (!Plant_Path.Empty() && !Normal_Plants.Choosing)
                 {
                     GetNode<ColorRect>("All/Main/Shadow").Show();

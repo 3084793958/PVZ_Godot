@@ -124,9 +124,11 @@ public class Polevaulter_Zombies_Main : Normal_Zombies
             count_health += health_list[i].Health;
         }
         health = count_health;
+        Hypno_Path = "res://scene/Plants/Zombies/Polevaulter_Zombies/Plants_Polevaulter_Zombies.tscn";
+        Spec_Info = "Pole";
         base._Ready();
     }
-    protected override void Free_Self()
+    public override void Free_Self()
     {
         if (GetNode<Area2D>("Main/Main/Jump_Area2D").IsConnected("area_entered", this, nameof(Jump_Area2D_area_entered)))
         {

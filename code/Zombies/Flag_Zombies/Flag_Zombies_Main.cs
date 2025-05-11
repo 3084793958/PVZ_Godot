@@ -45,6 +45,7 @@ public class Flag_Zombies_Main : Normal_Zombies
         speed_Normal = -4.5f;
         health_list.Clear();
         health_list.Add(new Health_Container(360, false));
+        Hypno_Path = "res://scene/Plants/Zombies/Flag_Zombies/Plants_Flag_Zombies.tscn";
         base._Ready();
     }
     protected override void Walk_Mode(bool is_Walking)

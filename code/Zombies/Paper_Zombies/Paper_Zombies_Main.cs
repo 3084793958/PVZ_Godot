@@ -103,6 +103,7 @@ public class Paper_Zombies_Main : Normal_Zombies
         health_list.Add(new Health_Container(1000, true, "Door", false, "Paper"));//报纸
         health_list.Add(new Health_Container(1200, true, "Hat", true, "Iron"));//眼镜
         health_list.Add(new Health_Container(1800, false));
+        Hypno_Path = "res://scene/Plants/Zombies/Paper_Zombies/Plants_Paper_Zombies.tscn";
         base._Ready();
     }
     protected override void Walk_Mode(bool is_Walking)

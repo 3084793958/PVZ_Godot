@@ -48,6 +48,7 @@ public class H2_Maker_Zombies_Main : Normal_Zombies
         speed_Normal = -2.5f;
         health_list.Clear();
         health_list.Add(new Health_Container(360, false));
+        Hypno_Path = "res://scene/Plants/Zombies/H2_maker_Zombies/Plants_H2_maker_Zombies.tscn";
         base._Ready();
     }
     protected override void Walk_Mode(bool is_Walking)

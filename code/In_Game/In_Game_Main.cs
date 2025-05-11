@@ -10,7 +10,9 @@ public class In_Game_Main : Node2D
     static public List<Tuple<string, Vector2, int>> Plant_Clone_Request_List = new List<Tuple<string, Vector2, int>>();
     static public List<Tuple<int, Vector2, float, bool>> Sun_Clone_Request_List = new List<Tuple<int, Vector2, float, bool>>();
     static public List<Tuple<string, Vector2, float>> Plants_Bullets_Clone_Request_List = new List<Tuple<string, Vector2, float>>();
+    static public List<Tuple<string, Vector2, Health_List,string>> Plants_Hypno_Clone_Request_List = new List<Tuple<string, Vector2, Health_List, string>>();
     //Clone_List
+    static public List<Node> Choosing_List = new List<Node>();
     static public int Sun_Number;
     static public int background_number;
     static public bool is_playing=false;
@@ -38,6 +40,7 @@ public class In_Game_Main : Node2D
     public override async void _Ready()
     {
         GD.Randomize();
+        Choosing_List.Clear();
         Zombies_Clone_Request_List.Clear();
         Plant_Zombies_Clone_Request_List.Clear();
         Plant_Clone_Request_List.Clear();
@@ -741,6 +744,19 @@ public class In_Game_Main : Node2D
     }
     public override async void _Process(float delta)
     {
+        for (int i = 0; i < Choosing_List.Count; i++)
+        {
+            if (Choosing_List[i] == null || !IsInstanceValid(Choosing_List[i]))
+            {
+                Choosing_List.RemoveAt(i);
+                i--;
+                continue;
+            }
+        }
+        if (Choosing_List.Count != 0 && !Normal_Plants.Choosing)
+        {
+            Normal_Plants.Choosing = true;
+        }
         if (Public_Main.debuging && is_playing && Belt_Card) 
         {
             Belt_Timer_timeout();
@@ -847,6 +863,20 @@ public class In_Game_Main : Node2D
                     }
                     Clone_Number++;
                     Plant_Zombies_Clone_Request_List.RemoveAt(0);
+                    Must_Quit = false;
+                }
+                if (Plants_Hypno_Clone_Request_List.Count != 0)
+                {
+                    var scene = GD.Load<PackedScene>(Plants_Hypno_Clone_Request_List[0].Item1);
+                    var plant_child = (Normal_Plants_Zombies)scene.Instance();
+                    plant_child.Hypno_Health = Plants_Hypno_Clone_Request_List[0].Item3;
+                    plant_child.Hypno_Pos = Plants_Hypno_Clone_Request_List[0].Item2;
+                    plant_child.Hypno_Spec_Info = Plants_Hypno_Clone_Request_List[0].Item4;
+                    plant_child.is_Hypnoed = true;
+                    plant_child.player_put = false;
+                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                    Clone_Number++;
+                    Plants_Hypno_Clone_Request_List.RemoveAt(0);
                     Must_Quit = false;
                 }
                 if (Plant_Clone_Request_List.Count != 0)
@@ -1254,6 +1284,10 @@ public class In_Game_Main : Node2D
     static public void Plants_Bullets_Clone_Request(string Path, Vector2 pos, float _y = 0f)
     {
         Plants_Bullets_Clone_Request_List.Add(new Tuple<string, Vector2, float>(Path, pos, _y));
+    }
+    static public void Plants_Hypno_Clone_Request(string Path, Vector2 pos, Health_List health_list,string Spec_Info)
+    {
+        Plants_Hypno_Clone_Request_List.Add(new Tuple<string, Vector2, Health_List, string>(Path, pos, health_list, Spec_Info));
     }
     public void Next_Wave_pressed()
     {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://image/Plants/New_Horizons/Path/Eyes2.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/New_Horizons/New_Horizons_Main.cs" type="Script" id=2]
@@ -383,6 +383,9 @@ tracks/11/keys = {
 "values": [ false, true, false, false ]
 }
 
+[sub_resource type="RectangleShape2D" id=22]
+extents = Vector2( 100, 100 )
+
 [sub_resource type="Animation" id=7]
 resource_name = "Free"
 length = 0.6
@@ -695,6 +698,12 @@ anims/Shoot = SubResource( 14 )
 stream = ExtResource( 10 )
 script = ExtResource( 3 )
 
+[node name="Find_Area" type="Area2D" parent="Main"]
+position = Vector2( 40, 40 )
+
+[node name="Shape" type="CollisionShape2D" parent="Main/Find_Area"]
+shape = SubResource( 22 )
+
 [node name="Plant_Sound" type="Node" parent="."]
 
 [node name="Ok" type="Node" parent="Plant_Sound"]
@@ -748,6 +757,11 @@ custom_fonts/font = ExtResource( 15 )
 text = "HP:300"
 align = 1
 
+[node name="Casing_Timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 25.0
+autostart = true
+
 [connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
 [connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
 [connection signal="area_entered" from="Main/Shovel_Area" to="." method="Area_Entered"]
@@ -755,3 +769,6 @@ align = 1
 [connection signal="area_entered" from="Main/Bullets_Way" to="." method="Bullets_Way_On"]
 [connection signal="area_exited" from="Main/Bullets_Way" to="." method="Bullets_Way_Off"]
 [connection signal="timeout" from="Main/Timer" to="." method="Bullets_Shot"]
+[connection signal="area_entered" from="Main/Find_Area" to="." method="Find_Area_Entered"]
+[connection signal="area_exited" from="Main/Find_Area" to="." method="Find_Area_Exited"]
+[connection signal="timeout" from="Casing_Timer" to="." method="Casing_Timer_timeout"]

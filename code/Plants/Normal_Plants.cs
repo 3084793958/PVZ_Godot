@@ -51,6 +51,7 @@ public class Normal_Plants : Node2D
     protected List<string> Move_Area_2D_Path = new List<string>();
     protected List<Vector2> Path_Init_Delta_Pos = new List<Vector2>();
     protected Vector2 Main_Pos = Vector2.Zero;
+    protected int Label_Health_Mode = 0;
     //for Grave_Buster
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -83,6 +84,9 @@ public class Normal_Plants : Node2D
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Big_Chmop").Stream.Set("loop", false);
+        GetNode<Control>("Dock").Show();
+        GetNode<Control>("Show").Show();
+        GetNode<Control>("Main").Hide();
         Move_Area_2D_Path.Clear();
         Path_Init_Delta_Pos.Clear();
         if (Use_Move_Area)
@@ -110,6 +114,10 @@ public class Normal_Plants : Node2D
             GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Play();
             has_Add_List = false;
             Plants_Init();
+        }
+        else
+        {
+            In_Game_Main.Choosing_List.Add(this);
         }
     }
     public override void _PhysicsProcess(float delta)
@@ -313,6 +321,7 @@ public class Normal_Plants : Node2D
                 {
                     on_lock_grid = false;
                     Normal_Plants.Choosing = false;
+                    In_Game_Main.Choosing_List.Remove(this);
                     Position = new Vector2(-1437, -1437);
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
                     if (Tmp_Card_Used)
@@ -339,6 +348,7 @@ public class Normal_Plants : Node2D
                         card_parent_Button.Set_ColorRect_2(false);
                     }
                     Normal_Plants.Choosing = false;
+                    In_Game_Main.Choosing_List.Remove(this);
                     if (Dock_Area_2D != null || (just_for_Grave_Buster && Tomb_Area_2D != null)) 
                     {
                         if (just_for_Grave_Buster || (Dock_Area_2D != null && Allow_Plants())) 
@@ -503,7 +513,14 @@ public class Normal_Plants : Node2D
             else
             {
                 GetNode<Label>("Health/Health").Text = "HP:" + health.ToString();
-                GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(this.GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, this.GlobalPosition.y - 40 - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
+                if (Label_Health_Mode == 0)
+                {
+                    GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(this.GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, this.GlobalPosition.y - 40 - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
+                }
+                else if (Label_Health_Mode == 1)
+                {
+                    GetNode<Label>("Health/Health").RectGlobalPosition= new Vector2(this.GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, this.GlobalPosition.y - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
+                }
                 GetNode<Node2D>("Health").ZIndex = 116;
                 GetNode<Node2D>("Health").Show();
             }
@@ -589,7 +606,18 @@ public class Normal_Plants : Node2D
             {
                 if (All_Boom_Area_2D_List[i].can_do && !All_Boom_Area_2D_List[i].end_hurt)
                 {
-                    health -= All_Boom_Area_2D_List[i].hurt;
+                    bool can_hurt = true;
+                    if (Dock_Area_2D != null)
+                    {
+                        if (Dock_Area_2D.on_PL_Casing_Save && !(this is PL_Casing_Main))  
+                        {
+                            can_hurt = false;
+                        }
+                    }
+                    if (can_hurt)
+                    {
+                        health -= All_Boom_Area_2D_List[i].hurt;
+                    }
                     All_Boom_Area_2D_List.RemoveAt(i);
                     i--;
                 }
