@@ -33,7 +33,7 @@ public class Normal_Plants : Node2D
     protected List<Normal_Zombies_Area> Zombies_Area_2D_List = new List<Normal_Zombies_Area>();
     protected Normal_Zombies_Area Bullets_Zombies_Area_2D = null;//Van_Door
     protected List<Normal_Zombies_Area> Bullets_Zombies_Area_2D_List = new List<Normal_Zombies_Area>();//Van_Door
-    [Export] protected int health = 300;
+    [Export] public int health = 300;
     [Export] protected int normal_ZIndex = 3;
     protected bool just_for_MG = false;
     protected bool just_for_C2H5OH = false;
@@ -52,6 +52,7 @@ public class Normal_Plants : Node2D
     protected List<Vector2> Path_Init_Delta_Pos = new List<Vector2>();
     protected Vector2 Main_Pos = Vector2.Zero;
     protected int Label_Health_Mode = 0;
+    public int Exchange_Health = 300;
     //for Grave_Buster
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -87,6 +88,7 @@ public class Normal_Plants : Node2D
         GetNode<Control>("Dock").Show();
         GetNode<Control>("Show").Show();
         GetNode<Control>("Main").Hide();
+        Exchange_Health = health;
         Move_Area_2D_Path.Clear();
         Path_Init_Delta_Pos.Clear();
         if (Use_Move_Area)

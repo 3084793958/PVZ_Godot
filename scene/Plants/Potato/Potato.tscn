@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://image/Plants/Potato/Path/Head.png" type="Texture" id=1]
 [ext_resource path="res://font/zh.otf" type="DynamicFontData" id=2]
@@ -25,7 +25,7 @@
 extents = Vector2( 0.01, 0.01 )
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 30, 30 )
+extents = Vector2( 20, 20 )
 
 [sub_resource type="Animation" id=12]
 resource_name = "Out_Land"
@@ -151,6 +151,33 @@ tracks/9/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0.133666, 0.031937 ) ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("Shovel_Area/Shape:shape:extents")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 20, 20 ), Vector2( 40, 40 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Shovel_Area/Shape:shape:extents")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 20, 20 ) ]
 }
 
 [sub_resource type="Animation" id=13]
@@ -550,7 +577,7 @@ scale = Vector2( 0.13269, 0.129284 )
 texture = ExtResource( 12 )
 
 [node name="Effect" type="Sprite" parent="Main"]
-modulate = Color( 0.223529, 0.105882, 0.0627451, 1 )
+modulate = Color( 0.223529, 0.105882, 0.0627451, 0 )
 position = Vector2( 40, 62 )
 scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 11 )
@@ -565,6 +592,7 @@ shape = SubResource( 6 )
 
 [node name="Out_Land" type="AnimationPlayer" parent="Main"]
 anims/Out_Land = SubResource( 12 )
+anims/RESET = SubResource( 19 )
 
 [node name="Player1" type="AnimationPlayer" parent="Main"]
 anims/Player = SubResource( 13 )

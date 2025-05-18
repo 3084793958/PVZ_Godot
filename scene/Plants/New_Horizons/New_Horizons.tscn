@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://image/Plants/New_Horizons/Path/Eyes2.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/New_Horizons/New_Horizons_Main.cs" type="Script" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://image/Plants/New_Horizons/Path/L_Hand.png" type="Texture" id=22]
 [ext_resource path="res://image/Plants/New_Horizons/Path/R_Hand.png" type="Texture" id=23]
 [ext_resource path="res://image/Plants/New_Horizons/Shining.png" type="Texture" id=24]
+[ext_resource path="res://image/Plants/New_Horizons/Path/Body2.png" type="Texture" id=25]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -148,7 +149,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -3, -3 ), Vector2( -3, -7 ), Vector2( -3, -3 ) ]
+"values": [ Vector2( -3, -3 ), Vector2( -3, -12 ), Vector2( -3, -3 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Body/R_Hand:rotation_degrees")
@@ -320,7 +321,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -3, -3 ), Vector2( -10, -3 ), Vector2( -3, -3 ) ]
+"values": [ Vector2( -3, -3 ), Vector2( -13, -3 ), Vector2( -3, -3 ) ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("Body/Move_Hair1:position")
@@ -567,10 +568,9 @@ texture = ExtResource( 18 )
 
 [node name="Body" type="Node2D" parent="Main"]
 position = Vector2( 40, 40 )
-rotation = 0.0164006
 
 [node name="Space" type="Node2D" parent="Main/Body"]
-position = Vector2( -3, -4.50349 )
+position = Vector2( -3, -3 )
 
 [node name="Space" type="Sprite" parent="Main/Body/Space"]
 position = Vector2( -3, -3 )
@@ -610,20 +610,22 @@ scale = Vector2( 0.275, 0.275 )
 texture = ExtResource( 16 )
 
 [node name="L_Hand" type="Sprite" parent="Main/Body"]
-position = Vector2( -8.31657, -3.47801 )
-rotation = 0.0438935
+position = Vector2( -7, -3 )
 scale = Vector2( 0.275, 0.275 )
 texture = ExtResource( 22 )
 
 [node name="R_Hand" type="Sprite" parent="Main/Body"]
-position = Vector2( 23.5229, -6.01874 )
-rotation = -0.0970581
+position = Vector2( 23, -5 )
 scale = Vector2( 0.275, 0.275 )
 texture = ExtResource( 23 )
 
+[node name="Body2" type="Sprite" parent="Main/Body"]
+position = Vector2( 8, -13 )
+scale = Vector2( 0.275, 0.275 )
+texture = ExtResource( 25 )
+
 [node name="eyes" type="Node2D" parent="Main"]
 position = Vector2( 40, 40 )
-rotation = 0.0164006
 
 [node name="Eye1" type="Sprite" parent="Main/eyes"]
 position = Vector2( 9, -42 )
@@ -759,7 +761,7 @@ align = 1
 
 [node name="Casing_Timer" type="Timer" parent="."]
 process_mode = 0
-wait_time = 25.0
+wait_time = 5.0
 autostart = true
 
 [connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]

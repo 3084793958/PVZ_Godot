@@ -14,6 +14,7 @@ public class Background_Grid_Main : Control_Area_2D
     public List<Node2D> Small_Plants_List = new List<Node2D> { null, null, null };
     public List<Vector2> Plants_Up_Pos_List = new List<Vector2>();
     public bool on_PL_Casing_Save = false;
+    public bool on_New_Horizons = false;
     //-23,0
     public override void _Ready()
     {
@@ -24,6 +25,7 @@ public class Background_Grid_Main : Control_Area_2D
     }
     public override void _PhysicsProcess(float delta)
     {
+        bool has_New_Horizons = false;
         for (int i = 0; i < Normal_Plant_List.Count; i++)
         {
             if (Normal_Plant_List[i] == null || !IsInstanceValid(Normal_Plant_List[i])) 
@@ -31,7 +33,12 @@ public class Background_Grid_Main : Control_Area_2D
                 Normal_Plant_List.RemoveAt(i);
                 i--;
             }
+            if (Normal_Plant_List[i] is New_Horizons_Main)
+            {
+                has_New_Horizons = true;
+            }
         }
+        on_New_Horizons = has_New_Horizons;
         for (int j = 0; j < Small_Plants_List.Count; j++)
         {
             bool has_Plants = false;
@@ -73,7 +80,7 @@ public class Background_Grid_Main : Control_Area_2D
                 i--;
                 continue;
             }
-            if (Casing_Plant_List[i] is PL_Casing_Main PL_Casing_Plant)
+            if (Casing_Plant_List[i] is PL_Casing_Main)
             {
                 has_PL_Casing = true;
             }

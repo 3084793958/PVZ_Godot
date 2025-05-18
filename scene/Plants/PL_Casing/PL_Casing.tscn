@@ -277,7 +277,12 @@ align = 1
 
 [node name="Fix_Timer" type="Timer" parent="."]
 process_mode = 0
-wait_time = 15.0
+wait_time = 20.0
+autostart = true
+
+[node name="Fix_Timer_Gird" type="Timer" parent="."]
+process_mode = 0
+wait_time = 5.0
 autostart = true
 
 [connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
@@ -285,3 +290,4 @@ autostart = true
 [connection signal="area_entered" from="Main/Shovel_Area" to="." method="Area_Entered"]
 [connection signal="area_exited" from="Main/Shovel_Area" to="." method="Area_Exited"]
 [connection signal="timeout" from="Fix_Timer" to="." method="Fix_Timer_timeout"]
+[connection signal="timeout" from="Fix_Timer_Gird" to="." method="Fix_Timer_Gird_timeout"]

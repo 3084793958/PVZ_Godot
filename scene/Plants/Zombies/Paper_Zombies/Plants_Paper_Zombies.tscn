@@ -623,12 +623,9 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 4.2, 4.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 4.5 ),
+"transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [  ],
-"method": "Remove_Zombies_Number"
-}, {
 "args": [  ],
 "method": "Free_Self"
 } ]

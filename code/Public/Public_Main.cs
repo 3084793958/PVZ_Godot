@@ -461,6 +461,16 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(1000,"res://scene/Plants/Zombies/Paper_Zombies/Plants_Paper_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    17,
+    "魅惑大爷",
+    "PFA球员",
+    "你大爷还是你大爷",
+    GD.Load<Texture>("res://image/Plants/Zombies/FootBall_Zombies/Plants_FootBall_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(625,"res://scene/Plants/Zombies/FootBall_Zombies/Plants_FootBall_Zombies.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -625,6 +635,16 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(1000,"res://scene/Zombies/Paper_Zombies/Paper_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    17,
+    "大爷",
+    "现役ZFA球员",
+    "现役ZFA球员",
+    GD.Load<Texture>("res://image/Zombies/FootBall_Zombies/FootBall_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(625,"res://scene/Zombies/FootBall_Zombies/FootBall_Zombies.tscn")
     )
     };
     static public List<string> Zombies_Path_List = new List<string>
@@ -644,7 +664,8 @@ static public class Public_Main
         "res://scene/Zombies/Bucket_Screen_Door_Zombies/Bucket_Screen_Door_Zombies.tscn",
         "res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn",
         "res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn",//15
-        "res://scene/Zombies/Paper_Zombies/Paper_Zombies.tscn"
+        "res://scene/Zombies/Paper_Zombies/Paper_Zombies.tscn",
+        "res://scene/Zombies/FootBall_Zombies/FootBall_Zombies.tscn"
     };
     static public List<Tuple<string, string, Texture, int>> Level_Mode1 = new List<Tuple<string, string, Texture, int>>
     { 
@@ -692,6 +713,9 @@ static public class Public_Main
         2),
         new Tuple<string, string,Texture, int>("第15关:二爷的复仇","res://level/Mode1/Mode1_15.cfg",
         GD.Load<Texture>("res://image/Hammer/hammer.png"),
+        2),
+        new Tuple<string, string,Texture, int>("第16关:将大局逆转吧","res://level/Mode1/Mode1_16.cfg",
+        GD.Load<Texture>("res://image/Plants/Hypno_Shroom/Hypno_Shroom.png"),
         2),
         new Tuple<string, string,Texture, int>("白天草坪(测试专用)","res://level/Mode1/Mode1_demo_Day.cfg",
         GD.Load<Texture>("res://image/Plants/godot/godot.png"),

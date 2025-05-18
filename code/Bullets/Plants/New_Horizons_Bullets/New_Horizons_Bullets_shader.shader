@@ -1,4 +1,5 @@
 //https://godotshaders.com/shader/water-like-wavelet/
+//Changed
 shader_type canvas_item;
 
 uniform float progression : hint_range(0.0, 1.0) = 0.7;
@@ -19,6 +20,8 @@ uniform vec2 screen_size;
 uniform vec4 tint : hint_color = vec4(.5, .5, .9, 1.);
 
 const float PI = 3.1415926535897932384626433832795;
+uniform float reflection_X_offset:hint_range(-1.0, 1.0,0.01) = 0.0;
+uniform float reflection_Y_offset:hint_range(-1.0, 1.0,0.01) = 0.0;
 void vertex()
 {
 	UV.y/=1.3;
@@ -33,7 +36,7 @@ void fragment() {
 	float distortion = clamp((dist - prog) / thickness, -1., 1.);
 	distortion = mix(cos(distortion * (PI / wavelet_factor)), 0., step(0.99, abs(distortion)));
 	vec2 def = distortion * deformation_length * SCREEN_PIXEL_SIZE;
-	vec2 offset_vector = norm * def;
+	vec2 offset_vector = norm * def+vec2(reflection_X_offset,reflection_Y_offset);
 	vec2 target_id = screen_pos + ((UV + offset_vector) * screen_size);
 	target_id.y = 1.0 - target_id.y;
 	COLOR = mix(vec4(0.),

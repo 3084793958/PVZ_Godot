@@ -3,7 +3,6 @@ using System;
 
 public class PL_Casing_Main : Normal_Plants
 {
-    public int Exchange_Health = 1500;
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Shovel_Area").IsConnected("area_entered", this, nameof(Area_Entered)))
@@ -11,7 +10,6 @@ public class PL_Casing_Main : Normal_Plants
             return;
         }
         base._PhysicsProcess(delta);
-        Exchange_Health = health;
         if (has_planted)
         {
             if (Zombies_Area_2D_List.Count != 0)
@@ -74,6 +72,31 @@ public class PL_Casing_Main : Normal_Plants
     public void Bug_Doing()
     {
         health += 3000;
+    }
+    public void Fix_Timer_Gird_timeout()
+    {
+        if (!has_planted)
+        {
+            return;
+        }
+        if (Dock_Area_2D == null)
+        {
+            return;
+        }
+        for (int i = 0; i < Dock_Area_2D.Normal_Plant_List.Count; i++)
+        {
+            if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants plants_object)
+            {
+                if (plants_object.health < plants_object.Exchange_Health - 20)
+                {
+                    plants_object.health += 20;
+                }
+                else if (plants_object.health < plants_object.Exchange_Health) 
+                {
+                    plants_object.health = plants_object.Exchange_Health;
+                }
+            }
+        }
     }
     public void Fix_Timer_timeout()
     {

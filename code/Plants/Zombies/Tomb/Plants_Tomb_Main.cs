@@ -39,7 +39,8 @@ public class Plants_Tomb_Main : Node2D
         "res://scene/Plants/Zombies/Bucket_Screen_Door_Zombies/Plants_Bucket_Screen_Door_Zombies.tscn",
         "res://scene/Plants/Zombies/Darts_Screen_Door_Zombies/Plants_Darts_Screen_Door_Zombies.tscn",
         "res://scene/Plants/Zombies/Bucket_Tomb_Zombies/Plants_Bucket_Tomb_Zombies.tscn",
-        "res://scene/Plants/Zombies/Paper_Zombies/Plants_Paper_Zombies.tscn"
+        "res://scene/Plants/Zombies/Paper_Zombies/Plants_Paper_Zombies.tscn",//15
+        "res://scene/Plants/Zombies/FootBall_Zombies/Plants_FootBall_Zombies.tscn"
     };
     protected List<Texture> Tomb_Texture_List = new List<Texture>
     {

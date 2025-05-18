@@ -375,12 +375,12 @@ visible = false
 position = Vector2( 0, -45.3333 )
 
 [node name="1" type="Sprite" parent="Main/eyes/Eye2"]
-position = Vector2( -2.66667, 24 )
+position = Vector2( -1.33333, 26.6666 )
 rotation = -0.243485
 texture = ExtResource( 13 )
 
 [node name="2" type="Sprite" parent="Main/eyes/Eye2"]
-position = Vector2( 13.3333, 16 )
+position = Vector2( 13.3333, 21.3333 )
 rotation = -0.256713
 scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 13 )

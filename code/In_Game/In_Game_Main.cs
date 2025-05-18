@@ -1024,6 +1024,7 @@ public class In_Game_Main : Node2D
     }
     public void Wave_Timer_Out()
     {
+        GetNode<Timer>("Wave_Timer").Stop();
         ConfigFile file = new ConfigFile();
         Error error = file.Load(level_file);
         if (error == Error.Ok)
@@ -1138,6 +1139,7 @@ public class In_Game_Main : Node2D
                                 GetNode<Timer>("End_Cold_Timer").Start();
                             }
                         }
+                        GetNode<Timer>("Wave_Timer").Start();
                         return;
                     }
                 }
@@ -1248,6 +1250,7 @@ public class In_Game_Main : Node2D
                     GetNode<Timer>("End_Cold_Timer").Start();
                 }
             }
+            GetNode<Timer>("Wave_Timer").Start();
         }
     }
     public void End_Cold_Timer_timeout()

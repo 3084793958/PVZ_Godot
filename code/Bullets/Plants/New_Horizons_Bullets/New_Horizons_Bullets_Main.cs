@@ -6,7 +6,7 @@ public class New_Horizons_Bullets_Main : Normal_Plants_Bullets
     public int touch_zombies_number = 0;
     public override void _PhysicsProcess(float delta)
     {
-        var target = GetNode<Sprite>("Shader");
+        var target = GetNode<Sprite>("Shader/Shader");
         var viewport_size = GetViewportRect().Size;
         var target_size = new Vector2(40, 40);
         var target_pos = target.GlobalPosition;

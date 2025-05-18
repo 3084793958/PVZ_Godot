@@ -69,7 +69,6 @@ public class Bucket_Screen_Door_Zombies_Main : Normal_Zombies
             {
                 GetNode<Cone_Hat_Control>("Main/Main/Head/Hat").Cone_4();
             }
-
             if (health_list[health_list.Count - 1].Health < 180 && !has_lose_Arm)
             {
                 has_lose_Arm = true;

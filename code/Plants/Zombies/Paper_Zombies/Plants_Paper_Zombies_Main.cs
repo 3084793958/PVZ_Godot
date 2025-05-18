@@ -79,7 +79,7 @@ public class Plants_Paper_Zombies_Main : Normal_Plants_Zombies
             if ((health_list[health_list.Count - 1].Health < 90 || health_list[health_list.Count - 1].Info == "Door") && !has_lose_Head)
             {
                 has_lose_Head = true;
-                GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").has_lose_head = true;
+                GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").has_lose_head = true;
                 GetNode<AnimationPlayer>("Main/Main/Lose_Head").Play("Lose_Head");
             }
         }

@@ -67,6 +67,8 @@ public class Normal_Zombies : Node2D
     [Export] protected bool Never_Died = false;
     [Export] protected bool is_Angry = false;
     protected int back_speed = 0;
+    protected int label_health_up = 64;
+    protected bool has_Add_Zombies_Number = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -113,7 +115,11 @@ public class Normal_Zombies : Node2D
             Walk_Mode(true);
             Position = put_position;
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").has_plant = true;
-            In_Game_Main.Zombies_Number++;
+            if (!has_Add_Zombies_Number)
+            {
+                has_Add_Zombies_Number = true;
+                In_Game_Main.Zombies_Number++;
+            }
         }
         else
         {
@@ -312,7 +318,11 @@ public class Normal_Zombies : Node2D
                             GetNode<Control>("Show").Hide();
                             GetNode<Control>("Main").Show();
                             Walk_Mode(true);
-                            In_Game_Main.Zombies_Number++;
+                            if (!has_Add_Zombies_Number)
+                            {
+                                has_Add_Zombies_Number = true;
+                                In_Game_Main.Zombies_Number++;
+                            }
                         }
                         else
                         {
@@ -376,7 +386,7 @@ public class Normal_Zombies : Node2D
                     }
                 }
                 GetNode<Label>("Health/Health").Text = health_text;
-                GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, GetNode<Control>("Main/Main").RectGlobalPosition.y - 64 - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
+                GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, GetNode<Control>("Main/Main").RectGlobalPosition.y - label_health_up - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
                 GetNode<Node2D>("Health").ZIndex = 116;
                 GetNode<Node2D>("Health").Show();
             }
@@ -963,6 +973,14 @@ public class Normal_Zombies : Node2D
                         Plants_Area_2D = null;
                         continue;
                     }
+                    if (Plants_Area_2D_List[i].GetNode<Node>("../..") is Potato_Main)
+                    {
+                        continue;
+                    }
+                    if (!(Plants_Area_2D_List[i].GetNode<Node>("../..") is Potato_Main) && Plants_Area_2D.GetNode<Node>("../..") is Potato_Main)
+                    {
+                        Plants_Area_2D = Plants_Area_2D_List[i];
+                    }
                     if (Plants_Area_2D_List[i].Sec_Info == "Zombies")
                     {
                         Plants_Area_2D = Plants_Area_2D_List[i];
@@ -1334,6 +1352,11 @@ public class Normal_Zombies : Node2D
             {
                 Sun_Flower_Up();
             }
+        }
+        if (!has_Lose_Number)
+        {
+            has_lose_Head = true;
+            In_Game_Main.Zombies_Number--;
         }
         Hide();
         await ToSignal(GetTree().CreateTimer(0.1f), "timeout");

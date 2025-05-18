@@ -45,6 +45,7 @@ public class Normal_Plants_Zombies : Node2D
     protected bool real_touching = false;
     [Export] protected bool Never_Died = false;
     [Export] protected bool is_Angry = false;
+    protected int label_health_up = 64;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -372,7 +373,7 @@ public class Normal_Plants_Zombies : Node2D
                     }
                 }
                 GetNode<Label>("Health/Health").Text = health_text;
-                GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, GetNode<Control>("Main/Main").RectGlobalPosition.y - 64 - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
+                GetNode<Label>("Health/Health").RectGlobalPosition = new Vector2(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - GetNode<Label>("Health/Health").RectSize.x * GetNode<Label>("Health/Health").RectScale.x / 2, GetNode<Control>("Main/Main").RectGlobalPosition.y - label_health_up - GetNode<Label>("Health/Health").RectSize.y * GetNode<Label>("Health/Health").RectScale.y);
                 GetNode<Node2D>("Health").ZIndex = 116;
                 GetNode<Node2D>("Health").Show();
             }

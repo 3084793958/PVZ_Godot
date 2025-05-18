@@ -45,7 +45,7 @@ public class New_Horizons_Main : Normal_Plants
     public override void _Ready()
     {
         GD.Randomize();
-        can_sleep = true;
+        can_sleep = true;//(O^<)休眠机制
         health = 768;//位于冥王星时的传输速度
         GetNode<Area2D>("Main/Bullets_Way").PauseMode = PauseModeEnum.Process;
         GetNode<AudioStreamPlayer>("Main/Throw").Stream.Set("loop", false);
@@ -195,6 +195,15 @@ public class New_Horizons_Main : Normal_Plants
         {
             return;
         }
+        if (sleep)
+        {
+            return;
+        }
+        if (GetNode<Timer>("Casing_Timer").WaitTime < 20f)
+        {
+            GetNode<Timer>("Casing_Timer").WaitTime = 25f;
+            GetNode<Timer>("Casing_Timer").Start();
+        }
         bool self_Dock_Clone = true;
         if (Dock_Area_2D != null)
         { 
@@ -211,8 +220,8 @@ public class New_Horizons_Main : Normal_Plants
         Find_Area_List.Remove(this.Dock_Area_2D);
         int PL_Casing_Number = 0;
         for (int i = 0; i < Find_Area_List.Count; i++)
-        { 
-            if (Find_Area_List[i].on_PL_Casing_Save)
+        {
+            if (Find_Area_List[i].on_PL_Casing_Save || Find_Area_List[i].on_New_Horizons) 
             {
                 PL_Casing_Number++;
                 continue;

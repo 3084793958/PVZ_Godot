@@ -42,6 +42,7 @@ public class Godot_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        GD.Randomize();
         base._Ready();
     }
     protected override void Plants_Add_List()
@@ -97,6 +98,20 @@ public class Godot_Main : Normal_Plants
     }
     public void Clone_Self_Zombies()
     {
+        string Clone_Path = null;
+        int res_number = (int)(GD.Randi()) % 3;
+        if (res_number == 0)
+        {
+            Clone_Path = "res://scene/Plants/Zombies/Cone_Zombies/Plants_Cone_Zombies.tscn";
+        }
+        else if (res_number == 1)
+        {
+            Clone_Path = "res://scene/Plants/Zombies/Bucket_Zombies/Plants_Bucket_Zombies.tscn";
+        }
+        else
+        {
+            Clone_Path = "res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn";
+        }
         if (In_Game_Main.background_number == 3 || In_Game_Main.background_number == 4)
         {
             for (int i = 1; i <= 6; i++)
@@ -135,7 +150,7 @@ public class Godot_Main : Normal_Plants
                         Zombies_put_position = new Vector2(76, 558);
                         _ZIndex = 107;
                     }
-                    In_Game_Main.Plants_Zombies_Clone_Request("res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn", Zombies_put_position, _ZIndex);
+                    In_Game_Main.Plants_Zombies_Clone_Request(Clone_Path, Zombies_put_position, _ZIndex);
                 }
             }
         }
@@ -172,7 +187,7 @@ public class Godot_Main : Normal_Plants
                         Zombies_put_position = new Vector2(76, 530);
                         _ZIndex = 87;
                     }
-                    In_Game_Main.Plants_Zombies_Clone_Request("res://scene/Plants/Zombies/Simple_Zombies/Plants_Simple_Zombies.tscn", Zombies_put_position, _ZIndex);
+                    In_Game_Main.Plants_Zombies_Clone_Request(Clone_Path, Zombies_put_position, _ZIndex);
                 }
             }
         }
