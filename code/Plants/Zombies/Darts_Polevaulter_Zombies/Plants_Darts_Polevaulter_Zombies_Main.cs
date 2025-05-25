@@ -6,12 +6,35 @@ public class Plants_Darts_Polevaulter_Zombies_Main : Normal_Plants_Zombies
 {
     [Export] public bool has_lose_pole = false;
     [Export] public bool is_jumping = false;
+    [Export] public bool Jumping_Run = false;
+    [Export] public bool Jumping_Run_Lock_Pole = false;
+    public Vector2 Jump_Pole_Position = Vector2.Zero;
+    public bool has_Set_Jump_Pole_Position = false;
     public List<Normal_Zombies_Area> Jump_Plants_List = new List<Normal_Zombies_Area>();
+    protected override void Re_Set_Process()
+    {
+        if (health < 340)
+        {
+            has_lose_Arm = true;
+            GetNode<Node2D>("Main/Main/Out_Arm/4").Show();
+            GetNode<Node2D>("Main/Main/Out_Arm/3").Hide();
+            GetNode<Node2D>("Main/Main/Out_Arm/2").Hide();
+            GetNode<Node2D>("Main/Main/Out_Arm/1").Hide();
+        }
+    }
+    public void Set_Pole_Position()
+    {
+        if (!has_Set_Jump_Pole_Position)
+        {
+            has_Set_Jump_Pole_Position = true;
+            Jump_Pole_Position = GetNode<Node2D>("Main/Main/Pole/Pos").GlobalPosition;
+        }
+    }
     protected override void Self_Hypno_Process()
     {
         //338
         GetNode<AnimationPlayer>("Main/Main/Up").Play("Just_Set");
-        this.GlobalPosition = Hypno_Pos - new Vector2(338, 0);
+        this.GlobalPosition = Hypno_Pos;
     }
     public void Jump_Area2D_area_entered(Area2D area_node)
     {
@@ -86,6 +109,26 @@ public class Plants_Darts_Polevaulter_Zombies_Main : Normal_Plants_Zombies
                             Walk_Mode(false);
                             GetNode<AnimationPlayer>("Main/Main/Up").Play("Up");
                         }
+                    }
+                }
+            }
+            if (Jumping_Run && !has_lose_pole && GetNode<AnimationPlayer>("Main/Main/Up").IsPlaying())
+            {
+                this.GlobalPosition += new Vector2(1.75f, 0);
+            }
+        }
+    }
+    public override void _Process(float delta)//牛逼   process高刷
+    {
+        if (has_planted)
+        {
+            if (Jumping_Run && !has_lose_pole && GetNode<AnimationPlayer>("Main/Main/Up").IsPlaying())
+            {
+                if (Jumping_Run_Lock_Pole)
+                {
+                    if (has_Set_Jump_Pole_Position)
+                    {
+                        this.GlobalPosition += Jump_Pole_Position - GetNode<Node2D>("Main/Main/Pole/Pos").GlobalPosition;
                     }
                 }
             }

@@ -5,6 +5,7 @@ public class Glass_Control : Node2D
 {
     [Export] public bool Hat_Run = false;
     public Vector2 Run_Position = Vector2.Zero;
+    public float Run_Rotation = 0f;
     public override void _Ready()
     {
         Glass_1();
@@ -22,10 +23,12 @@ public class Glass_Control : Node2D
         if (!Hat_Run)
         {
             Run_Position = this.GlobalPosition;
+            Run_Rotation = this.GlobalRotation;
         }
         if (Hat_Run && GetNode<AnimationPlayer>("Glass/Hat_Out").IsPlaying())
         {
             this.GlobalPosition = Run_Position;
+            this.GlobalRotation = Run_Rotation;
         }
     }
 }

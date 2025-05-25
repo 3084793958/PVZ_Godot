@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=2]
+[gd_scene load_steps=78 format=2]
 
 [ext_resource path="res://image/background/background1.jpg" type="Texture" id=1]
 [ext_resource path="res://image/background/background3.png" type="Texture" id=2]
@@ -49,6 +49,8 @@
 [ext_resource path="res://sound/bgm/Moongrains.mp3" type="AudioStream" id=47]
 [ext_resource path="res://code/In_Game/In_Game_Next_Wave.cs" type="Script" id=48]
 [ext_resource path="res://code/In_Game/Choose_Card_Page_Control.cs" type="Script" id=49]
+[ext_resource path="res://code/In_Game/In_Game_Choose_Card_Last_Choose.cs" type="Script" id=50]
+[ext_resource path="res://code/In_Game/In_Game_Choose_Card_Random_Choose.cs" type="Script" id=51]
 
 [sub_resource type="Animation" id=2]
 resource_name = "C_to_L"
@@ -1533,6 +1535,7 @@ custom_styles/focus = SubResource( 15 )
 custom_styles/disabled = SubResource( 15 )
 custom_styles/normal = SubResource( 15 )
 text = "随机选择   "
+script = ExtResource( 51 )
 
 [node name="TextureRect" type="TextureRect" parent="Main/Choose_Card/Background/RandomChoose"]
 margin_left = 74.0
@@ -1554,6 +1557,7 @@ custom_styles/focus = SubResource( 15 )
 custom_styles/disabled = SubResource( 15 )
 custom_styles/normal = SubResource( 15 )
 text = "上次选择"
+script = ExtResource( 50 )
 
 [node name="Watch" type="Button" parent="Main/Choose_Card/Background"]
 margin_left = 276.0

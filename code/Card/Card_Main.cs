@@ -11,10 +11,12 @@ public class Card_Main : Control
     [Export] public int Card_Background = 1;
     [Export] public int[] Card_Number = {1,1};
     public bool self_Wait_Time_Set = false;
+    public Card_Click_Button Card_Click_Button_Object = null;
     public override void _Ready()
     {
         Card_Background = 1;
         GetNode<Card_Click_Button>("Main/Main/Click_Button").sun = Sun;
+        Card_Click_Button_Object = GetNode<Card_Click_Button>("Main/Main/Click_Button");
         var Sun_Label = GetNode<Label>("Main/Main/Texture/Sun");
         var Shadow_Sun_Label = GetNode<Label>("Shadow/Texture/Sun");
         int Seed_Pos = -1;

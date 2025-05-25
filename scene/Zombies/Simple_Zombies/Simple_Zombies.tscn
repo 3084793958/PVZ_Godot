@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://image/Zombies/Simple_Zombies/Simple_Zombies.png" type="Texture" id=1]
 [ext_resource path="res://code/Zombies/Simple_Zombies/Simple_Zombies_Main.cs" type="Script" id=2]
@@ -1265,6 +1265,58 @@ tracks/5/keys = {
 "values": [ Vector2( 0, -48 ), Vector2( 0, 0 ) ]
 }
 
+[sub_resource type="Animation" id=19]
+resource_name = "Up"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Main:rect_clip_content")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Main/Main/Zombies_Area:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -145.333 ), Vector2( 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Main/Main:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 94, 141 ), Vector2( 94, 72 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Main:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -89, -39 ), Vector2( -89, -79 ) ]
+}
+
 [node name="Simple_Zombies" type="Node2D"]
 position = Vector2( -80, -80 )
 z_index = 7
@@ -1336,13 +1388,13 @@ mouse_filter = 2
 
 [node name="Main" type="Control" parent="Main"]
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 2.56667
 anchor_right = 0.5
-anchor_bottom = 0.5
+anchor_bottom = 2.56667
 margin_left = 31.5
-margin_top = 34.5
+margin_top = -120.5
 margin_right = 31.5
-margin_bottom = 34.5
+margin_bottom = -120.5
 rect_scale = Vector2( 0.75, 0.75 )
 mouse_filter = 2
 __meta__ = {
@@ -1564,6 +1616,9 @@ custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_fonts/font = ExtResource( 31 )
 text = "HP:270"
 align = 1
+
+[node name="Out_Land" type="AnimationPlayer" parent="."]
+anims/Up = SubResource( 19 )
 
 [connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
 [connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]

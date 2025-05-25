@@ -60,7 +60,7 @@ public class Hypno_Shroom_Main : Normal_Plants
         }
         Normal_Zombies Touch_Zombies = Touch_Zombies_Area.GetNode<Normal_Zombies>("../../..");
         string RES_Zombies_Path = Touch_Zombies.Hypno_Path;
-        Vector2 RES_Zombies_Pos = Touch_Zombies_Area.GlobalPosition;
+        Vector2 RES_Zombies_Pos = Touch_Zombies_Area.GlobalPosition + new Vector2(0, 10);
         Health_List RES_Zombies_Health = Touch_Zombies.health_list;
         string Spec_Info = Touch_Zombies.Spec_Info;
         In_Game_Main.Plants_Hypno_Clone_Request(RES_Zombies_Path, RES_Zombies_Pos, RES_Zombies_Health, Spec_Info);

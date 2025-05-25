@@ -277,6 +277,16 @@ static public class Public_Main
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     26,
+    "胆小菇",
+    "真的...要我...上场吗",
+    "胆小菇",
+    GD.Load<Texture>("res://image/Plants/Scaredy_Shroom/Scaredy_Shroom.png"),
+    10f,
+    15f,
+    new Tuple<int,string>(25,"res://scene/Plants/Scaredy_Shroom/Scaredy_Shroom.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    27,
     "莲叶",
     "莲叶",
     "莲叶",

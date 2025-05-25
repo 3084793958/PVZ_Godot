@@ -7,6 +7,25 @@ public class In_Game_Shovel : Button
     {
         GetNode<AudioStreamPlayer>("Shovel").Stream.Set("loop", false);
     }
+    public async override void _Process(float delta)
+    {
+        if (In_Game_Main.is_playing && !GetTree().Paused)
+        {
+            if (Input.IsActionJustPressed("shovel"))
+            {
+                if (Normal_Plants.Choosing)
+                {
+                    Input.ActionPress("Right_Mouse");
+                    await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
+                    Input.ActionRelease("Right_Mouse");
+                }
+                else
+                {
+                    _Pressed();
+                }
+            }
+        }
+    }
     public override void _Pressed()
     {
         if (In_Game_Main.is_playing)

@@ -530,16 +530,19 @@ public class Tomb_Main : Node2D
     {
         if (In_Game_Main.is_playing && has_planted && health > 0)  
         {
-            Clone_Time++;
             GetNode<AnimationPlayer>("Main/Player/Out_Land").Play("Out_Land");
-            if (lock_to_number <= 0)
-            {
-                In_Game_Main.Zombies_Clone_Request(Clone_List[(int)(GD.Randi() % Clone_List.Count)], this.Position, this.ZIndex - normal_ZIndex + 7);
-            }
-            else
-            {
-                In_Game_Main.Zombies_Clone_Request(Clone_List[(int)(GD.Randi() % lock_to_number)], this.Position, this.ZIndex - normal_ZIndex + 7);
-            }
+        }
+    }
+    protected void Clone_Zombies()
+    {
+        Clone_Time++;
+        if (lock_to_number <= 0)
+        {
+            In_Game_Main.Zombies_Clone_Request(Clone_List[(int)(GD.Randi() % Clone_List.Count)], this.Position, this.ZIndex - normal_ZIndex + 7, true);
+        }
+        else
+        {
+            In_Game_Main.Zombies_Clone_Request(Clone_List[(int)(GD.Randi() % lock_to_number)], this.Position, this.ZIndex - normal_ZIndex + 7, true);
         }
     }
     protected void Plants_Entered(Area2D area_node)

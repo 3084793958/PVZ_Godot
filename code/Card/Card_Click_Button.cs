@@ -35,7 +35,7 @@ public class Card_Click_Button : Node2D
         var Info = GetNode<Node2D>("../Info");
         Info.Hide();
     }
-    public async void  Button_Pressed()
+    public async void Button_Pressed()
     {
         if (has_Clicked)
         {

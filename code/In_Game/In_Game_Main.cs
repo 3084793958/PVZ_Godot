@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class In_Game_Main : Node2D
 {
     //Clone_List
-    static public List<Tuple<string, Vector2,int>> Zombies_Clone_Request_List = new List<Tuple<string, Vector2,int>>();
-    static public List<Tuple<string, Vector2, int>> Plant_Zombies_Clone_Request_List = new List<Tuple<string, Vector2, int>>();
+    static public List<Tuple<string, Vector2, int, bool>> Zombies_Clone_Request_List = new List<Tuple<string, Vector2, int, bool>>();
+    static public List<Tuple<string, Vector2, int, bool>> Plant_Zombies_Clone_Request_List = new List<Tuple<string, Vector2, int, bool>>();
     static public List<Tuple<string, Vector2, int>> Plant_Clone_Request_List = new List<Tuple<string, Vector2, int>>();
     static public List<Tuple<int, Vector2, float, bool>> Sun_Clone_Request_List = new List<Tuple<int, Vector2, float, bool>>();
     static public List<Tuple<string, Vector2, float>> Plants_Bullets_Clone_Request_List = new List<Tuple<string, Vector2, float>>();
@@ -836,6 +836,7 @@ public class In_Game_Main : Node2D
                         plant_child.ZIndex = Zombies_Clone_Request_List[0].Item3;
                         plant_child.put_position = Zombies_Clone_Request_List[0].Item2;
                         plant_child.player_put = false;
+                        plant_child.Use_Out_Land_Ani = Zombies_Clone_Request_List[0].Item4;
                         GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
                     }
                     Clone_Number++;
@@ -859,6 +860,7 @@ public class In_Game_Main : Node2D
                         plant_child.ZIndex = Plant_Zombies_Clone_Request_List[0].Item3;
                         plant_child.put_position = Plant_Zombies_Clone_Request_List[0].Item2;
                         plant_child.player_put = false;
+                        plant_child.Use_Out_Land_Ani = Plant_Zombies_Clone_Request_List[0].Item4;
                         GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
                     }
                     Clone_Number++;
@@ -1268,13 +1270,13 @@ public class In_Game_Main : Node2D
             GetNode<Control>("/root/In_Game/Main/Card/M2Bank/Seed").AddChild(plant_child);
         }
     }
-    static public void Zombies_Clone_Request(string Clone_String,Vector2 pos,int Z_index)
+    static public void Zombies_Clone_Request(string Clone_String, Vector2 pos, int Z_index, bool Out_Land = false)
     {
-        Zombies_Clone_Request_List.Add(new Tuple<string, Vector2, int>(Clone_String, pos, Z_index));
+        Zombies_Clone_Request_List.Add(new Tuple<string, Vector2, int, bool>(Clone_String, pos, Z_index, Out_Land));
     }
-    static public void Plants_Zombies_Clone_Request(string Clone_String, Vector2 pos, int Z_index)
+    static public void Plants_Zombies_Clone_Request(string Clone_String, Vector2 pos, int Z_index, bool Out_Land = false)
     {
-        Plant_Zombies_Clone_Request_List.Add(new Tuple<string, Vector2, int>(Clone_String, pos, Z_index));
+        Plant_Zombies_Clone_Request_List.Add(new Tuple<string, Vector2, int, bool>(Clone_String, pos, Z_index, Out_Land));
     }
     static public void Plants_Clone_Request(string Clone_String, Vector2 pos, int Z_index)
     {

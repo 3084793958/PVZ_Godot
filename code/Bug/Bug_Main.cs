@@ -111,10 +111,10 @@ public class Bug_Main : Node2D
             if (Is_Double_Click || (Input.IsActionJustPressed("Left_Mouse") && !real_touching))
             {
                 Is_Double_Click = false;
-                has_Done = true;
                 if (Plants_Area_2D_List.Count == 0)
                 {
                     GetNode<AudioStreamPlayer>("/root/In_Game/Cancel").Play();
+                    has_Done = true;
                     Normal_Plants.Choosing = false;
                     In_Game_Main.Choosing_List.Remove(this);
                     Hide();
@@ -125,6 +125,7 @@ public class Bug_Main : Node2D
                 {
                     if (by_H2SO4 || Public_Main.debuging)
                     {
+                        has_Done = true;
                         Normal_Plants.Choosing = false;
                         In_Game_Main.Choosing_List.Remove(this);
                         playing = true;
@@ -136,6 +137,7 @@ public class Bug_Main : Node2D
                     }
                     else if (In_Game_Main.Sun_Number >= 150)
                     {
+                        has_Done = true;
                         Normal_Plants.Choosing = false;
                         In_Game_Main.Choosing_List.Remove(this);
                         playing = true;

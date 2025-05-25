@@ -3,6 +3,21 @@ using System;
 
 public class Plants_Fast_Cone_Zombies_Main : Normal_Plants_Zombies
 {
+    protected override void Re_Set_Process()
+    {
+        if (health < 364)
+        {
+            GetNode<Cone_Hat_Control>("Main/Main/Hat").Hide();
+        }
+        if (health < 180)
+        {
+            has_lose_Arm = true;
+            GetNode<Node2D>("Main/Main/Out_Arm/4").Show();
+            GetNode<Node2D>("Main/Main/Out_Arm/3").Hide();
+            GetNode<Node2D>("Main/Main/Out_Arm/2").Hide();
+            GetNode<Node2D>("Main/Main/Out_Arm/1").Hide();
+        }
+    }
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))

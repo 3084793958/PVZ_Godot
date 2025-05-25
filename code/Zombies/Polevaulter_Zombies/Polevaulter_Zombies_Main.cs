@@ -6,7 +6,19 @@ public class Polevaulter_Zombies_Main : Normal_Zombies
 {
     [Export] public bool has_lose_pole = false;
     [Export] public bool is_jumping = false;
+    [Export] public bool Jumping_Run = false;
+    [Export] public bool Jumping_Run_Lock_Pole = false;
+    public Vector2 Jump_Pole_Position = Vector2.Zero;
+    public bool has_Set_Jump_Pole_Position = false;
     public List<Normal_Plants_Area> Jump_Plants_List = new List<Normal_Plants_Area>();
+    public void Set_Pole_Position()
+    {
+        if (!has_Set_Jump_Pole_Position)
+        {
+            has_Set_Jump_Pole_Position = true;
+            Jump_Pole_Position = GetNode<Node2D>("Main/Main/Pole/Pos").GlobalPosition;
+        }
+    }
     public void Jump_Area2D_area_entered(Area2D area_node)
     {
         if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
@@ -94,11 +106,32 @@ public class Polevaulter_Zombies_Main : Normal_Zombies
                     }
                 }
             }
+            if (Jumping_Run && !has_lose_pole && GetNode<AnimationPlayer>("Main/Main/Up").IsPlaying())
+            {
+                this.GlobalPosition += new Vector2(-1.75f, 0);
+            }
         }
         base._PhysicsProcess(delta);
     }
+    public override void _Process(float delta)//牛逼   process高刷
+    {
+        if (has_planted)
+        {
+            if (Jumping_Run && !has_lose_pole && GetNode<AnimationPlayer>("Main/Main/Up").IsPlaying())
+            {
+                if (Jumping_Run_Lock_Pole)
+                {
+                    if (has_Set_Jump_Pole_Position)
+                    {
+                        this.GlobalPosition += Jump_Pole_Position - GetNode<Node2D>("Main/Main/Pole/Pos").GlobalPosition;
+                    }
+                }
+            }
+        }
+    }
     public override void _Ready()
     {
+        Jumping_Run = false;
         speed_Normal = -5.5f;
         can_Eating = false;
         health_list.Clear();

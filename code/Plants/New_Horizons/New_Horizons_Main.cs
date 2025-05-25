@@ -221,7 +221,11 @@ public class New_Horizons_Main : Normal_Plants
         int PL_Casing_Number = 0;
         for (int i = 0; i < Find_Area_List.Count; i++)
         {
-            if (Find_Area_List[i].on_PL_Casing_Save || Find_Area_List[i].on_New_Horizons) 
+            if (Find_Area_List[i].on_New_Horizons)
+            {
+                continue;
+            }
+            if (Find_Area_List[i].on_PL_Casing_Save) 
             {
                 PL_Casing_Number++;
                 continue;

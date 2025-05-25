@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=1]
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/Out_Leg3.png" type="Texture" id=2]
@@ -1318,6 +1318,58 @@ tracks/5/keys = {
 "values": [ Vector2( 0, -48 ), Vector2( 0, 0 ) ]
 }
 
+[sub_resource type="Animation" id=22]
+resource_name = "Up"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Main:rect_clip_content")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Main/Main/Zombies_Area:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -145.333 ), Vector2( 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Main/Main:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 94, 164 ), Vector2( 94, 95 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Main:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -89, -62 ), Vector2( -89, -102 ) ]
+}
+
 [node name="Fire_Zombies" type="Node2D"]
 position = Vector2( -80, -80 )
 z_index = 7
@@ -1662,6 +1714,9 @@ custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_fonts/font = ExtResource( 37 )
 text = "HP:270"
 align = 1
+
+[node name="Out_Land" type="AnimationPlayer" parent="."]
+anims/Up = SubResource( 22 )
 
 [connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
 [connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]

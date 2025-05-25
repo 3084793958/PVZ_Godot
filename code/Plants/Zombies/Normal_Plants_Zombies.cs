@@ -46,6 +46,7 @@ public class Normal_Plants_Zombies : Node2D
     [Export] protected bool Never_Died = false;
     [Export] protected bool is_Angry = false;
     protected int label_health_up = 64;
+    public bool Use_Out_Land_Ani = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -92,6 +93,10 @@ public class Normal_Plants_Zombies : Node2D
             GetNode<Control>("Show").Hide();
             GetNode<Control>("Main").Show();
             Walk_Mode(true);
+            if (Use_Out_Land_Ani)
+            {
+                GetNode<AnimationPlayer>("Out_Land").Play("Up");
+            }
             if (is_Hypnoed)
             {
                 health_list.Clear();
@@ -99,6 +104,32 @@ public class Normal_Plants_Zombies : Node2D
                 {
                     health_list.Add(Hypno_Health[i]);
                 }
+                int count_health = 0;
+                for (int i = 0; i < health_list.Count; i++)
+                {
+                    if (health_list[i].Health < 0)
+                    {
+                        if (health_list[i].Is_lock)
+                        {
+                            health_list[i].Health = 0;
+                        }
+                        else
+                        {
+                            if (i + 1 < health_list.Count)
+                            {
+                                health_list[i + 1].Health += health_list[i].Health;
+                                health_list[i].Health = 0;
+                            }
+                        }
+                    }
+                    count_health += health_list[i].Health;
+                    if (health_list[i].Health <= 0 && health_list.Count != 1)
+                    {
+                        health_list.RemoveAt(i);
+                        i--;
+                    }
+                }
+                health = count_health;
                 if (Hypno_Spec_Info == null)
                 {
                     this.GlobalPosition = Hypno_Pos;
@@ -107,6 +138,7 @@ public class Normal_Plants_Zombies : Node2D
                 {
                     Self_Hypno_Process();
                 }
+                Re_Set_Process();
             }
             else
             {
@@ -651,6 +683,8 @@ public class Normal_Plants_Zombies : Node2D
     {
         return false;//形式意义
     }
+    protected virtual void Re_Set_Process()
+    { }
     protected virtual async void Free_Self()
     {
         if (GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))

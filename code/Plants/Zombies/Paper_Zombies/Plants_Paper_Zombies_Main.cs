@@ -4,6 +4,42 @@ using System;
 public class Plants_Paper_Zombies_Main : Normal_Plants_Zombies
 {
     [Export] protected bool has_Lost_Paper = false;
+    protected override void Re_Set_Process()
+    {
+        int Door_Health = 0;
+        int Bucket_Health = 0;
+        for (int i = 0; i < health_list.Count; i++)
+        {
+            if (health_list[i].Info == "Door")
+            {
+                Door_Health = health_list[i].Health;
+            }
+            else if (health_list[i].Info == "Hat")
+            {
+                Bucket_Health = health_list[i].Health;
+            }
+        }
+        if (Door_Health == 0)
+        {
+            GetNode<Sprite>("Main/Main/Head/2").Show();
+            GetNode<Node2D>("Main/Main/Out_Arm").Show();
+            GetNode<Node2D>("Main/Main/Paper").Hide();
+            has_Lost_Paper = true;
+        }
+        if (Bucket_Health == 0)
+        {
+            GetNode<Node2D>("Main/Main/Head/Glass").Hide();
+        }
+        if (health_list[health_list.Count - 1].Health < 500)
+        {
+            has_lose_Arm = true;
+            GetNode<Sprite>("Main/Main/Out_Arm/4").Show();
+            GetNode<Sprite>("Main/Main/Out_Arm/3").Hide();
+            GetNode<Sprite>("Main/Main/Out_Arm/2").Hide();
+            GetNode<Sprite>("Main/Main/Out_Arm/1").Hide();
+        }
+
+    }
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))

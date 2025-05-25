@@ -3,6 +3,10 @@ using System;
 
 public class Plants_H2_maker_Zombies_Main : Normal_Plants_Zombies
 {
+    protected override void Re_Set_Process()
+    {
+        //do nothing
+    }
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))

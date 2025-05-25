@@ -69,6 +69,7 @@ public class Normal_Zombies : Node2D
     protected int back_speed = 0;
     protected int label_health_up = 64;
     protected bool has_Add_Zombies_Number = false;
+    public bool Use_Out_Land_Ani = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -119,6 +120,10 @@ public class Normal_Zombies : Node2D
             {
                 has_Add_Zombies_Number = true;
                 In_Game_Main.Zombies_Number++;
+            }
+            if (Use_Out_Land_Ani)
+            {
+                GetNode<AnimationPlayer>("Out_Land").Play("Up");
             }
         }
         else

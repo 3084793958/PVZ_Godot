@@ -3,6 +3,22 @@ using System;
 
 public class Plants_Screen_Door_Zombies_Main : Normal_Plants_Zombies
 {
+    protected override void Re_Set_Process()
+    {
+        if (health < 300)
+        {
+            GetNode<Node2D>("Main/Main/Out_Arm").Show();
+            GetNode<Sprite>("Main/Main/Screen_Door").Hide();
+        }
+        if (health < 180)
+        {
+            has_lose_Arm = true;
+            GetNode<Node2D>("Main/Main/Out_Arm/4").Show();
+            GetNode<Node2D>("Main/Main/Out_Arm/3").Hide();
+            GetNode<Node2D>("Main/Main/Out_Arm/2").Hide();
+            GetNode<Node2D>("Main/Main/Out_Arm/1").Hide();
+        }
+    }
     public override void _PhysicsProcess(float delta)
     {
         if (!GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))
