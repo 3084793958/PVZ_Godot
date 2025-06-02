@@ -18,7 +18,7 @@ public class Tomb_Main : Node2D
     protected List<Background_Grid_Main> Dock_Area_2D_List = new List<Background_Grid_Main>();
     protected Background_Grid_Main Dock_Area_2D = null;
     protected int health = 2000;
-    protected int Clone_Time = 0;
+    public int Clone_Time = 0;
     protected List<Normal_Plants_Bullets_Area> Bullets_Area_2D_List = new List<Normal_Plants_Bullets_Area>();
     protected List<Mg_Shining_Area> Shining_Area_2D_List = new List<Mg_Shining_Area>();
     protected List<Normal_Boom_Area> Boom_Area_2D_List = new List<Normal_Boom_Area>();
@@ -46,7 +46,9 @@ public class Tomb_Main : Node2D
         "res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn",
         "res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn",
         "res://scene/Zombies/Paper_Zombies/Paper_Zombies.tscn",//15
-        "res://scene/Zombies/FootBall_Zombies/FootBall_Zombies.tscn"
+        "res://scene/Zombies/FootBall_Zombies/FootBall_Zombies.tscn",
+        "res://scene/Zombies/JackSon_Zombies/JackSon_Zombies.tscn",
+        "res://scene/Zombies/Dancer_Zombies/Dancer_Zombies.tscn"
     };
     protected List<Texture> Tomb_Texture_List = new List<Texture>
     {
@@ -533,7 +535,7 @@ public class Tomb_Main : Node2D
             GetNode<AnimationPlayer>("Main/Player/Out_Land").Play("Out_Land");
         }
     }
-    protected void Clone_Zombies()
+    public void Clone_Zombies()
     {
         Clone_Time++;
         if (lock_to_number <= 0)

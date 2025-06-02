@@ -43,6 +43,7 @@ public class Van_Door_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        GD.Randomize();
         GetNode<Area2D>("Main/Bullets_Way").PauseMode = PauseModeEnum.Process;
         GetNode<AudioStreamPlayer>("Main/Throw").Stream.Set("loop", false);
         base._Ready();
@@ -137,16 +138,18 @@ public class Van_Door_Main : Normal_Plants
         for (int i = 0; i < 50; i++) 
 		{
 			await ToSignal(GetTree(), "idle_frame");
-			Clone_Bullets();
+            Clone_Bullets(0, 0);
 		}
 	}
-    public void Clone_Bullets()
+    public void Clone_Bullets(float speed_y = 0f, int _y_type = 0)
     {
         if (Bullets_Path != null && health > 0)//health<=0 GetNode Error
         {
-            if (true)
+            In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, speed_y, _y_type);
+            if ((int)(GD.Randi() % 5) == 1)
             {
-                In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition);
+                In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, -15f, 1);
+                In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, 15f, 1);
             }
         }
     }

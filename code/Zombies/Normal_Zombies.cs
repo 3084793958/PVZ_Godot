@@ -70,6 +70,8 @@ public class Normal_Zombies : Node2D
     protected int label_health_up = 64;
     protected bool has_Add_Zombies_Number = false;
     public bool Use_Out_Land_Ani = false;
+    public bool dancing_stop = false;
+    public bool dancer_should_stop = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -1098,7 +1100,7 @@ public class Normal_Zombies : Node2D
                     }
                 }
             }//zombies
-            if (!eating && Get_Walk_Mode() && !On_Boom_Effect && !Is_Shining && !is_Lock_Ice && !is_Angry && back_speed <= 0)  
+            if (!eating && Get_Walk_Mode() && !On_Boom_Effect && !Is_Shining && !is_Lock_Ice && !is_Angry && back_speed <= 0 && !dancing_stop)  
             {
                 this.Position += new Vector2(speed * speed_x * delta * 60, 0);
             }
@@ -1127,7 +1129,14 @@ public class Normal_Zombies : Node2D
             {
                 eating = true;
                 Walk_Mode(false);
-                GetNode<AnimationPlayer>("Main/Main/Eating").Play("Eating");
+                if (dancing_stop)
+                {
+                    GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
+                }
+                else
+                {
+                    GetNode<AnimationPlayer>("Main/Main/Eating").Play("Eating");
+                }
             }
             else
             {

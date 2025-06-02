@@ -138,23 +138,20 @@ public class Double_Van_Door_Main : Normal_Plants
         for (int i = 0; i < 10; i++)
         {
             await ToSignal(GetTree(), "idle_frame");
-            Clone_Bullets(-2.5f);
-            Clone_Bullets(-2f);
-            Clone_Bullets(-1f);
-            Clone_Bullets(0f);
-            Clone_Bullets(2.5f);
-            Clone_Bullets(2f);
-            Clone_Bullets(1f);
+            Clone_Bullets(-2.5f, 0);
+            Clone_Bullets(-2f, 0);
+            Clone_Bullets(-1f, 0);
+            Clone_Bullets(0f, 0);
+            Clone_Bullets(2.5f, 0);
+            Clone_Bullets(2f, 0);
+            Clone_Bullets(1f, 0);
         }
     }
-    public void Clone_Bullets(float speed_y = 0)
+    public void Clone_Bullets(float speed_y = 0f, int _y_type = 0)
     {
         if (Bullets_Path != null && health > 0)//health<=0 GetNode Error
         {
-            if (true)
-            {
-                In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, speed_y);
-            }
+            In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, speed_y, _y_type);
         }
     }
     public override void Free_Self()

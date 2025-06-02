@@ -42,8 +42,15 @@ public class Small_Shroom_Bullets_Main : Normal_Plants_Bullets
             }
             if (!has_touch || (on_Fire && touch_zombies_number < 3)) 
             {
-                double sita_rad = speed_y * Math.PI / 180;
-                this.Position += new Vector2((float)(speed_x * Math.Cos(sita_rad) * delta * 60), (float)(speed_x * Math.Sin(sita_rad) * delta * 60));
+                if (_y_type == 1)
+                {
+                    double sita_rad = speed_y * Math.PI / 180;
+                    this.Position += new Vector2((float)(speed_x * Math.Cos(sita_rad) * delta * 60), (float)(speed_x * Math.Sin(sita_rad) * delta * 60));
+                }
+                else
+                {
+                    this.Position += new Vector2(speed_x * delta * 60, speed_y * delta * 60);
+                }
             }
             if (Position.x > 1437 || Position.x < -512 || Position.y > 800 || Position.y < -200)
             {

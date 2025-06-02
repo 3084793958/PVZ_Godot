@@ -39,7 +39,7 @@ public class Scaredy_Shroom_Main : Normal_Plants
             {
                 for (int i = 0; i < Scaredy_Area_2D_List.Count; i++)
                 {
-                    if (Scaredy_Area_2D_List[i].has_plant)
+                    if (Scaredy_Area_2D_List[i].has_plant && !Scaredy_Area_2D_List[i].has_lose_head)
                     {
                         can_scared = true;
                         break;
@@ -179,22 +179,23 @@ public class Scaredy_Shroom_Main : Normal_Plants
         {
             return;
         }
-        for (int i = 0; i < 17; i++)
+        for (int i = 0; i < 10; i++)
         {
             await ToSignal(GetTree(), "idle_frame");
-            In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, -15f);
-            In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, 15f);
-            In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, 0f);
+            Clone_Bullets(-30f, 1);
+            Clone_Bullets(-20f, 1);
+            Clone_Bullets(-10f, 1);
+            Clone_Bullets(0f, 1);
+            Clone_Bullets(10f, 1);
+            Clone_Bullets(20f, 1);
+            Clone_Bullets(30f, 1);
         }
     }
-    public void Clone_Bullets()
+    public void Clone_Bullets(float sita_y = 0f, int _y_type = 1)
     {
         if (Bullets_Path != null && health > 0)//health<=0 GetNode Error
         {
-            if (true)
-            {
-                In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition);
-            }
+            In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, sita_y, _y_type);
         }
     }
     public override void Free_Self()

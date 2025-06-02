@@ -150,7 +150,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0.2 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [ 0.0 ],
+"args": [ 0.0, 0 ],
 "method": "Clone_Bullets"
 } ]
 }

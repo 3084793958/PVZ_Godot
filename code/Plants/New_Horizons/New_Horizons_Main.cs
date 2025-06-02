@@ -159,23 +159,20 @@ public class New_Horizons_Main : Normal_Plants
         }
         for (int i = 0; i < 10; i++)
         {
-            Clone_Bullets(-30f);
-            Clone_Bullets(-15f);
-            Clone_Bullets(-7f);
-            Clone_Bullets(0f);
-            Clone_Bullets(7f);
-            Clone_Bullets(15f);
-            Clone_Bullets(30f);
+            Clone_Bullets(-30f, 1);
+            Clone_Bullets(-15f, 1);
+            Clone_Bullets(-7f, 1);
+            Clone_Bullets(0f, 1);
+            Clone_Bullets(7f, 1);
+            Clone_Bullets(15f, 1);
+            Clone_Bullets(30f, 1);
         }
     }
-    public void Clone_Bullets(float sita = 0)
+    public void Clone_Bullets(float sita = 0, int _y_type = 1)
     {
         if (Bullets_Path != null && health > 0)//health<=0 GetNode Error
         {
-            if (true)
-            {
-                In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, sita);
-            }
+            In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, sita, _y_type);
         }
     }
     public override void Free_Self()

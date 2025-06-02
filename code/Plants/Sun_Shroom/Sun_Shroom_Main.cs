@@ -146,7 +146,7 @@ public class Sun_Shroom_Main : Normal_Plants
             GetNode<AnimationPlayer>("Make_Sun").Play("Make_Sun");
             if (In_Game_Main.allow_sun)
             {
-                GetNode<Timer>("Timer").WaitTime = (float)GD.RandRange(25d, 60d);
+                GetNode<Timer>("Timer").WaitTime = (float)GD.RandRange(40d, 80d);
             }
             else
             {

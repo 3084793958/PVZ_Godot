@@ -52,6 +52,7 @@ font_data = ExtResource( 4 )
 margin_left = -52.0
 margin_top = -74.0
 rect_min_size = Vector2( 52, 74 )
+mouse_filter = 2
 script = ExtResource( 5 )
 
 [node name="Shadow" type="Control" parent="."]
@@ -186,6 +187,10 @@ margin_bottom = 74.0
 rect_min_size = Vector2( 52, 74 )
 custom_styles/focus = SubResource( 8 )
 flat = true
+
+[node name="Canvas" type="CanvasLayer" parent="Main/Main/Click_Button"]
+offset = Vector2( -52, -74 )
+transform = Transform2D( 1, 0, 0, 1, -52, -74 )
 
 [node name="button_Click" type="AudioStreamPlayer" parent="Main/Main"]
 stream = ExtResource( 3 )

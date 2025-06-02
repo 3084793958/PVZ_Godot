@@ -78,7 +78,7 @@ static public class Public_Main
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     6,
     "硫酸",
-    "危险的东西,伤害500\n试着放上Mg",
+    "危险的东西,伤害1000\n试着放上Mg",
     "MgSO4也不错",
     GD.Load<Texture>("res://image/Plants/H2SO4/H2SO4.png"),
     0f,
@@ -207,8 +207,8 @@ static public class Public_Main
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     19,
-    "新视野号",
-    "New Horizons\n只是个人喜好(O^<)",
+    "New Horizons",
+    "只是个人喜好(O^<)",
     "New Horizons",
     GD.Load<Texture>("res://image/Plants/New_Horizons/New_Horizons.png"),
     0f,
@@ -481,6 +481,26 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(625,"res://scene/Plants/Zombies/FootBall_Zombies/Plants_FootBall_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    18,
+    "魅惑舞王僵尸",
+    "全场动作必须跟我整齐化一",
+    "墓碑,起!",
+    GD.Load<Texture>("res://image/Plants/Zombies/JackSon_Zombies/Zombie_jackson.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(525,"res://scene/Plants/Zombies/JackSon_Zombies/Plants_JackSon_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    19,
+    "魅惑伴舞僵尸",
+    "舞王粉丝应援团",
+    "舞王粉丝应援团",
+    GD.Load<Texture>("res://image/Plants/Zombies/Dancer_Zombies/Dancer_Zombies.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(125,"res://scene/Plants/Zombies/Dancer_Zombies/Plants_Dancer_Zombies.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -655,6 +675,26 @@ static public class Public_Main
     0f,
     0f,
     new Tuple<int,string>(625,"res://scene/Zombies/FootBall_Zombies/FootBall_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    18,
+    "舞王僵尸",
+    "全场动作必须跟我整齐化一",
+    "墓碑,起!",
+    GD.Load<Texture>("res://image/Zombies/JackSon_Zombies/Zombie_jackson.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(525,"res://scene/Zombies/JackSon_Zombies/JackSon_Zombies.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    19,
+    "伴舞僵尸",
+    "舞王粉丝应援团",
+    "舞王粉丝应援团",
+    GD.Load<Texture>("res://image/Zombies/Dancer_Zombies/Dancer.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(125,"res://scene/Zombies/Dancer_Zombies/Dancer_Zombies.tscn")
     )
     };
     static public List<string> Zombies_Path_List = new List<string>
@@ -675,7 +715,9 @@ static public class Public_Main
         "res://scene/Zombies/Darts_Screen_Door_Zombies/Darts_Screen_Door_Zombies.tscn",
         "res://scene/Zombies/Bucket_Tomb_Zombies/Bucket_Tomb_Zombies.tscn",//15
         "res://scene/Zombies/Paper_Zombies/Paper_Zombies.tscn",
-        "res://scene/Zombies/FootBall_Zombies/FootBall_Zombies.tscn"
+        "res://scene/Zombies/FootBall_Zombies/FootBall_Zombies.tscn",
+        "res://scene/Zombies/JackSon_Zombies/JackSon_Zombies.tscn",
+        "res://scene/Zombies/Dancer_Zombies/Dancer_Zombies.tscn"
     };
     static public List<Tuple<string, string, Texture, int>> Level_Mode1 = new List<Tuple<string, string, Texture, int>>
     { 
@@ -726,6 +768,9 @@ static public class Public_Main
         2),
         new Tuple<string, string,Texture, int>("第16关:将大局逆转吧","res://level/Mode1/Mode1_16.cfg",
         GD.Load<Texture>("res://image/Plants/Hypno_Shroom/Hypno_Shroom.png"),
+        2),
+        new Tuple<string, string,Texture, int>("第17关:人山人海","res://level/Mode1/Mode1_17.cfg",
+        GD.Load<Texture>("res://image/Plants/Scaredy_Shroom/Scaredy_Shroom.png"),
         2),
         new Tuple<string, string,Texture, int>("白天草坪(测试专用)","res://level/Mode1/Mode1_demo_Day.cfg",
         GD.Load<Texture>("res://image/Plants/godot/godot.png"),

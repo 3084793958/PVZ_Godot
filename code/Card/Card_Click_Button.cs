@@ -14,9 +14,11 @@ public class Card_Click_Button : Node2D
     public bool isPlants_zombies = false;
     public bool has_Clicked = false;
     public bool Await_Running = false;
+    public Button Click_Button_Button = null;
     //private Object
     public override void _Ready()
     {
+        Click_Button_Button = GetNode<Button>("Click_Button");
         has_Clicked = false;
         normal_size.x = 100;
         normal_size.y = 0;
@@ -27,6 +29,10 @@ public class Card_Click_Button : Node2D
     }
     public void Mouse_EnterEvent()
     {
+        if (GetTree().Paused)
+        {
+            return;
+        }
         var Info = GetNode<Node2D>("../Info");
         Info.Show();
     }
@@ -41,86 +47,89 @@ public class Card_Click_Button : Node2D
         {
             return;
         }
-        if (In_Game_Main.is_playing)
+        if (In_Game_Main.is_playing) 
         {
-            if (In_Game_Main.Sun_Number < this.sun && !Public_Main.debuging)
+            if (In_Game_Main.really_start)
             {
-                In_Game_Main.Warning_Sun(this);
-            }
-            else
-            {
-                if (now_time <= 0f || Public_Main.debuging)
+                if (In_Game_Main.Sun_Number < this.sun && !Public_Main.debuging)
                 {
-                    if (In_Game_Main.Choosing_List.Count == 0)
-                    {
-                        Normal_Plants.Choosing = false;
-                    }
-                    if (!plant_path.Empty() && !Normal_Plants.Choosing)
-                    {
-                        GetNode<ColorRect>("../Texture/Shadow_2").Show();
-                        GetNode<AudioStreamPlayer>("Seed").Play();
-                        var scene = GD.Load<PackedScene>(plant_path);
-                        Normal_Plants.Choosing = true;
-                        if (is_zombies)
-                        {//为墓碑施工
-                            try
-                            {
-                                var plant_child = (Normal_Zombies)scene.Instance();
-                                plant_child.player_put = true;
-                                plant_child.card_parent_Button = this;
-                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                            }
-                            catch (Exception)
-                            {
-                                var plant_child = (Tomb_Main)scene.Instance();
-                                plant_child.player_put = true;
-                                plant_child.card_parent_Button = this;
-                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                            }
-                        }
-                        else if (isPlants_zombies)
-                        {
-                            try
-                            {
-                                var plant_child = (Normal_Plants_Zombies)scene.Instance();
-                                plant_child.player_put = true;
-                                plant_child.card_parent_Button = this;
-                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                            }
-                            catch (Exception)
-                            {
-                                var plant_child = (Plants_Tomb_Main)scene.Instance();
-                                plant_child.player_put = true;
-                                plant_child.card_parent_Button = this;
-                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                            }
-                        }
-                        else
-                        {
-                            try
-                            {
-                                var plant_child = (Normal_Plants)scene.Instance();
-                                plant_child.player_put = true;
-                                plant_child.card_parent_Button = this;
-                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                            }
-                            catch (Exception)
-                            {
-                                var plant_child = (Limited_Plants)scene.Instance();
-                                plant_child.player_put = true;
-                                plant_child.card_parent_Button = this;
-                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                            }
-                        }
-                    }
-                    else if (Normal_Plants.Choosing)
-                    {
-                        Normal_Plants.Choosing = false;
-                    }
+                    In_Game_Main.Warning_Sun(this);
                 }
                 else
                 {
-                    GetNode<AudioStreamPlayer>("/root/In_Game/Main/Card/SeedBank/Sun/Pause").Play();
+                    if (now_time <= 0f || Public_Main.debuging)
+                    {
+                        if (In_Game_Main.Choosing_List.Count == 0)
+                        {
+                            Normal_Plants.Choosing = false;
+                        }
+                        if (!plant_path.Empty() && !Normal_Plants.Choosing)
+                        {
+                            GetNode<ColorRect>("../Texture/Shadow_2").Show();
+                            GetNode<AudioStreamPlayer>("Seed").Play();
+                            var scene = GD.Load<PackedScene>(plant_path);
+                            Normal_Plants.Choosing = true;
+                            if (is_zombies)
+                            {//为墓碑施工
+                                try
+                                {
+                                    var plant_child = (Normal_Zombies)scene.Instance();
+                                    plant_child.player_put = true;
+                                    plant_child.card_parent_Button = this;
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                                catch (Exception)
+                                {
+                                    var plant_child = (Tomb_Main)scene.Instance();
+                                    plant_child.player_put = true;
+                                    plant_child.card_parent_Button = this;
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                            }
+                            else if (isPlants_zombies)
+                            {
+                                try
+                                {
+                                    var plant_child = (Normal_Plants_Zombies)scene.Instance();
+                                    plant_child.player_put = true;
+                                    plant_child.card_parent_Button = this;
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                                catch (Exception)
+                                {
+                                    var plant_child = (Plants_Tomb_Main)scene.Instance();
+                                    plant_child.player_put = true;
+                                    plant_child.card_parent_Button = this;
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    var plant_child = (Normal_Plants)scene.Instance();
+                                    plant_child.player_put = true;
+                                    plant_child.card_parent_Button = this;
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                                catch (Exception)
+                                {
+                                    var plant_child = (Limited_Plants)scene.Instance();
+                                    plant_child.player_put = true;
+                                    plant_child.card_parent_Button = this;
+                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                }
+                            }
+                        }
+                        else if (Normal_Plants.Choosing)
+                        {
+                            Normal_Plants.Choosing = false;
+                        }
+                    }
+                    else
+                    {
+                        GetNode<AudioStreamPlayer>("/root/In_Game/Main/Card/SeedBank/Sun/Pause").Play();
+                    }
                 }
             }
         }
@@ -192,6 +201,12 @@ public class Card_Click_Button : Node2D
     }
     public override void _Process(float delta)
     {
+        GetNode<CanvasLayer>("Canvas").Offset = this.GlobalPosition;
+        if (In_Game_Main.is_playing && Click_Button_Button.GetParent() != GetNode<CanvasLayer>("Canvas")) 
+        {
+            RemoveChild(Click_Button_Button);
+            GetNode<CanvasLayer>("Canvas").AddChild(Click_Button_Button);
+        }
         if (In_Game_Main.is_playing && !Public_Main.debuging)
         {
             if (In_Game_Main.Sun_Number >= this.sun&&now_time<=0)

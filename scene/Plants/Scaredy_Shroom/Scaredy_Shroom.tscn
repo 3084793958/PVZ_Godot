@@ -128,10 +128,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0.1, 0.35 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
-"args": [  ],
+"args": [ 0.0, 1 ],
 "method": "Clone_Bullets"
 }, {
-"args": [  ],
+"args": [ 0.0, 1 ],
 "method": "Clone_Bullets"
 } ]
 }
@@ -835,12 +835,10 @@ position = Vector2( 4.5, -37.333 )
 scale = Vector2( 0.031, 0.031 )
 
 [node name="1" type="Sprite" parent="Main/eyes/Eyes/Eye1"]
-scale = Vector2( 1, 1 )
 texture = ExtResource( 9 )
 
 [node name="2" type="Sprite" parent="Main/eyes/Eyes/Eye1"]
 visible = false
-scale = Vector2( 1, 1 )
 texture = ExtResource( 8 )
 
 [node name="Eye2" type="Sprite" parent="Main/eyes/Eyes"]

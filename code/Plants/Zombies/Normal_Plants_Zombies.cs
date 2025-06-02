@@ -47,6 +47,8 @@ public class Normal_Plants_Zombies : Node2D
     [Export] protected bool is_Angry = false;
     protected int label_health_up = 64;
     public bool Use_Out_Land_Ani = false;
+    public bool dancing_stop = false;
+    public bool dancer_should_stop = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -563,7 +565,7 @@ public class Normal_Plants_Zombies : Node2D
                     }
                 }
             }
-            if (!eating && Get_Walk_Mode() && !is_Angry) 
+            if (!eating && Get_Walk_Mode() && !is_Angry && !dancing_stop) 
             {
                 this.Position += new Vector2(speed * delta * 60, 0);
             }
@@ -585,7 +587,14 @@ public class Normal_Plants_Zombies : Node2D
             {
                 eating = true;
                 Walk_Mode(false);
-                GetNode<AnimationPlayer>("Main/Main/Eating").Play("Eating");
+                if (dancing_stop)
+                {
+                    GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
+                }
+                else
+                {
+                    GetNode<AnimationPlayer>("Main/Main/Eating").Play("Eating");
+                }
             }
             else
             {

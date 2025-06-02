@@ -9,7 +9,7 @@ public class In_Game_Main : Node2D
     static public List<Tuple<string, Vector2, int, bool>> Plant_Zombies_Clone_Request_List = new List<Tuple<string, Vector2, int, bool>>();
     static public List<Tuple<string, Vector2, int>> Plant_Clone_Request_List = new List<Tuple<string, Vector2, int>>();
     static public List<Tuple<int, Vector2, float, bool>> Sun_Clone_Request_List = new List<Tuple<int, Vector2, float, bool>>();
-    static public List<Tuple<string, Vector2, float>> Plants_Bullets_Clone_Request_List = new List<Tuple<string, Vector2, float>>();
+    static public List<Tuple<string, Vector2, float, int>> Plants_Bullets_Clone_Request_List = new List<Tuple<string, Vector2, float, int>>();
     static public List<Tuple<string, Vector2, Health_List,string>> Plants_Hypno_Clone_Request_List = new List<Tuple<string, Vector2, Health_List, string>>();
     //Clone_List
     static public List<Node> Choosing_List = new List<Node>();
@@ -37,9 +37,11 @@ public class In_Game_Main : Node2D
     static public int Tomb_Lock_To_Number = -1;
     static public int from_type = 1;
     static public bool Zombies_Died_Sun = false;
+    static public bool really_start = false;
     public override async void _Ready()
     {
         GD.Randomize();
+        really_start = false;
         Choosing_List.Clear();
         Zombies_Clone_Request_List.Clear();
         Plant_Zombies_Clone_Request_List.Clear();
@@ -813,6 +815,7 @@ public class In_Game_Main : Node2D
                     var scene = GD.Load<PackedScene>(Plants_Bullets_Clone_Request_List[0].Item1);
                     var Bullets_child = (Normal_Plants_Bullets)scene.Instance();
                     Bullets_child.speed_y = Plants_Bullets_Clone_Request_List[0].Item3;
+                    Bullets_child._y_type = Plants_Bullets_Clone_Request_List[0].Item4;
                     GetNode<Control>("/root/In_Game/Object").AddChild(Bullets_child);
                     Bullets_child.GlobalPosition = Plants_Bullets_Clone_Request_List[0].Item2;
                     Plants_Bullets_Clone_Request_List.RemoveAt(0);
@@ -1286,9 +1289,9 @@ public class In_Game_Main : Node2D
     {
         Sun_Clone_Request_List.Add(new Tuple<int, Vector2, float, bool>(Value, pos, size, from_Plants));
     }
-    static public void Plants_Bullets_Clone_Request(string Path, Vector2 pos, float _y = 0f)
+    static public void Plants_Bullets_Clone_Request(string Path, Vector2 pos, float _y = 0f, int _y_type = 0)
     {
-        Plants_Bullets_Clone_Request_List.Add(new Tuple<string, Vector2, float>(Path, pos, _y));
+        Plants_Bullets_Clone_Request_List.Add(new Tuple<string, Vector2, float, int>(Path, pos, _y, _y_type));
     }
     static public void Plants_Hypno_Clone_Request(string Path, Vector2 pos, Health_List health_list,string Spec_Info)
     {
@@ -1310,6 +1313,7 @@ public class In_Game_Main : Node2D
         player3.Play("start");
         In_Game_Main.is_playing = true;
         await node.ToSignal(node.GetTree().CreateTimer(3), "timeout");
+        In_Game_Main.really_start = true;
         if (In_Game_Main.background_number == 1)
         {
             var B1_bgm = node.GetNode<AudioStreamPlayer>("/root/In_Game/Music/GrassWalk");

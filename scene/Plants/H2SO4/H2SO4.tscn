@@ -240,7 +240,7 @@ shape = SubResource( 6 )
 [node name="H2SO4_Area" type="Area2D" parent="Main"]
 position = Vector2( 40, 40 )
 script = ExtResource( 10 )
-hurt = 500
+hurt = 1000
 
 [node name="Shape" type="CollisionShape2D" parent="Main/H2SO4_Area"]
 shape = SubResource( 6 )

@@ -99,12 +99,12 @@ public class Godot_Main : Normal_Plants
     public void Clone_Self_Zombies()
     {
         string Clone_Path = null;
-        int res_number = (int)(GD.Randi()) % 3;
-        if (res_number == 0)
+        int res_number = (int)(GD.Randi() % 6);
+        if (res_number == 4 || res_number == 3) 
         {
             Clone_Path = "res://scene/Plants/Zombies/Cone_Zombies/Plants_Cone_Zombies.tscn";
         }
-        else if (res_number == 1)
+        else if (res_number == 5)
         {
             Clone_Path = "res://scene/Plants/Zombies/Bucket_Zombies/Plants_Bucket_Zombies.tscn";
         }

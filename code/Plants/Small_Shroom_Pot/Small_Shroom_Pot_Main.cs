@@ -191,14 +191,11 @@ public class Small_Shroom_Pot_Main : Normal_Plants
             }
         }
     }
-    public void Clone_Bullets(float sita_y = 0f)
+    public void Clone_Bullets(float sita_y = 0f, int _y_type = 1)
     {
         if (Bullets_Path != null && health > 0)//health<=0 GetNode Error
         {
-            if (true)
-            {
-                In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, sita_y);
-            }
+            In_Game_Main.Plants_Bullets_Clone_Request(Bullets_Path, GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, sita_y, _y_type);
         }
     }
     public override void Free_Self()

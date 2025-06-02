@@ -86,7 +86,7 @@ public class SunFlower_Main : Normal_Plants
             GetNode<AnimationPlayer>("Make_Sun").Play("Make_Sun");
             if (In_Game_Main.allow_sun)
             {
-                GetNode<Timer>("Timer").WaitTime = (float)GD.RandRange(10d, 30d);
+                GetNode<Timer>("Timer").WaitTime = (float)GD.RandRange(15d, 45d);
             }
             else
             {
