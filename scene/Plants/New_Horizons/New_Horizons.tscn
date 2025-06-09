@@ -759,7 +759,7 @@ texture = ExtResource( 16 )
 
 [node name="L_Hand" type="Sprite" parent="Main/Body"]
 position = Vector2( -17, -3 )
-rotation = 0.241108
+rotation = 0.241109
 scale = Vector2( 0.255, 0.255 )
 texture = ExtResource( 22 )
 
@@ -802,8 +802,8 @@ texture = ExtResource( 9 )
 
 [node name="Eye2" type="Sprite" parent="Main/eyes"]
 visible = false
-position = Vector2( 2, -36 )
-scale = Vector2( 0.255, 0.255 )
+position = Vector2( 1.19209e-07, -35 )
+scale = Vector2( 0.085, 0.085 )
 texture = ExtResource( 1 )
 
 [node name="Sleep" type="Node2D" parent="Main"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=37 format=2]
 
 [ext_resource path="res://image/Plants/Scaredy_Shroom/Scaredy_Shroom.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/Scaredy_Shroom/Scaredy_Shroom_Main.cs" type="Script" id=2]
@@ -19,9 +19,63 @@
 [ext_resource path="res://code/Control_Area_2D/Normal_Plants_Area.cs" type="Script" id=17]
 [ext_resource path="res://image/shadow.png" type="Texture" id=18]
 [ext_resource path="res://image/Plants/Scaredy_Shroom/hair2.png" type="Texture" id=19]
+[ext_resource path="res://image/Plants/Scaredy_Shroom/eye_show.png" type="Texture" id=20]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
+
+[sub_resource type="Animation" id=28]
+resource_name = "Player"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("1:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 3, 3 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 3, 3 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("1:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("2:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
 
 [sub_resource type="DynamicFont" id=16]
 size = 100
@@ -492,6 +546,32 @@ tracks/17/keys = {
 "update": 1,
 "values": [ true, true, true ]
 }
+tracks/18/type = "method"
+tracks/18/path = NodePath("eyes/Eyes/Eye1/1/Show/Player")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0.9 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "Player" ],
+"method": "play"
+} ]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("eyes/Eyes/Eye1/1/Show:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 0, 0.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=27]
 resource_name = "Up"
@@ -555,10 +635,10 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 4, -2 ), Vector2( 4.5, -37.333 ) ]
+"values": [ Vector2( 4, -2 ), Vector2( 4, -2 ), Vector2( 4.5, -37.333 ) ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("Body/Body/Head:visible")
@@ -631,6 +711,32 @@ tracks/10/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0.045, 0.045 ), Vector2( 0.031, 0.031 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("eyes/Eyes/Eye1/1/Show:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/12/type = "method"
+tracks/12/path = NodePath("eyes/Eyes/Eye1/1/Show/Player")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ true ],
+"method": "stop"
+} ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -836,6 +942,22 @@ scale = Vector2( 0.031, 0.031 )
 
 [node name="1" type="Sprite" parent="Main/eyes/Eyes/Eye1"]
 texture = ExtResource( 9 )
+
+[node name="Show" type="Node2D" parent="Main/eyes/Eyes/Eye1/1"]
+visible = false
+
+[node name="1" type="Sprite" parent="Main/eyes/Eyes/Eye1/1/Show"]
+position = Vector2( -145.161, 10.7419 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 20 )
+
+[node name="2" type="Sprite" parent="Main/eyes/Eyes/Eye1/1/Show"]
+position = Vector2( 145.161, -53.7742 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 20 )
+
+[node name="Player" type="AnimationPlayer" parent="Main/eyes/Eyes/Eye1/1/Show"]
+anims/Player = SubResource( 28 )
 
 [node name="2" type="Sprite" parent="Main/eyes/Eyes/Eye1"]
 visible = false

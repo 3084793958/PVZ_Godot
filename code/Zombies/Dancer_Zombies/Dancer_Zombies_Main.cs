@@ -19,7 +19,7 @@ public class Dancer_Zombies_Main : Normal_Zombies
             }
             if (Parent_Zombies != null)
             {
-                dancing_stop = Parent_Zombies.dancer_should_stop;
+                dancing_stop = Parent_Zombies.dancing_stop;
             }
             else
             {

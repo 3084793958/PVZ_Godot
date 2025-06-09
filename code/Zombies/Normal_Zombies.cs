@@ -30,7 +30,7 @@ public class Normal_Zombies : Node2D
     protected float eating_speed = 1f;
     protected bool Allow_Hurt_Time = true;
     protected float speed_x = 1f;
-    protected bool has_planted = false;
+    public bool has_planted = false;
     protected bool is_Ice = false;
     protected bool is_Lock_Ice = false;
     protected bool On_Boom_Effect = false;
@@ -115,6 +115,7 @@ public class Normal_Zombies : Node2D
             GetNode<Control>("Dock").Hide();
             GetNode<Control>("Show").Hide();
             GetNode<Control>("Main").Show();
+            Spec_Doing();
             Walk_Mode(true);
             Position = put_position;
             GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").has_plant = true;
@@ -324,6 +325,7 @@ public class Normal_Zombies : Node2D
                             GetNode<Control>("Dock").Hide();
                             GetNode<Control>("Show").Hide();
                             GetNode<Control>("Main").Show();
+                            Spec_Doing();
                             Walk_Mode(true);
                             if (!has_Add_Zombies_Number)
                             {
@@ -1346,6 +1348,11 @@ public class Normal_Zombies : Node2D
     {
         if (!has_lose_Head)
         {
+            if (is_Lock_Ice)
+            {
+                is_Ice = true;
+                GetNode<Timer>("Ice_Timer").Start();
+            }
             is_Lock_Ice = false;
             GetNode<Sprite>("Main/Main/Ice_Lock").Hide();
         }
@@ -1389,29 +1396,84 @@ public class Normal_Zombies : Node2D
     }
     protected virtual void Bullets_Sound_Play()
     { }
-    public void Sun_Flower_Up()
+    public void Sun_Flower_Up(bool random_sun = true, int value = 0, float sun_size = 1f)
     {
         if (has_planted)
         {
             int sun_value;
             float size;
-            float random_number = GD.Randf();
-            if (random_number < 0.3f)
+            float random_number;
+            if (random_sun)
             {
-                sun_value = 50;
-                size = 2.0f;
-            }
-            else if (random_number > 0.8f)
-            {
-                sun_value = 75;
-                size = 3.0f;
+                random_number = GD.Randf();
+                if (random_number < 0.3f)
+                {
+                    sun_value = 50;
+                    size = 2.0f;
+                }
+                else if (random_number > 0.8f)
+                {
+                    sun_value = 75;
+                    size = 3.0f;
+                }
+                else
+                {
+                    sun_value = 25;
+                    size = 1.0f;
+                }
             }
             else
             {
-                sun_value = 25;
-                size = 1.0f;
+                sun_value = value;
+                size = sun_size;
             }
+
             In_Game_Main.Sun_Clone_Request(sun_value, GetNode<Normal_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition, size, true);
+        }
+    }
+    protected virtual void Spec_Doing()
+    { }
+    public void Ice_Lock_Do()
+    {
+        if (health > 0 && !has_lose_Head) 
+        {
+            is_Ice = true;
+            is_Lock_Ice = true;
+            GetNode<Sprite>("Main/Main/Ice_Lock").Show();
+            speed_x = 0f;
+            GetNode<Timer>("Ice_Lock_Timer").Start();
+            GetNode<Timer>("Ice_Timer").Start();
+        }
+    }
+    public void Boom_Do()
+    {
+        int count_health = 0;
+        for (int j = 0; j < health_list.Count; j++)
+        {
+            if (health_list[j].Health < 0)
+            {
+                if (health_list[j].Is_lock)
+                {
+                    health_list[j].Health = 0;
+                }
+                else
+                {
+                    if (j + 1 < health_list.Count)
+                    {
+                        health_list[j + 1].Health += health_list[j].Health;
+                        health_list[j].Health = 0;
+                    }
+                }
+            }
+            count_health += health_list[j].Health;
+        }
+        health = count_health;
+        if (health <= 90)
+        {
+            On_Boom_Effect = true;
+            Walk_Mode(false);
+            GetNode<AnimationPlayer>("Main/Main/Eating").Stop();
+            GetNode<AnimationPlayer>("Main/Main/Boom_Effect").Play("Boom_Effect");
         }
     }
     public override void _Input(InputEvent @event)

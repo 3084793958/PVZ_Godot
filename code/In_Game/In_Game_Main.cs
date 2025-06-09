@@ -797,6 +797,67 @@ public class In_Game_Main : Node2D
             while (Clone_Number < Public_Main.Max_Object_Clone_In_F || !Public_Main.Using_Clone_Limit)
             {
                 bool Must_Quit = true;
+                if (Plant_Clone_Request_List.Count != 0)
+                {
+                    var scene = GD.Load<PackedScene>(Plant_Clone_Request_List[0].Item1);
+                    try
+                    {
+                        var plant_child = (Normal_Plants)scene.Instance();
+                        plant_child.ZIndex = Plant_Clone_Request_List[0].Item3;
+                        plant_child.put_position = Plant_Clone_Request_List[0].Item2;
+                        plant_child.player_put = false;
+                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                    }
+                    catch (Exception)
+                    {
+                        var plant_child = (Limited_Plants)scene.Instance();
+                        plant_child.ZIndex = Plant_Clone_Request_List[0].Item3;
+                        plant_child.put_position = Plant_Clone_Request_List[0].Item2;
+                        plant_child.player_put = false;
+                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                    }
+                    Clone_Number++;
+                    Plant_Clone_Request_List.RemoveAt(0);
+                    Must_Quit = false;
+                }
+                if (Plants_Hypno_Clone_Request_List.Count != 0)
+                {
+                    var scene = GD.Load<PackedScene>(Plants_Hypno_Clone_Request_List[0].Item1);
+                    var plant_child = (Normal_Plants_Zombies)scene.Instance();
+                    plant_child.Hypno_Health = Plants_Hypno_Clone_Request_List[0].Item3;
+                    plant_child.Hypno_Pos = Plants_Hypno_Clone_Request_List[0].Item2;
+                    plant_child.Hypno_Spec_Info = Plants_Hypno_Clone_Request_List[0].Item4;
+                    plant_child.is_Hypnoed = true;
+                    plant_child.player_put = false;
+                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                    Clone_Number++;
+                    Plants_Hypno_Clone_Request_List.RemoveAt(0);
+                    Must_Quit = false;
+                }
+                if (Plant_Zombies_Clone_Request_List.Count != 0)
+                {
+                    var scene = GD.Load<PackedScene>(Plant_Zombies_Clone_Request_List[0].Item1);
+                    if (Plant_Zombies_Clone_Request_List[0].Item1 == Public_Main.Plants_Zombies_list[8].Rest.Item2)
+                    {
+                        var plant_child = (Plants_Tomb_Main)scene.Instance();
+                        plant_child.ZIndex = Plant_Zombies_Clone_Request_List[0].Item3 - 4;
+                        plant_child.put_position = Plant_Zombies_Clone_Request_List[0].Item2;
+                        plant_child.player_put = false;
+                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                    }
+                    else
+                    {
+                        var plant_child = (Normal_Plants_Zombies)scene.Instance();
+                        plant_child.ZIndex = Plant_Zombies_Clone_Request_List[0].Item3;
+                        plant_child.put_position = Plant_Zombies_Clone_Request_List[0].Item2;
+                        plant_child.player_put = false;
+                        plant_child.Use_Out_Land_Ani = Plant_Zombies_Clone_Request_List[0].Item4;
+                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                    }
+                    Clone_Number++;
+                    Plant_Zombies_Clone_Request_List.RemoveAt(0);
+                    Must_Quit = false;
+                }
                 if (Sun_Clone_Request_List.Count != 0)
                 {
                     var scene = GD.Load<PackedScene>("res://scene/Plants/SunFlower/Sun/Sun.tscn");
@@ -844,67 +905,6 @@ public class In_Game_Main : Node2D
                     }
                     Clone_Number++;
                     Zombies_Clone_Request_List.RemoveAt(0);
-                    Must_Quit = false;
-                }
-                if (Plant_Zombies_Clone_Request_List.Count != 0)
-                {
-                    var scene = GD.Load<PackedScene>(Plant_Zombies_Clone_Request_List[0].Item1);
-                    if (Plant_Zombies_Clone_Request_List[0].Item1 == Public_Main.Plants_Zombies_list[8].Rest.Item2)
-                    {
-                        var plant_child = (Plants_Tomb_Main)scene.Instance();
-                        plant_child.ZIndex = Plant_Zombies_Clone_Request_List[0].Item3 - 4;
-                        plant_child.put_position = Plant_Zombies_Clone_Request_List[0].Item2;
-                        plant_child.player_put = false;
-                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                    }
-                    else
-                    {
-                        var plant_child = (Normal_Plants_Zombies)scene.Instance();
-                        plant_child.ZIndex = Plant_Zombies_Clone_Request_List[0].Item3;
-                        plant_child.put_position = Plant_Zombies_Clone_Request_List[0].Item2;
-                        plant_child.player_put = false;
-                        plant_child.Use_Out_Land_Ani = Plant_Zombies_Clone_Request_List[0].Item4;
-                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                    }
-                    Clone_Number++;
-                    Plant_Zombies_Clone_Request_List.RemoveAt(0);
-                    Must_Quit = false;
-                }
-                if (Plants_Hypno_Clone_Request_List.Count != 0)
-                {
-                    var scene = GD.Load<PackedScene>(Plants_Hypno_Clone_Request_List[0].Item1);
-                    var plant_child = (Normal_Plants_Zombies)scene.Instance();
-                    plant_child.Hypno_Health = Plants_Hypno_Clone_Request_List[0].Item3;
-                    plant_child.Hypno_Pos = Plants_Hypno_Clone_Request_List[0].Item2;
-                    plant_child.Hypno_Spec_Info = Plants_Hypno_Clone_Request_List[0].Item4;
-                    plant_child.is_Hypnoed = true;
-                    plant_child.player_put = false;
-                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                    Clone_Number++;
-                    Plants_Hypno_Clone_Request_List.RemoveAt(0);
-                    Must_Quit = false;
-                }
-                if (Plant_Clone_Request_List.Count != 0)
-                {
-                    var scene = GD.Load<PackedScene>(Plant_Clone_Request_List[0].Item1);
-                    try
-                    {
-                        var plant_child = (Normal_Plants)scene.Instance();
-                        plant_child.ZIndex = Plant_Clone_Request_List[0].Item3;
-                        plant_child.put_position = Plant_Clone_Request_List[0].Item2;
-                        plant_child.player_put = false;
-                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                    }
-                    catch (Exception)
-                    {
-                        var plant_child = (Limited_Plants)scene.Instance();
-                        plant_child.ZIndex = Plant_Clone_Request_List[0].Item3;
-                        plant_child.put_position = Plant_Clone_Request_List[0].Item2;
-                        plant_child.player_put = false;
-                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-                    }
-                    Clone_Number++;
-                    Plant_Clone_Request_List.RemoveAt(0);
                     Must_Quit = false;
                 }
                 if (Must_Quit)

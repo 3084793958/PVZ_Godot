@@ -3,8 +3,14 @@ using System;
 
 public class In_Game_Choose_Card_OK : Button
 {
+    static public bool Has_Pressed = false;
+    public override void _Ready()
+    {
+        Has_Pressed = false;
+    }
     public async override void _Pressed()
     {
+        Has_Pressed = true;
         var Click = GetNode<AudioStreamPlayer>("/root/In_Game/button_Click");
         Click.Play();
         ConfigFile file = new ConfigFile();

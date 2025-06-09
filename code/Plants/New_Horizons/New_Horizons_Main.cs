@@ -81,8 +81,9 @@ public class New_Horizons_Main : Normal_Plants
         }
         else
         {
-            GetNode<Sprite>("Main/eyes/Eye1").Hide();
-            GetNode<Sprite>("Main/eyes/Eye2").Show();
+            GetNode<AnimationPlayer>("Main/Player1").PlaybackSpeed = 0.5f;
+            GetNode<Node2D>("Main/eyes/Eye1").Hide();
+            GetNode<Node2D>("Main/eyes/Eye2").Show();
             GetNode<Node2D>("Main/Sleep").Show();
             GetNode<AnimationPlayer>("Main/Sleep/Sleep").Play("Sleep");
         }
@@ -225,6 +226,10 @@ public class New_Horizons_Main : Normal_Plants
             if (Find_Area_List[i].on_PL_Casing_Save) 
             {
                 PL_Casing_Number++;
+                continue;
+            }
+            if (Find_Area_List[i].Normal_Plant_List.Count == 1 && (Find_Area_List[i].Normal_Plant_List[0] is Tomb_Main || Find_Area_List[i].Normal_Plant_List[0] is Plants_Tomb_Main))
+            {
                 continue;
             }
             if (Find_Area_List[i].Normal_Plant_List.Count + Find_Area_List[i].Down_Plant_List.Count != 0 && Find_Area_List[i].Casing_Plant_List.Count == 0)

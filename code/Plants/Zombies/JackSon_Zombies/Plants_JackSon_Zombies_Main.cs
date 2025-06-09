@@ -8,6 +8,11 @@ public class Plants_JackSon_Zombies_Main : Normal_Plants_Zombies
     public int clone_time = 0;
     public void Call_Up()
     {
+        /*if (has_lose_Head)
+        {
+            return;
+        }*///故意不写的,加大压力
+        GetNode<AudioStreamPlayer>("Main/Main/Call").Play();
         clone_time++;
         for (int i = 0; i < Child_Zombies_List.Count; i++)
         {
@@ -138,6 +143,8 @@ public class Plants_JackSon_Zombies_Main : Normal_Plants_Zombies
     }
     public override void _Ready()
     {
+        GetNode<AudioStreamPlayer>("Main/Main/Dancer").Stream.Set("loop", false);
+        GetNode<AudioStreamPlayer>("Main/Main/Call").Stream.Set("loop", false);
         health_list.Clear();
         health_list.Add(new Health_Container(1437, false));
         speed_Normal = 8.5f;
@@ -162,6 +169,10 @@ public class Plants_JackSon_Zombies_Main : Normal_Plants_Zombies
             GetNode<AnimationPlayer>("Main/Main/Walk1").Stop();
             GetNode<AnimationPlayer>("Main/Main/Walk2").Stop();
         }
+    }
+    protected override void Spec_Doing()
+    {
+        //GetNode<AudioStreamPlayer>("Main/Main/Dancer").Play();
     }
     protected override bool Get_Walk_Mode()
     {

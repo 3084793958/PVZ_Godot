@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/frozen.ogg-4b2fd25d5ad816e6f45d15709eb93255.oggstr"
+
+[deps]
+
+source_file="res://sound/Plants/Ice_Shroom/frozen.ogg"
+dest_files=[ "res://.import/frozen.ogg-4b2fd25d5ad816e6f45d15709eb93255.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

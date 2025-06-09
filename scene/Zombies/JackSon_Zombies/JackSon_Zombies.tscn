@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=62 format=2]
 
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=1]
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/Jaw.png" type="Texture" id=2]
@@ -35,6 +35,8 @@
 [ext_resource path="res://image/Water_Shader/splash.png" type="Texture" id=33]
 [ext_resource path="res://sound/Plants/Normal/water.ogg" type="AudioStream" id=34]
 [ext_resource path="res://image/Zombies/JackSon_Zombies/Path/Zombie_Jackson_colar.png" type="Texture" id=35]
+[ext_resource path="res://sound/Zombies/Dancer/dancer.ogg" type="AudioStream" id=36]
+[ext_resource path="res://sound/Zombies/dirt_rise.ogg" type="AudioStream" id=37]
 [ext_resource path="res://code/Control_Area_2D/Normal_Zombies_Area.cs" type="Script" id=39]
 [ext_resource path="res://image/Zombies/JackSon_Zombies/Zombie_jackson.png" type="Texture" id=40]
 
@@ -2301,6 +2303,14 @@ texture = ExtResource( 13 )
 visible = false
 position = Vector2( 5.33333, -1.33333 )
 texture = ExtResource( 28 )
+
+[node name="Dancer" type="AudioStreamPlayer" parent="Main/Main"]
+stream = ExtResource( 36 )
+script = ExtResource( 1 )
+
+[node name="Call" type="AudioStreamPlayer" parent="Main/Main"]
+stream = ExtResource( 37 )
+script = ExtResource( 1 )
 
 [node name="Splash" type="Sprite" parent="."]
 position = Vector2( 5, 32 )

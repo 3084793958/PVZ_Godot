@@ -158,9 +158,9 @@ public class Fume_Shroom_Main : Normal_Plants
         for (int i = 0; i < 17; i++)
         {
             await ToSignal(GetTree(), "idle_frame");
-            In_Game_Main.Plants_Bullets_Clone_Request("res://scene/Plants/Small_Shroom/Small_Shroom_Bullets/Small_Shroom_Bullets.tscn", GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, -15f);
-            In_Game_Main.Plants_Bullets_Clone_Request("res://scene/Plants/Small_Shroom/Small_Shroom_Bullets/Small_Shroom_Bullets.tscn", GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, 15f);
-            In_Game_Main.Plants_Bullets_Clone_Request("res://scene/Plants/Small_Shroom/Small_Shroom_Bullets/Small_Shroom_Bullets.tscn", GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, 0f);
+            In_Game_Main.Plants_Bullets_Clone_Request("res://scene/Plants/Small_Shroom/Small_Shroom_Bullets/Small_Shroom_Bullets.tscn", GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, -15f, 1);
+            In_Game_Main.Plants_Bullets_Clone_Request("res://scene/Plants/Small_Shroom/Small_Shroom_Bullets/Small_Shroom_Bullets.tscn", GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, 15f, 1);
+            In_Game_Main.Plants_Bullets_Clone_Request("res://scene/Plants/Small_Shroom/Small_Shroom_Bullets/Small_Shroom_Bullets.tscn", GetNode<Bullets_Way_Area>("Main/Bullets_Way").GlobalPosition, 0f, 1);
         }
     }
     public void Clone_Bullets()

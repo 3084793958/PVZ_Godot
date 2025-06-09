@@ -46,6 +46,14 @@ public class Scaredy_Shroom_Main : Normal_Plants
                     }
                 }
             }
+            if (on_Shovel)
+            {
+                can_scared = true;
+            }
+            if (Math.Abs((this.GlobalPosition - GetTree().Root.GetMousePosition()).x) < 20 && Math.Abs((this.GlobalPosition - GetTree().Root.GetMousePosition()).y) < 20 && !on_Bug && Input.IsActionPressed("Left_Mouse")) 
+            {
+                can_scared = true;
+            }
             if (can_scared && !sleep && !Scared_doing && !GetNode<AnimationPlayer>("Main/Scared").IsPlaying()) 
             {
                 GetNode<AnimationPlayer>("Main/Scared").Play("Down");
@@ -66,6 +74,7 @@ public class Scaredy_Shroom_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        health = 750;
         GD.Randomize();
         can_sleep = true;
         GetNode<Area2D>("Main/Bullets_Way").PauseMode = PauseModeEnum.Process;
@@ -103,8 +112,8 @@ public class Scaredy_Shroom_Main : Normal_Plants
         }
         else
         {
-            GetNode<Sprite>("Main/eyes/Eyes/Eye1").Hide();
-            GetNode<Sprite>("Main/eyes/Eyes/Eye2").Show();
+            GetNode<Node2D>("Main/eyes/Eyes/Eye1").Hide();
+            GetNode<Node2D>("Main/eyes/Eyes/Eye2").Show();
             GetNode<Node2D>("Main/Sleep").Show();
             GetNode<AnimationPlayer>("Main/Sleep/Sleep").Play("Sleep");
         }

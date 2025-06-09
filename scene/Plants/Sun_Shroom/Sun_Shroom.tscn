@@ -407,7 +407,6 @@ texture = ExtResource( 4 )
 [node name="Eye2" type="Sprite" parent="Main/eyes"]
 visible = false
 position = Vector2( -10, 105 )
-scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 9 )
 
 [node name="Sleep" type="Node2D" parent="Main"]

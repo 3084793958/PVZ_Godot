@@ -96,6 +96,7 @@ public class Hypno_Shroom_Main : Normal_Plants
         }
         else
         {
+            GetNode<AnimationPlayer>("Main/Player1").PlaybackSpeed = 0.5f;
             GetNode<Node2D>("Main/eyes/Eye1").Hide();
             GetNode<Node2D>("Main/eyes/Eye2").Show();
             GetNode<Node2D>("Main/Sleep").Show();

@@ -287,6 +287,36 @@ static public class Public_Main
     ),
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     27,
+    "寒冰菇",
+    "法师控制强,冰霜秒全场!",
+    "法师控制强,冰霜秒全场!",
+    GD.Load<Texture>("res://image/Plants/Ice_Shroom/IceShroom.png"),
+    20f,
+    50f,
+    new Tuple<int,string>(75,"res://scene/Plants/Ice_Shroom/Ice_Shroom.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    28,
+    "阳光寒冰菇",
+    "考虑是否需要削弱",
+    "考虑是否需要削弱",
+    GD.Load<Texture>("res://image/Plants/Ice_Sun_Shroom/Ice_Sun_Shroom.png"),
+    20f,
+    50f,
+    new Tuple<int,string>(175,"res://scene/Plants/Ice_Sun_Shroom/Ice_Sun_Shroom.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    29,
+    "毁灭菇",
+    "大范围1800伤害",
+    "大范围1800伤害",
+    GD.Load<Texture>("res://image/Plants/Doom_Shroom/DoomShroom.png"),
+    15f,
+    50f,
+    new Tuple<int,string>(125,"res://scene/Plants/Doom_Shroom/Doom_Shroom.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    30,
     "莲叶",
     "莲叶",
     "莲叶",
@@ -307,6 +337,16 @@ static public class Public_Main
     0f,
     1437f,
     new Tuple<int,string>(50,"res://scene/Plants/Random/Random.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    2,
+    "弹坑",
+    "弹坑",
+    "弹坑",
+    GD.Load<Texture>("res://image/Crater/Day1.png"),
+    0f,
+    0f,
+    new Tuple<int,string>(100,"res://scene/Crater/Crater.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Plants_Zombies_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>

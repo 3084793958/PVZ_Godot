@@ -47,7 +47,7 @@ public class Card_Click_Button : Node2D
         {
             return;
         }
-        if (In_Game_Main.is_playing) 
+        if (In_Game_Main.is_playing && In_Game_Choose_Card_OK.Has_Pressed)
         {
             if (In_Game_Main.really_start)
             {
@@ -114,10 +114,20 @@ public class Card_Click_Button : Node2D
                                 }
                                 catch (Exception)
                                 {
-                                    var plant_child = (Limited_Plants)scene.Instance();
-                                    plant_child.player_put = true;
-                                    plant_child.card_parent_Button = this;
-                                    GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                    try
+                                    {
+                                        var plant_child = (Limited_Plants)scene.Instance();
+                                        plant_child.player_put = true;
+                                        plant_child.card_parent_Button = this;
+                                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        var plant_child = (Crater_Main)scene.Instance();
+                                        plant_child.player_put = true;
+                                        plant_child.card_parent_Button = this;
+                                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                                    }
                                 }
                             }
                         }
@@ -133,7 +143,7 @@ public class Card_Click_Button : Node2D
                 }
             }
         }
-        else
+        else if (!In_Game_Choose_Card_OK.Has_Pressed) 
         {
             var button_Click = GetNode<AudioStreamPlayer>("../button_Click");
             button_Click.Play();

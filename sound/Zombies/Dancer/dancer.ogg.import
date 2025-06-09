@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/dancer.ogg-afad1966e330152f53661b6d21e035f2.oggstr"
+
+[deps]
+
+source_file="res://sound/Zombies/Dancer/dancer.ogg"
+dest_files=[ "res://.import/dancer.ogg-afad1966e330152f53661b6d21e035f2.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

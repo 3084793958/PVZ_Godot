@@ -95,6 +95,7 @@ public class Normal_Plants_Zombies : Node2D
             GetNode<Control>("Show").Hide();
             GetNode<Control>("Main").Show();
             Walk_Mode(true);
+            Spec_Doing();
             if (Use_Out_Land_Ani)
             {
                 GetNode<AnimationPlayer>("Out_Land").Play("Up");
@@ -345,6 +346,7 @@ public class Normal_Plants_Zombies : Node2D
                             GetNode<Control>("Show").Hide();
                             GetNode<Control>("Main").Show();
                             Walk_Mode(true);
+                            Spec_Doing();
                         }
                         else
                         {
@@ -693,6 +695,8 @@ public class Normal_Plants_Zombies : Node2D
         return false;//形式意义
     }
     protected virtual void Re_Set_Process()
+    { }
+    protected virtual void Spec_Doing()
     { }
     protected virtual async void Free_Self()
     {
