@@ -38,7 +38,7 @@ public class Normal_Plants : Node2D
     protected bool just_for_MG = false;
     protected bool just_for_C2H5OH = false;
     protected bool can_sleep = false;
-    protected bool sleep = false;
+    public bool sleep = false;
     protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
     protected bool real_touching = false;
     protected bool has_Add_List = true;

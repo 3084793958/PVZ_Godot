@@ -694,6 +694,7 @@ public class In_Game_Main : Node2D
                                     loop_number++;
                                 }
                             }
+                            GetNode<Timer>("Belt_Timer").WaitTime= (float)file2.GetValue("Plant_Card", "Speed", 7.5);
                             var player1 = GetNode<AnimationPlayer>("Main/AnimationPlayer");
                             var player2 = GetNode<AnimationPlayer>("Main/Card_Player");
                             player1.Play("C_to_R");

@@ -99,7 +99,7 @@ public class Ice_Sun_Shroom_Main : Normal_Plants
     public override void Free_Self()
     {
         Plants_Remove_List();
-        if (!has_boom && !on_Shovel)
+        if (!has_boom && !on_Shovel && !sleep)
         {
             Ice_Doing_Timer_timeout();
             has_boom = true;

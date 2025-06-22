@@ -97,7 +97,7 @@ public class Doom_Shroom_Main : Normal_Plants
     }
     public override void Free_Self()
     {
-        if (!has_boom && !on_Shovel)
+        if (!has_boom && !on_Shovel && !sleep) 
         {
             Doom_Doing_Function();
             has_boom = true;

@@ -1094,6 +1094,11 @@ custom_fonts/font = ExtResource( 15 )
 text = "HP:300"
 align = 1
 
+[node name="Scared_Timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 2.0
+one_shot = true
+
 [connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
 [connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
 [connection signal="area_entered" from="Main/Shovel_Area" to="." method="Area_Entered"]

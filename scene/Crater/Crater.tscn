@@ -42,8 +42,9 @@ tracks/1/keys = {
 }
 
 [node name="Crater" type="Node2D"]
-z_index = 3
+z_index = 1
 script = ExtResource( 2 )
+normal_ZIndex = 1
 
 [node name="Dock" type="Control" parent="."]
 mouse_filter = 2

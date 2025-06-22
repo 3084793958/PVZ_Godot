@@ -33,9 +33,12 @@ public class Background_Grid_Main : Control_Area_2D
                 Normal_Plant_List.RemoveAt(i);
                 i--;
             }
-            if (Normal_Plant_List[i] is New_Horizons_Main)
+            if (Normal_Plant_List[i] is New_Horizons_Main New_Horizons_object)
             {
-                has_New_Horizons = true;
+                if (!New_Horizons_object.sleep)
+                {
+                    has_New_Horizons = true;
+                }
             }
         }
         on_New_Horizons = has_New_Horizons;

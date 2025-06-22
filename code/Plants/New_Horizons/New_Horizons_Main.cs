@@ -228,7 +228,23 @@ public class New_Horizons_Main : Normal_Plants
                 PL_Casing_Number++;
                 continue;
             }
-            if (Find_Area_List[i].Normal_Plant_List.Count == 1 && (Find_Area_List[i].Normal_Plant_List[0] is Tomb_Main || Find_Area_List[i].Normal_Plant_List[0] is Plants_Tomb_Main))
+            bool has_plants_object = false;
+            for (int j = 0; j < Find_Area_List[i].Normal_Plant_List.Count; j++)
+            {
+                if (Find_Area_List[i].Normal_Plant_List[j] != null)
+                {
+                    if (Find_Area_List[i].Normal_Plant_List[j] is Tomb_Main || Find_Area_List[i].Normal_Plant_List[j] is Crater_Main || Find_Area_List[i].Normal_Plant_List[j] is Plants_Tomb_Main)
+                    { 
+                        //NOTHING
+                    }
+                    else
+                    {
+                        has_plants_object = true;
+                        break;
+                    }
+                }
+            }
+            if (!has_plants_object)
             {
                 continue;
             }

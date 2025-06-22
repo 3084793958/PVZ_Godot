@@ -48,7 +48,8 @@ public class Tomb_Main : Node2D
         "res://scene/Zombies/Paper_Zombies/Paper_Zombies.tscn",//15
         "res://scene/Zombies/FootBall_Zombies/FootBall_Zombies.tscn",
         "res://scene/Zombies/JackSon_Zombies/JackSon_Zombies.tscn",
-        "res://scene/Zombies/Dancer_Zombies/Dancer_Zombies.tscn"
+        "res://scene/Zombies/Dancer_Zombies/Dancer_Zombies.tscn",
+        "res://scene/Zombies/Basketball_Zombies/Basketball_Zombies.tscn"
     };
     protected List<Texture> Tomb_Texture_List = new List<Texture>
     {

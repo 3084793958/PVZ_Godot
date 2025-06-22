@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/basketball.ogg-a5d8312fd41d9df450a680e268f776a5.oggstr"
+
+[deps]
+
+source_file="res://sound/Zombies/Basketball/basketball.ogg"
+dest_files=[ "res://.import/basketball.ogg-a5d8312fd41d9df450a680e268f776a5.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

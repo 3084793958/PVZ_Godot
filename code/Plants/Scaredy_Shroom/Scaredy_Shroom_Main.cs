@@ -50,15 +50,25 @@ public class Scaredy_Shroom_Main : Normal_Plants
             {
                 can_scared = true;
             }
-            if (Math.Abs((this.GlobalPosition - GetTree().Root.GetMousePosition()).x) < 20 && Math.Abs((this.GlobalPosition - GetTree().Root.GetMousePosition()).y) < 20 && !on_Bug && Input.IsActionPressed("Left_Mouse")) 
+            if (Math.Abs((this.GlobalPosition - GetTree().Root.GetMousePosition()).x) < 20 && Math.Abs((this.GlobalPosition - GetTree().Root.GetMousePosition()).y) < 20 && !on_Bug && Input.IsActionJustPressed("Left_Mouse")) 
             {
                 can_scared = true;
+            }
+            if (can_scared && !GetNode<Timer>("Scared_Timer").Paused) 
+            {
+                GetNode<Timer>("Scared_Timer").Start();
+                GetNode<Timer>("Scared_Timer").Paused = true;
+            }
+            if (!can_scared && Scared_doing && GetNode<Timer>("Scared_Timer").Paused)
+            {
+                GetNode<Timer>("Scared_Timer").Paused = false;
+                GetNode<Timer>("Scared_Timer").Start();
             }
             if (can_scared && !sleep && !Scared_doing && !GetNode<AnimationPlayer>("Main/Scared").IsPlaying()) 
             {
                 GetNode<AnimationPlayer>("Main/Scared").Play("Down");
             }
-            if ((sleep || !can_scared) && Scared_doing && !GetNode<AnimationPlayer>("Main/Scared").IsPlaying()) 
+            if ((sleep || !can_scared) && Scared_doing && !GetNode<AnimationPlayer>("Main/Scared").IsPlaying() && GetNode<Timer>("Scared_Timer").IsStopped()) 
             {
                 GetNode<AnimationPlayer>("Main/Scared").Play("Up");
             }
