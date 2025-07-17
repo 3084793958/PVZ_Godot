@@ -60,7 +60,7 @@ public class Plants_FootBall_Zombies_Main : Normal_Plants_Zombies
     public override void _Ready()
     {
         health_list.Clear();
-        health_list.Add(new Health_Container(2800, true));
+        health_list.Add(new Health_Container(2800, true, "Hat", true, "Iron"));//橄榄球
         health_list.Add(new Health_Container(700, false));
         speed_Normal = 5.5f;
         label_health_up = 84;

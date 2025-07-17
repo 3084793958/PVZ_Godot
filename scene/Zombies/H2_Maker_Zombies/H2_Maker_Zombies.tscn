@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://image/Zombies/H2_Maker_Zombies/H2_Maker_Zombies.png" type="Texture" id=1]
 [ext_resource path="res://code/Zombies/H2_Maker_Zombies/H2_Maker_Zombies_Main.cs" type="Script" id=2]
@@ -32,6 +32,7 @@
 [ext_resource path="res://image/Water_Shader/splash.png" type="Texture" id=30]
 [ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=31]
 [ext_resource path="res://image/Zombies/H2_Maker_Zombies/H2_Maker.png" type="Texture" id=32]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=33]
 [ext_resource path="res://image/Zombies/Screen_Door/Zombie_outerarm_screendoor.png" type="Texture" id=35]
 [ext_resource path="res://sound/Zombies/Bucket.ogg" type="AudioStream" id=36]
 
@@ -1400,6 +1401,7 @@ margin_top = -79.0
 margin_right = 36.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 33 )
 
 [node name="Main" type="Control" parent="Main"]
 anchor_left = 0.5

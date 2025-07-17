@@ -32,6 +32,14 @@ public class New_Horizons_Main : Normal_Plants
                     }
                 }
             }
+            if (Math.Abs((this.GlobalPosition - GetTree().Root.GetMousePosition()).x) < 40 && Math.Abs((this.GlobalPosition - GetTree().Root.GetMousePosition()).y) < 40 && !on_Bug && Input.IsActionPressed("Left_Mouse"))
+            {
+                //(O^<)
+                if (!sleep && !GetNode<AnimationPlayer>("Main/Shoot").IsPlaying() && !GetNode<AnimationPlayer>("Main/(O^<)").IsPlaying()) 
+                {
+                    GetNode<AnimationPlayer>("Main/(O^<)").Play("(O^<)");
+                }
+            }
             if (health <= 0)
             {
                 if (!GetNode<AnimationPlayer>("Died").IsPlaying())
@@ -44,9 +52,12 @@ public class New_Horizons_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        Not_H_Hurt = true;
         GD.Randomize();
         can_sleep = true;//(O^<)休眠机制
         health = 768;//位于冥王星时的传输速度
+        PL_Casing_Size = 1.5f;
+        PL_Casing_Y_Add = -28;
         GetNode<Area2D>("Main/Bullets_Way").PauseMode = PauseModeEnum.Process;
         GetNode<AudioStreamPlayer>("Main/Throw").Stream.Set("loop", false);
         base._Ready();
@@ -91,7 +102,7 @@ public class New_Horizons_Main : Normal_Plants
     }
     protected override bool Allow_Plants()
     {
-        return ((In_Game_Main.Sun_Number >= this_sun && Dock_Area_2D.Normal_Plant_List.Count == 0 && Dock_Area_2D.now_type[Dock_Area_2D.now_type.Count - 1] == 1) || Public_Main.debuging) && on_lock_grid;
+        return ((In_Game_Main.Sun_Number >= this_sun && Dock_Area_2D.Normal_Plant_List.Count == 0) || Public_Main.debuging) && on_lock_grid;
     }
     public void Bullets_Way_On(Area2D area_node)
     {

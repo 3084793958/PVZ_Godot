@@ -211,6 +211,7 @@ public class Card_Click_Button : Node2D
     }
     public override void _Process(float delta)
     {
+        GetNode<Control>("../Info/Info/1").RectPosition = new Vector2(26 - GetNode<Control>("../Info/Info/1").RectSize.x * GetNode<Control>("../Info/Info/1").RectScale.x / 2, GetNode<Control>("../Info/Info/1").RectPosition.y);
         GetNode<CanvasLayer>("Canvas").Offset = this.GlobalPosition;
         if (In_Game_Main.is_playing && Click_Button_Button.GetParent() != GetNode<CanvasLayer>("Canvas")) 
         {

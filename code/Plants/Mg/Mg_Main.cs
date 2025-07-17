@@ -9,6 +9,7 @@ public class Mg_Main : Normal_Plants
     //lock
     public List<C2H5OH_Bullets_Fire_Area> C2H5OH_Fire_Area_2D_List = new List<C2H5OH_Bullets_Fire_Area>();
     public List<H2SO4_Area2D> H2SO4_Area_2D_List = new List<H2SO4_Area2D>();
+    protected List<Water_Area> Water_Area_List = new List<Water_Area>();
     public void Shovel_Area_Entered(Area2D area_node)
     {
         if (!(area_node is Control_Area_2D area2D) || !IsInstanceValid(area2D))
@@ -74,6 +75,12 @@ public class Mg_Main : Normal_Plants
         base._PhysicsProcess(delta);
         if (has_planted)
         {
+            if (GetNode<Normal_Plants_Area>("Main/Touch_Area").lose_health)
+            {
+                GetNode<Normal_Plants_Area>("Main/Touch_Area").lose_health = false;
+                health -= GetNode<Normal_Plants_Area>("Main/Touch_Area").lose_health_number;
+                GetNode<AnimationPlayer>("Is_Eated").Play("Is_Eated");
+            }
             if (Zombies_Area_2D_List.Count != 0)
             {
                 for (int i = 0; i < Zombies_Area_2D_List.Count; i++)
@@ -98,6 +105,7 @@ public class Mg_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        Not_H_Hurt = true;
         just_for_MG = true;
         Use_Move_Area = false;
         GetNode<Area2D>("Main/Touch_Area").PauseMode = PauseModeEnum.Process;
@@ -127,6 +135,10 @@ public class Mg_Main : Normal_Plants
             {
                 H2SO4_Area_2D_List.Add((H2SO4_Area2D)area2D);
             }
+            if (Type_string != null && Type_string == "Water_Area")//H2O
+            {
+                Water_Area_List.Add((Water_Area)area2D);
+            }
         }
     }
     protected override void Area_Exited(Area2D area_node)
@@ -150,6 +162,10 @@ public class Mg_Main : Normal_Plants
             if (Type_string != null && Type_string == "H2SO4")
             {
                 H2SO4_Area_2D_List.Remove((H2SO4_Area2D)area2D);
+            }
+            if (Type_string != null && Type_string == "Water_Area")//H2O
+            {
+                Water_Area_List.Remove((Water_Area)area2D);
             }
         }
     }
@@ -195,16 +211,48 @@ public class Mg_Main : Normal_Plants
         {
             for (int i = 0; i < H2SO4_Area_2D_List.Count; i++)
             {
-                H2SO4_Area_2D_List[i].has_become = true;
+                if (H2SO4_Area_2D_List[i].has_planted)
+                {
+                    H2SO4_Area_2D_List[i].has_become = true;
+                }
             }
             GetNode<AnimationPlayer>("Main/Player3").Play("Player1");
+        }
+        else if (Dock_Area_2D != null && Dock_Area_2D.pH <= 3.5f)
+        {
+            GetNode<AnimationPlayer>("Main/Player3").Play("Player1");
+            if (Dock_Area_2D.N_H > 0.04f)
+            {
+                Dock_Area_2D.Change_pH(0f, 0.04f, 0f);
+            }
+            else
+            {
+                Dock_Area_2D.N_H = 1E-7f * Dock_Area_2D.N_H2O;
+                Dock_Area_2D.N_OH = 1E-7f * Dock_Area_2D.N_H2O;
+                Dock_Area_2D.pH = 7;
+            }
+            In_Game_Main.Plants_Clone_Request("res://scene/Plants/H2/H2.tscn", this.GlobalPosition, this.ZIndex - this.normal_ZIndex + 5);
+        }
+        else if (Water_Area_List.Count != 0 && Water_Area_List[0].pH <= 3.5f) 
+        {
+            GetNode<AnimationPlayer>("Main/Player3").Play("Player1");
+            if (Water_Area_List[0].N_H > 0.04f)
+            {
+                Water_Area_List[0].Change_pH(0f, 0.04f, 0f);
+            }
+            else
+            {
+                Water_Area_List[0].N_H = 1E-7f * Water_Area_List[0].N_H2O;
+                Water_Area_List[0].N_OH = 1E-7f * Water_Area_List[0].N_H2O;
+                Water_Area_List[0].pH = 7;
+            }
+            In_Game_Main.Plants_Clone_Request("res://scene/Plants/H2/H2.tscn", this.GlobalPosition, this.ZIndex - this.normal_ZIndex + 5);
         }
         else
         {
             GetNode<AnimationPlayer>("Main/Player1").Play("Player1");
         }
         GetNode<Normal_Plants_Area>("Main/Shovel_Area").has_planted = this.has_planted;
-        GetNode<Normal_Plants_Area>("Main/Shovel_Area").is_MG = true;
         GetNode<Normal_Plants_Area>("Main/Touch_Area").has_planted = this.has_planted;
     }
     protected override bool Allow_Plants()

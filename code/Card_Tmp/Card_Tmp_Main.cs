@@ -147,10 +147,33 @@ public class Card_Tmp_Main : Node2D
                     }
                     else
                     {
-                        var plant_child = (Normal_Plants)scene.Instance();
-                        plant_child.Tmp_card_parent = this;
-                        plant_child.Tmp_Card_Used = true;
-                        GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                        try
+                        {
+                            var plant_child = (Normal_Plants)scene.Instance();
+                            plant_child.player_put = true;
+                            plant_child.Tmp_card_parent = this;
+                            plant_child.Tmp_Card_Used = true;
+                            GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                        }
+                        catch (Exception)
+                        {
+                            try
+                            {
+                                var plant_child = (Limited_Plants)scene.Instance();
+                                plant_child.player_put = true;
+                                plant_child.Tmp_card_parent = this;
+                                plant_child.Tmp_Card_Used = true;
+                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            }
+                            catch (Exception)
+                            {
+                                var plant_child = (Crater_Main)scene.Instance();
+                                plant_child.player_put = true;
+                                plant_child.Tmp_card_parent = this;
+                                plant_child.Tmp_Card_Used = true;
+                                GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
+                            }
+                        }
                     }
                 }
             }
@@ -173,6 +196,7 @@ public class Card_Tmp_Main : Node2D
     }
     public override void _PhysicsProcess(float delta)
     {
+        GetNode<Control>("All/Info/Info/1").RectPosition = new Vector2(26 - GetNode<Control>("All/Info/Info/1").RectSize.x * GetNode<Control>("All/Info/Info/1").RectScale.x / 2, GetNode<Control>("All/Info/Info/1").RectPosition.y);
         if (In_Game_Main.Sun_Number < this.Sun && !Public_Main.debuging)
         {
             GetNode<ColorRect>("All/Main/Shadow2").Show();

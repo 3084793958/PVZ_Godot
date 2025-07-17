@@ -1,6 +1,7 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://code/Plants/Zombies/Bucket_Tomb_Zombies/Plants_Bucket_Tomb_Zombies_Main.cs" type="Script" id=1]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=2]
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=3]
 [ext_resource path="res://sound/Plants/Normal/water.ogg" type="AudioStream" id=4]
 [ext_resource path="res://sound/Plants/Normal/plant2.ogg" type="AudioStream" id=5]
@@ -1227,6 +1228,7 @@ margin_top = -108.0
 margin_right = 66.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 2 )
 
 [node name="Main" type="Control" parent="Main"]
 margin_left = 158.0

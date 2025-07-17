@@ -85,12 +85,12 @@ public class Flag_Zombies_Main : Normal_Zombies
                     }
                     else if (i == 3)
                     {
-                        Zombies_put_position = new Vector2(1024, 299);
+                        Zombies_put_position = new Vector2(1024, 313);
                         _ZIndex = 47;
                     }
                     else if (i == 4)
                     {
-                        Zombies_put_position = new Vector2(1024, 376);
+                        Zombies_put_position = new Vector2(1024, 398);
                         _ZIndex = 67;
                     }
                     else if (i == 5)

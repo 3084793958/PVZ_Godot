@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=62 format=2]
 
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=1]
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/Jaw.png" type="Texture" id=2]
@@ -40,6 +40,7 @@
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/Out_Arm2.png" type="Texture" id=38]
 [ext_resource path="res://code/Control_Area_2D/Normal_Zombies_Area.cs" type="Script" id=39]
 [ext_resource path="res://image/Zombies/Bucket_Screen_Door_Zombies/Bucket_Screen_Door_Zombies.png" type="Texture" id=40]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=41]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -1514,6 +1515,7 @@ margin_top = -108.0
 margin_right = 66.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 41 )
 
 [node name="Main" type="Control" parent="Main"]
 anchor_left = 0.5

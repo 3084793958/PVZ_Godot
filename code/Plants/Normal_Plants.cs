@@ -23,6 +23,7 @@ public class Normal_Plants : Node2D
     public Card_Tmp_Main Tmp_card_parent = null;//Card_Tmp使用
     protected List<Background_Grid_Main> Dock_Area_2D_List = new List<Background_Grid_Main>();
     protected Background_Grid_Main Dock_Area_2D = null;
+    protected Background_Grid_Main Choose_Dock_Area_2D = null;
     protected bool on_lock_grid = false;
     protected bool has_planted = false;
     protected bool on_Shovel = false;
@@ -46,6 +47,7 @@ public class Normal_Plants : Node2D
     protected bool just_for_Grave_Buster = false;
     protected List<Zombies_Tomb_Area2D> Tomb_Area_2D_List = new List<Zombies_Tomb_Area2D>();
     protected Zombies_Tomb_Area2D Tomb_Area_2D = null;
+    //for Grave_Buster
     protected bool Use_Move_Area = true;
     protected int Up_Number = -1;//Auto
     protected List<string> Move_Area_2D_Path = new List<string>();
@@ -53,7 +55,11 @@ public class Normal_Plants : Node2D
     protected Vector2 Main_Pos = Vector2.Zero;
     protected int Label_Health_Mode = 0;
     public int Exchange_Health = 300;
-    //for Grave_Buster
+    public float PL_Casing_Size = 1f;
+    public int PL_Casing_Y_Add = 0;
+    protected List<Water_Area> P_Water_Area_List = new List<Water_Area>();
+    protected Timer Hurt_Timer = new Timer();
+    public bool Not_H_Hurt = false;
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -81,6 +87,11 @@ public class Normal_Plants : Node2D
         Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
+        AddChild(Hurt_Timer);
+        Hurt_Timer.WaitTime = 5f;
+        Hurt_Timer.Autostart = false;
+        Hurt_Timer.OneShot = false;
+        Hurt_Timer.Connect("timeout", this, nameof(Hurt_Timer_Out));
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
@@ -115,6 +126,7 @@ public class Normal_Plants : Node2D
             Position = put_position;
             GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Play();
             has_Add_List = false;
+            Hurt_Timer.Start();
             Plants_Init();
         }
         else
@@ -411,6 +423,7 @@ public class Normal_Plants : Node2D
                             GetNode<Control>("Dock").Hide();
                             GetNode<Control>("Show").Hide();
                             GetNode<Control>("Main").Show();
+                            Hurt_Timer.Start();
                             Plants_Init();
                         }
                         else
@@ -624,6 +637,15 @@ public class Normal_Plants : Node2D
                     i--;
                 }
             }
+            if (Dock_Area_2D != null && Choose_Dock_Area_2D != null)
+            {
+                if (Dock_Area_2D != Choose_Dock_Area_2D)
+                {
+                    this.Plants_Add_List();
+                    Dock_Area_2D = Choose_Dock_Area_2D;
+                    this.Plants_Remove_List();
+                }
+            }
         }
     }
     protected virtual void Area_Entered(Area2D area_node)
@@ -738,6 +760,10 @@ public class Normal_Plants : Node2D
         {
             Dock_Area_2D_List.Add((Background_Grid_Main)area2D);
         }
+        else if (Type_string != null && Type_string == "Water_Area")//H2O
+        {
+            P_Water_Area_List.Add((Water_Area)area2D);
+        }
         if (just_for_Grave_Buster)
         {
             if (Type_string != null && Type_string == "Zombies_Tomb")
@@ -756,6 +782,10 @@ public class Normal_Plants : Node2D
         if (Type_string != null && Type_string == "Grid")
         {
             Dock_Area_2D_List.Remove((Background_Grid_Main)area2D);
+        }
+        else if (Type_string != null && Type_string == "Water_Area")//H2O
+        {
+            P_Water_Area_List.Remove((Water_Area)area2D);
         }
         if (just_for_Grave_Buster)
         {
@@ -799,6 +829,38 @@ public class Normal_Plants : Node2D
         if (IsInstanceValid(this)) 
         {
             this.QueueFree();
+        }
+    }
+    public void Hurt_Timer_Out()
+    {
+        if (!Not_H_Hurt && (Dock_Area_2D != null && !Dock_Area_2D.on_PL_Casing_Save)) 
+        {
+            //WaterPH
+            for (int i = 0; i < P_Water_Area_List.Count; i++)
+            {
+                if (P_Water_Area_List[i].pH < 5)
+                {
+                    health -= (int)(Math.Pow(3, (5f - P_Water_Area_List[i].pH))) * 2;
+                }
+                else if (P_Water_Area_List[i].pH > 8)
+                {
+                    health -= (int)(Math.Pow(3, (P_Water_Area_List[i].pH - 8))) * 3;
+                }
+            }
+            //WaterPH
+            //GroundPH
+            if (Dock_Area_2D != null)
+            {
+                if (Dock_Area_2D.pH < 5)
+                {
+                    health -= (int)(Math.Pow(3, (5f - Dock_Area_2D.pH))) * 2;
+                }
+                else if (Dock_Area_2D.pH > 8)
+                {
+                    health -= (int)(Math.Pow(3, (Dock_Area_2D.pH - 8))) * 3;
+                }
+            }
+            //GroundPH
         }
     }
     public override void _Input(InputEvent @event)

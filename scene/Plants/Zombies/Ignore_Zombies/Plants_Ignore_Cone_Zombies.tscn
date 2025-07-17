@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=1]
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/Body.png" type="Texture" id=2]
@@ -34,6 +34,7 @@
 [ext_resource path="res://code/Zombies/Cone_Zombies/Cone_Hat_Control.cs" type="Script" id=32]
 [ext_resource path="res://sound/Plants/Normal/water.ogg" type="AudioStream" id=33]
 [ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=34]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=35]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -1107,7 +1108,7 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 0.3 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -89, -31 ), Vector2( -89, -79 ) ]
+"values": [ Vector2( -89, -70 ), Vector2( -89, -118 ) ]
 }
 tracks/4/type = "value"
 tracks/4/path = NodePath("Plant_Sound/Ok/Water:playing")
@@ -1253,6 +1254,7 @@ margin_top = -118.0
 margin_right = 114.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 35 )
 
 [node name="Main" type="Control" parent="Main"]
 margin_left = 99.0

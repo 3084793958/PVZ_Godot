@@ -6,6 +6,7 @@ public class H2_Main : Limited_Plants
     public List<C2H5OH_Bullets_Fire_Area> Center_C2H5OH_Fire_Area_2D_List = new List<C2H5OH_Bullets_Fire_Area>();
     public List<C2H5OH_Bullets_Fire_Area> Out_C2H5OH_Fire_Area_2D_List = new List<C2H5OH_Bullets_Fire_Area>();
     protected bool real_touching = false;
+    public bool will_boom = false;
     public override void _Ready()
     {
         normal_ZIndex = 5;
@@ -225,7 +226,7 @@ public class H2_Main : Limited_Plants
                         }
                     }
                 }
-                if (has_fire)
+                if (has_fire) 
                 {
                     GetNode<AnimationPlayer>("Main/Player").Stop();
                     GetNode<All_Boom_Area>("Main/Boom").hurt = 500;
@@ -233,6 +234,14 @@ public class H2_Main : Limited_Plants
                     GetNode<All_Boom_Area>("Main/Boom").Start_hurting();
                     GetNode<AnimationPlayer>("Boom").Play("Died");
                 }
+            }
+            if (will_boom)
+            {
+                GetNode<AnimationPlayer>("Main/Player").Stop();
+                GetNode<All_Boom_Area>("Main/Boom").hurt = 500;
+                GetNode<All_Boom_Area>("Main/Boom").can_do = true;
+                GetNode<All_Boom_Area>("Main/Boom").Start_hurting();
+                GetNode<AnimationPlayer>("Boom").Play("Died");
             }
         }
     }

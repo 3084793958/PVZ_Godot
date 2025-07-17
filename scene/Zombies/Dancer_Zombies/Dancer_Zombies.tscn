@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=1]
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/Jaw.png" type="Texture" id=2]
@@ -36,6 +36,7 @@
 [ext_resource path="res://sound/Plants/Normal/water.ogg" type="AudioStream" id=34]
 [ext_resource path="res://image/Zombies/JackSon_Zombies/Path/Zombie_Jackson_colar.png" type="Texture" id=35]
 [ext_resource path="res://image/Zombies/Dancer_Zombies/Dancer.png" type="Texture" id=36]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=37]
 [ext_resource path="res://code/Control_Area_2D/Normal_Zombies_Area.cs" type="Script" id=39]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -1267,6 +1268,7 @@ margin_top = -108.0
 margin_right = 66.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 37 )
 
 [node name="Main" type="Control" parent="Main"]
 anchor_left = 0.5

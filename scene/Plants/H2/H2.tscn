@@ -272,6 +272,7 @@ margin_left = -40.0
 margin_top = -40.0
 margin_right = 40.0
 margin_bottom = 40.0
+mouse_filter = 2
 
 [node name="Main" type="Sprite" parent="Main"]
 material = SubResource( 23 )

@@ -40,6 +40,7 @@ public class Grave_Buster_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        Not_H_Hurt = true;
         just_for_Grave_Buster = true;
         Use_Move_Area = false;
         base._Ready();

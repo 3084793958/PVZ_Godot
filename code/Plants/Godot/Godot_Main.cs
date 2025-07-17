@@ -42,6 +42,7 @@ public class Godot_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        Not_H_Hurt = true;
         GD.Randomize();
         base._Ready();
     }
@@ -132,12 +133,12 @@ public class Godot_Main : Normal_Plants
                     }
                     else if (i == 3)
                     {
-                        Zombies_put_position = new Vector2(76, 299);
+                        Zombies_put_position = new Vector2(76, 313);
                         _ZIndex = 47;
                     }
                     else if (i == 4)
                     {
-                        Zombies_put_position = new Vector2(76, 376);
+                        Zombies_put_position = new Vector2(76, 398);
                         _ZIndex = 67;
                     }
                     else if (i == 5)

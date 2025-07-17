@@ -96,7 +96,7 @@ public class Polevaulter_Zombies_Main : Normal_Zombies
                             }
                         }
                     }
-                    if (can_work)
+                    if (can_work && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !GetNode<AnimationPlayer>("Out_Water").IsPlaying() && !GetNode<AnimationPlayer>("Out_Land").IsPlaying()) 
                     {
                         if (!GetNode<AnimationPlayer>("Main/Main/Up").IsPlaying() && !has_lose_Head && !is_Lock_Ice) 
                         {

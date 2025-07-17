@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://image/Zombies/Screen_Door/Zombie_screendoor2.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/Zombies/Darts_Screen_Door_Zombies/Plants_Darts_Screen_Door_Zombies_Main.cs" type="Script" id=2]
@@ -35,6 +35,7 @@
 [ext_resource path="res://image/Zombies/Screen_Door/Zombie_screendoor3.png" type="Texture" id=33]
 [ext_resource path="res://image/Zombies/Darts_Polevaulter_Zombies/Darts.png" type="Texture" id=34]
 [ext_resource path="res://image/Zombies/Darts_Screen_Door_Zombies/Dart_Screen_Door_Zombies.png" type="Texture" id=35]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=36]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -1183,6 +1184,7 @@ margin_top = -108.0
 margin_right = 66.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 36 )
 
 [node name="Main" type="Control" parent="Main"]
 margin_left = 158.0

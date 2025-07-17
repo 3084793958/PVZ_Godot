@@ -1,0 +1,626 @@
+[gd_scene load_steps=38 format=2]
+
+[ext_resource path="res://code/Plants/Na/Na_Main.cs" type="Script" id=1]
+[ext_resource path="res://code/Control_Area_2D/All_Boom_Area.cs" type="Script" id=2]
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=3]
+[ext_resource path="res://sound/Plants/Van_Door/firepea.ogg" type="AudioStream" id=4]
+[ext_resource path="res://sound/Plants/Normal/water.ogg" type="AudioStream" id=5]
+[ext_resource path="res://sound/Plants/Normal/plant2.ogg" type="AudioStream" id=6]
+[ext_resource path="res://sound/Plants/Normal/plant1.ogg" type="AudioStream" id=7]
+[ext_resource path="res://image/Plants/Fire/fire1_1.png" type="Texture" id=8]
+[ext_resource path="res://image/Plants/Fire/fire1_2.png" type="Texture" id=9]
+[ext_resource path="res://image/Plants/Fire/fire1_3.png" type="Texture" id=10]
+[ext_resource path="res://font/zh.otf" type="DynamicFontData" id=11]
+[ext_resource path="res://image/Plants/C_Boom/Path/ExplosionCloud.png" type="Texture" id=12]
+[ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=13]
+[ext_resource path="res://image/Plants/Na/Na.png" type="Texture" id=14]
+[ext_resource path="res://sound/Plants/C_Boom/cherrybomb.ogg" type="AudioStream" id=15]
+[ext_resource path="res://code/Control_Area_2D/Normal_Plants_Area.cs" type="Script" id=17]
+[ext_resource path="res://image/shadow.png" type="Texture" id=18]
+[ext_resource path="res://sound/Zombies/bigchomp.ogg" type="AudioStream" id=20]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 0.01, 0.01 )
+
+[sub_resource type="Shader" id=21]
+code = "shader_type canvas_item;
+uniform float value:hint_range(0.0, 1.0)=0.5;
+uniform sampler2D noise_texture;
+void fragment()
+{
+	vec4 texture_color=texture(TEXTURE,UV);
+	vec4 noise_color=texture(noise_texture,UV);
+	if (noise_color.r>value)
+	{
+		COLOR.a=0.0;
+	}
+	else
+	{
+		COLOR=texture_color;
+	}
+}"
+
+[sub_resource type="OpenSimplexNoise" id=13]
+seed = 1437
+persistence = 1.0
+lacunarity = 4.0
+
+[sub_resource type="NoiseTexture" id=22]
+seamless = true
+noise = SubResource( 13 )
+
+[sub_resource type="ShaderMaterial" id=23]
+resource_local_to_scene = true
+shader = SubResource( 21 )
+shader_param/value = 1.0
+shader_param/noise_texture = SubResource( 22 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 40, 30 )
+
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 25, 25 )
+
+[sub_resource type="Animation" id=19]
+resource_name = "Player1"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Main:material:shader_param/value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 2, 2, 2 ),
+"update": 0,
+"values": [ 1.0, 1.0, 0.5, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Main:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 40, -17 ), Vector2( 40, -7 ), Vector2( 40, -17 ), Vector2( 40, -27 ), Vector2( 40, -17 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Shadow:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.588235 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Fire:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1, 1.8, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/4/type = "animation"
+tracks/4/path = NodePath("Fire/turn_fire")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"clips": PoolStringArray( "fire" ),
+"times": PoolRealArray( 0 )
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("../Burn:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/6/type = "method"
+tracks/6/path = NodePath("..")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Free_Self"
+} ]
+}
+
+[sub_resource type="Animation" id=20]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Main:material:shader_param/value")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=24]
+resource_name = "fire"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, false, false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("3:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, false, false ]
+}
+
+[sub_resource type="RectangleShape2D" id=28]
+extents = Vector2( 50, 40 )
+
+[sub_resource type="RectangleShape2D" id=29]
+extents = Vector2( 90, 90 )
+
+[sub_resource type="RectangleShape2D" id=32]
+extents = Vector2( 1024, 10 )
+
+[sub_resource type="DynamicFont" id=30]
+size = 64
+outline_size = 2
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 11 )
+
+[sub_resource type="Animation" id=31]
+resource_name = "Died"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Explosion:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 3, 3 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Boom_Sound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.02, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Explosion:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.9, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath("..")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 1.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Free_Self"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("..:has_boom")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Free"
+length = 0.6
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Free_Self"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:Na_on_Shovel")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Is_Eated"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1.3, 1.3, 1.3, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Died"
+length = 0.4
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Free_Self"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("Main/Main")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "hide"
+} ]
+}
+
+[sub_resource type="Animation" id=33]
+resource_name = "Bug"
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Bug_Doing"
+} ]
+}
+
+[node name="Na" type="Node2D"]
+z_index = 5
+script = ExtResource( 1 )
+health = 100
+normal_ZIndex = 5
+
+[node name="Dock" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 40, 40 )
+
+[node name="Help" type="Node2D" parent="Dock"]
+z_index = 118
+z_as_relative = false
+
+[node name="80" type="Control" parent="Dock/Help"]
+margin_right = 50.0
+margin_bottom = 50.0
+
+[node name="Texture" type="TextureRect" parent="Dock/Help/80"]
+modulate = Color( 1, 1, 1, 0.588235 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = -42.0
+margin_right = 15.0
+margin_bottom = -42.0
+texture = ExtResource( 14 )
+expand = true
+stretch_mode = 6
+
+[node name="Area2D" type="Area2D" parent="Dock"]
+position = Vector2( 40, 40 )
+
+[node name="Shape" type="CollisionShape2D" parent="Dock/Area2D"]
+shape = SubResource( 1 )
+
+[node name="Show" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Help" type="Node2D" parent="Show"]
+z_index = 118
+z_as_relative = false
+
+[node name="80" type="Control" parent="Show/Help"]
+margin_right = 50.0
+margin_bottom = 50.0
+
+[node name="TextureRect" type="TextureRect" parent="Show/Help/80"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = -42.0
+margin_right = 15.0
+margin_bottom = -42.0
+texture = ExtResource( 14 )
+expand = true
+stretch_mode = 6
+
+[node name="Main" type="Control" parent="."]
+visible = false
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Main" type="Sprite" parent="Main"]
+material = SubResource( 23 )
+position = Vector2( 40, -17 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 14 )
+
+[node name="Shadow" type="Sprite" parent="Main"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 41, 69 )
+scale = Vector2( 0.05, 0.03 )
+texture = ExtResource( 18 )
+
+[node name="Touch_Area" type="Area2D" parent="Main"]
+position = Vector2( 40, 40 )
+script = ExtResource( 17 )
+plants_type = "Top"
+
+[node name="Shape" type="CollisionShape2D" parent="Main/Touch_Area"]
+shape = SubResource( 6 )
+
+[node name="Shovel_Area" type="Area2D" parent="Main"]
+position = Vector2( 40, -17 )
+script = ExtResource( 17 )
+plants_type = "Top"
+Not_Joining_Touching = true
+
+[node name="Shape" type="CollisionShape2D" parent="Main/Shovel_Area"]
+shape = SubResource( 18 )
+
+[node name="Player" type="AnimationPlayer" parent="Main"]
+anims/Player1 = SubResource( 19 )
+anims/RESET = SubResource( 20 )
+
+[node name="Fire" type="Node2D" parent="Main"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 40, 0 )
+scale = Vector2( 0.4, 0.4 )
+
+[node name="1" type="Sprite" parent="Main/Fire"]
+texture = ExtResource( 8 )
+
+[node name="2" type="Sprite" parent="Main/Fire"]
+visible = false
+texture = ExtResource( 9 )
+
+[node name="3" type="Sprite" parent="Main/Fire"]
+visible = false
+texture = ExtResource( 10 )
+
+[node name="turn_fire" type="AnimationPlayer" parent="Main/Fire"]
+anims/fire = SubResource( 24 )
+
+[node name="Boom1" type="Area2D" parent="Main"]
+position = Vector2( 40, 40 )
+script = ExtResource( 2 )
+
+[node name="Shape" type="CollisionShape2D" parent="Main/Boom1"]
+shape = SubResource( 28 )
+
+[node name="Boom2" type="Area2D" parent="Main"]
+position = Vector2( 40, 40 )
+script = ExtResource( 2 )
+
+[node name="Shape" type="CollisionShape2D" parent="Main/Boom2"]
+shape = SubResource( 29 )
+
+[node name="W1" type="CollisionShape2D" parent="Main/Boom2"]
+shape = SubResource( 32 )
+
+[node name="W2" type="CollisionShape2D" parent="Main/Boom2"]
+rotation = 0.261799
+shape = SubResource( 32 )
+
+[node name="W3" type="CollisionShape2D" parent="Main/Boom2"]
+rotation = -0.261799
+shape = SubResource( 32 )
+
+[node name="Explosion" type="Sprite" parent="Main"]
+position = Vector2( 40, 40 )
+scale = Vector2( 1e-05, 1e-05 )
+z_index = 117
+z_as_relative = false
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Main/Explosion"]
+margin_left = -24.9999
+margin_top = -33.9998
+margin_right = 59.0001
+margin_bottom = 51.0002
+rect_scale = Vector2( 0.690274, 0.690274 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 30 )
+text = "炸!"
+
+[node name="Boom_Sound" type="AudioStreamPlayer" parent="Main"]
+stream = ExtResource( 15 )
+script = ExtResource( 3 )
+
+[node name="Boom" type="AnimationPlayer" parent="Main"]
+anims/Died = SubResource( 31 )
+
+[node name="Plant_Sound" type="Node" parent="."]
+
+[node name="Ok" type="Node" parent="Plant_Sound"]
+
+[node name="Plant1" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 7 )
+script = ExtResource( 3 )
+
+[node name="Plant2" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 6 )
+script = ExtResource( 3 )
+
+[node name="Water" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 5 )
+script = ExtResource( 3 )
+
+[node name="Free_player" type="AnimationPlayer" parent="."]
+anims/Free = SubResource( 7 )
+
+[node name="Burn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+script = ExtResource( 3 )
+
+[node name="Is_Eated" type="AnimationPlayer" parent="."]
+anims/Is_Eated = SubResource( 9 )
+
+[node name="Big_Chmop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 20 )
+script = ExtResource( 3 )
+
+[node name="Died" type="AnimationPlayer" parent="."]
+anims/Died = SubResource( 10 )
+
+[node name="Health" type="Node2D" parent="."]
+visible = false
+modulate = Color( 2, 2, 2, 0.6 )
+z_index = 118
+z_as_relative = false
+
+[node name="Health" type="Label" parent="Health"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -36.0
+margin_top = -67.0
+margin_right = 303.0
+margin_bottom = 66.0
+rect_scale = Vector2( 0.2, 0.2 )
+custom_colors/font_color = Color( 0, 1, 0, 1 )
+custom_fonts/font = ExtResource( 13 )
+text = "HP:300"
+align = 1
+
+[node name="Bug_player" type="AnimationPlayer" parent="."]
+anims/Bug = SubResource( 33 )
+
+[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
+[connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
+[connection signal="area_entered" from="Main/Touch_Area" to="." method="Area_Entered"]
+[connection signal="area_exited" from="Main/Touch_Area" to="." method="Area_Exited"]
+[connection signal="area_entered" from="Main/Shovel_Area" to="." method="Shovel_Area_Entered"]
+[connection signal="area_exited" from="Main/Shovel_Area" to="." method="Shovel_Area_Exited"]

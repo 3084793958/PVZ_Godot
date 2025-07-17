@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://image/Zombies/Bucket_Zombies/Zombie_bucket1.png" type="Texture" id=1]
 [ext_resource path="res://code/Zombies/Bucket_Zombies/Bucket_Zombies_Main.cs" type="Script" id=2]
@@ -36,6 +36,7 @@
 [ext_resource path="res://code/Zombies/Cone_Zombies/Cone_Hat_Control.cs" type="Script" id=34]
 [ext_resource path="res://sound/Zombies/Bucket.ogg" type="AudioStream" id=35]
 [ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=36]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=37]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -1499,6 +1500,7 @@ margin_top = -118.0
 margin_right = 114.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 37 )
 
 [node name="Main" type="Control" parent="Main"]
 anchor_left = 0.5

@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://image/Zombies/FootBall_Zombies/Path/zombie_football_rightarm_upper.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/Zombies/FootBall_Zombies/Plants_FootBall_Zombies_Main.cs" type="Script" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://image/Zombies/FootBall_Zombies/Path/Zombie_football_rightleg_upper.png" type="Texture" id=31]
 [ext_resource path="res://image/Zombies/FootBall_Zombies/Path/Zombie_football_leftleg_upper.png" type="Texture" id=32]
 [ext_resource path="res://code/Zombies/Cone_Zombies/Cone_Hat_Control.cs" type="Script" id=33]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=34]
 [ext_resource path="res://image/Zombies/FootBall_Zombies/Path/Hat/Zombie_football_helmet2.png" type="Texture" id=35]
 [ext_resource path="res://image/Zombies/FootBall_Zombies/Path/Zombie_football_outerarm_eatinghand.png" type="Texture" id=36]
 [ext_resource path="res://image/Zombies/FootBall_Zombies/FootBall_Zombies.png" type="Texture" id=37]
@@ -1096,6 +1097,7 @@ margin_top = -108.0
 margin_right = 66.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 34 )
 
 [node name="Main" type="Control" parent="Main"]
 margin_left = 158.0

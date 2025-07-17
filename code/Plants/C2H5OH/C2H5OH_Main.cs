@@ -55,6 +55,7 @@ public class C2H5OH_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        Not_H_Hurt = true;
         just_for_C2H5OH = true;
         health = 100;
         base._Ready();

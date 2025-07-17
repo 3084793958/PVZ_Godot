@@ -221,8 +221,8 @@ margin_bottom = 80.0
 modulate = Color( 1, 1, 1, 0.588235 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 35.0
-margin_bottom = 20.0
+margin_top = 32.0
+margin_bottom = 17.0
 texture = ExtResource( 8 )
 expand = true
 stretch_mode = 6
@@ -254,8 +254,8 @@ margin_bottom = 80.0
 [node name="TextureRect" type="TextureRect" parent="Show/Help/80"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = 36.0
-margin_bottom = 20.0
+margin_top = 32.0
+margin_bottom = 16.0
 texture = ExtResource( 8 )
 expand = true
 stretch_mode = 6
@@ -276,7 +276,7 @@ texture = ExtResource( 10 )
 anims/Splash = SubResource( 14 )
 
 [node name="Body" type="Sprite" parent="Main"]
-position = Vector2( 39.9961, 68 )
+position = Vector2( 39.9961, 64 )
 scale = Vector2( 0.164287, 0.163212 )
 texture = ExtResource( 9 )
 

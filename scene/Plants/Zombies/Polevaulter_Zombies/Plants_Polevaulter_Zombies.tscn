@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=55 format=2]
 
 [ext_resource path="res://image/Zombies/Polevaulter_Zombies/Path/Zombie_polevaulter_hair.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/Zombies/Polevaulter_Zombies/Plants_Polevaulter_Zombies_Main.cs" type="Script" id=2]
@@ -37,6 +37,7 @@
 [ext_resource path="res://image/Zombies/Polevaulter_Zombies/Path/Zombie_polevaulter_pole.png" type="Texture" id=35]
 [ext_resource path="res://sound/Zombies/polevault.ogg" type="AudioStream" id=36]
 [ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=37]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=38]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -1568,6 +1569,7 @@ margin_top = -170.0
 margin_right = 591.0
 margin_bottom = -5.0
 mouse_filter = 2
+script = ExtResource( 38 )
 
 [node name="Main" type="Control" parent="Main"]
 anchor_left = 0.379016

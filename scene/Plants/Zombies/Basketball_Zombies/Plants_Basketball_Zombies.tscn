@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://image/Zombies/Polevaulter_Zombies/Path/Zombie_polevaulter_hair.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/Zombies/Basketball_Zombies/Plants_Basketball_Zombies_Main.cs" type="Script" id=2]
@@ -39,6 +39,7 @@
 [ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=37]
 [ext_resource path="res://image/Zombies/Basketball_Zombies/Path/Hand.png" type="Texture" id=38]
 [ext_resource path="res://code/Control_Area_2D/Stop_Basketball_Zombies_Area2D.cs" type="Script" id=39]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=40]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -142,7 +143,7 @@ tracks/5/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("../MAN:visible")
+tracks/6/path = NodePath("MAN:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -278,7 +279,7 @@ tracks/5/keys = {
 "values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, -70.6667 ), Vector2( 0, -70.6667 ), Vector2( 0, 0 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("../MAN:visible")
+tracks/6/path = NodePath("MAN:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -537,7 +538,7 @@ tracks/12/keys = {
 "values": [ false, true, true, false ]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("../MAN:visible")
+tracks/13/path = NodePath("MAN:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
@@ -686,7 +687,7 @@ tracks/10/keys = {
 "values": [ false, false ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("../MAN:visible")
+tracks/11/path = NodePath("MAN:visible")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -1492,6 +1493,7 @@ margin_top = -170.0
 margin_right = 591.0
 margin_bottom = -5.0
 mouse_filter = 2
+script = ExtResource( 40 )
 
 [node name="Main" type="Control" parent="Main"]
 anchor_left = 0.379016
@@ -1515,7 +1517,6 @@ scale = Vector2( 0.153335, 0.06 )
 texture = ExtResource( 22 )
 
 [node name="All_Body" type="Node2D" parent="Main/Main"]
-scale = Vector2( 1, 1 )
 
 [node name="In_Arm" type="Node2D" parent="Main/Main/All_Body"]
 position = Vector2( -18.6667, -58 )
@@ -1529,12 +1530,10 @@ texture = ExtResource( 10 )
 
 [node name="3" type="Sprite" parent="Main/Main/All_Body/In_Arm/Hand2"]
 position = Vector2( -26.6667, -34.6667 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 11 )
 
 [node name="2" type="Sprite" parent="Main/Main/All_Body/In_Arm/Hand2"]
 position = Vector2( -26.6667, -7.99998 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 12 )
 
 [node name="Hand1" type="Node2D" parent="Main/Main/All_Body/In_Arm"]
@@ -1542,13 +1541,11 @@ rotation = 0.358937
 
 [node name="3" type="Sprite" parent="Main/Main/All_Body/In_Arm/Hand1"]
 position = Vector2( -32.0001, 31.3333 )
-scale = Vector2( 1, 1 )
 texture = ExtResource( 38 )
 
 [node name="2" type="Sprite" parent="Main/Main/All_Body/In_Arm/Hand1"]
 position = Vector2( -5.33347, 18 )
 rotation = -2.42268
-scale = Vector2( 1, 1 )
 texture = ExtResource( 12 )
 
 [node name="1" type="Sprite" parent="Main/Main/All_Body/In_Arm/Hand1"]
@@ -1723,14 +1720,15 @@ script = ExtResource( 39 )
 position = Vector2( 10, 0 )
 shape = SubResource( 10 )
 
-[node name="MAN" type="Node2D" parent="Main"]
+[node name="MAN" type="Node2D" parent="Main/Main"]
 visible = false
-position = Vector2( 1101, 162 )
-scale = Vector2( -1, 1 )
+position = Vector2( -0.000160217, 0 )
+rotation = 3.14159
+scale = Vector2( 1.33333, -1.33333 )
 z_index = 118
 z_as_relative = false
 
-[node name="MAN" type="Label" parent="Main/MAN"]
+[node name="MAN" type="Label" parent="Main/Main/MAN"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -1811,8 +1809,8 @@ anims/Up = SubResource( 31 )
 [connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
 [connection signal="area_entered" from="Main/Main/Zombies_Area" to="." method="Plants_Entered"]
 [connection signal="area_entered" from="Main/Main/Zombies_Area" to="." method="Basketball_Stop_Entered"]
-[connection signal="area_exited" from="Main/Main/Zombies_Area" to="." method="Plants_Exited"]
 [connection signal="area_exited" from="Main/Main/Zombies_Area" to="." method="Basketball_Stop_Exited"]
+[connection signal="area_exited" from="Main/Main/Zombies_Area" to="." method="Plants_Exited"]
 [connection signal="area_entered" from="Main/Main/Jump_Area2D" to="." method="Jump_Area2D_area_entered"]
 [connection signal="area_exited" from="Main/Main/Jump_Area2D" to="." method="Jump_Area2D_area_exited"]
 [connection signal="timeout" from="Timer" to="." method="Hurt_Timer_Out"]

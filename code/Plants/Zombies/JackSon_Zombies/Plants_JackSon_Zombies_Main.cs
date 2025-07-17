@@ -24,7 +24,7 @@ public class Plants_JackSon_Zombies_Main : Normal_Plants_Zombies
             var scene = GD.Load<PackedScene>("res://scene/Plants/Zombies/Dancer_Zombies/Plants_Dancer_Zombies.tscn");
             var plant_child = (Plants_Dancer_Zombies_Main)scene.Instance();
             plant_child.ZIndex = this.ZIndex;
-            if (i == 0)
+            if (i == 0)//never change
             {
                 plant_child.put_position = this.GlobalPosition + new Vector2(-80, 0);
             }
@@ -34,26 +34,41 @@ public class Plants_JackSon_Zombies_Main : Normal_Plants_Zombies
             }
             else if (i == 2)
             {
-                if (this.GlobalPosition.y > 150)
+                if ((Dock_Area_2D == null && GetNode<Control>("/root/In_Game/Main/Background/").GetChild(0).GetNode<Background_Grid_Main>("Grid/0/" + (this.ZIndex / 20 + 1).ToString()).pos[0] == 1) || (Dock_Area_2D != null && Dock_Area_2D.pos[0] == 1))
                 {
-                    plant_child.put_position = this.GlobalPosition + new Vector2(0, -100);
-                    plant_child.ZIndex = this.ZIndex - 20;
+                    plant_child.put_position = this.GlobalPosition;
                 }
                 else
                 {
-                    plant_child.put_position = this.GlobalPosition;
+                    if (Dock_Area_2D == null)
+                    {
+                        plant_child.put_position = new Vector2(this.GlobalPosition.x, GetNode<Control>("/root/In_Game/Main/Background/").GetChild(0).GetNode<Node2D>("Grid/0/" + (this.ZIndex / 20).ToString()).GlobalPosition.y + 10);
+                    }
+                    else
+                    {
+                        plant_child.put_position = new Vector2(this.GlobalPosition.x, Dock_Area_2D.GetNode<Node2D>("../" + (Dock_Area_2D.pos[0] - 1).ToString()).GlobalPosition.y + 10);
+
+                    }
+                    plant_child.ZIndex = this.ZIndex - 20;
                 }
             }
             else
             {
-                if (this.GlobalPosition.y < 450)
+                if ((Dock_Area_2D == null && (((In_Game_Main.background_number == 1 || In_Game_Main.background_number == 2) && GetNode<Control>("/root/In_Game/Main/Background/").GetChild(0).GetNode<Background_Grid_Main>("Grid/0/" + (this.ZIndex / 20 + 1).ToString()).pos[0] == 5) || ((In_Game_Main.background_number == 3 || In_Game_Main.background_number == 4) && GetNode<Control>("/root/In_Game/Main/Background/").GetChild(0).GetNode<Background_Grid_Main>("Grid/0/" + (this.ZIndex / 20 + 1).ToString()).pos[0] == 6))) || (Dock_Area_2D != null && (((In_Game_Main.background_number == 1 || In_Game_Main.background_number == 2) && Dock_Area_2D.pos[0] == 5) || ((In_Game_Main.background_number == 3 || In_Game_Main.background_number == 4) && Dock_Area_2D.pos[0] == 6))))
                 {
-                    plant_child.put_position = this.GlobalPosition + new Vector2(0, 100);
-                    plant_child.ZIndex = this.ZIndex + 20;
+                    plant_child.put_position = this.GlobalPosition;
                 }
                 else
                 {
-                    plant_child.put_position = this.GlobalPosition;
+                    if (Dock_Area_2D == null)
+                    {
+                        plant_child.put_position = new Vector2(this.GlobalPosition.x, GetNode<Control>("/root/In_Game/Main/Background/").GetChild(0).GetNode<Node2D>("Grid/0/" + (this.ZIndex / 20 + 2).ToString()).GlobalPosition.y + 10);
+                    }
+                    else
+                    {
+                        plant_child.put_position = new Vector2(this.GlobalPosition.x, Dock_Area_2D.GetNode<Node2D>("../" + (Dock_Area_2D.pos[0] + 1).ToString()).GlobalPosition.y + 10);
+                    }
+                    plant_child.ZIndex = this.ZIndex + 20;
                 }
             }
             plant_child.player_put = false;

@@ -16,7 +16,8 @@ public class Normal_Plants_Zombies : Node2D
     protected bool Is_Double_Click = false;//for Android
     public Vector2 put_position = Vector2.Zero;//In_Game_Main使用
     public bool player_put = false;//In_Game_Main使用
-    protected List<Health_Container> health_list = new List<Health_Container>()
+    protected Timer Hurt_Timer = new Timer();
+    protected Health_List health_list = new Health_List
     {
         new Health_Container(270,false)
     };
@@ -42,6 +43,8 @@ public class Normal_Plants_Zombies : Node2D
     protected List<Background_Grid_Main> Dock_Area_2D_List = new List<Background_Grid_Main>();
     protected List<Normal_Zombies_Area> Zombies_Area_2D_List = new List<Normal_Zombies_Area>();
     protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
+    protected List<Background_Out_Land_Main> Out_Land_Area_2D_List = new List<Background_Out_Land_Main>();
+    protected Background_Out_Land_Main Out_Land_Area_2D = null;
     protected bool real_touching = false;
     [Export] protected bool Never_Died = false;
     [Export] protected bool is_Angry = false;
@@ -49,6 +52,7 @@ public class Normal_Plants_Zombies : Node2D
     public bool Use_Out_Land_Ani = false;
     public bool dancing_stop = false;
     public bool dancer_should_stop = false;
+    protected List<Water_Area> Water_Area_List = new List<Water_Area>();
     //define
     protected static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
@@ -78,6 +82,11 @@ public class Normal_Plants_Zombies : Node2D
         Android_Timer.WaitTime = 0.5f;
         Android_Timer.Autostart = false;
         Android_Timer.OneShot = true;
+        AddChild(Hurt_Timer);
+        Hurt_Timer.WaitTime = 5f;
+        Hurt_Timer.Autostart = false;
+        Hurt_Timer.OneShot = false;
+        Hurt_Timer.Connect("timeout", this, nameof(Hurt_Timer_Out));
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant1").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Plant2").Stream.Set("loop", false);
         GetNode<AudioStreamPlayer>("Plant_Sound/Ok/Water").Stream.Set("loop", false);
@@ -94,6 +103,7 @@ public class Normal_Plants_Zombies : Node2D
             GetNode<Control>("Dock").Hide();
             GetNode<Control>("Show").Hide();
             GetNode<Control>("Main").Show();
+            Hurt_Timer.Start();
             Walk_Mode(true);
             Spec_Doing();
             if (Use_Out_Land_Ani)
@@ -183,6 +193,19 @@ public class Normal_Plants_Zombies : Node2D
         }
         else
         {
+            bool Area_2D_in_List = false;
+            for (int i = 0; i < Dock_Area_2D_List.Count; i++)
+            {
+                if (Dock_Area_2D == Dock_Area_2D_List[i])
+                {
+                    Area_2D_in_List = true;
+                    break;
+                }
+            }
+            if (!Area_2D_in_List)
+            {
+                Dock_Area_2D = null;
+            }
             for (int i = 0; i < Dock_Area_2D_List.Count; i++)
             {
                 if (Dock_Area_2D_List[i] == null)
@@ -191,13 +214,13 @@ public class Normal_Plants_Zombies : Node2D
                     i--;
                     continue;
                 }
-                if (Math.Abs(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - Dock_Area_2D_List[i].GlobalPosition.x) >= 40 || Math.Abs(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.y - Dock_Area_2D_List[i].GlobalPosition.y) >= 40)
+                if (Math.Abs(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - Dock_Area_2D_List[i].GlobalPosition.x) >= 40 || Math.Abs(GetNode<Node2D>("Main/Main/Zombies_Area/Shape").GlobalPosition.y - Dock_Area_2D_List[i].GlobalPosition.y) >= 40)
                 {
                     continue;
                 }
                 if (Dock_Area_2D != null)
                 {
-                    if (Math.Abs(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - Dock_Area_2D.GlobalPosition.x) >= 40 || Math.Abs(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.y - Dock_Area_2D.GlobalPosition.y) >= 40)
+                    if (Math.Abs(GetNode<Normal_Plants_Zombies_Area>("Main/Main/Zombies_Area").GlobalPosition.x - Dock_Area_2D.GlobalPosition.x) >= 40 || Math.Abs(GetNode<Node2D>("Main/Main/Zombies_Area/Shape").GlobalPosition.y - Dock_Area_2D.GlobalPosition.y) >= 40)
                     {
                         Dock_Area_2D = Dock_Area_2D_List[i];
                     }
@@ -222,10 +245,51 @@ public class Normal_Plants_Zombies : Node2D
                 }
             }
         }
+        if (Out_Land_Area_2D_List.Count == 0)
+        {
+            Out_Land_Area_2D = null;
+        }
+        else
+        {
+            bool Area_2D_in_List = false;
+            for (int i = 0; i < Out_Land_Area_2D_List.Count; i++)
+            {
+                if (Out_Land_Area_2D == Out_Land_Area_2D_List[i])
+                {
+                    Area_2D_in_List = true;
+                    break;
+                }
+            }
+            if (!Area_2D_in_List)
+            {
+                Out_Land_Area_2D = null;
+            }
+            for (int i = 0; i < Out_Land_Area_2D_List.Count; i++)
+            {
+                if (Out_Land_Area_2D_List[i] == null)
+                {
+                    Out_Land_Area_2D_List.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                if (Out_Land_Area_2D == null)
+                {
+                    Out_Land_Area_2D = Out_Land_Area_2D_List[i];
+                    break;//will be done in the future
+                }
+            }
+        }
         if (Dock_Area_2D != null)
         {
             ZIndex = normal_ZIndex + 20 * (Dock_Area_2D.pos[0] - 1);
             in_water = Dock_Area_2D.type == 2;
+        }
+        else
+        {
+            if (Out_Land_Area_2D != null)
+            {
+                in_water = Out_Land_Area_2D.type == 2;
+            }
         }
         int count_health = 0;
         for (int i = 0; i < health_list.Count; i++)
@@ -345,6 +409,7 @@ public class Normal_Plants_Zombies : Node2D
                             GetNode<Control>("Dock").Hide();
                             GetNode<Control>("Show").Hide();
                             GetNode<Control>("Main").Show();
+                            Hurt_Timer.Start();
                             Walk_Mode(true);
                             Spec_Doing();
                         }
@@ -422,15 +487,18 @@ public class Normal_Plants_Zombies : Node2D
                 }
                 GetNode<AnimationPlayer>("Is_Eated").Play("Is_Eated");
             }
-            if (in_water && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !GetNode<AnimationPlayer>("Out_Water").IsPlaying() && !now_in_water)
+            if (!Doing_jumping && !GetNode<AnimationPlayer>("Out_Land").IsPlaying())
             {
-                GetNode<AnimationPlayer>("In_Water").Play("Water");
-                now_in_water = true;
-            }
-            if (!in_water && !GetNode<AnimationPlayer>("Out_Water").IsPlaying() && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && now_in_water)
-            {
-                GetNode<AnimationPlayer>("Out_Water").Play("Water");
-                now_in_water = false;
+                if (in_water && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !GetNode<AnimationPlayer>("Out_Water").IsPlaying() && !now_in_water)
+                {
+                    GetNode<AnimationPlayer>("In_Water").Play("Water");
+                    now_in_water = true;
+                }
+                if (!in_water && !GetNode<AnimationPlayer>("Out_Water").IsPlaying() && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && now_in_water)
+                {
+                    GetNode<AnimationPlayer>("Out_Water").Play("Water");
+                    now_in_water = false;
+                }
             }
             if (!GetNode<Control>("Main").RectClipContent && now_in_water && !GetNode<AnimationPlayer>("In_Water").IsPlaying() && !GetNode<AnimationPlayer>("Out_Water").IsPlaying())
             {
@@ -486,6 +554,10 @@ public class Normal_Plants_Zombies : Node2D
                     continue;
                 }
                 if (!Zombies_Area_2D_List[i].has_plant || Zombies_Area_2D_List[i].has_lose_head)
+                {
+                    continue;
+                }
+                if (!(Get_Other_ZIndex(Zombies_Area_2D_List[i]) - (this.ZIndex - this.normal_ZIndex) < 20 && Get_Other_ZIndex(Zombies_Area_2D_List[i]) - (this.ZIndex - this.normal_ZIndex) > 0))
                 {
                     continue;
                 }
@@ -551,6 +623,10 @@ public class Normal_Plants_Zombies : Node2D
                     {
                         Zombies_Area_2D_List.RemoveAt(i);
                         i--;
+                        continue;
+                    }
+                    if (!(Get_Other_ZIndex(Zombies_Area_2D_List[i])  - (this.ZIndex - this.normal_ZIndex) < 20 && Get_Other_ZIndex(Zombies_Area_2D_List[i]) - (this.ZIndex - this.normal_ZIndex) > 0))
+                    {
                         continue;
                     }
                     if (Zombies_Area_2D_List[i].Choose_Plants_Area == GetNode<Normal_Plants_Area>("Main/Main/Zombies_Area"))
@@ -675,6 +751,14 @@ public class Normal_Plants_Zombies : Node2D
         {
             Dock_Area_2D_List.Add((Background_Grid_Main)area2D);
         }
+        else if (Type_string != null && Type_string == "Out_Land")
+        {
+            Out_Land_Area_2D_List.Add((Background_Out_Land_Main)area2D);
+        }
+        else if (Type_string != null && Type_string == "Water_Area")//H2O
+        {
+            Water_Area_List.Add((Water_Area)area2D);
+        }
     }
     protected virtual void Dock_Exited(Area2D area_node)
     {
@@ -687,6 +771,14 @@ public class Normal_Plants_Zombies : Node2D
         {
             Dock_Area_2D_List.Remove((Background_Grid_Main)area2D);
         }
+        else if (Type_string != null && Type_string == "Out_Land")
+        {
+            Out_Land_Area_2D_List.Remove((Background_Out_Land_Main)area2D);
+        }
+        else if (Type_string != null && Type_string == "Water_Area")//H2O
+        {
+            Water_Area_List.Remove((Water_Area)area2D);
+        }
     }
     protected virtual void Walk_Mode(bool is_Walking)
     { }
@@ -698,6 +790,47 @@ public class Normal_Plants_Zombies : Node2D
     { }
     protected virtual void Spec_Doing()
     { }
+    public void Hurt_Timer_Out()
+    {
+        //WaterPH
+        for (int i = 0; i < Water_Area_List.Count; i++)
+        {
+            if (Water_Area_List[i].pH < 5)
+            {
+                health_list[health_list.Get_Can_Through_To_Index()].Health -= (int)(Math.Pow(3, (5f - Water_Area_List[i].pH))) * 2;
+            }
+            else if (Water_Area_List[i].pH > 9)
+            {
+                health_list[health_list.Get_Can_Through_To_Index()].Health -= (int)(Math.Pow(3, (Water_Area_List[i].pH - 9))) * 3;
+            }
+        }
+        //WaterPH
+        //GroundPH
+        if (Dock_Area_2D != null)
+        {
+            if (Dock_Area_2D.pH < 5)
+            {
+                health_list[health_list.Get_Can_Through_To_Index()].Health -= (int)(Math.Pow(3, (5f - Dock_Area_2D.pH))) * 2;
+            }
+            else if (Dock_Area_2D.pH > 9)
+            {
+                health_list[health_list.Get_Can_Through_To_Index()].Health -= (int)(Math.Pow(3, (Dock_Area_2D.pH - 9))) * 3;
+            }
+        }
+        //GroundPH
+    }
+    public int Get_Other_ZIndex(Node area_node)
+    {
+        bool is_zombies = area_node.GetParent().GetParent().Name == "Main";
+        if (is_zombies)
+        {
+            return area_node.GetNode<Node2D>("../../..").ZIndex;
+        }
+        else
+        {
+            return area_node.GetNode<Node2D>("../..").ZIndex;
+        }
+    }
     protected virtual async void Free_Self()
     {
         if (GetNode<Area2D>("Main/Main/Zombies_Area").IsConnected("area_entered", this, nameof(Plants_Entered)))

@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://image/Zombies/Paper_Zombies/Path/Zombie_paper_rightarm_upper.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/Zombies/Paper_Zombies/Plants_Paper_Zombies_Main.cs" type="Script" id=2]
@@ -40,6 +40,7 @@
 [ext_resource path="res://image/Zombies/Paper_Zombies/Path/Out_Arm.png" type="Texture" id=38]
 [ext_resource path="res://image/Zombies/Paper_Zombies/Path/Zombie_paper_hairpiece.png" type="Texture" id=39]
 [ext_resource path="res://sound/Zombies/Paper/newspaper_rarrgh2.ogg" type="AudioStream" id=40]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=41]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -1135,6 +1136,7 @@ margin_top = -108.0
 margin_right = 66.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 41 )
 
 [node name="Main" type="Control" parent="Main"]
 margin_left = 158.0

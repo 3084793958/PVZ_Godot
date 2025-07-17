@@ -17,6 +17,7 @@ public class Plants_Tomb_Main : Node2D
     public Card_Tmp_Main Tmp_card_parent = null;//Card_Tmp使用
     protected List<Background_Grid_Main> Dock_Area_2D_List = new List<Background_Grid_Main>();
     protected Background_Grid_Main Dock_Area_2D = null;
+    protected Background_Grid_Main Choose_Dock_Area_2D = null;
     public int Clone_Time = 0;
     protected int health = 2000;
     protected List<All_Boom_Area> All_Boom_Area_2D_List = new List<All_Boom_Area>();
@@ -190,6 +191,7 @@ public class Plants_Tomb_Main : Node2D
                         Plant_object.Free_Self();
                     }
                 }
+                Choose_Dock_Area_2D = Dock_Area_2D;
                 Dock_Area_2D.Normal_Plant_List.Add(this);
                 Dock_Area_2D.Down_Plant_List.Add(this);
             }
@@ -278,6 +280,7 @@ public class Plants_Tomb_Main : Node2D
                                     Plant_object.Free_Self();
                                 }
                             }
+                            Choose_Dock_Area_2D = Dock_Area_2D;
                             Dock_Area_2D.Normal_Plant_List.Add(this);
                             Dock_Area_2D.Down_Plant_List.Add(this);
                             has_planted = true;
@@ -349,6 +352,17 @@ public class Plants_Tomb_Main : Node2D
                     health -= All_Boom_Area_2D_List[i].hurt;
                     All_Boom_Area_2D_List.RemoveAt(i);
                     i--;
+                }
+            }
+            if (Dock_Area_2D != null && Choose_Dock_Area_2D != null)
+            {
+                if (Dock_Area_2D != Choose_Dock_Area_2D)
+                {
+                    Choose_Dock_Area_2D.Normal_Plant_List.Remove(this);
+                    Choose_Dock_Area_2D.Down_Plant_List.Remove(this);
+                    Choose_Dock_Area_2D = Dock_Area_2D;
+                    Dock_Area_2D.Normal_Plant_List.Add(this);
+                    Dock_Area_2D.Down_Plant_List.Add(this);
                 }
             }
         }

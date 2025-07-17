@@ -189,6 +189,10 @@ public class In_Game_Main : Node2D
                                     {
                                         continue;
                                     }
+                                    else
+                                    {
+                                        plant_child.car_type = Car_type;
+                                    }
                                     if (i == 1)
                                     {
                                         plant_child.Position = new Vector2(25, 124);
@@ -201,12 +205,12 @@ public class In_Game_Main : Node2D
                                     }
                                     else if (i == 3)
                                     {
-                                        plant_child.Position = new Vector2(25, 299);
+                                        plant_child.Position = new Vector2(25, 305);
                                         plant_child.ZIndex = 42;
                                     }
                                     else if (i == 4)
                                     {
-                                        plant_child.Position = new Vector2(25, 376);
+                                        plant_child.Position = new Vector2(25, 390);
                                         plant_child.ZIndex = 62;
                                     }
                                     else if (i == 5)
@@ -235,6 +239,10 @@ public class In_Game_Main : Node2D
                                     if (Car_type == 0)
                                     {
                                         continue;
+                                    }
+                                    else
+                                    {
+                                        plant_child.car_type = Car_type;
                                     }
                                     if (i == 1)
                                     {
@@ -588,6 +596,10 @@ public class In_Game_Main : Node2D
                                     {
                                         continue;
                                     }
+                                    else
+                                    {
+                                        plant_child.car_type = Car_type;
+                                    }
                                     if (i == 1)
                                     {
                                         plant_child.Position = new Vector2(25, 124);
@@ -600,12 +612,12 @@ public class In_Game_Main : Node2D
                                     }
                                     else if (i == 3)
                                     {
-                                        plant_child.Position = new Vector2(25, 299);
+                                        plant_child.Position = new Vector2(25, 305);
                                         plant_child.ZIndex = 42;
                                     }
                                     else if (i == 4)
                                     {
-                                        plant_child.Position = new Vector2(25, 376);
+                                        plant_child.Position = new Vector2(25, 390);
                                         plant_child.ZIndex = 62;
                                     }
                                     else if (i == 5)
@@ -634,6 +646,10 @@ public class In_Game_Main : Node2D
                                     if (Car_type == 0)
                                     {
                                         continue;
+                                    }
+                                    else
+                                    {
+                                        plant_child.car_type = Car_type;
                                     }
                                     if (i == 1)
                                     {
@@ -778,7 +794,7 @@ public class In_Game_Main : Node2D
             var scene = GD.Load<PackedScene>("res://scene/In_Game/Trophy/Trophy.tscn");
             var plant_child = (Trophy_Main)scene.Instance();
             GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
-            if (Last_Zombies_Pos.x <= 50 || Last_Zombies_Pos.x >= 850)
+            if (Last_Zombies_Pos.x <= 50 || Last_Zombies_Pos.x >= 850 || Last_Zombies_Pos.y < 150 || Last_Zombies_Pos.y > 450) 
             {
                 plant_child.Position = new Vector2(512, 300);
             }
@@ -891,7 +907,7 @@ public class In_Game_Main : Node2D
                     {
                         var plant_child = (Tomb_Main)scene.Instance();
                         plant_child.ZIndex = Zombies_Clone_Request_List[0].Item3 - 4;
-                        plant_child.put_position = new Vector2(710 - 80 * (GD.Randi() % 3), Zombies_Clone_Request_List[0].Item2.y);
+                        plant_child.put_position = Zombies_Clone_Request_List[0].Item2;
                         plant_child.player_put = false;
                         GetNode<Control>("/root/In_Game/Object").AddChild(plant_child);
                     }
@@ -1073,12 +1089,12 @@ public class In_Game_Main : Node2D
                                         }
                                         else if (i == 3)
                                         {
-                                            put_position = new Vector2(1024, 299);
+                                            put_position = new Vector2(1024, 313);
                                             _ZIndex = 47;
                                         }
                                         else if (i == 4)
                                         {
-                                            put_position = new Vector2(1024, 376);
+                                            put_position = new Vector2(1024, 398);
                                             _ZIndex = 67;
                                         }
                                         else if (i == 5)
@@ -1090,6 +1106,20 @@ public class In_Game_Main : Node2D
                                         {
                                             put_position = new Vector2(1024, 558);
                                             _ZIndex = 107;
+                                        }
+                                        if (result_Number == 9)
+                                        {
+                                            if (i == 3)
+                                            {
+                                                put_position = new Vector2(1024, 216);
+                                                _ZIndex = 27;
+                                            }
+                                            if (i == 4)
+                                            {
+                                                put_position = new Vector2(1024, 477);
+                                                _ZIndex = 87;
+                                            }
+                                            put_position.x = 710 - 80 * (GD.Randi() % 3);
                                         }
                                         Zombies_Clone_Request(Public_Main.Zombies_Path_List[result_Number - 1], put_position, _ZIndex);
                                     }
@@ -1125,6 +1155,10 @@ public class In_Game_Main : Node2D
                                         {
                                             put_position = new Vector2(1024, 530);
                                             _ZIndex = 87;
+                                        }
+                                        if (result_Number == 9)
+                                        {
+                                            put_position.x = 710 - 80 * (GD.Randi() % 3);
                                         }
                                         Zombies_Clone_Request(Public_Main.Zombies_Path_List[result_Number - 1], put_position, _ZIndex);
                                     }
@@ -1183,12 +1217,12 @@ public class In_Game_Main : Node2D
                                 }
                                 else if (i == 3)
                                 {
-                                    put_position = new Vector2(1024, 299);
+                                    put_position = new Vector2(1024, 313);
                                     _ZIndex = 47;
                                 }
                                 else if (i == 4)
                                 {
-                                    put_position = new Vector2(1024, 376);
+                                    put_position = new Vector2(1024, 398);
                                     _ZIndex = 67;
                                 }
                                 else if (i == 5)
@@ -1200,6 +1234,20 @@ public class In_Game_Main : Node2D
                                 {
                                     put_position = new Vector2(1024, 558);
                                     _ZIndex = 107;
+                                }
+                                if (result_Number == 9)
+                                {
+                                    if (i == 3)
+                                    {
+                                        put_position = new Vector2(1024, 216);
+                                        _ZIndex = 27;
+                                    }
+                                    if (i == 4)
+                                    {
+                                        put_position = new Vector2(1024, 477);
+                                        _ZIndex = 87;
+                                    }
+                                    put_position.x = 710 - 80 * (GD.Randi() % 3);
                                 }
                                 Zombies_Clone_Request(Public_Main.Zombies_Path_List[result_Number - 1], put_position, _ZIndex);
                             }
@@ -1235,6 +1283,10 @@ public class In_Game_Main : Node2D
                                 {
                                     put_position = new Vector2(1024, 530);
                                     _ZIndex = 87;
+                                }
+                                if (result_Number == 9)
+                                {
+                                    put_position.x = 710 - 80 * (GD.Randi() % 3);
                                 }
                                 Zombies_Clone_Request(Public_Main.Zombies_Path_List[result_Number - 1], put_position, _ZIndex);
                             }

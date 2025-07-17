@@ -74,7 +74,7 @@ public class Plants_Cone_Zombies_Main : Normal_Plants_Zombies
     public override void _Ready()
     {
         health_list.Clear();
-        health_list.Add(new Health_Container(370, false));
+        health_list.Add(new Health_Container(370, false, "Hat"));//路障
         health_list.Add(new Health_Container(270, false));
         base._Ready();
     }

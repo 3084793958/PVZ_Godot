@@ -127,21 +127,21 @@ public class Crater_Main : Node2D
                 has_Add_List = true;
                 for (int i = 0; i < Dock_Area_2D.Normal_Plant_List.Count; i++)
                 {
-                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object && !(Dock_Area_2D.Normal_Plant_List[i] is Doom_Shroom_Main))
                     {
                         Plant_object.Free_Self();
                     }
                 }
                 for (int i = 0; i < Dock_Area_2D.Down_Plant_List.Count; i++)
                 {
-                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object && !(Dock_Area_2D.Normal_Plant_List[i] is Doom_Shroom_Main))
                     {
                         Plant_object.Free_Self();
                     }
                 }
                 for (int i = 0; i < Dock_Area_2D.Small_Plants_List.Count; i++)
                 {
-                    if (Dock_Area_2D.Small_Plants_List[i] is Normal_Plants Plant_object)
+                    if (Dock_Area_2D.Small_Plants_List[i] is Normal_Plants Plant_object && !(Dock_Area_2D.Small_Plants_List[i] is Doom_Shroom_Main))
                     {
                         Plant_object.Free_Self();
                     }
@@ -265,21 +265,21 @@ public class Crater_Main : Node2D
                             }//TODO delete Plant
                             for (int i = 0; i < Dock_Area_2D.Normal_Plant_List.Count; i++)
                             {
-                                if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                                if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object && !(Dock_Area_2D.Normal_Plant_List[i] is Doom_Shroom_Main)) 
                                 {
                                     Plant_object.Free_Self();
                                 }
                             }
                             for (int i = 0; i < Dock_Area_2D.Down_Plant_List.Count; i++)
                             {
-                                if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object)
+                                if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants Plant_object && !(Dock_Area_2D.Normal_Plant_List[i] is Doom_Shroom_Main))
                                 {
                                     Plant_object.Free_Self();
                                 }
                             }
                             for (int i = 0; i < Dock_Area_2D.Small_Plants_List.Count; i++)
                             {
-                                if (Dock_Area_2D.Small_Plants_List[i] is Normal_Plants Plant_object)
+                                if (Dock_Area_2D.Small_Plants_List[i] is Normal_Plants Plant_object && !(Dock_Area_2D.Small_Plants_List[i] is Doom_Shroom_Main))
                                 {
                                     Plant_object.Free_Self();
                                 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=1]
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/Jaw.png" type="Texture" id=2]
@@ -42,6 +42,7 @@
 [ext_resource path="res://image/Zombies/Paper_Zombies/Path/Zombie_paper_paper3.png" type="Texture" id=40]
 [ext_resource path="res://sound/Zombies/Paper/newspaper_rip.ogg" type="AudioStream" id=41]
 [ext_resource path="res://code/Zombies/Paper_Zombies/Paper_Zombies_Main.cs" type="Script" id=42]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=43]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -1289,7 +1290,6 @@ z_index = 7
 script = ExtResource( 42 )
 
 [node name="Dock" type="Control" parent="."]
-visible = false
 margin_top = -16.0
 margin_bottom = -16.0
 rect_scale = Vector2( 0.75, 0.75 )
@@ -1319,7 +1319,6 @@ position = Vector2( 0, 21.333 )
 shape = SubResource( 1 )
 
 [node name="Show" type="Control" parent="."]
-visible = false
 margin_top = -16.0
 margin_bottom = -16.0
 rect_scale = Vector2( 0.75, 0.75 )
@@ -1342,6 +1341,7 @@ mouse_filter = 2
 texture = ExtResource( 3 )
 
 [node name="Main" type="Control" parent="."]
+visible = false
 show_behind_parent = true
 anchor_left = 0.5
 anchor_top = 0.5
@@ -1352,6 +1352,7 @@ margin_top = -108.0
 margin_right = 66.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 43 )
 
 [node name="Main" type="Control" parent="Main"]
 anchor_left = 0.5

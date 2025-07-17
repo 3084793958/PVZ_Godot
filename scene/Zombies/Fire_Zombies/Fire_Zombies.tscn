@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=1]
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/Out_Leg3.png" type="Texture" id=2]
@@ -37,6 +37,7 @@
 [ext_resource path="res://image/Zombies/Fire_Zombies/Fire.png" type="Texture" id=35]
 [ext_resource path="res://sound/Plants/Normal/water.ogg" type="AudioStream" id=36]
 [ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=37]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=38]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -1440,6 +1441,7 @@ margin_top = -102.0
 margin_right = 36.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 38 )
 
 [node name="Main" type="Control" parent="Main"]
 anchor_left = 0.5

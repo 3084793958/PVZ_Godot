@@ -1,3 +1,24 @@
+/*************************************************************************/
+/* Public_Main.cs                                                        */
+/*                              GPL v3.0                                 */
+/*                  This file is part of: PVZ_Godot                      */
+/*            <https://github.com/3084793958/PVZ_Godot.git>              */
+/*************************************************************************/
+/* Copyright (C) 2024-present github.com:3084793958                      */
+/*                                                                       */
+/* This program is free software: you can redistribute it and/or modify  */
+/* it under the terms of the GNU General Public License as published by  */
+/* the Free Software Foundation, either version 3 of the License, or     */
+/* (at your option) any later version.                                   */
+/*                                                                       */
+/* This program is distributed in the hope that it will be useful,       */
+/* but WITHOUT ANY WARRANTY; without even the implied warranty of        */
+/* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         */
+/* GNU General Public License for more details.                          */
+/*                                                                       */
+/* You should have received a copy of the GNU General Public License     */
+/* along with this program.  If not, see <https://www.gnu.org/licenses/>.*/
+/*************************************************************************/
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -68,7 +89,7 @@ static public class Public_Main
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     5,
     "酒精灯",
-    "终有酒精燃尽的一天",
+    "<!>化学仪器\n内焰具有C2H5OH蒸汽\n终有酒精燃尽的一天\n使用喷剂重燃(不具备科学性)",
     "从化学实验室回来的酒精灯\n诶?帽子去哪了?",
     GD.Load<Texture>("res://image/Plants/C2H5OH/C2H5OH.png"),
     5f,
@@ -78,7 +99,7 @@ static public class Public_Main
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     6,
     "硫酸",
-    "危险的东西,伤害1000\n试着放上Mg",
+    "<!>危险化学品\n稀硫酸pH=1\nMg+H+->H2+Mg2+\nMg盐有利于植物生长\n危险的东西,伤害1000",
     "MgSO4也不错",
     GD.Load<Texture>("res://image/Plants/H2SO4/H2SO4.png"),
     0f,
@@ -88,7 +109,7 @@ static public class Public_Main
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     7,
     "Mg",
-    "燃烧吧!\n在点燃的酒精灯上使用,放出刺眼的光",
+    "<!>危险化学品\nMg+O2->MgO\nMg+H+->H2+Mg2+\n燃烧后放出刺眼的光,燃烧吧!",
     "也不一定要配合酒精灯使用",
     GD.Load<Texture>("res://image/Plants/Mg/Mg.png"),
     10f,
@@ -198,7 +219,7 @@ static public class Public_Main
     new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
     18,
     "氢气",
-    "验纯!",
+    "<!>化学品\nH2+O2->H2O\n点燃不纯的H2会产生爆炸\n验纯!",
     "氢气",
     GD.Load<Texture>("res://image/Plants/H2/H2.png"),
     0f,
@@ -324,6 +345,56 @@ static public class Public_Main
     0f,
     15f,
     new Tuple<int,string>(25,"res://scene/Plants/Lotus/Lotus.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    31,
+    "Na",
+    "<!>危险化学品\nNa+H+->H2+Na+\nNa+R-OH->R-ONa+H2\nR-OH为醇类,如CH3CH2OH(C2H5OH)\nH2O在任何PH下都能电离出H+\nNa熔点97.8℃\nNa:别抢我电子了!",
+    "Na:别抢我电子了!",
+    GD.Load<Texture>("res://image/Plants/Na/Na.png"),
+    0f,
+    23f,
+    new Tuple<int,string>(125,"res://scene/Plants/Na/Na.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    32,
+    "电子pH计",
+    "读取土壤或液体中的pH值\n双击顶部可破坏广口瓶",
+    "读取土壤或液体中的pH值",
+    GD.Load<Texture>("res://image/Plants/PH_Meter/PH.png"),
+    14f,
+    25f,
+    new Tuple<int,string>(0,"res://scene/Plants/PH_Meter/PH_Meter.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    33,
+    "水",
+    "<!>化学品\n用于稀释",
+    "用于稀释",
+    GD.Load<Texture>("res://image/Plants/H2O/H2O.png"),
+    0f,
+    5f,
+    new Tuple<int,string>(0,"res://scene/Plants/H2O/H2O.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    34,
+    "硫磺悬浮液",
+    "<!>化学品\n用于处理土壤碱化问题",
+    "用于处理土壤碱化问题",
+    GD.Load<Texture>("res://image/Plants/S_Emulsion/S_Emulsion.png"),
+    0f,
+    3f,
+    new Tuple<int,string>(5,"res://scene/Plants/S_Emulsion/S_Emulsion.tscn")
+    ),
+    new Tuple<int,string,string,string,Texture,float,float,Tuple<int,string>>(
+    35,
+    "石灰悬浮液",
+    "<!>化学品\n用于处理土壤酸化问题",
+    "用于处理土壤酸化问题",
+    GD.Load<Texture>("res://image/Plants/CaO_Emulsion/CaO_Emulsion.png"),
+    0f,
+    3f,
+    new Tuple<int,string>(5,"res://scene/Plants/CaO_Emulsion/CaO_Emulsion.tscn")
     )
     };
     static public List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>> Spec_Plants_list = new List<Tuple<int, string, string, string, Texture, float, float, Tuple<int, string>>>
@@ -839,9 +910,12 @@ static public class Public_Main
         new Tuple<string, string,Texture, int>("第19关:爆炸的艺术","res://level/Mode1/Mode1_19.cfg",
         GD.Load<Texture>("res://image/Plants/Doom_Shroom/DoomShroom.png"),
         2),
-        new Tuple<string, string,Texture, int>("第20关:凌晨的余辉","res://level/Mode1/Mode1_20.cfg",
+        new Tuple<string, string,Texture, int>("第20关:强弩之末","res://level/Mode1/Mode1_20.cfg",
         GD.Load<Texture>("res://image/null/Null.png"),
         2),
+        new Tuple<string, string,Texture, int>("第21关:涉水","res://level/Mode1/Mode1_21.cfg",
+        GD.Load<Texture>("res://image/Plants/Lotus/Lotus.png"),
+        3),
         new Tuple<string, string,Texture, int>("白天草坪(测试专用)","res://level/Mode1/Mode1_demo_Day.cfg",
         GD.Load<Texture>("res://image/Plants/godot/godot.png"),
         1),

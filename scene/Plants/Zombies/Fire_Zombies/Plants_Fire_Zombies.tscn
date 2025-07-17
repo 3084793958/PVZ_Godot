@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://image/Zombies/Fire_Zombies/Fire_Zombies.png" type="Texture" id=1]
 [ext_resource path="res://code/Plants/Zombies/Fire_Zombies/Plants_Fire_Zombies_Main.cs" type="Script" id=2]
@@ -36,6 +36,7 @@
 [ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=34]
 [ext_resource path="res://image/Zombies/Fire_Zombies/Fire.png" type="Texture" id=35]
 [ext_resource path="res://code/Control_Area_2D/C2H5OH_Bullets_Fire_Area.cs" type="Script" id=36]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=37]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 0.01, 0.01 )
@@ -1223,6 +1224,7 @@ margin_top = -102.0
 margin_right = 36.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 37 )
 
 [node name="Main" type="Control" parent="Main"]
 anchor_left = 0.5

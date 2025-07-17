@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=58 format=2]
 
 [ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=1]
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/Jaw.png" type="Texture" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/In_Arm3.png" type="Texture" id=21]
 [ext_resource path="res://image/Zombies/Darts_Screen_Door_Zombies/Dart_Screen_Door_Zombies.png" type="Texture" id=22]
 [ext_resource path="res://sound/Plants/Normal/plant1.ogg" type="AudioStream" id=23]
+[ext_resource path="res://code/Zombies/Clip_Content_Main.cs" type="Script" id=24]
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/Body.png" type="Texture" id=25]
 [ext_resource path="res://image/Zombies/Simple_Zombies/Path/Out_Leg1.png" type="Texture" id=26]
 [ext_resource path="res://image/shadow.png" type="Texture" id=27]
@@ -1414,6 +1415,7 @@ margin_top = -108.0
 margin_right = 66.0
 margin_bottom = -4.0
 mouse_filter = 2
+script = ExtResource( 24 )
 
 [node name="Main" type="Control" parent="Main"]
 anchor_left = 0.5

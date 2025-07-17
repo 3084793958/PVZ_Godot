@@ -27,6 +27,30 @@ public class PL_Casing_Main : Normal_Plants
                     }
                 }
             }
+            if (Dock_Area_2D != null)
+            {
+                float max_PL_Size = 1f;
+                int _Y_Add = 0;
+                for (int i = 0; i < Dock_Area_2D.Normal_Plant_List.Count; i++)
+                {
+                    if (Dock_Area_2D.Normal_Plant_List[i] == this)
+                    {
+                        continue;
+                    }
+                    if (Dock_Area_2D.Normal_Plant_List[i] is Normal_Plants plants_object)
+                    {
+                        if (max_PL_Size < plants_object.PL_Casing_Size)
+                        {
+                            max_PL_Size = plants_object.PL_Casing_Size;
+                            _Y_Add = plants_object.PL_Casing_Y_Add;
+                        }
+                    }
+                }
+                PL_Casing_Size = max_PL_Size;
+                PL_Casing_Y_Add = _Y_Add;
+                GetNode<Sprite>("Main/Head").Scale = new Vector2(0.16f * PL_Casing_Size, 0.16f * PL_Casing_Size);
+                GetNode<Sprite>("Main/Head").GlobalPosition = GetNode<Control>("Main").RectGlobalPosition + new Vector2(44, 44) + new Vector2(0, PL_Casing_Y_Add);
+            }
             if (health <= 0)
             {
                 if (!GetNode<AnimationPlayer>("Died").IsPlaying())
@@ -39,6 +63,7 @@ public class PL_Casing_Main : Normal_Plants
     }
     public override void _Ready()
     {
+        Not_H_Hurt = true;
         health = 1500;
         normal_ZIndex = 4;
         Label_Health_Mode = 1;

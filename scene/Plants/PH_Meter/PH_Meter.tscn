@@ -1,0 +1,218 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://image/Plants/PH_Meter/PH.png" type="Texture" id=1]
+[ext_resource path="res://code/Plants/PH_Meter/PH_Meter_Main.cs" type="Script" id=2]
+[ext_resource path="res://code/Public/Set_sound.cs" type="Script" id=3]
+[ext_resource path="res://image/Plants/PH_Meter/Down.png" type="Texture" id=4]
+[ext_resource path="res://sound/Plants/Normal/water.ogg" type="AudioStream" id=5]
+[ext_resource path="res://sound/Plants/Normal/plant2.ogg" type="AudioStream" id=6]
+[ext_resource path="res://sound/Plants/Normal/plant1.ogg" type="AudioStream" id=7]
+[ext_resource path="res://env/Show_Health.tres" type="DynamicFont" id=8]
+[ext_resource path="res://code/Control_Area_2D/Normal_Plants_Area.cs" type="Script" id=9]
+[ext_resource path="res://image/shadow.png" type="Texture" id=18]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 0.01, 0.01 )
+
+[sub_resource type="Shader" id=21]
+code = "shader_type canvas_item;
+uniform float value:hint_range(0.0, 1.0)=0.5;
+uniform sampler2D noise_texture;
+void fragment()
+{
+	vec4 texture_color=texture(TEXTURE,UV);
+	vec4 noise_color=texture(noise_texture,UV);
+	if (noise_color.r>value)
+	{
+		COLOR.a=0.0;
+	}
+	else
+	{
+		COLOR=texture_color;
+	}
+}"
+
+[sub_resource type="OpenSimplexNoise" id=13]
+seed = 1437
+persistence = 1.0
+lacunarity = 4.0
+
+[sub_resource type="NoiseTexture" id=22]
+seamless = true
+noise = SubResource( 13 )
+
+[sub_resource type="ShaderMaterial" id=23]
+resource_local_to_scene = true
+shader = SubResource( 21 )
+shader_param/value = 1.0
+shader_param/noise_texture = SubResource( 22 )
+
+[sub_resource type="RectangleShape2D" id=24]
+extents = Vector2( 25, 25 )
+
+[sub_resource type="Animation" id=25]
+resource_name = "Free"
+length = 0.6
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "Free_Self"
+} ]
+}
+
+[node name="PH_Meter" type="Node2D"]
+z_index = 6
+script = ExtResource( 2 )
+normal_ZIndex = 6
+
+[node name="Dock" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 40, 40 )
+
+[node name="Help" type="Node2D" parent="Dock"]
+z_index = 118
+z_as_relative = false
+
+[node name="80" type="Control" parent="Dock/Help"]
+
+[node name="Texture" type="TextureRect" parent="Dock/Help/80"]
+modulate = Color( 1, 1, 1, 0.588235 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_top = -40.0
+margin_right = 80.0
+margin_bottom = 40.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+
+[node name="Area2D" type="Area2D" parent="Dock"]
+position = Vector2( 40, 40 )
+
+[node name="Shape" type="CollisionShape2D" parent="Dock/Area2D"]
+shape = SubResource( 1 )
+
+[node name="Show" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Help" type="Node2D" parent="Show"]
+z_index = 118
+z_as_relative = false
+
+[node name="80" type="Control" parent="Show/Help"]
+
+[node name="TextureRect" type="TextureRect" parent="Show/Help/80"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_top = -40.0
+margin_right = 80.0
+margin_bottom = 40.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+
+[node name="Main" type="Control" parent="."]
+visible = false
+margin_left = -40.0
+margin_top = -40.0
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+
+[node name="Main" type="Sprite" parent="Main"]
+material = SubResource( 23 )
+position = Vector2( 40, 0 )
+scale = Vector2( 0.16, 0.16 )
+texture = ExtResource( 1 )
+
+[node name="Down" type="Sprite" parent="Main"]
+position = Vector2( 39.4, 51 )
+scale = Vector2( 0.15, 0.15 )
+texture = ExtResource( 4 )
+
+[node name="Shadow" type="Sprite" parent="Main"]
+modulate = Color( 1, 1, 1, 0.117647 )
+position = Vector2( 40, 69 )
+scale = Vector2( 0.05, 0.03 )
+texture = ExtResource( 18 )
+
+[node name="Shovel_Area" type="Area2D" parent="Main"]
+position = Vector2( 40, -17 )
+script = ExtResource( 9 )
+plants_type = "Top"
+Not_Joining_Touching = true
+
+[node name="Shape" type="CollisionShape2D" parent="Main/Shovel_Area"]
+shape = SubResource( 24 )
+
+[node name="Plant_Sound" type="Node" parent="."]
+
+[node name="Ok" type="Node" parent="Plant_Sound"]
+
+[node name="Plant1" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 7 )
+script = ExtResource( 3 )
+
+[node name="Plant2" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 6 )
+script = ExtResource( 3 )
+
+[node name="Water" type="AudioStreamPlayer" parent="Plant_Sound/Ok"]
+stream = ExtResource( 5 )
+script = ExtResource( 3 )
+
+[node name="pH" type="Node2D" parent="."]
+visible = false
+modulate = Color( 2, 2, 2, 0.6 )
+scale = Vector2( 0.909, 0.909 )
+z_index = 116
+z_as_relative = false
+
+[node name="pH" type="Label" parent="pH"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -36.0
+margin_top = -35.2035
+margin_right = 303.0
+margin_bottom = 97.7965
+rect_scale = Vector2( 0.2, 0.2 )
+custom_colors/font_color = Color( 1, 1, 0, 1 )
+custom_fonts/font = ExtResource( 8 )
+text = "pH:7"
+align = 1
+
+[node name="Free_player" type="AnimationPlayer" parent="."]
+anims/Free = SubResource( 25 )
+
+[connection signal="area_entered" from="Dock/Area2D" to="." method="Dock_Entered"]
+[connection signal="area_exited" from="Dock/Area2D" to="." method="Dock_Exited"]
+[connection signal="area_entered" from="Main/Shovel_Area" to="." method="Shovel_Area_Entered"]
+[connection signal="area_exited" from="Main/Shovel_Area" to="." method="Shovel_Area_Exited"]
